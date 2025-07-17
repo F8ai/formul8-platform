@@ -333,7 +333,13 @@ export default function AgentsPage() {
                   <Card 
                     key={agent.id} 
                     className="relative overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                    onClick={() => setLocation(`/agent/${agent.id}`)}
+                    onClick={() => {
+                      if (agent.id === 'compliance') {
+                        window.open('/dashboard/compliance', '_blank');
+                      } else {
+                        setLocation(`/agent/${agent.id}`);
+                      }
+                    }}
                   >
                     <CardHeader className="pb-4">
                       <div className="flex items-center justify-between">
@@ -431,11 +437,15 @@ export default function AgentsPage() {
                           size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setLocation(`/agent/${agent.id}`);
+                            if (agent.id === 'compliance') {
+                              window.open('/dashboard/compliance', '_blank');
+                            } else {
+                              setLocation(`/agent/${agent.id}`);
+                            }
                           }}
                           className="flex-1"
                         >
-                          Test Agent
+                          {agent.id === 'compliance' ? 'Open Dashboard' : 'Test Agent'}
                         </Button>
                         <Button
                           variant="outline"

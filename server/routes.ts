@@ -1,5 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import path from "path";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { baselineAutomation } from "./services/baseline-automation";
@@ -40,6 +41,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Baseline assessment routes
   app.use(baselineAssessmentRoutes);
+
+  // Serve compliance agent HTML dashboard (public route - no auth required)
+  app.get('/dashboard/compliance', (req, res) => {
+    try {
+      const filePath = path.resolve(process.cwd(), 'agents/compliance-agent/dashboard.html');
+      res.sendFile(filePath);
+    } catch (error) {
+      console.error("Error serving compliance dashboard:", error);
+      res.status(500).json({ message: "Failed to serve dashboard" });
+    }
+  });
 
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
