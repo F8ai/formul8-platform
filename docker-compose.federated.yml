@@ -1,0 +1,143 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for local data
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: f8local
+      POSTGRES_USER: f8user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - f8-network
+
+  # Redis for session storage and caching
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    networks:
+      - f8-network
+
+  # Main Formul8 Application
+  formul8-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.federated
+    environment:
+      # Federation Configuration
+      FEDERATION_NODE_ID: ${FEDERATION_NODE_ID}
+      FEDERATION_ENDPOINT: ${FEDERATION_ENDPOINT}
+      CLOUD_ENDPOINT: https://formul8.ai
+      
+      # Local Agents Configuration
+      LOCAL_AGENTS: ${LOCAL_AGENTS}
+      
+      # Database Configuration
+      DATABASE_URL: postgresql://f8user:${POSTGRES_PASSWORD}@postgres:5432/f8local
+      REDIS_URL: redis://redis:6379
+      
+      # SSL Configuration
+      SSL_CERT_PATH: /certs/server.crt
+      SSL_KEY_PATH: /certs/server.key
+      
+      # Authentication
+      FEDERATION_SECRET: ${FEDERATION_SECRET}
+      CLOUD_API_KEY: ${CLOUD_API_KEY}
+      SESSION_SECRET: ${SESSION_SECRET}
+      
+      # OpenAI Configuration (for local processing)
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./certs:/certs:ro
+      - ./data:/app/data
+      - agent_data:/app/agents
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - f8-network
+    restart: unless-stopped
+
+  # Compliance Agent (if deployed locally)
+  compliance-agent:
+    build:
+      context: ./agents/compliance-agent
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://f8user:${POSTGRES_PASSWORD}@postgres:5432/f8local
+      FEDERATION_ENDPOINT: ${FEDERATION_ENDPOINT}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./agents/compliance-agent/data:/app/data
+    networks:
+      - f8-network
+    restart: unless-stopped
+    profiles:
+      - compliance
+
+  # Operations Agent (if deployed locally)
+  operations-agent:
+    build:
+      context: ./agents/operations-agent
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://f8user:${POSTGRES_PASSWORD}@postgres:5432/f8local
+      FEDERATION_ENDPOINT: ${FEDERATION_ENDPOINT}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./agents/operations-agent/data:/app/data
+    networks:
+      - f8-network
+    restart: unless-stopped
+    profiles:
+      - operations
+
+  # Formulation Agent (if deployed locally)
+  formulation-agent:
+    build:
+      context: ./agents/formulation-agent
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://f8user:${POSTGRES_PASSWORD}@postgres:5432/f8local
+      FEDERATION_ENDPOINT: ${FEDERATION_ENDPOINT}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./agents/formulation-agent/data:/app/data
+    networks:
+      - f8-network
+    restart: unless-stopped
+    profiles:
+      - formulation
+
+  # Nginx Reverse Proxy with SSL Termination
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - formul8-app
+    networks:
+      - f8-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  agent_data:
+
+networks:
+  f8-network:
+    driver: bridge
