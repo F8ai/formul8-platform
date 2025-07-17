@@ -69,7 +69,3 @@
 [submodule "agents/customer-success-agent/data"]
         path = agents/customer-success-agent/data
         url = https://github.com/F8ai/customer-success-data.git
-
-[submodule "agents/lms-agent/data"]
-        path = agents/lms-agent/data
-        url = https://github.com/F8ai/lms-data.git
