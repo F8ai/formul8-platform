@@ -23,7 +23,7 @@ export class FederationManager {
   
   constructor() {
     // Initialize with cloud node (this instance)
-    this.registerNode({
+    this.nodes.set('formul8-cloud', {
       id: 'formul8-cloud',
       type: 'cloud',
       endpoint: process.env.CLOUD_ENDPOINT || 'https://formul8.ai',
