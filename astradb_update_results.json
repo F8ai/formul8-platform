@@ -1,0 +1,219 @@
+{
+  "agent_updates": {
+    "compliance": {
+      "status": "updated",
+      "file": "compliance-agent/agent.py"
+    },
+    "formulation": {
+      "status": "updated",
+      "file": "formulation-agent/agent.py"
+    },
+    "marketing": {
+      "status": "updated",
+      "file": "marketing-agent/agent.py"
+    },
+    "science": {
+      "status": "updated",
+      "file": "science-agent/agent.py"
+    },
+    "operations": {
+      "status": "updated",
+      "file": "operations-agent/agent.py"
+    },
+    "sourcing": {
+      "status": "skipped",
+      "reason": "Agent file not found: sourcing-agent/agent.py"
+    },
+    "patent": {
+      "status": "skipped",
+      "reason": "Agent file not found: patent-agent/agent.py"
+    },
+    "spectra": {
+      "status": "skipped",
+      "reason": "Agent file not found: spectra-agent/agent.py"
+    },
+    "customer-success": {
+      "status": "updated",
+      "file": "customer-success-agent/agent.py"
+    }
+  },
+  "requirements_updates": {
+    "compliance": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "formulation": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "marketing": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "science": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "operations": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "sourcing": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "patent": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "spectra": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    },
+    "customer-success": {
+      "status": "updated",
+      "added_deps": [
+        "astrapy>=2.0.0",
+        "cassandra-driver>=3.29.0"
+      ]
+    }
+  },
+  "config_creation": {
+    "compliance": {
+      "status": "created",
+      "file": "compliance-agent/rag/astradb_config.yaml"
+    },
+    "formulation": {
+      "status": "created",
+      "file": "formulation-agent/rag/astradb_config.yaml"
+    },
+    "marketing": {
+      "status": "created",
+      "file": "marketing-agent/rag/astradb_config.yaml"
+    },
+    "science": {
+      "status": "created",
+      "file": "science-agent/rag/astradb_config.yaml"
+    },
+    "operations": {
+      "status": "created",
+      "file": "operations-agent/rag/astradb_config.yaml"
+    },
+    "sourcing": {
+      "status": "created",
+      "file": "sourcing-agent/rag/astradb_config.yaml"
+    },
+    "patent": {
+      "status": "created",
+      "file": "patent-agent/rag/astradb_config.yaml"
+    },
+    "spectra": {
+      "status": "created",
+      "file": "spectra-agent/rag/astradb_config.yaml"
+    },
+    "customer-success": {
+      "status": "created",
+      "file": "customer-success-agent/rag/astradb_config.yaml"
+    }
+  },
+  "yaml_updates": {
+    "compliance": {
+      "status": "updated",
+      "file": "compliance-agent/agent_config.yaml"
+    },
+    "formulation": {
+      "status": "updated",
+      "file": "formulation-agent/agent_config.yaml"
+    },
+    "marketing": {
+      "status": "updated",
+      "file": "marketing-agent/agent_config.yaml"
+    },
+    "science": {
+      "status": "updated",
+      "file": "science-agent/agent_config.yaml"
+    },
+    "operations": {
+      "status": "updated",
+      "file": "operations-agent/agent_config.yaml"
+    },
+    "sourcing": {
+      "status": "skipped",
+      "reason": "agent_config.yaml not found"
+    },
+    "patent": {
+      "status": "skipped",
+      "reason": "agent_config.yaml not found"
+    },
+    "spectra": {
+      "status": "skipped",
+      "reason": "agent_config.yaml not found"
+    },
+    "customer-success": {
+      "status": "updated",
+      "file": "customer-success-agent/agent_config.yaml"
+    }
+  },
+  "test_creation": {
+    "compliance": {
+      "status": "created",
+      "file": "compliance-agent/test_astradb.py"
+    },
+    "formulation": {
+      "status": "created",
+      "file": "formulation-agent/test_astradb.py"
+    },
+    "marketing": {
+      "status": "created",
+      "file": "marketing-agent/test_astradb.py"
+    },
+    "science": {
+      "status": "created",
+      "file": "science-agent/test_astradb.py"
+    },
+    "operations": {
+      "status": "created",
+      "file": "operations-agent/test_astradb.py"
+    },
+    "sourcing": {
+      "status": "created",
+      "file": "sourcing-agent/test_astradb.py"
+    },
+    "patent": {
+      "status": "created",
+      "file": "patent-agent/test_astradb.py"
+    },
+    "spectra": {
+      "status": "created",
+      "file": "spectra-agent/test_astradb.py"
+    },
+    "customer-success": {
+      "status": "created",
+      "file": "customer-success-agent/test_astradb.py"
+    }
+  }
+}

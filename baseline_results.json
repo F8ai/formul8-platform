@@ -1,0 +1,327 @@
+{
+  "lastUpdated": "2025-07-14T12:33:00Z",
+  "testRun": {
+    "id": "baseline-run-20250714-123300",
+    "timestamp": "2025-07-14T12:33:00Z",
+    "commit": "latest",
+    "environment": "production"
+  },
+  "agents": {
+    "compliance-agent": {
+      "accuracy": 65,
+      "confidence": 72,
+      "responseTime": 2100,
+      "tests": {
+        "total": 50,
+        "passed": 32,
+        "failed": 18,
+        "passRate": 64
+      },
+      "baselineQuestions": {
+        "regulatory_compliance": {
+          "passed": 8,
+          "total": 12,
+          "accuracy": 67
+        },
+        "license_requirements": {
+          "passed": 7,
+          "total": 10,
+          "accuracy": 70
+        },
+        "state_regulations": {
+          "passed": 9,
+          "total": 15,
+          "accuracy": 60
+        },
+        "compliance_documentation": {
+          "passed": 8,
+          "total": 13,
+          "accuracy": 62
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "formulation-agent": {
+      "accuracy": 58,
+      "confidence": 68,
+      "responseTime": 2400,
+      "tests": {
+        "total": 45,
+        "passed": 26,
+        "failed": 19,
+        "passRate": 58
+      },
+      "baselineQuestions": {
+        "molecular_analysis": {
+          "passed": 6,
+          "total": 12,
+          "accuracy": 50
+        },
+        "cannabinoid_profiles": {
+          "passed": 8,
+          "total": 11,
+          "accuracy": 73
+        },
+        "extraction_methods": {
+          "passed": 7,
+          "total": 12,
+          "accuracy": 58
+        },
+        "formulation_design": {
+          "passed": 5,
+          "total": 10,
+          "accuracy": 50
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "marketing-agent": {
+      "accuracy": 52,
+      "confidence": 61,
+      "responseTime": 1900,
+      "tests": {
+        "total": 42,
+        "passed": 22,
+        "failed": 20,
+        "passRate": 52
+      },
+      "baselineQuestions": {
+        "platform_compliance": {
+          "passed": 5,
+          "total": 10,
+          "accuracy": 50
+        },
+        "content_strategy": {
+          "passed": 7,
+          "total": 12,
+          "accuracy": 58
+        },
+        "advertising_regulations": {
+          "passed": 6,
+          "total": 11,
+          "accuracy": 55
+        },
+        "brand_positioning": {
+          "passed": 4,
+          "total": 9,
+          "accuracy": 44
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "operations-agent": {
+      "accuracy": 71,
+      "confidence": 76,
+      "responseTime": 2200,
+      "tests": {
+        "total": 48,
+        "passed": 34,
+        "failed": 14,
+        "passRate": 71
+      },
+      "baselineQuestions": {
+        "inventory_management": {
+          "passed": 9,
+          "total": 12,
+          "accuracy": 75
+        },
+        "workflow_optimization": {
+          "passed": 8,
+          "total": 11,
+          "accuracy": 73
+        },
+        "quality_control": {
+          "passed": 10,
+          "total": 13,
+          "accuracy": 77
+        },
+        "compliance_tracking": {
+          "passed": 7,
+          "total": 12,
+          "accuracy": 58
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "science-agent": {
+      "accuracy": 69,
+      "confidence": 74,
+      "responseTime": 2600,
+      "tests": {
+        "total": 52,
+        "passed": 36,
+        "failed": 16,
+        "passRate": 69
+      },
+      "baselineQuestions": {
+        "research_analysis": {
+          "passed": 10,
+          "total": 14,
+          "accuracy": 71
+        },
+        "literature_review": {
+          "passed": 9,
+          "total": 13,
+          "accuracy": 69
+        },
+        "clinical_studies": {
+          "passed": 8,
+          "total": 12,
+          "accuracy": 67
+        },
+        "evidence_validation": {
+          "passed": 9,
+          "total": 13,
+          "accuracy": 69
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "patent-agent": {
+      "accuracy": 47,
+      "confidence": 55,
+      "responseTime": 2800,
+      "tests": {
+        "total": 38,
+        "passed": 18,
+        "failed": 20,
+        "passRate": 47
+      },
+      "baselineQuestions": {
+        "patent_search": {
+          "passed": 4,
+          "total": 10,
+          "accuracy": 40
+        },
+        "trademark_analysis": {
+          "passed": 6,
+          "total": 10,
+          "accuracy": 60
+        },
+        "ip_strategy": {
+          "passed": 4,
+          "total": 9,
+          "accuracy": 44
+        },
+        "prior_art_review": {
+          "passed": 4,
+          "total": 9,
+          "accuracy": 44
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "sourcing-agent": {
+      "accuracy": 63,
+      "confidence": 69,
+      "responseTime": 2000,
+      "tests": {
+        "total": 44,
+        "passed": 28,
+        "failed": 16,
+        "passRate": 64
+      },
+      "baselineQuestions": {
+        "vendor_analysis": {
+          "passed": 8,
+          "total": 11,
+          "accuracy": 73
+        },
+        "supply_chain": {
+          "passed": 7,
+          "total": 12,
+          "accuracy": 58
+        },
+        "cost_optimization": {
+          "passed": 8,
+          "total": 11,
+          "accuracy": 73
+        },
+        "quality_sourcing": {
+          "passed": 5,
+          "total": 10,
+          "accuracy": 50
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "spectra-agent": {
+      "accuracy": 56,
+      "confidence": 62,
+      "responseTime": 3200,
+      "tests": {
+        "total": 40,
+        "passed": 22,
+        "failed": 18,
+        "passRate": 55
+      },
+      "baselineQuestions": {
+        "gcms_analysis": {
+          "passed": 6,
+          "total": 10,
+          "accuracy": 60
+        },
+        "hplc_interpretation": {
+          "passed": 5,
+          "total": 10,
+          "accuracy": 50
+        },
+        "coa_validation": {
+          "passed": 6,
+          "total": 10,
+          "accuracy": 60
+        },
+        "contaminant_detection": {
+          "passed": 5,
+          "total": 10,
+          "accuracy": 50
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    },
+    "customer-success-agent": {
+      "accuracy": 74,
+      "confidence": 78,
+      "responseTime": 1800,
+      "tests": {
+        "total": 46,
+        "passed": 34,
+        "failed": 12,
+        "passRate": 74
+      },
+      "baselineQuestions": {
+        "onboarding_support": {
+          "passed": 9,
+          "total": 12,
+          "accuracy": 75
+        },
+        "issue_resolution": {
+          "passed": 10,
+          "total": 12,
+          "accuracy": 83
+        },
+        "retention_strategy": {
+          "passed": 8,
+          "total": 11,
+          "accuracy": 73
+        },
+        "satisfaction_tracking": {
+          "passed": 7,
+          "total": 11,
+          "accuracy": 64
+        }
+      },
+      "lastRun": "2025-07-14T12:33:00Z"
+    }
+  },
+  "summary": {
+    "totalAgents": 9,
+    "averageAccuracy": 62,
+    "averageConfidence": 68,
+    "totalTests": 405,
+    "totalPassed": 252,
+    "totalFailed": 153,
+    "overallPassRate": 62,
+    "avgResponseTime": 2344
+  }
+}

@@ -1,0 +1,208 @@
+name: Baseline Exam Runner
+
+on:
+  repository_dispatch:
+    types: [run-baseline-exam]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      force_run:
+        description: 'Force run baseline exam'
+        required: false
+        default: 'false'
+
+env:
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  FORMUL8_API_ENDPOINT: ${{ secrets.FORMUL8_API_ENDPOINT }}
+
+jobs:
+  baseline-exam:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install openai python-dotenv
+          
+      - name: Check for baseline exam file
+        id: check-exam
+        run: |
+          if [ -f "baseline-exam.json" ]; then
+            echo "exam_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exam_exists=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Create default baseline exam
+        if: steps.check-exam.outputs.exam_exists == 'false'
+        run: |
+          cat > baseline-exam.json << 'EOF'
+          [
+            {
+              "id": "default-001",
+              "category": "General Knowledge",
+              "difficulty": "medium",
+              "question": "What is your primary function and expertise area?",
+              "expectedResponse": "I am an AI agent specialized in cannabis industry operations, providing expert guidance and analysis.",
+              "scoringCriteria": {
+                "accuracy": 40,
+                "completeness": 30,
+                "relevance": 20,
+                "timeliness": 10
+              },
+              "maxPoints": 100
+            }
+          ]
+          EOF
+          
+      - name: Run baseline exam
+        id: run-exam
+        run: |
+          python << 'EOF'
+          import json
+          import os
+          import time
+          from datetime import datetime
+          
+          # Load baseline exam questions
+          with open('baseline-exam.json', 'r') as f:
+              questions = json.load(f)
+          
+          # Initialize OpenAI client (using o3 model)
+          try:
+              from openai import OpenAI
+              client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+              
+              def run_agent_exam(questions):
+                  results = []
+                  total_score = 0
+                  total_max_score = 0
+                  
+                  for question in questions:
+                      start_time = time.time()
+                      
+                      # Call OpenAI o3 model
+                      response = client.chat.completions.create(
+                          model="o3",
+                          messages=[
+                              {"role": "system", "content": f"You are a cannabis industry AI agent. Answer questions with expertise in your domain."},
+                              {"role": "user", "content": question["question"]}
+                          ],
+                          max_tokens=500,
+                          temperature=0.3
+                      )
+                      
+                      end_time = time.time()
+                      response_text = response.choices[0].message.content
+                      response_time = (end_time - start_time) * 1000
+                      
+                      # Simple scoring based on keyword matching
+                      expected_words = set(question["expectedResponse"].lower().split())
+                      response_words = set(response_text.lower().split())
+                      
+                      matching_words = expected_words.intersection(response_words)
+                      score = (len(matching_words) / len(expected_words)) * question["maxPoints"]
+                      
+                      results.append({
+                          "questionId": question["id"],
+                          "response": response_text,
+                          "score": score,
+                          "maxScore": question["maxPoints"],
+                          "responseTime": response_time
+                      })
+                      
+                      total_score += score
+                      total_max_score += question["maxPoints"]
+                  
+                  overall_score = (total_score / total_max_score) * 100
+                  
+                  return {
+                      "overallScore": overall_score,
+                      "confidenceScore": min(overall_score + 10, 100),
+                      "accuracyScore": overall_score,
+                      "speedScore": max(0, 100 - (sum(r["responseTime"] for r in results) / len(results) / 1000 * 10)),
+                      "totalQuestions": len(questions),
+                      "correctAnswers": sum(1 for r in results if r["score"] >= r["maxScore"] * 0.7),
+                      "averageResponseTime": sum(r["responseTime"] for r in results) / len(results),
+                      "results": results
+                  }
+              
+              # Run the exam
+              exam_results = run_agent_exam(questions)
+              
+              # Save results
+              with open('baseline-results.json', 'w') as f:
+                  json.dump(exam_results, f, indent=2)
+              
+              # Set outputs for GitHub Actions
+              print(f"::set-output name=overall_score::{exam_results['overallScore']:.1f}")
+              print(f"::set-output name=confidence_score::{exam_results['confidenceScore']:.1f}")
+              print(f"::set-output name=accuracy_score::{exam_results['accuracyScore']:.1f}")
+              print(f"::set-output name=speed_score::{exam_results['speedScore']:.1f}")
+              
+          except Exception as e:
+              print(f"Error running baseline exam: {e}")
+              print("::set-output name=overall_score::0")
+              print("::set-output name=confidence_score::0")
+              print("::set-output name=accuracy_score::0")
+              print("::set-output name=speed_score::0")
+          EOF
+          
+      - name: Update README badges
+        run: |
+          # Create or update badges in README
+          if [ -f "README.md" ]; then
+            # Extract repository name
+            REPO_NAME=$(basename $(git remote get-url origin) .git)
+            
+            # Update baseline badge
+            sed -i 's|!\[Baseline\]([^)]*)|![Baseline](https://img.shields.io/endpoint?url=https://formul8-platform.replit.app/api/baseline-exam/badge-data/'$REPO_NAME')|g' README.md
+            
+            # If no baseline badge exists, add it
+            if ! grep -q "!\[Baseline\]" README.md; then
+              sed -i '1i![Baseline](https://img.shields.io/endpoint?url=https://formul8-platform.replit.app/api/baseline-exam/badge-data/'$REPO_NAME')' README.md
+            fi
+          fi
+          
+      - name: Commit results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add baseline-results.json README.md
+          git commit -m "Update baseline exam results [skip ci]" || exit 0
+          git push
+          
+      - name: Create performance summary
+        run: |
+          echo "## 📊 Baseline Exam Results" >> $GITHUB_STEP_SUMMARY
+          echo "- **Overall Score**: ${{ steps.run-exam.outputs.overall_score }}%" >> $GITHUB_STEP_SUMMARY
+          echo "- **Confidence Score**: ${{ steps.run-exam.outputs.confidence_score }}%" >> $GITHUB_STEP_SUMMARY
+          echo "- **Accuracy Score**: ${{ steps.run-exam.outputs.accuracy_score }}%" >> $GITHUB_STEP_SUMMARY
+          echo "- **Speed Score**: ${{ steps.run-exam.outputs.speed_score }}%" >> $GITHUB_STEP_SUMMARY
+          echo "- **Exam Date**: $(date)" >> $GITHUB_STEP_SUMMARY
+          
+      - name: Post to Formul8 API
+        if: env.FORMUL8_API_ENDPOINT != ''
+        run: |
+          curl -X POST "$FORMUL8_API_ENDPOINT/api/baseline-exam/webhook" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "repository": "'$(basename $(git remote get-url origin) .git)'",
+              "overallScore": ${{ steps.run-exam.outputs.overall_score }},
+              "confidenceScore": ${{ steps.run-exam.outputs.confidence_score }},
+              "accuracyScore": ${{ steps.run-exam.outputs.accuracy_score }},
+              "speedScore": ${{ steps.run-exam.outputs.speed_score }},
+              "timestamp": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'"
+            }'

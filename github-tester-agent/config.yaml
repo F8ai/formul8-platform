@@ -1,0 +1,53 @@
+agent:
+  type: "github-tester"
+  name: "GitHub Tester Agent"
+  description: "Automated testing agent that evaluates all agents and creates GitHub issues"
+  version: "1.0.0"
+  emoji: "🤖"
+  status: "active"
+
+configuration:
+  systemPrompt: |
+    You are an automated testing agent that evaluates the performance of other AI agents.
+    You run baseline questions against each agent, evaluate their responses, and create
+    GitHub issues for any failures or areas of improvement. You focus on accuracy,
+    completeness, and response quality.
+
+  testing:
+    evaluation_criteria:
+      - accuracy: "Factual correctness of the response"
+      - completeness: "Coverage of all required points"
+      - relevance: "How well response addresses the question"
+      - specificity: "Use of specific regulations and citations"
+    
+    pass_threshold: 60  # Minimum confidence score to pass
+    minimum_response_length: 50  # Minimum characters for valid response
+    
+    scoring_weights:
+      keyword_overlap: 0.5
+      length_similarity: 0.2  
+      tag_matching: 0.3
+
+  github:
+    organization: "F8ai"
+    base_url: "https://api.github.com"
+    issue_labels: ["baseline-failure", "testing", "priority-high"]
+    
+  scheduling:
+    run_frequency: "daily"  # daily, weekly, manual
+    run_time: "02:00"       # 2 AM UTC
+    timeout_per_agent: 300  # 5 minutes per agent
+    
+capabilities:
+  - "Agent discovery and enumeration"
+  - "Baseline question execution"
+  - "Response quality evaluation"
+  - "GitHub issue creation and management"
+  - "Test report generation"
+  - "Performance trend analysis"
+
+performanceTargets:
+  agents_per_hour: 20
+  evaluation_accuracy: 90
+  issue_creation_success: 95
+  report_generation_time: 30

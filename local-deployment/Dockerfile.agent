@@ -1,0 +1,55 @@
+FROM node:20-alpine as builder
+
+# Install Python for agent scripts
+RUN apk add --no-cache python3 py3-pip
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code
+COPY shared ./shared
+COPY server ./server
+
+# Build TypeScript
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine
+
+# Install Python and dependencies for agent scripts
+RUN apk add --no-cache python3 py3-pip curl
+
+WORKDIR /app
+
+# Copy built application
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+
+# Copy agent-specific files
+ARG AGENT_NAME
+COPY agents/${AGENT_NAME} ./agent
+
+# Install Python dependencies for agent
+RUN if [ -f ./agent/requirements.txt ]; then pip3 install -r ./agent/requirements.txt; fi
+
+# Create federation client
+COPY local-deployment/federation-client.py ./federation-client.py
+COPY local-deployment/start-federated-agent.sh ./start-agent.sh
+RUN chmod +x ./start-agent.sh
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/health || exit 1
+
+# Expose port
+EXPOSE 3000
+
+# Start federated agent
+CMD ["./start-agent.sh"]

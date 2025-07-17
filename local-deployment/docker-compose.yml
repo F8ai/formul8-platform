@@ -1,0 +1,230 @@
+version: '3.8'
+
+services:
+  # Local PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: formul8_local
+      POSTGRES_USER: formul8
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secure_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - formul8-local
+
+  # Vector Database (ChromaDB)
+  chromadb:
+    image: chromadb/chroma:latest
+    environment:
+      CHROMA_SERVER_HOST: 0.0.0.0
+      CHROMA_SERVER_HTTP_PORT: 8000
+    volumes:
+      - chroma_data:/chroma/chroma
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    networks:
+      - formul8-local
+
+  # Redis for caching and session storage
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - formul8-local
+
+  # Compliance Agent
+  compliance-agent:
+    build:
+      context: ../
+      dockerfile: local-deployment/Dockerfile.agent
+      args:
+        AGENT_NAME: compliance-agent
+    environment:
+      NODE_ENV: production
+      AGENT_MODE: local
+      AGENT_TYPE: compliance
+      DATABASE_URL: postgresql://formul8:${DB_PASSWORD:-secure_password}@postgres:5432/formul8_local
+      CHROMA_URL: http://chromadb:8000
+      REDIS_URL: redis://redis:6379
+      PLATFORM_SYNC_URL: ${PLATFORM_SYNC_URL:-https://sync.formul8.ai}
+      AGENT_API_KEY: ${COMPLIANCE_AGENT_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - agent_data:/app/data
+      - ./config:/app/config:ro
+      - ./logs:/app/logs
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgres
+      - chromadb
+      - redis
+    restart: unless-stopped
+    networks:
+      - formul8-local
+
+  # Formulation Agent (optional)
+  formulation-agent:
+    build:
+      context: ../
+      dockerfile: local-deployment/Dockerfile.agent
+      args:
+        AGENT_NAME: formulation-agent
+    environment:
+      NODE_ENV: production
+      AGENT_MODE: local
+      AGENT_TYPE: formulation
+      DATABASE_URL: postgresql://formul8:${DB_PASSWORD:-secure_password}@postgres:5432/formul8_local
+      CHROMA_URL: http://chromadb:8000
+      REDIS_URL: redis://redis:6379
+      PLATFORM_SYNC_URL: ${PLATFORM_SYNC_URL:-https://sync.formul8.ai}
+      AGENT_API_KEY: ${FORMULATION_AGENT_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - agent_data:/app/data
+      - ./config:/app/config:ro
+      - ./logs:/app/logs
+    ports:
+      - "3002:3000"
+    depends_on:
+      - postgres
+      - chromadb
+      - redis
+    restart: unless-stopped
+    networks:
+      - formul8-local
+    profiles:
+      - formulation
+
+  # Operations Agent (optional)
+  operations-agent:
+    build:
+      context: ../
+      dockerfile: local-deployment/Dockerfile.agent
+      args:
+        AGENT_NAME: operations-agent
+    environment:
+      NODE_ENV: production
+      AGENT_MODE: local
+      AGENT_TYPE: operations
+      DATABASE_URL: postgresql://formul8:${DB_PASSWORD:-secure_password}@postgres:5432/formul8_local
+      CHROMA_URL: http://chromadb:8000
+      REDIS_URL: redis://redis:6379
+      PLATFORM_SYNC_URL: ${PLATFORM_SYNC_URL:-https://sync.formul8.ai}
+      AGENT_API_KEY: ${OPERATIONS_AGENT_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - agent_data:/app/data
+      - ./config:/app/config:ro
+      - ./logs:/app/logs
+    ports:
+      - "3003:3000"
+    depends_on:
+      - postgres
+      - chromadb
+      - redis
+    restart: unless-stopped
+    networks:
+      - formul8-local
+    profiles:
+      - operations
+
+  # Local Web Dashboard
+  dashboard:
+    build:
+      context: ../
+      dockerfile: local-deployment/Dockerfile.dashboard
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://formul8:${DB_PASSWORD:-secure_password}@postgres:5432/formul8_local
+      REDIS_URL: redis://redis:6379
+      COMPLIANCE_AGENT_URL: http://compliance-agent:3000
+      FORMULATION_AGENT_URL: http://formulation-agent:3000
+      OPERATIONS_AGENT_URL: http://operations-agent:3000
+      PLATFORM_SYNC_URL: ${PLATFORM_SYNC_URL:-https://sync.formul8.ai}
+      SESSION_SECRET: ${SESSION_SECRET}
+    volumes:
+      - ./config:/app/config:ro
+      - ./logs:/app/logs
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+      - compliance-agent
+    restart: unless-stopped
+    networks:
+      - formul8-local
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - dashboard
+    restart: unless-stopped
+    networks:
+      - formul8-local
+
+  # Monitoring (Prometheus)
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    networks:
+      - formul8-local
+    profiles:
+      - monitoring
+
+  # Monitoring (Grafana)
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - formul8-local
+    profiles:
+      - monitoring
+
+volumes:
+  postgres_data:
+  chroma_data:
+  redis_data:
+  agent_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  formul8-local:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

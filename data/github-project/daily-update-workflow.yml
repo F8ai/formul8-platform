@@ -1,0 +1,56 @@
+name: Daily Project Update
+
+on:
+  schedule:
+    # Run daily at 9:00 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    # Allow manual trigger
+
+env:
+  PROJECT_OWNER: F8ai
+  PROJECT_NAME: "Formul8 Agent Training Data Acquisition"
+
+jobs:
+  update-project:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: read
+      pull-requests: read
+      projects: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup GitHub CLI
+      run: |
+        gh --version
+        
+    - name: Run daily update
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        chmod +x ./scripts/daily-update.sh
+        ./scripts/daily-update.sh
+        
+    - name: Commit and push reports
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add daily-reports/ PROJECT-DASHBOARD.md
+        git diff --staged --quiet || git commit -m "📊 Daily project update $(date +%Y-%m-%d)"
+        git push
+        
+    - name: Create summary
+      run: |
+        echo "## Daily Update Summary" >> $GITHUB_STEP_SUMMARY
+        echo "**Date:** $(date +%Y-%m-%d)" >> $GITHUB_STEP_SUMMARY
+        echo "**Time:** $(date +%H:%M:%S)" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Updates Completed" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Repository metrics updated" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Progress reports generated" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Dashboard refreshed" >> $GITHUB_STEP_SUMMARY
+        echo "- ✅ Documentation updated" >> $GITHUB_STEP_SUMMARY

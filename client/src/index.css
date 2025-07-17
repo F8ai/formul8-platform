@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+
+  /* Formul8 Professional Cannabis Branding */
+  --formul8-primary: hsl(85, 15%, 24%);      /* Deep forest green - primary brand */
+  --formul8-secondary: hsl(43, 64%, 38%);    /* Warm gold - premium accent */
+  --formul8-tertiary: hsl(30, 25%, 72%);     /* Mocha mousse - sophisticated neutral */
+  --formul8-success: hsl(138, 23%, 39%);     /* Success states */
+  --formul8-warning: hsl(43, 64%, 55%);      /* Warning states */
+  --formul8-error: hsl(0, 65%, 48%);         /* Error states */
+  --formul8-info: hsl(221, 83%, 53%);        /* Information */
+  --formul8-surface: hsl(210, 20%, 98%);     /* Light surface */
+  --formul8-surface-dark: hsl(85, 8%, 16%);  /* Dark surface */
+  --formul8-text-primary: hsl(220, 26%, 14%); /* Primary text */
+  --formul8-text-secondary: hsl(220, 9%, 46%); /* Secondary text */
+  --formul8-text-muted: hsl(220, 7%, 62%);    /* Muted text */
+  --formul8-border: hsl(210, 14%, 89%);       /* Border color */
+  --formul8-border-dark: hsl(85, 8%, 22%);    /* Dark border */
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Text Colors */
+  .text-formul8-primary { color: var(--formul8-primary); }
+  .text-formul8-secondary { color: var(--formul8-secondary); }
+  .text-formul8-tertiary { color: var(--formul8-tertiary); }
+  .text-formul8-success { color: var(--formul8-success); }
+  .text-formul8-warning { color: var(--formul8-warning); }
+  .text-formul8-error { color: var(--formul8-error); }
+  .text-formul8-info { color: var(--formul8-info); }
+  .text-formul8-text-primary { color: var(--formul8-text-primary); }
+  .text-formul8-text-secondary { color: var(--formul8-text-secondary); }
+  .text-formul8-text-muted { color: var(--formul8-text-muted); }
+
+  /* Background Colors */
+  .bg-formul8-primary { background-color: var(--formul8-primary); }
+  .bg-formul8-secondary { background-color: var(--formul8-secondary); }
+  .bg-formul8-tertiary { background-color: var(--formul8-tertiary); }
+  .bg-formul8-success { background-color: var(--formul8-success); }
+  .bg-formul8-warning { background-color: var(--formul8-warning); }
+  .bg-formul8-error { background-color: var(--formul8-error); }
+  .bg-formul8-info { background-color: var(--formul8-info); }
+  .bg-formul8-surface { background-color: var(--formul8-surface); }
+  .bg-formul8-surface-dark { background-color: var(--formul8-surface-dark); }
+
+  /* Border Colors */
+  .border-formul8-primary { border-color: var(--formul8-primary); }
+  .border-formul8-secondary { border-color: var(--formul8-secondary); }
+  .border-formul8-tertiary { border-color: var(--formul8-tertiary); }
+  .border-formul8-border { border-color: var(--formul8-border); }
+  .border-formul8-border-dark { border-color: var(--formul8-border-dark); }
+
+  /* Hover States */
+  .hover\:bg-formul8-primary:hover { background-color: var(--formul8-primary); }
+  .hover\:bg-formul8-secondary:hover { background-color: var(--formul8-secondary); }
+  .hover\:bg-formul8-success:hover { background-color: var(--formul8-success); }
+  .hover\:text-formul8-secondary:hover { color: var(--formul8-secondary); }
+  .hover\:text-white:hover { color: white; }
+
+  /* Professional Brand Components */
+  .formul8-gradient {
+    background: linear-gradient(135deg, var(--formul8-primary) 0%, var(--formul8-success) 100%);
+  }
+  
+  .formul8-card {
+    @apply bg-white dark:bg-formul8-surface-dark border border-formul8-border dark:border-formul8-border-dark rounded-lg shadow-sm;
+  }
+  
+  .formul8-button-primary {
+    @apply bg-formul8-primary hover:bg-formul8-success text-white font-medium px-4 py-2 rounded-md transition-colors duration-200;
+  }
+  
+  .formul8-button-secondary {
+    @apply bg-formul8-secondary hover:bg-formul8-warning text-white font-medium px-4 py-2 rounded-md transition-colors duration-200;
+  }
+  
+  .formul8-text-gradient {
+    background: linear-gradient(135deg, var(--formul8-primary) 0%, var(--formul8-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

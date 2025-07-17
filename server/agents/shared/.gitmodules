@@ -1,0 +1,7 @@
+# This file demonstrates how each agent repository would include the base agent
+# Example for marketing-agent repository:
+
+[submodule "shared"]
+    path = shared
+    url = https://github.com/formul8/base-agent
+    branch = main
