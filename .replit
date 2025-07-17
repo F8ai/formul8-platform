@@ -1,0 +1,12 @@
+modules = ["nodejs-20"]
+[workflows]
+runButton = "Run Formul8 Platform"
+
+[[workflows.workflow]]
+name = "Run Formul8 Platform"
+author = 42906269
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
