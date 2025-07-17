@@ -19,7 +19,7 @@ import artifactsRouter from "./routes/artifacts";
 import astradbRouter from "./routes/astradb";
 import { createFeatureIssues, createAllFeatureIssues, getFeatureIssues, getRoadmapFeatures, addCommentsToAllIssues } from "./routes/roadmap";
 import { duplicatePreventionService } from "./services/duplicate-prevention";
-import { insertProjectSchema, insertQuerySchema } from "../shared copy/schema.js";
+import { insertProjectSchema, insertQuerySchema } from "@shared/schema";
 import { orchestrator } from "./services/orchestrator";
 import { registerBenchmarkRoutes } from "./routes/benchmarks";
 import { registerAgentManagementRoutes } from "./routes/agent-management";
