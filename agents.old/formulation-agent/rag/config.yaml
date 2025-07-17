@@ -1,0 +1,60 @@
+# RAG Configuration for Formulation Agent
+vectorstore:
+  type: "faiss"
+  index_path: "vectorstore/formulation_index.faiss"
+  metadata_path: "vectorstore/formulation_metadata.pkl"
+  
+embedding:
+  provider: "openai"
+  model: "text-embedding-ada-002"
+  dimensions: 1536
+  
+text_processing:
+  chunk_size: 1000
+  chunk_overlap: 200
+  splitter_type: "recursive_character"
+  separators: ["\n\n", "\n", " ", ""]
+  
+corpus:
+  file: "corpus.jsonl"
+  encoding: "utf-8"
+  fields:
+    - "text"
+    - "metadata"
+    - "source"
+    - "formulation_type"
+    - "cannabinoid_profile"
+    - "extraction_method"
+  
+retrieval:
+  search_type: "similarity"
+  k: 5
+  score_threshold: 0.7
+  fetch_k: 20
+  lambda_mult: 0.5
+  
+knowledge_base:
+  rdf_file: "knowledge_base.ttl"
+  format: "turtle"
+  namespaces:
+    formulation: "http://formul8.ai/ontology/formulation#"
+    cannabinoid: "http://formul8.ai/ontology/cannabinoid#"
+    terpene: "http://formul8.ai/ontology/terpene#"
+    extraction: "http://formul8.ai/ontology/extraction#"
+  
+phi2_sparql:
+  model_path: "microsoft/phi-2"
+  max_length: 512
+  temperature: 0.1
+  device: "cpu"
+  cache_dir: "model/phi2_cache"
+  
+indexing:
+  batch_size: 100
+  max_documents: 10000
+  update_frequency: "weekly"
+  
+performance:
+  index_rebuild_threshold: 0.1
+  similarity_threshold: 0.6
+  max_retrieval_time: 5  # seconds

@@ -1,0 +1,84 @@
+{
+  "questions": [
+    {
+      "id": "src_001",
+      "question": "What are the key criteria for selecting cannabis cultivators as suppliers?",
+      "expected_answer": "Licensing compliance, cultivation track record, quality consistency, testing results, production capacity, pricing competitiveness, delivery reliability, pest management practices, and sustainable growing methods.",
+      "keywords": ["licensing compliance", "cultivation track record", "quality consistency", "production capacity", "delivery reliability", "sustainable growing"],
+      "category": "supplier_selection",
+      "difficulty": "basic"
+    },
+    {
+      "id": "src_002",
+      "question": "How do you evaluate cannabis product quality before purchasing?",
+      "expected_answer": "Review Certificate of Analysis (COA), visual inspection for mold/pests, trichome density assessment, aroma evaluation, cannabinoid and terpene profiles, moisture content, and batch consistency records.",
+      "keywords": ["COA", "visual inspection", "trichome density", "aroma evaluation", "cannabinoid profiles", "moisture content"],
+      "category": "quality_evaluation",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "src_003",
+      "question": "What supply chain risks should cannabis retailers consider?",
+      "expected_answer": "Regulatory changes, crop failures, contamination issues, transportation delays, price volatility, supplier bankruptcy, compliance violations, and seasonal availability fluctuations.",
+      "keywords": ["regulatory changes", "crop failures", "contamination", "transportation delays", "price volatility", "compliance violations"],
+      "category": "supply_chain_risks",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "src_004",
+      "question": "How do you negotiate pricing contracts with cannabis suppliers?",
+      "expected_answer": "Market price analysis, volume-based discounts, quality incentives, payment terms negotiation, exclusive product arrangements, price protection clauses, and seasonal adjustment mechanisms.",
+      "keywords": ["market price analysis", "volume discounts", "quality incentives", "payment terms", "exclusive products", "price protection"],
+      "category": "pricing_negotiation",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "src_005",
+      "question": "What inventory management strategies work best for cannabis procurement?",
+      "expected_answer": "Just-in-time delivery for flower, safety stock for fast-moving products, ABC analysis for category prioritization, seasonal demand forecasting, and expiration date tracking with FIFO rotation.",
+      "keywords": ["just-in-time", "safety stock", "ABC analysis", "demand forecasting", "expiration tracking", "FIFO rotation"],
+      "category": "inventory_management",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "src_006",
+      "question": "How do you source rare or specialty cannabis genetics?",
+      "expected_answer": "Breeding program partnerships, exclusive licensing agreements, genetic preservation initiatives, seed bank relationships, clone trading networks, and international legal acquisition channels.",
+      "keywords": ["breeding partnerships", "licensing agreements", "genetic preservation", "seed banks", "clone trading", "international acquisition"],
+      "category": "specialty_sourcing",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "src_007",
+      "question": "What due diligence is required for new cannabis suppliers?",
+      "expected_answer": "License verification, financial stability assessment, facility inspection, reference checks, insurance coverage review, compliance history evaluation, and quality system audit.",
+      "keywords": ["license verification", "financial stability", "facility inspection", "reference checks", "insurance coverage", "compliance history"],
+      "category": "supplier_due_diligence",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "src_008",
+      "question": "How do you optimize cannabis procurement costs while maintaining quality?",
+      "expected_answer": "Supplier diversification, bulk purchasing agreements, direct producer relationships, vertical integration opportunities, group purchasing cooperatives, and automated procurement systems.",
+      "keywords": ["supplier diversification", "bulk purchasing", "direct relationships", "vertical integration", "group purchasing", "automated systems"],
+      "category": "cost_optimization",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "src_009",
+      "question": "What tracking systems are essential for cannabis supply chain management?",
+      "expected_answer": "Seed-to-sale tracking integration, batch tracking systems, temperature monitoring for transport, chain of custody documentation, inventory management software, and compliance reporting tools.",
+      "keywords": ["seed-to-sale tracking", "batch tracking", "temperature monitoring", "chain of custody", "inventory software", "compliance reporting"],
+      "category": "tracking_systems",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "src_010",
+      "question": "How do you manage seasonal sourcing challenges in cannabis procurement?",
+      "expected_answer": "Harvest cycle planning, greenhouse vs outdoor sourcing strategies, storage capacity optimization, preservation techniques for flower, alternative product sourcing, and price hedging mechanisms.",
+      "keywords": ["harvest cycle", "greenhouse sourcing", "storage optimization", "preservation techniques", "alternative sourcing", "price hedging"],
+      "category": "seasonal_management",
+      "difficulty": "advanced"
+    }
+  ]
+}

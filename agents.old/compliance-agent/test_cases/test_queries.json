@@ -1,0 +1,26 @@
+{
+  "test_cases": [
+    {
+      "id": "test_001",
+      "query": "What are the key requirements for obtaining a cannabis cultivation license in California?",
+      "expected_response_type": "structured",
+      "evaluation_criteria": {
+        "accuracy": "Must mention DCC licensing, local permits, background checks",
+        "completeness": "Should include at least 8 of 10 key requirements",
+        "specificity": "Must reference California-specific regulations"
+      },
+      "tags": ["california", "licensing", "cultivation"]
+    },
+    {
+      "id": "test_002",
+      "query": "What labeling requirements apply to cannabis edibles in Colorado?",
+      "expected_response_type": "structured",
+      "evaluation_criteria": {
+        "accuracy": "Must mention MED requirements, serving size, THC content",
+        "completeness": "Should include warning labels and batch information",
+        "specificity": "Must reference Colorado MED regulations"
+      },
+      "tags": ["colorado", "labeling", "edibles"]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+# Formulation Agent Configuration
+agent:
+  name: "formulation-agent"
+  type: "formulation"
+  version: "1.0.0"
+  description: "Cannabis formulation expert with RDKit molecular analysis"
+  
+llm:
+  provider: "openai"
+  model: "gpt-4o"
+  temperature: 0.1
+  max_tokens: 2000
+  
+rag:
+  enabled: true
+  vectorstore_type: "faiss"
+  embedding_model: "text-embedding-ada-002"
+  chunk_size: 1000
+  chunk_overlap: 200
+  retrieval_k: 5
+  
+rdf_knowledge:
+  enabled: true
+  knowledge_base_path: "rag/knowledge_base.ttl"
+  sparql_endpoint: null
+  phi2_model_path: "microsoft/phi-2"
+  
+memory:
+  type: "conversation_buffer_window"
+  window_size: 10
+  return_messages: true
+  
+tools:
+  - name: "molecular_analysis"
+    enabled: true
+    requires: ["rdkit"]
+    description: "RDKit molecular property analysis"
+    
+  - name: "formulation_search"
+    enabled: true
+    requires: ["vectorstore"]
+    description: "RAG search of formulation knowledge"
+    
+  - name: "structured_knowledge_query"
+    enabled: true
+    requires: ["rdf_knowledge"]
+    description: "SPARQL queries on structured knowledge"
+    
+  - name: "cannabinoid_analysis"
+    enabled: true
+    description: "Cannabinoid profile analysis"
+    
+  - name: "extraction_recommendation"
+    enabled: true
+    description: "Extraction method recommendations"
+
+specialization:
+  domain: "cannabis_formulation"
+  expertise_areas:
+    - "molecular_analysis"
+    - "cannabinoid_chemistry"
+    - "terpene_chemistry"
+    - "extraction_methods"
+    - "formulation_optimization"
+    - "stability_testing"
+    - "potency_analysis"
+    - "rdkit_integration"
+  
+  molecular_tools:
+    rdkit_enabled: true
+    calculation_types:
+      - "molecular_weight"
+      - "logp"
+      - "topological_polar_surface_area"
+      - "h_bond_donors"
+      - "h_bond_acceptors"
+      - "lipinski_rule_of_five"
+  
+  extraction_methods:
+    - "co2_extraction"
+    - "hydrocarbon_extraction"
+    - "ethanol_extraction"
+    - "steam_distillation"
+    - "rosin_press"
+    - "ice_water_extraction"
+  
+  cannabinoids:
+    primary:
+      - "THC"
+      - "CBD"
+      - "CBG"
+      - "CBN"
+    acidic_forms:
+      - "THCA"
+      - "CBDA"
+      - "CBGA"
+    minor:
+      - "CBC"
+      - "THCV"
+      - "CBDV"
+  
+  terpenes:
+    primary:
+      - "myrcene"
+      - "limonene"
+      - "pinene"
+      - "linalool"
+      - "caryophyllene"
+    secondary:
+      - "humulene"
+      - "terpinolene"
+      - "ocimene"
+      - "bisabolol"
+
+performance:
+  response_time_target: 15  # seconds
+  accuracy_target: 0.85
+  confidence_threshold: 0.7
+  
+baseline_testing:
+  enabled: true
+  test_file: "baseline.json"
+  auto_evaluate: true
+  
+logging:
+  level: "INFO"
+  file: "logs/formulation_agent.log"
+  
+dependencies:
+  required:
+    - "langchain"
+    - "openai"
+    - "faiss-cpu"
+  optional:
+    - "rdkit-pypi"
+    - "rdflib"
+    - "transformers"
+# AstraDB Vector Storage Configuration
+vector_storage:
+  provider: "astradb"
+  collection_name: "cannabis_formulation_vectors"
+  use_local_fallback: true
+  
+  # Migration settings
+  migration:
+    auto_migrate_from_faiss: true
+    backup_faiss_index: true
+    verify_migration: true

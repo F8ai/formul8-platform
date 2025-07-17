@@ -1,0 +1,48 @@
+{
+  "agentType": "formulation",
+  "description": "Cannabis product formulation and chemical analysis baseline questions",
+  "version": "1.0",
+  "lastUpdated": "2025-01-13T20:20:00Z",
+  "questions": [
+    {
+      "id": "form_001",
+      "category": "extraction",
+      "question": "What factors affect cannabinoid extraction efficiency in CO2 supercritical extraction?",
+      "expectedAnswer": "CO2 extraction efficiency factors: 1) Temperature (30-80°C optimal), 2) Pressure (200-300 bar), 3) Flow rate, 4) Extraction time, 5) Particle size of plant material, 6) Moisture content (<10%), 7) Co-solvents (ethanol), 8) Multiple extraction cycles, 9) Decarboxylation status, 10) Plant material quality and age.",
+      "difficulty": "advanced",
+      "tags": ["extraction", "co2", "cannabinoids"]
+    },
+    {
+      "id": "form_002",
+      "category": "dosing",
+      "question": "How do you calculate the bioavailability of THC in different delivery methods?",
+      "expectedAnswer": "THC bioavailability by method: 1) Smoking: 25-35%, onset 2-10 min, 2) Vaporizing: 40-60%, onset 2-10 min, 3) Sublingual: 20-35%, onset 15-45 min, 4) Oral: 4-20%, onset 30-120 min, 5) Topical: <1% systemic, 6) Rectal: 25-50%, onset 15-60 min. Calculate dose = (desired effect dose) / (bioavailability percentage).",
+      "difficulty": "intermediate",
+      "tags": ["dosing", "bioavailability", "thc"]
+    },
+    {
+      "id": "form_003",
+      "category": "stability",
+      "question": "What storage conditions preserve cannabinoid stability in finished products?",
+      "expectedAnswer": "Cannabinoid stability requirements: 1) Temperature: <25°C, avoid heat, 2) Light: Dark storage, UV protection, 3) Oxygen: Minimal air exposure, nitrogen atmosphere, 4) Humidity: 55-65% RH for flower, <5% for extracts, 5) pH: Neutral conditions, 6) Container: Glass or appropriate barrier materials, 7) Avoid metal contact, 8) Regular potency testing.",
+      "difficulty": "intermediate",
+      "tags": ["stability", "storage", "degradation"]
+    },
+    {
+      "id": "form_004",
+      "category": "terpenes",
+      "question": "Which terpenes are most volatile during extraction and how to preserve them?",
+      "expectedAnswer": "Volatile terpenes and preservation: 1) Most volatile: Pinene, limonene, myrcene (low boiling points), 2) Preservation methods: Cold extraction (<40°C), 3) Steam distillation collection, 4) Fractional distillation, 5) Addition post-extraction, 6) Vacuum processing, 7) Short exposure times, 8) Proper storage in dark, cool conditions.",
+      "difficulty": "advanced",
+      "tags": ["terpenes", "volatility", "preservation"]
+    },
+    {
+      "id": "form_005",
+      "category": "analysis",
+      "question": "What analytical methods are required for full cannabinoid profiling?",
+      "expectedAnswer": "Cannabinoid profiling methods: 1) HPLC-UV/DAD for potency, 2) LC-MS/MS for trace cannabinoids, 3) GC-MS for neutral forms, 4) Sample preparation: decarboxylation, extraction, 5) Reference standards for quantification, 6) Method validation (accuracy, precision, LOD/LOQ), 7) Quality controls, 8) Matrix-matched calibration.",
+      "difficulty": "advanced",
+      "tags": ["analysis", "hplc", "cannabinoids"]
+    }
+  ]
+}

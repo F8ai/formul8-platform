@@ -1,0 +1,133 @@
+{
+  "generated_at": "2025-07-15T03:26:20.182119",
+  "data_source": "real_state_websites",
+  "collection_method": "live_web_scraping",
+  "total_states": 25,
+  "processed_states": 2,
+  "summary_metrics": {
+    "total_files_downloaded": 0,
+    "total_download_size_mb": 0,
+    "total_citations": 0,
+    "total_vectors": 0,
+    "average_quality_score": 0.0,
+    "states_completed": 0,
+    "states_in_progress": 2,
+    "states_failed": 0,
+    "states_not_started": 23
+  },
+  "state_metrics": [
+    {
+      "state_code": "ca",
+      "state_name": "California",
+      "regulator": "Department of Cannabis Control",
+      "url": "https://cannabis.ca.gov/laws-and-regulations/",
+      "status": "in_progress",
+      "note": "Real data collection from cannabis.ca.gov - network access limited",
+      "last_updated": "2025-07-15T03:26:16.169415",
+      "processing_metrics": {
+        "completed_phases": [
+          "mirror"
+        ],
+        "failed_phases": [
+          "extract"
+        ],
+        "processing_time": 15,
+        "current_phase": "extract"
+      },
+      "data_metrics": {
+        "files_downloaded": 0,
+        "download_size_mb": 0,
+        "html_files": 0,
+        "pdf_files": 0,
+        "forms_found": 0,
+        "regulations_found": 0
+      },
+      "citation_metrics": {
+        "total_citations": 0,
+        "regulation_citations": 0,
+        "statute_citations": 0,
+        "form_citations": 0,
+        "unique_sections": 0
+      },
+      "rag_metrics": {
+        "total_vectors": 0,
+        "embedding_dimension": 0,
+        "index_size_mb": 0,
+        "search_quality_score": 0,
+        "retrieval_accuracy": 0
+      },
+      "quality_metrics": {
+        "data_quality_score": 0,
+        "completeness_score": 0,
+        "accuracy_score": 0,
+        "validation_passed": false
+      }
+    },
+    {
+      "state_code": "co",
+      "state_name": "Colorado",
+      "regulator": "Marijuana Enforcement Division",
+      "url": "https://ccrs.colorado.gov/rules-and-regulations",
+      "status": "failed",
+      "error": "HTTPSConnectionPool(host='ccrs.colorado.gov', port=443): Max retries exceeded with url: /rules-and-regulations (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7f3e36ef3090>: Failed to resolve 'ccrs.colorado.gov' ([Errno -2] Name or service not known)\"))",
+      "last_updated": "2025-07-15T03:26:18.181958",
+      "processing_metrics": {
+        "completed_phases": [
+          "mirror"
+        ],
+        "failed_phases": [
+          "extract"
+        ],
+        "processing_time": 15,
+        "current_phase": "extract"
+      },
+      "data_metrics": {
+        "files_downloaded": 0,
+        "download_size_mb": 0,
+        "html_files": 0,
+        "pdf_files": 0,
+        "forms_found": 0,
+        "regulations_found": 0
+      },
+      "citation_metrics": {
+        "total_citations": 0,
+        "regulation_citations": 0,
+        "statute_citations": 0,
+        "form_citations": 0,
+        "unique_sections": 0
+      },
+      "rag_metrics": {
+        "total_vectors": 0,
+        "embedding_dimension": 0,
+        "index_size_mb": 0,
+        "search_quality_score": 0,
+        "retrieval_accuracy": 0
+      },
+      "quality_metrics": {
+        "data_quality_score": 0,
+        "completeness_score": 0,
+        "accuracy_score": 0,
+        "validation_passed": false
+      }
+    }
+  ],
+  "processing_status": {
+    "status_breakdown": {
+      "completed": 0,
+      "in_progress": 0,
+      "failed": 2,
+      "not_started": 23
+    },
+    "completion_rate": 0.0
+  },
+  "top_performers": {
+    "highest_quality": [],
+    "most_data": []
+  },
+  "system_health": {
+    "overall_health_score": 0.0,
+    "healthy_states": 0,
+    "failed_states": 2,
+    "system_status": "degraded"
+  }
+}

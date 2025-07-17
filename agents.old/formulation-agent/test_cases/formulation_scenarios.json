@@ -1,0 +1,121 @@
+{
+  "test_scenarios": [
+    {
+      "id": "form_001",
+      "title": "High-CBD Oil Formulation",
+      "description": "Formulate a high-CBD oil for anxiety relief",
+      "input": {
+        "target_cannabinoids": ["CBD", "CBG"],
+        "target_effects": ["anxiolytic", "anti-inflammatory"],
+        "delivery_method": "sublingual_oil",
+        "potency_target": "25mg/ml CBD"
+      },
+      "expected_considerations": [
+        "carrier_oil_selection",
+        "cbd_extraction_method",
+        "terpene_profile",
+        "stability_testing",
+        "bioavailability_optimization"
+      ],
+      "test_query": "I need to formulate a 25mg/ml CBD oil for anxiety. What extraction method and carrier oil should I use?"
+    },
+    {
+      "id": "form_002", 
+      "title": "Terpene-Preserved Concentrate",
+      "description": "Create a live resin concentrate preserving terpene profile",
+      "input": {
+        "extraction_type": "live_resin",
+        "target_preservation": "terpenes",
+        "starting_material": "fresh_frozen",
+        "primary_terpenes": ["myrcene", "limonene", "pinene"]
+      },
+      "expected_considerations": [
+        "flash_freezing_technique",
+        "low_temperature_extraction",
+        "hydrocarbon_solvent_selection",
+        "purging_parameters",
+        "storage_conditions"
+      ],
+      "test_query": "How do I make live resin that preserves the original terpene profile from fresh frozen material?"
+    },
+    {
+      "id": "form_003",
+      "title": "Nano-Emulsion Beverage",
+      "description": "Develop water-soluble cannabis beverage formulation",
+      "input": {
+        "product_type": "beverage",
+        "target_onset": "15_minutes",
+        "thc_dose": "5mg",
+        "cbd_dose": "10mg",
+        "stability_requirement": "6_months"
+      },
+      "expected_considerations": [
+        "nano_emulsification_process",
+        "surfactant_selection",
+        "particle_size_distribution",
+        "pH_stability",
+        "preservative_system"
+      ],
+      "test_query": "I want to create a 5mg THC + 10mg CBD beverage with 15-minute onset. What emulsification process should I use?"
+    },
+    {
+      "id": "form_004",
+      "title": "Molecular Analysis Workflow",
+      "description": "Analyze cannabinoid molecular properties for optimization",
+      "input": {
+        "compounds": ["THC", "CBD", "CBG"],
+        "analysis_type": "molecular_properties",
+        "formulation_target": "topical_cream"
+      },
+      "expected_calculations": [
+        "molecular_weight",
+        "logp_values",
+        "solubility_prediction",
+        "permeability_assessment",
+        "stability_factors"
+      ],
+      "test_query": "What are the molecular properties of THC, CBD, and CBG for topical formulation? Calculate LogP and permeability."
+    },
+    {
+      "id": "form_005",
+      "title": "Decarboxylation Optimization",
+      "description": "Optimize decarboxylation process for maximum conversion",
+      "input": {
+        "starting_compounds": ["THCA", "CBDA"],
+        "target_conversion": "95%",
+        "terpene_preservation": "maximum",
+        "batch_size": "1kg"
+      },
+      "expected_parameters": [
+        "temperature_profile",
+        "time_duration",
+        "atmosphere_control",
+        "monitoring_methods",
+        "equipment_requirements"
+      ],
+      "test_query": "What's the optimal decarboxylation process to convert 95% of THCA to THC while preserving terpenes?"
+    }
+  ],
+  "evaluation_criteria": {
+    "technical_accuracy": {
+      "weight": 0.3,
+      "aspects": ["chemical_accuracy", "process_validity", "safety_considerations"]
+    },
+    "completeness": {
+      "weight": 0.25,
+      "aspects": ["all_factors_addressed", "detailed_recommendations", "practical_considerations"]
+    },
+    "molecular_analysis": {
+      "weight": 0.2,
+      "aspects": ["rdkit_usage", "property_calculations", "structure_insights"]
+    },
+    "practical_applicability": {
+      "weight": 0.15,
+      "aspects": ["feasibility", "cost_considerations", "scalability"]
+    },
+    "regulatory_compliance": {
+      "weight": 0.1,
+      "aspects": ["safety_standards", "quality_requirements", "documentation"]
+    }
+  }
+}

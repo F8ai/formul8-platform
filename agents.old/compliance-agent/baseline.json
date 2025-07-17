@@ -1,0 +1,88 @@
+{
+  "agentType": "compliance",
+  "description": "Cannabis compliance and regulatory guidance baseline questions",
+  "version": "1.0",
+  "lastUpdated": "2025-01-13T20:18:00Z",
+  "questions": [
+    {
+      "id": "comp_001",
+      "category": "licensing",
+      "question": "What are the key requirements for obtaining a cannabis cultivation license in California?",
+      "expectedAnswer": "California cannabis cultivation licenses require: 1) State license through DCC (Department of Cannabis Control), 2) Local municipal permits and compliance, 3) Background checks for all owners/operators, 4) Detailed security plan, 5) Water rights documentation, 6) Environmental compliance (CEQA), 7) Track-and-trace system setup, 8) Insurance requirements, 9) Financial documentation, 10) Payment of licensing fees.",
+      "difficulty": "intermediate",
+      "tags": ["california", "licensing", "cultivation"]
+    },
+    {
+      "id": "comp_002", 
+      "category": "packaging",
+      "question": "What information must be included on cannabis product labels according to state regulations?",
+      "expectedAnswer": "Cannabis product labels must include: 1) Product name and type, 2) THC and CBD content in mg, 3) Net weight, 4) Batch/lot number, 5) Manufacturing date, 6) Expiration date, 7) Licensed manufacturer info, 8) Universal symbol, 9) Health warnings, 10) Lab testing QR code or results, 11) Ingredients list, 12) Serving size information. Note: Requirements vary by state as there are no federal labeling guidelines for recreational cannabis.",
+      "difficulty": "intermediate",
+      "tags": ["labeling", "packaging", "state-regulations"]
+    },
+    {
+      "id": "comp_003",
+      "category": "testing",
+      "question": "What contaminants must be tested for in cannabis flower before retail sale?",
+      "expectedAnswer": "Cannabis flower testing requirements include: 1) Pesticides (multi-residue analysis), 2) Heavy metals (lead, cadmium, mercury, arsenic), 3) Microbials (E.coli, salmonella, aspergillus), 4) Residual solvents, 5) Mycotoxins, 6) Moisture content, 7) Potency (THC, CBD, other cannabinoids), 8) Foreign matter analysis.",
+      "difficulty": "advanced",
+      "tags": ["testing", "safety", "flower"]
+    },
+    {
+      "id": "comp_004",
+      "category": "transportation",
+      "question": "What security requirements apply to cannabis transportation vehicles?",
+      "expectedAnswer": "Cannabis transportation security requires: 1) GPS tracking systems, 2) Locked storage compartments, 3) Security cameras, 4) Two-person minimum crew, 5) Communication devices, 6) Manifest documentation, 7) Vehicle inspection logs, 8) Insurance coverage, 9) Route planning and reporting, 10) Emergency protocols.",
+      "difficulty": "intermediate",
+      "tags": ["transportation", "security", "logistics"]
+    },
+    {
+      "id": "comp_005",
+      "category": "advertising",
+      "question": "What restrictions apply to cannabis advertising on social media platforms?",
+      "expectedAnswer": "Cannabis advertising restrictions include: 1) No targeting minors under 21, 2) Platform-specific prohibition policies, 3) Age-gated content requirements, 4) No health claims without evidence, 5) Warning label requirements, 6) Location-based restrictions, 7) No free samples promotion, 8) Compliance with state-specific rules, 9) Truth in advertising standards.",
+      "difficulty": "intermediate",
+      "tags": ["advertising", "social-media", "marketing"]
+    },
+    {
+      "id": "comp_006",
+      "category": "state-specific",
+      "question": "What are the key differences between California and Colorado cannabis regulations?",
+      "expectedAnswer": "California allows adults 21+ to possess up to 1 oz flower, 8g concentrates, with home cultivation of 6 plants. Colorado allows 1 oz flower, home cultivation of 6 plants, but has stricter packaging requirements. California has local control allowing cities to ban cannabis businesses, while Colorado has more uniform statewide implementation. Tax structures differ: California has cultivation tax plus excise tax, Colorado has excise and special sales tax.",
+      "difficulty": "advanced",
+      "tags": ["california", "colorado", "state-regulations", "comparison"]
+    },
+    {
+      "id": "comp_007",
+      "category": "state-specific",
+      "question": "What are New York's unique cannabis compliance requirements?",
+      "expectedAnswer": "New York requires: 1) CAURD (Community Reinvestment Fund) licensing prioritizing social equity, 2) Conditional Adult-Use Retail Dispensary licenses, 3) Strict supply chain requirements with seed-to-sale tracking, 4) Community benefit agreements, 5) Social equity programs, 6) Advertising restrictions including no billboards, 7) Specific packaging with child-resistant containers, 8) Laboratory testing requirements, 9) Local municipal approval.",
+      "difficulty": "advanced",
+      "tags": ["new-york", "CAURD", "social-equity", "licensing"]
+    },
+    {
+      "id": "comp_008",
+      "category": "state-specific",
+      "question": "What compliance challenges exist for multi-state cannabis operations?",
+      "expectedAnswer": "Multi-state operators face: 1) Varying state regulations requiring separate compliance systems, 2) Different testing requirements and acceptable limits, 3) Inconsistent packaging and labeling standards, 4) State-specific tax structures, 5) Varying licensing requirements, 6) Different security and transportation rules, 7) Residency requirements in some states, 8) Banking compliance across jurisdictions, 9) Interstate commerce restrictions.",
+      "difficulty": "advanced",
+      "tags": ["multi-state", "compliance", "operations", "interstate"]
+    },
+    {
+      "id": "comp_009",
+      "category": "state-specific",
+      "question": "What are Florida's medical cannabis compliance requirements?",
+      "expectedAnswer": "Florida requires: 1) Medical Marijuana Treatment Center (MMTC) licensing, 2) Patient registry identification cards, 3) Qualified physician recommendations, 4) Seed-to-sale tracking, 5) Vertical integration (cultivation, processing, dispensing), 6) Specific medical conditions qualifying for treatment, 7) Low-THC and medical cannabis licenses, 8) Laboratory testing requirements, 9) Inventory tracking systems, 10) Security requirements including video surveillance.",
+      "difficulty": "intermediate",
+      "tags": ["florida", "medical-cannabis", "MMTC", "patient-registry"]
+    },
+    {
+      "id": "comp_010",
+      "category": "state-specific",
+      "question": "How do Massachusetts cannabis regulations differ from other states?",
+      "expectedAnswer": "Massachusetts features: 1) Social Equity Program with priority licensing, 2) Community Impact Payments for host communities, 3) Strict advertising restrictions, 4) Seed-to-sale tracking requirements, 5) Laboratory testing with specific contaminant limits, 6) Local approval requirements, 7) Adult-use and medical programs with different regulations, 8) Packaging requirements with specific warnings, 9) Delivery service regulations, 10) On-site consumption endorsements.",
+      "difficulty": "intermediate",
+      "tags": ["massachusetts", "social-equity", "community-impact", "delivery"]
+    }
+  ]
+}

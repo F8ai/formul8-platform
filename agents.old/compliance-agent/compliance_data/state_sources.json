@@ -1,0 +1,730 @@
+{
+  "cannabis_legal_states": {
+    "ak": {
+      "state_name": "Alaska",
+      "state_code": "AK",
+      "legalization_date": "2015-02-24",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Alcohol and Marijuana Control Office (AMCO)",
+      "main_url": "https://www.commerce.alaska.gov/web/amco/",
+      "regulations_url": "https://www.commerce.alaska.gov/web/amco/marijuanaregulations.aspx",
+      "forms_url": "https://www.commerce.alaska.gov/web/amco/marijuanaforms.aspx",
+      "additional_sources": [
+        "https://aws.state.ak.us/OnlinePublicNotices/Notices/Search.aspx",
+        "https://www.commerce.alaska.gov/web/amco/marijuanastatutes.aspx"
+      ],
+      "primary_regulations": [
+        "Alaska Statutes Title 17 Chapter 38",
+        "Alaska Administrative Code 3 AAC 306"
+      ],
+      "key_forms": [
+        "MJ-01 Adult Use Marijuana License Application",
+        "MJ-02 Medical Marijuana License Application",
+        "MJ-03 Cultivation Facility License",
+        "MJ-04 Testing Laboratory License"
+      ]
+    },
+    "az": {
+      "state_name": "Arizona",
+      "state_code": "AZ",
+      "legalization_date": "2020-11-30",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Arizona Department of Health Services (ADHS)",
+      "main_url": "https://www.azdhs.gov/licensing/medical-marijuana/",
+      "regulations_url": "https://www.azdhs.gov/documents/licensing/medical-marijuana/",
+      "forms_url": "https://www.azdhs.gov/licensing/medical-marijuana/forms/",
+      "additional_sources": [
+        "https://apps.azsos.gov/public_services/Title_09/9-17.pdf",
+        "https://www.azdhs.gov/licensing/medical-marijuana/documents/"
+      ],
+      "primary_regulations": [
+        "Arizona Revised Statutes Title 36 Chapter 28.1",
+        "Arizona Administrative Code Title 9 Chapter 17"
+      ],
+      "key_forms": [
+        "Application for Medical Marijuana Dispensary Registration Certificate",
+        "Application for Medical Marijuana Cultivation Site Registration Certificate",
+        "Adult Use Marijuana Establishment License Application",
+        "Laboratory Testing License Application"
+      ]
+    },
+    "ca": {
+      "state_name": "California",
+      "state_code": "CA",
+      "legalization_date": "2016-11-08",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Department of Cannabis Control (DCC)",
+      "main_url": "https://cannabis.ca.gov/",
+      "regulations_url": "https://cannabis.ca.gov/laws-and-regulations/",
+      "forms_url": "https://cannabis.ca.gov/applicants/application-forms/",
+      "additional_sources": [
+        "https://www.cdtfa.ca.gov/industry/cannabis.htm",
+        "https://oag.ca.gov/cannabis",
+        "https://www.cdph.ca.gov/Programs/CEH/DFDCS/MCSB/Pages/default.aspx"
+      ],
+      "primary_regulations": [
+        "California Code of Regulations Title 4 Division 19",
+        "Business and Professions Code Section 26000-26231",
+        "Health and Safety Code Section 11362.5-11362.9"
+      ],
+      "key_forms": [
+        "DCC-LIC-001 Standard Application",
+        "DCC-LIC-002 Provisional License Application",
+        "DCC-LIC-003 Conditional Adult-Use License",
+        "DCC-LIC-004 Testing Laboratory License",
+        "DCC-LIC-005 Distributor License"
+      ]
+    },
+    "co": {
+      "state_name": "Colorado",
+      "state_code": "CO",
+      "legalization_date": "2012-12-10",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Marijuana Enforcement Division (MED)",
+      "main_url": "https://sbg.colorado.gov/med",
+      "regulations_url": "https://sbg.colorado.gov/med-enforcement/med-rules-statutes",
+      "forms_url": "https://sbg.colorado.gov/med-enforcement/med-forms",
+      "additional_sources": [
+        "https://www.colorado.gov/pacific/cdphe/medical-marijuana",
+        "https://www.colorado.gov/pacific/revenue/colorado-marijuana-tax-data"
+      ],
+      "primary_regulations": [
+        "Colorado Revised Statutes Title 44 Article 10",
+        "Colorado Code of Regulations 1 CCR 212-1",
+        "Colorado Code of Regulations 1 CCR 212-2"
+      ],
+      "key_forms": [
+        "MED 21-601 Retail Marijuana Store License",
+        "MED 21-602 Retail Marijuana Cultivation Facility License",
+        "MED 21-603 Retail Marijuana Products Manufacturing License",
+        "MED 21-604 Retail Marijuana Testing Facility License"
+      ]
+    },
+    "ct": {
+      "state_name": "Connecticut",
+      "state_code": "CT",
+      "legalization_date": "2021-06-18",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Department of Consumer Protection (DCP)",
+      "main_url": "https://portal.ct.gov/DCP/Drug-Control-Division/Drug-Control-Division/Medical-Marijuana-Program",
+      "regulations_url": "https://portal.ct.gov/DCP/Drug-Control-Division/Drug-Control-Division/Regulations",
+      "forms_url": "https://portal.ct.gov/DCP/Drug-Control-Division/Drug-Control-Division/Forms",
+      "additional_sources": [
+        "https://www.cga.ct.gov/current/pub/chap_420f.htm",
+        "https://eregulations.ct.gov/eRegsPortal/Browse/RCSA"
+      ],
+      "primary_regulations": [
+        "Connecticut General Statutes Section 21a-408-21a-408u",
+        "Regulations of Connecticut State Agencies Section 21a-408-1 through 21a-408-70"
+      ],
+      "key_forms": [
+        "DCP-420 Medical Marijuana Dispensary Facility License",
+        "DCP-421 Medical Marijuana Producer License",
+        "DCP-422 Adult-Use Cannabis Retailer License",
+        "DCP-423 Adult-Use Cannabis Cultivator License"
+      ]
+    },
+    "de": {
+      "state_name": "Delaware",
+      "state_code": "DE",
+      "legalization_date": "2023-04-23",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Delaware Division of Alcohol and Tobacco Enforcement (DATE)",
+      "main_url": "https://date.delaware.gov/",
+      "regulations_url": "https://date.delaware.gov/cannabis/",
+      "forms_url": "https://date.delaware.gov/cannabis/forms/",
+      "additional_sources": [
+        "https://dhss.delaware.gov/dhss/dph/hsp/medmarhome.html",
+        "https://legis.delaware.gov/BillDetail?LegislationId=109124"
+      ],
+      "primary_regulations": [
+        "Delaware Code Title 16 Chapter 49A",
+        "Delaware Administrative Code Title 4 Department of Safety and Homeland Security"
+      ],
+      "key_forms": [
+        "Cannabis License Application",
+        "Medical Marijuana Compassion Center License",
+        "Adult-Use Cannabis Retailer Application",
+        "Cannabis Testing Laboratory License"
+      ]
+    },
+    "fl": {
+      "state_name": "Florida",
+      "state_code": "FL",
+      "legalization_date": "2016-11-08",
+      "adult_use": false,
+      "medical_use": true,
+      "status": "medical_only",
+      "regulatory_agency": "Florida Department of Health Office of Medical Marijuana Use (OMMU)",
+      "main_url": "https://knowthefactsmmj.com/",
+      "regulations_url": "https://knowthefactsmmj.com/rules/",
+      "forms_url": "https://knowthefactsmmj.com/forms/",
+      "additional_sources": [
+        "https://www.flrules.org/gateway/ChapterHome.asp?Chapter=64-4",
+        "https://www.myflorida.com/cannabis"
+      ],
+      "primary_regulations": [
+        "Florida Statutes Chapter 381.986",
+        "Florida Administrative Code Rule 64-4"
+      ],
+      "key_forms": [
+        "OMMU-001 Medical Marijuana Treatment Center License",
+        "OMMU-002 Low-THC Cannabis Dispensing Organization License",
+        "OMMU-003 Patient Registry Application",
+        "OMMU-004 Physician Certification"
+      ]
+    },
+    "hi": {
+      "state_name": "Hawaii",
+      "state_code": "HI",
+      "legalization_date": "2000-12-28",
+      "adult_use": false,
+      "medical_use": true,
+      "status": "medical_only",
+      "regulatory_agency": "Hawaii Department of Health",
+      "main_url": "https://health.hawaii.gov/medicalmarijuana/",
+      "regulations_url": "https://health.hawaii.gov/medicalmarijuana/files/",
+      "forms_url": "https://health.hawaii.gov/medicalmarijuana/forms/",
+      "additional_sources": [
+        "https://www.capitol.hawaii.gov/hrscurrent/Vol06_Ch0321-0344/HRS0329/",
+        "https://health.hawaii.gov/opcrp/"
+      ],
+      "primary_regulations": [
+        "Hawaii Revised Statutes Chapter 329",
+        "Hawaii Administrative Rules Title 11 Chapter 157"
+      ],
+      "key_forms": [
+        "MED-1 Medical Cannabis Patient Registration",
+        "MED-2 Medical Cannabis Caregiver Registration",
+        "MED-3 Medical Cannabis Dispensary License",
+        "MED-4 Medical Cannabis Production Center License"
+      ]
+    },
+    "il": {
+      "state_name": "Illinois",
+      "state_code": "IL",
+      "legalization_date": "2019-06-25",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Illinois Department of Financial and Professional Regulation (IDFPR)",
+      "main_url": "https://www.idfpr.com/profs/cannabis.asp",
+      "regulations_url": "https://www.idfpr.com/admin/administrative-rules.asp",
+      "forms_url": "https://www.idfpr.com/Forms/Cannabis/",
+      "additional_sources": [
+        "https://www2.illinois.gov/sites/agr/Plants/Pages/medical-cannabis.aspx",
+        "https://dph.illinois.gov/topics-services/prevention-wellness/medical-cannabis"
+      ],
+      "primary_regulations": [
+        "Illinois Compiled Statutes 410 ILCS 705",
+        "Illinois Administrative Code Title 68 Chapter VII"
+      ],
+      "key_forms": [
+        "IL-CAN-001 Adult Use Cannabis Dispensing Organization License",
+        "IL-CAN-002 Adult Use Cannabis Cultivation Center License",
+        "IL-CAN-003 Adult Use Cannabis Infuser License",
+        "IL-CAN-004 Adult Use Cannabis Transporter License"
+      ]
+    },
+    "ma": {
+      "state_name": "Massachusetts",
+      "state_code": "MA",
+      "legalization_date": "2016-12-15",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Cannabis Control Commission (CCC)",
+      "main_url": "https://mass-cannabis-control.com/",
+      "regulations_url": "https://mass-cannabis-control.com/regulations/",
+      "forms_url": "https://mass-cannabis-control.com/applicant-resources/forms/",
+      "additional_sources": [
+        "https://www.mass.gov/orgs/department-of-public-health/cannabis",
+        "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXVI/Chapter94G"
+      ],
+      "primary_regulations": [
+        "Massachusetts General Laws Chapter 94G",
+        "Code of Massachusetts Regulations 935 CMR 500"
+      ],
+      "key_forms": [
+        "CCC-LIC-001 Marijuana Establishment License Application",
+        "CCC-LIC-002 Medical Marijuana Treatment Center License",
+        "CCC-LIC-003 Adult-Use Cannabis Retailer License",
+        "CCC-LIC-004 Cannabis Testing Laboratory License"
+      ]
+    },
+    "md": {
+      "state_name": "Maryland",
+      "state_code": "MD",
+      "legalization_date": "2023-07-01",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Maryland Cannabis Administration (MCA)",
+      "main_url": "https://cannabis.maryland.gov/",
+      "regulations_url": "https://cannabis.maryland.gov/laws/",
+      "forms_url": "https://cannabis.maryland.gov/forms/",
+      "additional_sources": [
+        "https://health.maryland.gov/mmcp/Pages/default.aspx",
+        "https://mgaleg.maryland.gov/2023RS/bills/hb/hb0556e.pdf"
+      ],
+      "primary_regulations": [
+        "Maryland Code Health-General Section 13-3301-13-3317",
+        "Code of Maryland Regulations Title 10 Subtitle 62"
+      ],
+      "key_forms": [
+        "MCA-001 Cannabis Business License Application",
+        "MCA-002 Medical Cannabis Dispensary License",
+        "MCA-003 Adult-Use Cannabis Retailer License",
+        "MCA-004 Cannabis Testing Laboratory License"
+      ]
+    },
+    "me": {
+      "state_name": "Maine",
+      "state_code": "ME",
+      "legalization_date": "2016-12-09",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Maine Office of Cannabis Policy (OCP)",
+      "main_url": "https://www.maine.gov/dafs/ocp/",
+      "regulations_url": "https://www.maine.gov/dafs/ocp/laws-rules/",
+      "forms_url": "https://www.maine.gov/dafs/ocp/adult-use/applications-forms/",
+      "additional_sources": [
+        "https://www.maine.gov/dhhs/mecdc/public-health-systems/mmm/",
+        "https://legislature.maine.gov/statutes/28-B/"
+      ],
+      "primary_regulations": [
+        "Maine Revised Statutes Title 28-B",
+        "Maine Code of Rules 18-691 Chapter 1"
+      ],
+      "key_forms": [
+        "OCP-001 Adult-Use Cannabis License Application",
+        "OCP-002 Medical Cannabis Caregiver Registration",
+        "OCP-003 Cannabis Testing Laboratory License",
+        "OCP-004 Cannabis Cultivation Facility License"
+      ]
+    },
+    "mi": {
+      "state_name": "Michigan",
+      "state_code": "MI",
+      "legalization_date": "2018-12-06",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Cannabis Regulatory Agency (CRA)",
+      "main_url": "https://www.michigan.gov/cra/",
+      "regulations_url": "https://www.michigan.gov/cra/laws-and-rules/",
+      "forms_url": "https://www.michigan.gov/cra/applications-and-forms/",
+      "additional_sources": [
+        "https://www.michigan.gov/mdhhs/inside-mdhhs/bureaus/bch/medicalmarijuana",
+        "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-333-27101"
+      ],
+      "primary_regulations": [
+        "Michigan Compiled Laws Chapter 333.27101-333.27801",
+        "Michigan Administrative Code R 420.1-R 420.805"
+      ],
+      "key_forms": [
+        "CRA-001 Adult-Use Cannabis License Application",
+        "CRA-002 Medical Cannabis Facility License",
+        "CRA-003 Cannabis Testing Laboratory License",
+        "CRA-004 Cannabis Processor License"
+      ]
+    },
+    "mn": {
+      "state_name": "Minnesota",
+      "state_code": "MN",
+      "legalization_date": "2023-08-01",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Minnesota Office of Cannabis Management (OCM)",
+      "main_url": "https://www.cannabis.state.mn.us/",
+      "regulations_url": "https://www.cannabis.state.mn.us/laws/",
+      "forms_url": "https://www.cannabis.state.mn.us/businesses/forms/",
+      "additional_sources": [
+        "https://www.health.state.mn.us/people/cannabis/",
+        "https://www.revisor.mn.gov/statutes/cite/342"
+      ],
+      "primary_regulations": [
+        "Minnesota Statutes Chapter 342",
+        "Minnesota Rules Chapter 3600-3699"
+      ],
+      "key_forms": [
+        "OCM-001 Cannabis Business License Application",
+        "OCM-002 Medical Cannabis Manufacturer License",
+        "OCM-003 Adult-Use Cannabis Retailer License",
+        "OCM-004 Cannabis Testing Laboratory License"
+      ]
+    },
+    "mo": {
+      "state_name": "Missouri",
+      "state_code": "MO",
+      "legalization_date": "2022-12-08",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Missouri Division of Cannabis Regulation (DCR)",
+      "main_url": "https://health.mo.gov/safety/medical-marijuana/",
+      "regulations_url": "https://health.mo.gov/safety/medical-marijuana/regulations.php",
+      "forms_url": "https://health.mo.gov/safety/medical-marijuana/forms.php",
+      "additional_sources": [
+        "https://www.sos.mo.gov/CMSImages/AdRules/csr/current/19csr/19c30-95.pdf",
+        "https://revisor.mo.gov/main/OneSection.aspx?section=195.017"
+      ],
+      "primary_regulations": [
+        "Missouri Revised Statutes Chapter 195.017",
+        "Missouri Code of State Regulations 19 CSR 30-95"
+      ],
+      "key_forms": [
+        "DCR-001 Medical Marijuana Facility License",
+        "DCR-002 Adult-Use Cannabis License Application",
+        "DCR-003 Cannabis Testing Laboratory License",
+        "DCR-004 Cannabis Transportation License"
+      ]
+    },
+    "mt": {
+      "state_name": "Montana",
+      "state_code": "MT",
+      "legalization_date": "2020-11-03",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Montana Department of Revenue Cannabis Control Division",
+      "main_url": "https://mtrevenue.gov/cannabis/",
+      "regulations_url": "https://mtrevenue.gov/cannabis/laws-and-rules/",
+      "forms_url": "https://mtrevenue.gov/cannabis/forms/",
+      "additional_sources": [
+        "https://dphhs.mt.gov/publichealth/medicalmarijuana",
+        "https://leg.mt.gov/bills/mca/title_0160/chapters_index.html"
+      ],
+      "primary_regulations": [
+        "Montana Code Annotated Title 16 Chapter 12",
+        "Montana Administrative Rules Title 42 Chapter 39"
+      ],
+      "key_forms": [
+        "CCD-001 Adult-Use Cannabis License Application",
+        "CCD-002 Medical Marijuana Provider License",
+        "CCD-003 Cannabis Testing Laboratory License",
+        "CCD-004 Cannabis Manufacturing License"
+      ]
+    },
+    "nv": {
+      "state_name": "Nevada",
+      "state_code": "NV",
+      "legalization_date": "2016-11-08",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Nevada Cannabis Compliance Board (CCB)",
+      "main_url": "https://ccb.nv.gov/",
+      "regulations_url": "https://ccb.nv.gov/laws-and-regulations/",
+      "forms_url": "https://ccb.nv.gov/applicants/forms/",
+      "additional_sources": [
+        "https://www.leg.state.nv.us/NRS/NRS-678A.html",
+        "https://www.leg.state.nv.us/NAC/NAC-678A.html"
+      ],
+      "primary_regulations": [
+        "Nevada Revised Statutes Chapter 678A",
+        "Nevada Administrative Code Chapter 678A"
+      ],
+      "key_forms": [
+        "CCB-001 Adult-Use Cannabis License Application",
+        "CCB-002 Medical Marijuana Establishment License",
+        "CCB-003 Cannabis Testing Laboratory License",
+        "CCB-004 Cannabis Distribution License"
+      ]
+    },
+    "nj": {
+      "state_name": "New Jersey",
+      "state_code": "NJ",
+      "legalization_date": "2021-02-22",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "New Jersey Cannabis Regulatory Commission (CRC)",
+      "main_url": "https://www.nj.gov/cannabis/",
+      "regulations_url": "https://www.nj.gov/cannabis/laws/",
+      "forms_url": "https://www.nj.gov/cannabis/businesses/forms/",
+      "additional_sources": [
+        "https://www.nj.gov/health/medicalmarijuana/",
+        "https://www.njleg.state.nj.us/Bills/2020/A4000/3884_R1.PDF"
+      ],
+      "primary_regulations": [
+        "New Jersey Statutes Annotated 24:6I-1 through 24:6I-36",
+        "New Jersey Administrative Code Title 17 Chapter 30"
+      ],
+      "key_forms": [
+        "CRC-001 Adult-Use Cannabis License Application",
+        "CRC-002 Medical Cannabis Dispensary License",
+        "CRC-003 Cannabis Testing Laboratory License",
+        "CRC-004 Cannabis Cultivator License"
+      ]
+    },
+    "nm": {
+      "state_name": "New Mexico",
+      "state_code": "NM",
+      "legalization_date": "2021-04-12",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "New Mexico Regulation and Licensing Department Cannabis Control Division",
+      "main_url": "https://www.rld.nm.gov/boards-and-commissions/cannabis-control-division/",
+      "regulations_url": "https://www.rld.nm.gov/boards-and-commissions/cannabis-control-division/laws-and-rules/",
+      "forms_url": "https://www.rld.nm.gov/boards-and-commissions/cannabis-control-division/forms/",
+      "additional_sources": [
+        "https://www.nmlegis.gov/Sessions/21%20Regular/bills/house/HB0002.pdf",
+        "https://www.srca.nm.gov/parts/title16/16.008.0000.htm"
+      ],
+      "primary_regulations": [
+        "New Mexico Statutes Annotated Chapter 26 Article 2C",
+        "New Mexico Administrative Code Title 16 Chapter 8"
+      ],
+      "key_forms": [
+        "CCD-001 Adult-Use Cannabis License Application",
+        "CCD-002 Medical Cannabis Producer License",
+        "CCD-003 Cannabis Testing Laboratory License",
+        "CCD-004 Cannabis Manufacturing License"
+      ]
+    },
+    "ny": {
+      "state_name": "New York",
+      "state_code": "NY",
+      "legalization_date": "2021-03-31",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "New York State Office of Cannabis Management (OCM)",
+      "main_url": "https://cannabis.ny.gov/",
+      "regulations_url": "https://cannabis.ny.gov/laws-and-regulations/",
+      "forms_url": "https://cannabis.ny.gov/businesses/applications-and-forms/",
+      "additional_sources": [
+        "https://www.health.ny.gov/regulations/medical_marijuana/",
+        "https://www.nysenate.gov/legislation/bills/2021/s854"
+      ],
+      "primary_regulations": [
+        "New York Cannabis Law Article 1-4",
+        "New York Codes, Rules and Regulations Title 9 Subtitle S"
+      ],
+      "key_forms": [
+        "OCM-001 Adult-Use Cannabis License Application",
+        "OCM-002 Medical Cannabis Organization License",
+        "OCM-003 Cannabis Testing Laboratory License",
+        "OCM-004 Cannabis Processor License"
+      ]
+    },
+    "oh": {
+      "state_name": "Ohio",
+      "state_code": "OH",
+      "legalization_date": "2023-12-07",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Ohio Department of Commerce Division of Cannabis Control",
+      "main_url": "https://com.ohio.gov/divisions/cannabis",
+      "regulations_url": "https://com.ohio.gov/divisions/cannabis/laws-and-rules",
+      "forms_url": "https://com.ohio.gov/divisions/cannabis/forms",
+      "additional_sources": [
+        "https://www.pharmacy.ohio.gov/mmcp",
+        "https://codes.ohio.gov/ohio-revised-code/chapter-3796"
+      ],
+      "primary_regulations": [
+        "Ohio Revised Code Chapter 3796",
+        "Ohio Administrative Code Chapter 3796"
+      ],
+      "key_forms": [
+        "DCC-001 Adult-Use Cannabis License Application",
+        "DCC-002 Medical Marijuana Dispensary License",
+        "DCC-003 Cannabis Testing Laboratory License",
+        "DCC-004 Cannabis Processor License"
+      ]
+    },
+    "or": {
+      "state_name": "Oregon",
+      "state_code": "OR",
+      "legalization_date": "2014-07-01",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Oregon Liquor and Cannabis Commission (OLCC)",
+      "main_url": "https://www.oregon.gov/olcc/marijuana/Pages/default.aspx",
+      "regulations_url": "https://www.oregon.gov/olcc/marijuana/Pages/Recreational-Marijuana-Rules.aspx",
+      "forms_url": "https://www.oregon.gov/olcc/marijuana/Pages/Recreational-Marijuana-Forms.aspx",
+      "additional_sources": [
+        "https://www.oregon.gov/oha/ph/diseasesconditions/chronicdisease/medicalmarijuanaprogram/Pages/index.aspx",
+        "https://www.oregonlegislature.gov/bills_laws/ors/ors475b.html"
+      ],
+      "primary_regulations": [
+        "Oregon Revised Statutes Chapter 475B",
+        "Oregon Administrative Rules Chapter 845 Division 25"
+      ],
+      "key_forms": [
+        "OLCC-001 Recreational Marijuana License Application",
+        "OLCC-002 Medical Marijuana Dispensary License",
+        "OLCC-003 Cannabis Testing Laboratory License",
+        "OLCC-004 Cannabis Processor License"
+      ]
+    },
+    "pa": {
+      "state_name": "Pennsylvania",
+      "state_code": "PA",
+      "legalization_date": "2016-04-17",
+      "adult_use": false,
+      "medical_use": true,
+      "status": "medical_only",
+      "regulatory_agency": "Pennsylvania Department of Health Medical Marijuana Program",
+      "main_url": "https://www.health.pa.gov/topics/programs/Medical%20Marijuana/Pages/Medical%20Marijuana.aspx",
+      "regulations_url": "https://www.health.pa.gov/topics/programs/Medical%20Marijuana/Pages/Regulations.aspx",
+      "forms_url": "https://www.health.pa.gov/topics/programs/Medical%20Marijuana/Pages/Forms.aspx",
+      "additional_sources": [
+        "https://www.legis.state.pa.us/cfdocs/legis/li/uconsCheck.cfm?yr=2016&sessInd=0&act=16",
+        "https://www.pacode.com/secure/data/028/chapter1141/chap1141toc.html"
+      ],
+      "primary_regulations": [
+        "Pennsylvania Medical Marijuana Act (Act 16 of 2016)",
+        "Pennsylvania Code Title 28 Chapter 1141"
+      ],
+      "key_forms": [
+        "DOH-001 Medical Marijuana Dispensary Permit",
+        "DOH-002 Medical Marijuana Grower/Processor Permit",
+        "DOH-003 Medical Marijuana Patient ID Card",
+        "DOH-004 Medical Marijuana Caregiver ID Card"
+      ]
+    },
+    "ri": {
+      "state_name": "Rhode Island",
+      "state_code": "RI",
+      "legalization_date": "2022-05-25",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Rhode Island Department of Business Regulation Cannabis Division",
+      "main_url": "https://dbr.ri.gov/divisions/cannabis/",
+      "regulations_url": "https://dbr.ri.gov/divisions/cannabis/laws-and-regulations/",
+      "forms_url": "https://dbr.ri.gov/divisions/cannabis/forms/",
+      "additional_sources": [
+        "https://health.ri.gov/healthcare/medicalmarijuana/",
+        "https://webserver.rilin.state.ri.us/Statutes/title21/21-28.6/"
+      ],
+      "primary_regulations": [
+        "Rhode Island General Laws Chapter 21-28.6",
+        "Rhode Island Code of Regulations Title 216 Department of Business Regulation"
+      ],
+      "key_forms": [
+        "DBR-001 Adult-Use Cannabis License Application",
+        "DBR-002 Medical Marijuana Compassion Center License",
+        "DBR-003 Cannabis Testing Laboratory License",
+        "DBR-004 Cannabis Cultivator License"
+      ]
+    },
+    "vt": {
+      "state_name": "Vermont",
+      "state_code": "VT",
+      "legalization_date": "2018-07-01",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Vermont Cannabis Control Board (CCB)",
+      "main_url": "https://ccb.vermont.gov/",
+      "regulations_url": "https://ccb.vermont.gov/laws-and-rules/",
+      "forms_url": "https://ccb.vermont.gov/businesses/forms/",
+      "additional_sources": [
+        "https://www.healthvermont.gov/wellness/drugs-alcohol/medical-marijuana",
+        "https://legislature.vermont.gov/statutes/chapter/18/084"
+      ],
+      "primary_regulations": [
+        "Vermont Statutes Annotated Title 18 Chapter 84",
+        "Vermont Code of Rules Title 3 Chapter 25"
+      ],
+      "key_forms": [
+        "CCB-001 Adult-Use Cannabis License Application",
+        "CCB-002 Medical Marijuana Dispensary License",
+        "CCB-003 Cannabis Testing Laboratory License",
+        "CCB-004 Cannabis Integrated License"
+      ]
+    },
+    "wa": {
+      "state_name": "Washington",
+      "state_code": "WA",
+      "legalization_date": "2012-12-09",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Washington State Liquor and Cannabis Board (WSLCB)",
+      "main_url": "https://lcb.wa.gov/marijuana/",
+      "regulations_url": "https://lcb.wa.gov/laws/laws-and-rules-by-topic#marijuana",
+      "forms_url": "https://lcb.wa.gov/marijuana/forms",
+      "additional_sources": [
+        "https://www.doh.wa.gov/youandyourfamily/marijuana",
+        "https://app.leg.wa.gov/RCW/default.aspx?cite=69.50"
+      ],
+      "primary_regulations": [
+        "Washington Revised Code Chapter 69.50",
+        "Washington Administrative Code Chapter 314-55"
+      ],
+      "key_forms": [
+        "WSLCB-001 Marijuana License Application",
+        "WSLCB-002 Medical Marijuana Endorsement",
+        "WSLCB-003 Cannabis Testing Laboratory License",
+        "WSLCB-004 Cannabis Processor License"
+      ]
+    },
+    "dc": {
+      "state_name": "District of Columbia",
+      "state_code": "DC",
+      "legalization_date": "2015-02-26",
+      "adult_use": true,
+      "medical_use": true,
+      "status": "active",
+      "regulatory_agency": "Alcoholic Beverage and Cannabis Administration (ABCA)",
+      "main_url": "https://abca.dc.gov/",
+      "regulations_url": "https://abca.dc.gov/page/medical-marijuana-program",
+      "forms_url": "https://abca.dc.gov/page/medical-marijuana-forms",
+      "additional_sources": [
+        "https://code.dccouncil.gov/us/dc/council/code/titles/7/chapters/16B/",
+        "https://dchealth.dc.gov/service/medical-marijuana-program"
+      ],
+      "primary_regulations": [
+        "DC Code Title 7 Chapter 16B",
+        "DC Municipal Regulations Title 25 Chapter 5"
+      ],
+      "key_forms": [
+        "ABCA-001 Medical Marijuana Dispensary License",
+        "ABCA-002 Medical Marijuana Cultivation Center License",
+        "ABCA-003 Medical Marijuana Testing Laboratory License",
+        "ABCA-004 Medical Marijuana Manufacturing License"
+      ]
+    }
+  },
+  "collection_metadata": {
+    "total_states": 25,
+    "adult_use_states": 21,
+    "medical_only_states": 4,
+    "created_date": "2025-01-15",
+    "last_updated": "2025-01-15",
+    "data_version": "1.0"
+  },
+  "regulatory_categories": {
+    "licensing": "License applications, renewals, and compliance requirements",
+    "cultivation": "Growing, harvesting, and processing regulations",
+    "testing": "Laboratory testing requirements and protocols",
+    "packaging": "Packaging, labeling, and marketing restrictions",
+    "distribution": "Transportation, delivery, and wholesale operations",
+    "retail": "Dispensary operations and consumer sales",
+    "taxation": "Tax compliance and reporting requirements",
+    "security": "Security protocols and surveillance requirements",
+    "quality_control": "Product quality and safety standards",
+    "record_keeping": "Inventory tracking and reporting systems"
+  }
+}

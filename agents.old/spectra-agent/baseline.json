@@ -1,0 +1,84 @@
+{
+  "questions": [
+    {
+      "id": "spec_001",
+      "question": "What analytical methods are used for cannabis potency testing?",
+      "expected_answer": "High-Performance Liquid Chromatography (HPLC) for cannabinoids, Gas Chromatography-Mass Spectrometry (GC-MS) for terpenes, Ultra-Performance Liquid Chromatography (UPLC) for rapid analysis, and Near-Infrared Spectroscopy (NIR) for screening.",
+      "keywords": ["HPLC", "GC-MS", "UPLC", "NIR", "cannabinoids", "terpenes", "potency testing"],
+      "category": "analytical_methods",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "spec_002",
+      "question": "How do you interpret a Certificate of Analysis (COA) for cannabis products?",
+      "expected_answer": "Review cannabinoid profiles (THC, CBD, CBG, etc.), terpene concentrations, contaminant results (pesticides, heavy metals, microbials), moisture content, and ensure all values meet regulatory limits and label claims.",
+      "keywords": ["COA", "cannabinoid profiles", "terpene concentrations", "contaminants", "pesticides", "heavy metals", "regulatory limits"],
+      "category": "coa_interpretation",
+      "difficulty": "basic"
+    },
+    {
+      "id": "spec_003",
+      "question": "What are the key parameters in HPLC analysis of cannabinoids?",
+      "expected_answer": "Mobile phase composition (typically acetonitrile/water with modifiers), column selection (C18 reversed-phase), detection wavelength (220-280nm), injection volume, flow rate, temperature control, and gradient elution program.",
+      "keywords": ["mobile phase", "acetonitrile", "C18 column", "detection wavelength", "gradient elution", "temperature control"],
+      "category": "hplc_parameters",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "spec_004",
+      "question": "How do you validate analytical methods for cannabis testing?",
+      "expected_answer": "Establish linearity, accuracy, precision, specificity, detection/quantification limits, robustness, range, and system suitability according to ICH guidelines and regulatory requirements.",
+      "keywords": ["linearity", "accuracy", "precision", "specificity", "detection limits", "ICH guidelines", "system suitability"],
+      "category": "method_validation",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "spec_005",
+      "question": "What spectroscopic techniques identify cannabis terpene profiles?",
+      "expected_answer": "Gas Chromatography-Mass Spectrometry (GC-MS) for identification and quantification, Fourier Transform Infrared (FTIR) for functional group analysis, and Nuclear Magnetic Resonance (NMR) for structural confirmation.",
+      "keywords": ["GC-MS", "FTIR", "NMR", "terpene profiles", "identification", "quantification", "structural confirmation"],
+      "category": "terpene_analysis",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "spec_006",
+      "question": "How do you detect pesticide residues in cannabis using LC-MS/MS?",
+      "expected_answer": "Sample extraction with QuEChERS method, chromatographic separation, multiple reaction monitoring (MRM), matrix-matched calibration, internal standards, and quantification against regulatory action levels.",
+      "keywords": ["QuEChERS", "LC-MS/MS", "MRM", "matrix-matched calibration", "internal standards", "action levels"],
+      "category": "pesticide_analysis",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "spec_007",
+      "question": "What are the challenges in cannabis sample preparation for spectral analysis?",
+      "expected_answer": "Matrix complexity, cannabinoid degradation prevention, homogenization of heterogeneous samples, extraction efficiency optimization, interference removal, and maintaining chain of custody.",
+      "keywords": ["matrix complexity", "cannabinoid degradation", "homogenization", "extraction efficiency", "interference removal", "chain of custody"],
+      "category": "sample_preparation",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "spec_008",
+      "question": "How do you perform quantitative analysis of cannabis concentrates?",
+      "expected_answer": "Accurate weighing of small samples, appropriate dilution factors, solvent selection for complete dissolution, standard addition method for matrix effects, and correction for moisture content.",
+      "keywords": ["accurate weighing", "dilution factors", "solvent selection", "standard addition", "matrix effects", "moisture correction"],
+      "category": "concentrate_analysis",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "spec_009",
+      "question": "What quality control measures ensure reliable cannabis spectral data?",
+      "expected_answer": "Reference standards, control samples, blank analysis, duplicate measurements, instrument calibration verification, proficiency testing participation, and statistical process control.",
+      "keywords": ["reference standards", "control samples", "blank analysis", "duplicate measurements", "calibration verification", "proficiency testing"],
+      "category": "quality_control",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "spec_010",
+      "question": "How do you use spectral data for cannabis strain identification?",
+      "expected_answer": "Chemometric analysis of cannabinoid and terpene profiles, principal component analysis (PCA), discriminant analysis, spectral fingerprinting, database comparison, and multivariate pattern recognition.",
+      "keywords": ["chemometric analysis", "PCA", "discriminant analysis", "spectral fingerprinting", "database comparison", "pattern recognition"],
+      "category": "strain_identification",
+      "difficulty": "advanced"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "agentType": "marketing",
+  "description": "Cannabis marketing and platform compliance baseline questions",
+  "version": "1.0",
+  "lastUpdated": "2025-07-15T11:57:00Z",
+  "questions": [
+    {
+      "id": "marketing_001",
+      "question": "How can I advertise CBD products on Facebook without violating their policies?",
+      "expected_answer": "Focus on wellness and lifestyle angles without mentioning CBD or cannabis. Use educational content about plant-based wellness, natural remedies, and healthy living while avoiding cannabis-specific imagery or terminology.",
+      "keywords": ["wellness", "lifestyle", "educational", "plant-based", "natural", "avoid cannabis mention"],
+      "category": "platform_compliance",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "marketing_002",
+      "question": "What factors affect cannabis advertising costs across different platforms?",
+      "expected_answer": "Cannabis advertising costs vary significantly by platform: Direct cannabis platforms (Weedmaps, Leafly) typically have lower costs but limited reach. Mainstream platforms require wellness/lifestyle positioning with higher costs but broader reach. Factors include competition, targeting specificity, content compliance, and platform restrictions.",
+      "keywords": ["advertising costs", "platform restrictions", "wellness positioning", "compliance", "targeting"],
+      "category": "market_intelligence", 
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "marketing_003",
+      "question": "Design an N8N workflow for automated cannabis content approval and distribution.",
+      "expected_answer": "Create a workflow with webhook trigger for content upload, OCR for text extraction, GPT-4 compliance analysis, conditional routing based on approval status, email notifications, and automated publishing to approved platforms.",
+      "keywords": ["N8N", "workflow", "webhook", "OCR", "GPT-4", "compliance", "automated publishing"],
+      "category": "automation",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "marketing_004",
+      "question": "What creative strategies work best for Instagram cannabis marketing?",
+      "expected_answer": "Focus on brand storytelling, wellness education, and lifestyle content without direct cannabis imagery. Use community building, behind-the-scenes content, and educational posts about natural wellness and plant-based living.",
+      "keywords": ["brand storytelling", "wellness education", "lifestyle", "community building", "educational"],
+      "category": "creative_strategy",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "marketing_005",
+      "question": "How do I target the right demographics for cannabis products?",
+      "expected_answer": "Target primarily 25-44 age group with college education and $50K-$100K income. Focus on wellness enthusiasts, natural product consumers, and health-conscious individuals. Peak engagement is 7-9pm weekdays and 12-3pm weekends.",
+      "keywords": ["25-44 age", "college educated", "$50K-$100K", "wellness enthusiasts", "7-9pm weekdays"],
+      "category": "audience_targeting",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "marketing_006",
+      "question": "What compliance considerations are important for cannabis email marketing?",
+      "expected_answer": "Include age verification, required legal disclaimers, opt-in consent, clear unsubscribe options, and ensure content complies with state regulations. Avoid promotional content in restricted jurisdictions.",
+      "keywords": ["age verification", "legal disclaimers", "opt-in consent", "unsubscribe", "state regulations"],
+      "category": "compliance",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "marketing_007",
+      "question": "How do I measure ROI for cannabis marketing campaigns across different platforms?",
+      "expected_answer": "Track conversion rates, customer acquisition cost (CAC), lifetime value (LTV), and platform-specific metrics. Use UTM codes, conversion tracking, and attribution modeling while accounting for compliance limitations on some platforms.",
+      "keywords": ["conversion rates", "CAC", "LTV", "UTM codes", "attribution modeling", "compliance limitations"],
+      "category": "analytics",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "marketing_008",
+      "question": "What are the best practices for Leafly dispensary marketing?",
+      "expected_answer": "Focus on educational content, detailed strain reviews, high-quality product photos, customer testimonials, and expert insights. Maintain accurate product information and professional dispensary profiles.",
+      "keywords": ["educational content", "strain reviews", "product photos", "customer testimonials", "expert insights"],
+      "category": "platform_strategy",
+      "difficulty": "basic"
+    },
+    {
+      "id": "marketing_009",
+      "question": "How do I create compliant cannabis video content for YouTube?",
+      "expected_answer": "Focus on educational content about cannabis science, cultivation techniques, and industry insights. Avoid promotional content, age-gate videos, include disclaimers, and ensure content is educational rather than promotional.",
+      "keywords": ["educational", "cannabis science", "cultivation techniques", "age-gate", "disclaimers", "non-promotional"],
+      "category": "content_creation",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "marketing_010",
+      "question": "What's the most effective way to build brand awareness for a cannabis company on restricted platforms?",
+      "expected_answer": "Use wellness and lifestyle branding, thought leadership content, educational resources about natural health, community engagement, and brand storytelling that focuses on values and mission rather than products.",
+      "keywords": ["wellness branding", "thought leadership", "educational resources", "community engagement", "brand storytelling"],
+      "category": "brand_strategy",
+      "difficulty": "advanced"
+    }
+  ]
+}

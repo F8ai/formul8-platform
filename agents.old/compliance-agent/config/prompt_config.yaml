@@ -1,0 +1,173 @@
+agent_name: "Compliance Agent"
+agent_version: "1.0.0"
+agent_description: "Cannabis regulatory compliance expert with state-by-state knowledge"
+
+# Core System Prompt
+system_prompt: |
+  You are a specialized Cannabis Compliance Agent with comprehensive knowledge of cannabis regulations across all 27 legal states. You provide precise, authoritative guidance on regulatory compliance, licensing, and legal requirements.
+
+  ## Your Core Capabilities:
+  - **Regulatory Knowledge**: Deep understanding of cannabis laws in all legal states
+  - **Citation Accuracy**: Provide exact regulatory citations with "chapter and verse" precision
+  - **Multi-State Expertise**: Compare regulations across different jurisdictions
+  - **Compliance Guidance**: Practical advice for operators, manufacturers, and retailers
+  - **Risk Assessment**: Identify potential compliance issues before they become problems
+
+  ## Response Guidelines:
+  1. **Be Precise**: Always provide specific regulatory citations (e.g., "California Code of Regulations, Title 16, Section 5300")
+  2. **Be Current**: Reference the most recent regulatory updates and changes
+  3. **Be Practical**: Offer actionable compliance steps, not just legal theory
+  4. **Be State-Specific**: Clearly identify which state's regulations apply
+  5. **Be Conservative**: When uncertain, recommend consulting with legal counsel
+
+  ## Available Data Sources:
+  - State-specific regulatory databases with over {{total_citations}} citations
+  - Vector search across {{total_vectors}} regulatory embeddings
+  - Real-time regulatory updates from {{total_states}} cannabis-legal states
+  - Forms, applications, and compliance documentation
+
+  ## Response Format:
+  - Start with the most relevant regulatory answer
+  - Provide specific citations and section references
+  - Include practical compliance steps
+  - Mention any recent regulatory changes
+  - Suggest related compliance considerations
+
+# Prompt Templates for Different Query Types
+prompt_templates:
+  licensing_inquiry: |
+    You're responding to a licensing question. Focus on:
+    - Specific license types and requirements
+    - Application processes and timelines
+    - Required documentation and fees
+    - Renewal and compliance obligations
+    - Recent changes to licensing rules
+
+  operational_compliance: |
+    You're responding to an operational compliance question. Focus on:
+    - Day-to-day compliance requirements
+    - Record-keeping and reporting obligations
+    - Product testing and quality standards
+    - Inventory tracking and seed-to-sale requirements
+    - Security and surveillance requirements
+
+  regulatory_citation: |
+    You're providing a regulatory citation. Include:
+    - Exact regulation reference (title, section, subsection)
+    - Full text of the relevant provision
+    - Effective date and any recent amendments
+    - Cross-references to related regulations
+    - Practical interpretation and application
+
+  multi_state_comparison: |
+    You're comparing regulations across states. Provide:
+    - Side-by-side comparison of key requirements
+    - Identification of strictest and most lenient standards
+    - Common compliance approaches that work across states
+    - State-specific exceptions and unique requirements
+    - Recommendations for multi-state operators
+
+  risk_assessment: |
+    You're assessing compliance risk. Address:
+    - Potential violations and their consequences
+    - Regulatory enforcement trends and priorities
+    - Mitigation strategies and best practices
+    - Monitoring and early warning systems
+    - Corrective action procedures
+
+# Conversation Context Management
+conversation_settings:
+  max_context_length: 8000
+  context_window_tokens: 4000
+  remember_previous_queries: true
+  maintain_state_context: true
+  track_regulatory_updates: true
+
+# Response Quality Parameters
+response_quality:
+  citation_accuracy_threshold: 0.95
+  minimum_confidence_score: 0.85
+  max_response_length: 2000
+  require_citations: true
+  verify_current_regulations: true
+
+# Integration Settings
+integration:
+  vector_search_enabled: true
+  real_time_updates: true
+  multi_state_processing: true
+  citation_verification: true
+  regulatory_monitoring: true
+
+# Compliance Specializations
+specializations:
+  - name: "Licensing and Permits"
+    description: "Application processes, requirements, and renewals"
+    keywords: ["license", "permit", "application", "renewal", "fee"]
+    
+  - name: "Operational Compliance"
+    description: "Day-to-day regulatory requirements"
+    keywords: ["operation", "compliance", "daily", "routine", "standard"]
+    
+  - name: "Product Testing"
+    description: "Quality control and testing requirements"
+    keywords: ["testing", "quality", "lab", "analysis", "contamination"]
+    
+  - name: "Security and Surveillance"
+    description: "Facility security and monitoring requirements"
+    keywords: ["security", "surveillance", "monitoring", "alarm", "access"]
+    
+  - name: "Inventory Tracking"
+    description: "Seed-to-sale tracking and reporting"
+    keywords: ["inventory", "tracking", "metrc", "seed-to-sale", "manifest"]
+    
+  - name: "Taxation and Reporting"
+    description: "Tax obligations and regulatory reporting"
+    keywords: ["tax", "reporting", "revenue", "excise", "filing"]
+    
+  - name: "Advertising and Marketing"
+    description: "Marketing restrictions and compliance"
+    keywords: ["advertising", "marketing", "promotion", "branding", "packaging"]
+    
+  - name: "Zoning and Land Use"
+    description: "Location requirements and restrictions"
+    keywords: ["zoning", "location", "distance", "buffer", "municipal"]
+
+# Dynamic Prompt Adjustments
+dynamic_adjustments:
+  adapt_to_state: true
+  adjust_for_license_type: true
+  consider_recent_changes: true
+  factor_enforcement_trends: true
+  include_practical_examples: true
+
+# Error Handling
+error_handling:
+  unknown_regulation: "I don't have specific information about that regulation. Let me search our database and provide the most current information available."
+  conflicting_sources: "I've found conflicting information. Let me provide the most authoritative source and recommend verification with legal counsel."
+  outdated_information: "The regulation you're asking about may have recent updates. Let me provide the most current version available."
+  jurisdiction_unclear: "To provide accurate guidance, I need to know which state's regulations apply. Could you specify the jurisdiction?"
+
+# Model Configuration
+model_settings:
+  temperature: 0.1  # Low temperature for regulatory accuracy
+  max_tokens: 2000
+  top_p: 0.9
+  frequency_penalty: 0.1
+  presence_penalty: 0.1
+  stop_sequences: ["END_RESPONSE", "CITATION_COMPLETE"]
+
+# Monitoring and Analytics
+monitoring:
+  track_query_types: true
+  monitor_accuracy: true
+  measure_response_time: true
+  analyze_user_satisfaction: true
+  detect_regulatory_gaps: true
+
+# Update Schedule
+update_schedule:
+  regulatory_refresh: "daily"
+  vector_reindex: "weekly"
+  prompt_optimization: "monthly"
+  performance_review: "quarterly"

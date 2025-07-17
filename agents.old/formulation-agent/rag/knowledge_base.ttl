@@ -1,0 +1,222 @@
+@prefix formul: <http://formul8.ai/ontology/formulation#> .
+@prefix chem: <http://formul8.ai/ontology/chemistry#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix rdkit: <http://formul8.ai/ontology/rdkit#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Cannabinoids
+chem:THC a chem:Cannabinoid ;
+    rdfs:label "Delta-9-Tetrahydrocannabinol" ;
+    chem:formula "C21H30O2" ;
+    chem:molecularWeight "314.46"^^xsd:decimal ;
+    chem:smiles "CCCCCc1cc(c(c(c1)O)C2C3CC(CC(C3C(O2)(C)C)O)C)O" ;
+    chem:meltingPoint "157"^^xsd:decimal ;
+    chem:boilingPoint "315"^^xsd:decimal ;
+    chem:solubility "Water-insoluble, alcohol-soluble" ;
+    cannabis:psychoactive true ;
+    cannabis:legalStatus "Regulated" .
+
+chem:CBD a chem:Cannabinoid ;
+    rdfs:label "Cannabidiol" ;
+    chem:formula "C21H30O2" ;
+    chem:molecularWeight "314.46"^^xsd:decimal ;
+    chem:smiles "CCCCCc1cc(c(c(c1)O)C2C3C=C(CC(C3C(O2)(C)C)O)C)O" ;
+    chem:meltingPoint "66"^^xsd:decimal ;
+    chem:boilingPoint "180"^^xsd:decimal ;
+    chem:solubility "Water-insoluble, alcohol-soluble" ;
+    cannabis:psychoactive false ;
+    cannabis:legalStatus "Legal in most jurisdictions" .
+
+chem:CBG a chem:Cannabinoid ;
+    rdfs:label "Cannabigerol" ;
+    chem:formula "C21H32O2" ;
+    chem:molecularWeight "316.48"^^xsd:decimal ;
+    chem:psychoactive false ;
+    cannabis:precursor true .
+
+# Terpenes
+chem:Myrcene a chem:Terpene ;
+    rdfs:label "Myrcene" ;
+    chem:formula "C10H16" ;
+    chem:molecularWeight "136.23"^^xsd:decimal ;
+    chem:smiles "CC(=CCCC(=CC=C)C)C" ;
+    chem:boilingPoint "167"^^xsd:decimal ;
+    chem:aroma "Earthy, musky, fruity" ;
+    cannabis:effects "Sedating, muscle relaxant" .
+
+chem:Limonene a chem:Terpene ;
+    rdfs:label "Limonene" ;
+    chem:formula "C10H16" ;
+    chem:molecularWeight "136.23"^^xsd:decimal ;
+    chem:smiles "CC(=C)C1CCC(=CC1)C" ;
+    chem:boilingPoint "176"^^xsd:decimal ;
+    chem:aroma "Citrus, lemon, orange" ;
+    cannabis:effects "Mood elevation, stress relief" .
+
+chem:Pinene a chem:Terpene ;
+    rdfs:label "Alpha-Pinene" ;
+    chem:formula "C10H16" ;
+    chem:molecularWeight "136.23"^^xsd:decimal ;
+    chem:boilingPoint "155"^^xsd:decimal ;
+    chem:aroma "Pine, rosemary, basil" ;
+    cannabis:effects "Alertness, memory retention, counteracts THC" .
+
+# Extraction Methods
+formul:CO2Extraction a formul:ExtractionMethod ;
+    rdfs:label "Supercritical CO2 Extraction" ;
+    formul:temperature "31.1"^^xsd:decimal ;
+    formul:pressure "73.8"^^xsd:decimal ;
+    formul:advantages (
+        "No residual solvents"
+        "Selective extraction"
+        "Food-grade safe"
+        "Preserves terpenes"
+        "Environmentally friendly"
+    ) ;
+    formul:disadvantages (
+        "High initial equipment cost"
+        "Complex operation"
+        "Lower yield than butane"
+    ) .
+
+formul:BHOExtraction a formul:ExtractionMethod ;
+    rdfs:label "Butane Hash Oil Extraction" ;
+    formul:solvent "Butane" ;
+    formul:temperature "-20 to 20"^^xsd:decimal ;
+    formul:advantages (
+        "High yield"
+        "Fast processing"
+        "Lower equipment cost"
+        "Preserves cannabinoids"
+    ) ;
+    formul:disadvantages (
+        "Flammable solvent"
+        "Residual solvent concerns"
+        "Safety requirements"
+        "Purging required"
+    ) .
+
+formul:EthanolExtraction a formul:ExtractionMethod ;
+    rdfs:label "Ethanol Extraction" ;
+    formul:solvent "Ethanol" ;
+    formul:temperature "-40 to 25"^^xsd:decimal ;
+    formul:advantages (
+        "Food-grade solvent"
+        "Scalable process"
+        "Full spectrum extraction"
+        "GRAS status"
+    ) ;
+    formul:disadvantages (
+        "Extracts chlorophyll"
+        "Requires winterization"
+        "Lower selectivity"
+    ) .
+
+# Product Formulations
+formul:VapeCartridge a formul:ProductType ;
+    rdfs:label "Vape Cartridge" ;
+    formul:targetViscosity "500-1500 cP" ;
+    formul:cannabinoidContent "70-95%" ;
+    formul:carrierOil "MCT, PG, or none" ;
+    formul:preserveTerpenes true ;
+    formul:shelfLife "18 months" .
+
+formul:Edible a formul:ProductType ;
+    rdfs:label "Cannabis Edible" ;
+    formul:bioavailability "4-20%" ;
+    formul:onsetTime "30-120 minutes" ;
+    formul:duration "4-8 hours" ;
+    formul:doseForms (
+        "Gummies"
+        "Chocolates"
+        "Beverages"
+        "Capsules"
+        "Baked goods"
+    ) .
+
+formul:Topical a formul:ProductType ;
+    rdfs:label "Cannabis Topical" ;
+    formul:penetrationEnhancer "Limonene, Menthol" ;
+    formul:baseFormulations (
+        "Balm"
+        "Lotion"
+        "Cream"
+        "Oil"
+        "Transdermal patch"
+    ) ;
+    formul:targetApplication "Localized relief" .
+
+# Quality Control Parameters
+formul:PotencyTesting a formul:QualityTest ;
+    rdfs:label "Cannabinoid Potency Analysis" ;
+    formul:testMethod "HPLC-UV, HPLC-DAD" ;
+    formul:measuredCompounds (
+        chem:THC
+        chem:CBD
+        chem:CBG
+        chem:CBC
+        chem:CBN
+        chem:THCA
+        chem:CBDA
+    ) ;
+    formul:reportingLimit "0.01%" .
+
+formul:TerpeneProfile a formul:QualityTest ;
+    rdfs:label "Terpene Profile Analysis" ;
+    formul:testMethod "GC-MS, GC-FID" ;
+    formul:commonTerpenes (
+        chem:Myrcene
+        chem:Limonene
+        chem:Pinene
+        chem:Linalool
+        chem:Caryophyllene
+        chem:Humulene
+        chem:Terpinolene
+        chem:Ocimene
+    ) .
+
+# RDKit Integration
+rdkit:MolecularDescriptor a rdkit:Calculation ;
+    rdfs:label "Molecular Descriptor Calculation" ;
+    rdkit:properties (
+        "Molecular weight"
+        "LogP"
+        "Topological polar surface area"
+        "Number of rotatable bonds"
+        "Lipinski rule compliance"
+        "Aromatic ring count"
+    ) .
+
+rdkit:SimilaritySearch a rdkit:Analysis ;
+    rdfs:label "Molecular Similarity Search" ;
+    rdkit:algorithms (
+        "Tanimoto coefficient"
+        "Dice coefficient"
+        "Cosine similarity"
+        "Sokal similarity"
+    ) ;
+    rdkit:fingerprintTypes (
+        "Morgan fingerprints"
+        "RDKit fingerprints"
+        "MACCS keys"
+        "Atom pair fingerprints"
+    ) .
+
+# Stability and Storage
+formul:StabilityFactor a formul:StorageParameter ;
+    rdfs:label "Stability Factors" ;
+    formul:environmentalFactors (
+        "Light exposure"
+        "Temperature"
+        "Humidity"
+        "Oxygen exposure"
+        "pH levels"
+        "Container material"
+    ) ;
+    formul:degradationProducts (
+        "CBN from THC"
+        "Delta-8 THC from Delta-9 THC"
+        "Oxidized terpenes"
+    ) .

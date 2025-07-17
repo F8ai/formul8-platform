@@ -1,0 +1,88 @@
+{
+  "agentType": "formulation",
+  "description": "Cannabis formulation and molecular analysis baseline questions",
+  "version": "1.0",
+  "lastUpdated": "2025-07-15T11:50:00Z",
+  "questions": [
+    {
+      "id": "form_001",
+      "category": "extraction",
+      "question": "What extraction method best preserves terpenes in cannabis concentrates?",
+      "expected_answer": "Low-temperature methods like CO2 extraction, hydrocarbon extraction at 20-40°C, or live resin processing preserve terpenes effectively by staying below their boiling points (most terpenes boil between 150-185°C). Supercritical CO2 with temperature control and cold ethanol extraction are preferred for terpene preservation.",
+      "difficulty": "intermediate",
+      "keywords": ["extraction", "terpenes", "temperature-control", "CO2", "hydrocarbon", "live resin"]
+    },
+    {
+      "id": "form_002", 
+      "question": "Calculate the molecular weight and LogP of THC using RDKit.",
+      "expected_answer": "THC has a molecular weight of 314.46 g/mol and a LogP of approximately 6.97, indicating high lipophilicity suitable for oil-based formulations.",
+      "keywords": ["molecular weight", "314.46", "LogP", "6.97", "lipophilic", "RDKit"],
+      "category": "molecular_analysis",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "form_003",
+      "question": "What's the optimal decarboxylation temperature and time for converting THCA to THC?",
+      "expected_answer": "Optimal decarboxylation occurs at 105-120°C for 30-60 minutes, balancing complete conversion with minimal terpene loss.",
+      "keywords": ["105-120°C", "30-60 minutes", "THCA", "THC", "decarboxylation", "terpene preservation"],
+      "category": "processing",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "form_004",
+      "question": "How do you create a water-soluble cannabis formulation for beverages?",
+      "expected_answer": "Use nano-emulsification to reduce cannabinoid particle size to 20-200 nanometers, creating stable water-soluble formulations with faster onset and higher bioavailability.",
+      "keywords": ["nano-emulsification", "20-200 nanometers", "water-soluble", "bioavailability", "beverages"],
+      "category": "nano_formulation",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "form_005",
+      "question": "What's the difference between winterization and dewaxing in cannabis processing?",
+      "expected_answer": "Winterization removes waxes and lipids using cold ethanol (-40°C), while dewaxing uses mechanical filtration at -20°C to remove plant waxes, improving concentrate clarity and stability.",
+      "keywords": ["winterization", "dewaxing", "-40°C", "-20°C", "ethanol", "mechanical filtration", "waxes", "lipids"],
+      "category": "processing",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "form_006",
+      "question": "How do you formulate a transdermal cannabis patch for consistent delivery?",
+      "expected_answer": "Use permeation enhancers like oleic acid, control release with polymer matrices, and optimize cannabinoid solubility for steady 12-24 hour delivery through skin.",
+      "keywords": ["transdermal", "permeation enhancers", "oleic acid", "polymer matrices", "steady delivery", "12-24 hour"],
+      "category": "transdermal_delivery",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "form_007",
+      "question": "What quality control tests are essential for cannabis edibles?",
+      "expected_answer": "Essential tests include potency (cannabinoid content), homogeneity (distribution uniformity), microbial contamination, heavy metals, residual solvents, and stability testing.",
+      "keywords": ["potency", "homogeneity", "microbial contamination", "heavy metals", "residual solvents", "stability testing"],
+      "category": "quality_control",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "form_008",
+      "question": "How does beta-caryophyllene differ from other terpenes pharmacologically?",
+      "expected_answer": "Beta-caryophyllene uniquely binds to CB2 receptors, acting as a dietary cannabinoid with anti-inflammatory properties, unlike other terpenes that primarily modulate effects.",
+      "keywords": ["beta-caryophyllene", "CB2 receptors", "dietary cannabinoid", "anti-inflammatory", "unique binding"],
+      "category": "terpene_pharmacology", 
+      "difficulty": "advanced"
+    },
+    {
+      "id": "form_009",
+      "question": "What carrier oil is best for sublingual CBD formulations and why?",
+      "expected_answer": "MCT oil or fractionated coconut oil provides optimal bioavailability for sublingual absorption due to medium-chain triglycerides that enhance cannabinoid solubility and absorption.",
+      "keywords": ["MCT oil", "coconut oil", "bioavailability", "sublingual", "medium-chain triglycerides", "absorption"],
+      "category": "formulation",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "form_010",
+      "question": "Compare CO2 vs ethanol extraction for cannabinoid preservation.",
+      "expected_answer": "CO2 extraction preserves heat-sensitive compounds better with precise temperature control, while ethanol is more efficient but requires cold temperatures (-40°C) to prevent degradation.",
+      "keywords": ["CO2 extraction", "ethanol", "heat-sensitive", "temperature control", "cold ethanol", "-40°C"],
+      "category": "extraction_comparison",
+      "difficulty": "advanced"
+    }
+  ]
+}

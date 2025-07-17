@@ -1,0 +1,71 @@
+# RAG Configuration for Marketing Agent
+vectorstore:
+  type: "faiss"
+  index_path: "vectorstore/marketing_index.faiss"
+  metadata_path: "vectorstore/marketing_metadata.pkl"
+  
+embedding:
+  provider: "openai"
+  model: "text-embedding-ada-002"
+  dimensions: 1536
+  
+text_processing:
+  chunk_size: 1000
+  chunk_overlap: 200
+  splitter_type: "recursive_character"
+  separators: ["\n\n", "\n", " ", ""]
+  
+corpus:
+  file: "corpus.jsonl"
+  encoding: "utf-8"
+  fields:
+    - "text"
+    - "metadata"
+    - "source"
+    - "platform"
+    - "campaign_type"
+    - "compliance_level"
+  
+retrieval:
+  search_type: "similarity"
+  k: 5
+  score_threshold: 0.7
+  fetch_k: 20
+  lambda_mult: 0.5
+  
+knowledge_base:
+  rdf_file: "knowledge_base.ttl"
+  format: "turtle"
+  namespaces:
+    marketing: "http://formul8.ai/ontology/marketing#"
+    platform: "http://formul8.ai/ontology/platform#"
+    campaign: "http://formul8.ai/ontology/campaign#"
+    compliance: "http://formul8.ai/ontology/compliance#"
+  
+phi2_sparql:
+  model_path: "microsoft/phi-2"
+  max_length: 512
+  temperature: 0.1
+  device: "cpu"
+  cache_dir: "model/phi2_cache"
+  
+platform_compliance:
+  facebook:
+    restrictions: ["no_cannabis_content", "no_cbd_ads", "no_hemp_mention"]
+    workarounds: ["wellness_angle", "lifestyle_focus", "educational_content"]
+  instagram:
+    restrictions: ["no_cannabis_imagery", "no_product_promotion"]
+    workarounds: ["brand_awareness", "educational_posts", "community_building"]
+  google_ads:
+    restrictions: ["no_cannabis_keywords", "no_cbd_products"]
+    workarounds: ["wellness_keywords", "educational_content", "brand_terms"]
+  
+indexing:
+  batch_size: 100
+  max_documents: 10000
+  update_frequency: "weekly"
+  
+performance:
+  index_rebuild_threshold: 0.1
+  similarity_threshold: 0.6
+  max_retrieval_time: 5  # seconds

@@ -1,0 +1,43 @@
+
+    {
+      "id": "comp_001",
+      "category": "licensing",
+      "question": "What are the key requirements for obtaining a cannabis cultivation license in California?",
+      "expectedAnswer": "California cannabis cultivation licenses require: 1) State license through DCC (Department of Cannabis Control), 2) Local municipal permits and compliance, 3) Background checks for all owners/operators, 4) Detailed security plan, 5) Water rights documentation, 6) Environmental compliance (CEQA), 7) Track-and-trace system setup, 8) Insurance requirements, 9) Financial documentation, 10) Payment of licensing fees.",
+      "difficulty": "intermediate",
+      "tags": ["california", "licensing", "cultivation"]
+    },
+    {
+      "id": "comp_002", 
+      "category": "packaging",
+      "question": "What information must be included on cannabis product labels according to federal guidelines?",
+      "expectedAnswer": "Cannabis product labels must include: 1) Product name and type, 2) THC and CBD content in mg, 3) Net weight, 4) Batch/lot number, 5) Manufacturing date, 6) Expiration date, 7) Licensed manufacturer info, 8) Universal symbol, 9) Health warnings, 10) Lab testing results, 11) Ingredients list, 12) Serving size information.",
+      "difficulty": "basic",
+      "tags": ["labeling", "packaging", "federal"]
+    },
+    {
+      "id": "comp_003",
+      "category": "testing",
+      "question": "What contaminants must be tested for in cannabis flower before retail sale?",
+      "expectedAnswer": "Cannabis flower testing requirements include: 1) Pesticides (multi-residue analysis), 2) Heavy metals (lead, cadmium, mercury, arsenic), 3) Microbials (E.coli, salmonella, aspergillus), 4) Residual solvents, 5) Mycotoxins, 6) Moisture content, 7) Potency (THC, CBD, other cannabinoids), 8) Foreign matter analysis.",
+      "difficulty": "advanced",
+      "tags": ["testing", "safety", "flower"]
+    },
+    {
+      "id": "comp_004",
+      "category": "transportation",
+      "question": "What security requirements apply to cannabis transportation vehicles?",
+      "expectedAnswer": "Cannabis transportation security requires: 1) GPS tracking systems, 2) Locked storage compartments, 3) Security cameras, 4) Two-person minimum crew, 5) Communication devices, 6) Manifest documentation, 7) Vehicle inspection logs, 8) Insurance coverage, 9) Route planning and reporting, 10) Emergency protocols.",
+      "difficulty": "intermediate",
+      "tags": ["transportation", "security", "logistics"]
+    },
+    {
+      "id": "comp_005",
+      "category": "advertising",
+      "question": "What restrictions apply to cannabis advertising on social media platforms?",
+      "expectedAnswer": "Cannabis advertising restrictions include: 1) No targeting minors under 21, 2) Platform-specific prohibition policies, 3) Age-gated content requirements, 4) No health claims without evidence, 5) Warning label requirements, 6) Location-based restrictions, 7) No free samples promotion, 8) Compliance with state-specific rules, 9) Truth in advertising standards.",
+      "difficulty": "intermediate",
+      "tags": ["advertising", "social-media", "marketing"]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+# Cannabis Compliance Data Collection Requirements
+
+# Web scraping and HTTP
+aiohttp==3.9.1
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+html5lib==1.1
+
+# PDF processing
+PyPDF2==3.0.1
+pdfplumber==0.10.3
+PyMuPDF==1.23.14
+pillow==10.1.0
+pytesseract==0.3.10
+
+# Data processing
+pandas==2.1.4
+numpy==1.24.3
+python-dateutil==2.8.2
+
+# Text processing and NLP
+nltk==3.8.1
+textblob==0.17.1
+spacy==3.7.2
+
+# Async and concurrency
+asyncio-throttle==1.0.2
+concurrent-futures==3.1.1
+
+# Database and storage
+sqlite3  # Built-in
+json5==0.9.14
+
+# Logging and monitoring
+colorlog==6.8.0
+tqdm==4.66.1
+
+# File handling
+pathlib  # Built-in
+hashlib  # Built-in
+mimetypes  # Built-in
+
+# Regular expressions and text parsing
+regex==2023.10.3
+
+# Development and testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+
+# Optional: Machine learning for text analysis
+scikit-learn==1.3.2
+transformers==4.36.0
+
+# Optional: Advanced PDF processing
+camelot-py==0.10.1
+tabula-py==2.9.0
+
+# System dependencies (install via system package manager):
+# tesseract-ocr
+# poppler-utils
+# libxml2-dev
+# libxslt1-dev
+# python3-dev
+# build-essential

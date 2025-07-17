@@ -1,0 +1,123 @@
+{
+  "test_scenarios": [
+    {
+      "id": "comp_001",
+      "title": "Multi-State License Application",
+      "description": "Guide through licensing requirements for cannabis business across multiple states",
+      "input": {
+        "business_type": "cultivation",
+        "target_states": ["california", "colorado", "oregon"],
+        "business_size": "medium",
+        "social_equity": false
+      },
+      "expected_considerations": [
+        "state_specific_requirements",
+        "application_timelines",
+        "fee_structures",
+        "zoning_restrictions",
+        "security_requirements"
+      ],
+      "test_query": "I want to start a cannabis cultivation business in California, Colorado, and Oregon. What are the licensing requirements for each state?"
+    },
+    {
+      "id": "comp_002",
+      "title": "Product Testing Compliance",
+      "description": "Ensure cannabis products meet testing requirements across jurisdictions",
+      "input": {
+        "product_type": "edibles",
+        "target_market": "recreational",
+        "states": ["nevada", "washington", "massachusetts"],
+        "testing_requirements": "comprehensive"
+      },
+      "expected_testing": [
+        "potency_analysis",
+        "pesticide_screening",
+        "heavy_metals",
+        "residual_solvents",
+        "microbial_testing"
+      ],
+      "test_query": "What testing is required for cannabis edibles in Nevada, Washington, and Massachusetts before retail sale?"
+    },
+    {
+      "id": "comp_003",
+      "title": "Packaging and Labeling Compliance",
+      "description": "Ensure packaging meets state requirements for child safety and information disclosure",
+      "input": {
+        "product_types": ["flower", "concentrates", "edibles"],
+        "target_state": "california",
+        "distribution": "retail",
+        "special_requirements": "child_resistant"
+      },
+      "expected_requirements": [
+        "child_resistant_packaging",
+        "tamper_evident_seals",
+        "required_label_information",
+        "thc_cbd_content_display",
+        "warning_statements"
+      ],
+      "test_query": "What are the packaging and labeling requirements for cannabis products in California retail dispensaries?"
+    },
+    {
+      "id": "comp_004",
+      "title": "Advertising Compliance Review",
+      "description": "Review marketing materials for compliance with cannabis advertising restrictions",
+      "input": {
+        "content_type": "social_media_post",
+        "platform": "instagram",
+        "product": "cbd_wellness",
+        "target_audience": "adults_21_plus",
+        "jurisdiction": "multiple_states"
+      },
+      "expected_compliance_checks": [
+        "age_restriction_notices",
+        "required_disclaimers",
+        "prohibited_claims",
+        "platform_policy_adherence",
+        "state_specific_restrictions"
+      ],
+      "test_query": "Review this Instagram post for CBD wellness products to ensure it complies with cannabis advertising regulations."
+    },
+    {
+      "id": "comp_005",
+      "title": "Transportation and Delivery Compliance",
+      "description": "Ensure cannabis transportation meets state tracking and security requirements",
+      "input": {
+        "transport_type": "delivery_service",
+        "state": "new_york",
+        "vehicle_requirements": "licensed",
+        "tracking_system": "state_mandated",
+        "security_measures": "required"
+      },
+      "expected_requirements": [
+        "licensed_vehicle_registration",
+        "state_tracking_compliance",
+        "driver_qualifications",
+        "route_restrictions",
+        "security_protocols"
+      ],
+      "test_query": "What are the requirements for cannabis delivery services in New York, including vehicle licensing and tracking?"
+    }
+  ],
+  "evaluation_criteria": {
+    "regulatory_accuracy": {
+      "weight": 0.35,
+      "aspects": ["state_law_accuracy", "current_regulations", "licensing_details"]
+    },
+    "completeness": {
+      "weight": 0.25,
+      "aspects": ["all_requirements_covered", "multi_jurisdictional", "comprehensive_guidance"]
+    },
+    "compliance_analysis": {
+      "weight": 0.2,
+      "aspects": ["risk_assessment", "violation_identification", "mitigation_strategies"]
+    },
+    "practical_applicability": {
+      "weight": 0.15,
+      "aspects": ["actionable_steps", "timeline_guidance", "cost_considerations"]
+    },
+    "regulatory_updates": {
+      "weight": 0.05,
+      "aspects": ["current_information", "recent_changes", "pending_regulations"]
+    }
+  }
+}

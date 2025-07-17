@@ -1,0 +1,88 @@
+{
+  "agentType": "operations",
+  "description": "Cannabis operations management and efficiency optimization baseline questions",
+  "version": "1.0",
+  "lastUpdated": "2025-07-15T11:57:00Z",
+  "questions": [
+    {
+      "id": "ops_001",
+      "question": "How can I improve inventory turnover in my cannabis cultivation business?",
+      "expected_answer": "Implement ABC analysis, use predictive analytics for demand forecasting, establish just-in-time ordering, and optimize supplier relationships. Target 8-12x annual turnover vs current industry average.",
+      "keywords": ["ABC analysis", "predictive analytics", "just-in-time", "supplier relationships", "8-12x turnover"],
+      "category": "inventory_management",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ops_002",
+      "question": "What are the key operational efficiency metrics for cannabis processing?",
+      "expected_answer": "Track processing time, equipment utilization (target 85%+), waste percentage (target <3%), quality pass rates (target 95%+), and throughput per hour. Monitor bottlenecks in trimming and packaging.",
+      "keywords": ["processing time", "equipment utilization", "85%", "waste percentage", "3%", "quality pass rates", "95%"],
+      "category": "efficiency_metrics",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ops_003",
+      "question": "How do I optimize staffing levels for a cannabis retail operation?",
+      "expected_answer": "Analyze revenue per employee (target $115K+), implement cross-training for flexibility, use performance metrics and bonuses, plan for peak hours, and ensure compliance training is current.",
+      "keywords": ["revenue per employee", "$115K", "cross-training", "performance metrics", "peak hours", "compliance training"],
+      "category": "staff_management",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "ops_004",
+      "question": "What financial ratios should I monitor for cannabis business health?",
+      "expected_answer": "Monitor profit margins (target 15-20%), current ratio (>1.5), inventory turnover (8-12x), cash flow ratios, and compliance costs as percentage of revenue (<5%).",
+      "keywords": ["profit margins", "15-20%", "current ratio", "1.5", "inventory turnover", "8-12x", "compliance costs", "5%"],
+      "category": "financial_analysis",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "ops_005",
+      "question": "How can I reduce operational costs in cannabis cultivation?",
+      "expected_answer": "Optimize energy efficiency with LED lighting, automate environmental controls, implement lean manufacturing principles, reduce waste through better processes, and negotiate better supplier terms.",
+      "keywords": ["energy efficiency", "LED lighting", "automate controls", "lean manufacturing", "reduce waste", "supplier terms"],
+      "category": "cost_reduction",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ops_006",
+      "question": "What compliance monitoring systems should I implement?",
+      "expected_answer": "Use seed-to-sale tracking systems, implement automated compliance reporting, establish backup testing lab relationships, conduct regular audits, and maintain comprehensive documentation.",
+      "keywords": ["seed-to-sale tracking", "automated reporting", "backup testing", "regular audits", "comprehensive documentation"],
+      "category": "compliance",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "ops_007",
+      "question": "How do I optimize supply chain management for cannabis products?",
+      "expected_answer": "Consolidate suppliers for better pricing, implement demand forecasting, reduce lead times, optimize inventory levels using ABC analysis, and establish backup supplier relationships.",
+      "keywords": ["consolidate suppliers", "demand forecasting", "reduce lead times", "ABC analysis", "backup suppliers"],
+      "category": "supply_chain",
+      "difficulty": "advanced"
+    },
+    {
+      "id": "ops_008",
+      "question": "What are the best practices for cannabis quality control operations?",
+      "expected_answer": "Implement statistical process control, establish clear quality standards, use real-time monitoring, maintain testing protocols, and document all quality procedures for compliance.",
+      "keywords": ["statistical process control", "quality standards", "real-time monitoring", "testing protocols", "document procedures"],
+      "category": "quality_control",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ops_009",
+      "question": "How can I improve cash flow management in cannabis business?",
+      "expected_answer": "Optimize inventory turnover, negotiate better payment terms with suppliers, implement efficient billing and collection processes, and maintain adequate cash reserves for compliance costs.",
+      "keywords": ["inventory turnover", "payment terms", "billing collection", "cash reserves", "compliance costs"],
+      "category": "cash_flow",
+      "difficulty": "intermediate"
+    },
+    {
+      "id": "ops_010",
+      "question": "What automation opportunities exist in cannabis operations?",
+      "expected_answer": "Automate environmental controls, implement automated trimming systems, use robotic packaging, automate inventory tracking, and implement automated compliance reporting systems.",
+      "keywords": ["environmental controls", "automated trimming", "robotic packaging", "inventory tracking", "compliance reporting"],
+      "category": "automation",
+      "difficulty": "advanced"
+    }
+  ]
+}

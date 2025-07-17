@@ -1,0 +1,59 @@
+{
+  "test_scenarios": [
+    {
+      "id": "mkt_001",
+      "title": "Facebook Wellness Campaign",
+      "description": "Create compliant cannabis wellness campaign for Facebook",
+      "input": {
+        "platform": "facebook",
+        "product_category": "cbd_wellness",
+        "target_audience": "wellness_enthusiasts",
+        "budget": 5000,
+        "campaign_goal": "brand_awareness"
+      },
+      "expected_strategy": [
+        "wellness_messaging",
+        "lifestyle_focus",
+        "educational_content",
+        "plant_based_health"
+      ],
+      "test_query": "How do I create a Facebook campaign for CBD wellness products without violating their cannabis policies?"
+    },
+    {
+      "id": "mkt_002",
+      "title": "Multi-Platform N8N Automation",
+      "description": "Design N8N workflow for automated content distribution",
+      "input": {
+        "workflow_type": "content_distribution",
+        "platforms": ["weedmaps", "leafly", "instagram"],
+        "content_types": ["educational", "product_highlights"],
+        "approval_process": "automated_compliance_check"
+      },
+      "expected_automation": [
+        "content_approval_workflow",
+        "platform_specific_formatting",
+        "compliance_verification",
+        "automated_posting"
+      ],
+      "test_query": "Create an N8N workflow that automatically distributes cannabis content across multiple platforms after compliance checking."
+    }
+  ],
+  "evaluation_criteria": {
+    "platform_compliance": {
+      "weight": 0.3,
+      "aspects": ["policy_adherence", "creative_workarounds", "risk_mitigation"]
+    },
+    "automation_design": {
+      "weight": 0.25,
+      "aspects": ["workflow_efficiency", "n8n_implementation", "scalability"]
+    },
+    "creative_strategy": {
+      "weight": 0.25,
+      "aspects": ["messaging_innovation", "visual_strategy", "brand_alignment"]
+    },
+    "market_intelligence": {
+      "weight": 0.2,
+      "aspects": ["demographic_targeting", "cpc_optimization", "roi_projection"]
+    }
+  }
+}

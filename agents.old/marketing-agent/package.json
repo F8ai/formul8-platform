@@ -1,0 +1,46 @@
+{
+  "name": "marketing-agent",
+  "version": "1.0.0",
+  "description": "📈 Cannabis marketing automation with N8N workflows and platform intelligence",
+  "main": "index.js",
+  "scripts": {
+    "dev": "n8n start --tunnel",
+    "dev:n8n": "N8N_HOST=0.0.0.0 N8N_PORT=5678 n8n start",
+    "start": "n8n start",
+    "test": "jest",
+    "test:workflows": "node tests/validate-workflows.js",
+    "test:compliance": "node tests/compliance-tests.js",
+    "test:workflow-execution": "node tests/workflow-execution-tests.js",
+    "benchmarks": "node tests/benchmarks/run-benchmarks.js",
+    "import:workflows": "node scripts/import-workflows.js",
+    "import:test-workflows": "node scripts/import-test-workflows.js",
+    "export:workflows": "node scripts/export-workflows.js",
+    "update:badges": "node scripts/update-badges.js"
+  },
+  "dependencies": {
+    "n8n": "^1.19.0",
+    "axios": "^1.6.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.5",
+    "supertest": "^6.3.3"
+  },
+  "keywords": [
+    "cannabis",
+    "marketing",
+    "n8n",
+    "automation",
+    "workflows",
+    "compliance"
+  ],
+  "author": "F8ai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/F8ai/marketing-agent.git"
+  }
+}

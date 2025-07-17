@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Agent Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/chart.js"></script>
+    <style>
+        .status-active { color: #10b981; }
+        .status-warning { color: #f59e0b; }
+        .status-error { color: #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="text-4xl">🛡️</div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Compliance Agent</h1>
+                        <p class="text-gray-600">Multi-state regulatory compliance intelligence</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold text-blue-600" id="confidence-score">Loading...</div>
+                    <div class="text-sm text-gray-500">Confidence Score</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-600" id="tests-passed">--</div>
+                    <div class="text-sm text-gray-500">Tests Passed</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-red-600" id="tests-failed">--</div>
+                    <div class="text-sm text-gray-500">Tests Failed</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-yellow-600" id="tests-active">--</div>
+                    <div class="text-sm text-gray-500">Active Tests</div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-gray-900" id="total-tests">--</div>
+                    <div class="text-sm text-gray-500">Total Tests</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Baseline Test Results -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Baseline Test Results</h2>
+            <div class="space-y-3" id="test-results">
+                <div class="text-center text-gray-500 py-8">Loading test results...</div>
+            </div>
+        </div>
+
+        <!-- Regulatory Coverage -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Regulatory Coverage</h2>
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-4" id="state-coverage">
+                <!-- States will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+            <div class="space-y-3" id="recent-activity">
+                <div class="text-center text-gray-500 py-8">Loading activity...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock baseline exam data - replace with real API calls
+        const baselineData = {
+            totalTests: 120,
+            passed: 94,
+            failed: 26,
+            active: 8,
+            confidence: 78,
+            tests: [
+                {
+                    id: 1,
+                    question: "What are the cultivation license requirements in California?",
+                    status: "passed",
+                    confidence: 95,
+                    expectedAnswer: "Valid cultivation license, track-and-trace compliance, local permits",
+                    actualAnswer: "Valid cultivation license, track-and-trace compliance, local permits required",
+                    category: "Licensing"
+                },
+                {
+                    id: 2,
+                    question: "What is the THC testing requirement in Colorado?",
+                    status: "failed",
+                    confidence: 45,
+                    expectedAnswer: "All products must test below 0.3% Delta-9 THC",
+                    actualAnswer: "Products must test below 1% THC",
+                    category: "Testing"
+                },
+                {
+                    id: 3,
+                    question: "What packaging requirements exist in Massachusetts?",
+                    status: "passed",
+                    confidence: 88,
+                    expectedAnswer: "Child-resistant packaging, proper labeling, opaque containers",
+                    actualAnswer: "Child-resistant packaging, proper labeling requirements, opaque containers",
+                    category: "Packaging"
+                }
+            ]
+        };
+
+        const states = [
+            { code: 'CA', name: 'California', status: 'active' },
+            { code: 'CO', name: 'Colorado', status: 'active' },
+            { code: 'WA', name: 'Washington', status: 'active' },
+            { code: 'OR', name: 'Oregon', status: 'active' },
+            { code: 'NV', name: 'Nevada', status: 'warning' },
+            { code: 'AZ', name: 'Arizona', status: 'active' },
+            { code: 'MA', name: 'Massachusetts', status: 'active' },
+            { code: 'IL', name: 'Illinois', status: 'warning' },
+            { code: 'NY', name: 'New York', status: 'error' },
+            { code: 'NJ', name: 'New Jersey', status: 'active' },
+            { code: 'CT', name: 'Connecticut', status: 'active' },
+            { code: 'MI', name: 'Michigan', status: 'active' }
+        ];
+
+        function updateMetrics() {
+            document.getElementById('confidence-score').textContent = baselineData.confidence + '%';
+            document.getElementById('tests-passed').textContent = baselineData.passed;
+            document.getElementById('tests-failed').textContent = baselineData.failed;
+            document.getElementById('tests-active').textContent = baselineData.active;
+            document.getElementById('total-tests').textContent = baselineData.totalTests;
+        }
+
+        function renderTestResults() {
+            const container = document.getElementById('test-results');
+            container.innerHTML = baselineData.tests.map(test => `
+                <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer" onclick="viewTestDetails(${test.id})">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <div class="font-medium text-gray-900">${test.question}</div>
+                            <div class="text-sm text-gray-500 mt-1">Category: ${test.category}</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-sm ${test.status === 'passed' ? 'text-green-600' : 'text-red-600'}">${test.confidence}%</div>
+                            <div class="w-3 h-3 rounded-full ${test.status === 'passed' ? 'bg-green-500' : 'bg-red-500'}"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderStateCoverage() {
+            const container = document.getElementById('state-coverage');
+            container.innerHTML = states.map(state => `
+                <div class="text-center p-3 rounded-lg border border-gray-200">
+                    <div class="text-lg font-bold">${state.code}</div>
+                    <div class="text-xs text-gray-500">${state.name}</div>
+                    <div class="w-2 h-2 rounded-full mx-auto mt-1 ${
+                        state.status === 'active' ? 'bg-green-500' : 
+                        state.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
+                    }"></div>
+                </div>
+            `).join('');
+        }
+
+        function viewTestDetails(testId) {
+            const test = baselineData.tests.find(t => t.id === testId);
+            if (test) {
+                alert(`Test Details:\n\nQuestion: ${test.question}\nStatus: ${test.status}\nConfidence: ${test.confidence}%\n\nExpected: ${test.expectedAnswer}\nActual: ${test.actualAnswer}`);
+            }
+        }
+
+        // Initialize dashboard
+        updateMetrics();
+        renderTestResults();
+        renderStateCoverage();
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update with real API data here
+            console.log('Fetching latest baseline exam results...');
+        }, 30000);
+    </script>
+</body>
+</html>

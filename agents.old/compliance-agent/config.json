@@ -1,0 +1,83 @@
+{
+  "agentType": "compliance",
+  "name": "Compliance Agent",
+  "description": "Cannabis compliance and regulatory guidance specialist",
+  "version": "1.0.0",
+  "emoji": "🛡️",
+  "status": "active",
+  "configuration": {
+    "systemPrompt": "You are a cannabis compliance expert with deep knowledge of cannabis regulations across all legal states. You provide accurate, up-to-date regulatory guidance based on current laws and regulations. You help cannabis businesses navigate complex compliance requirements including licensing, packaging, labeling, testing, transportation, advertising, and operational compliance. Always cite specific regulations and provide actionable compliance steps.",
+    "mcpTools": [
+      {
+        "name": "regulatory-database",
+        "type": "mcp-server",
+        "server": "sqlite",
+        "config": {
+          "database": "./rag/regulatory.db",
+          "schema": "regulations"
+        }
+      },
+      {
+        "name": "compliance-checker",
+        "type": "mcp-server", 
+        "server": "web-search",
+        "config": {
+          "domains": ["cannabis.ca.gov", "colorado.gov", "lcb.wa.gov"],
+          "searchType": "regulatory"
+        }
+      },
+      {
+        "name": "legal-research",
+        "type": "mcp-server",
+        "server": "filesystem",
+        "config": {
+          "rootPath": "./rag/corpus",
+          "allowedExtensions": [".pdf", ".txt", ".json"]
+        }
+      }
+    ],
+    "ragConfig": {
+      "enabled": true,
+      "retriever": "faiss",
+      "indexPath": "./rag/retriever.faiss",
+      "corpusPath": "./rag/corpus.jsonl",
+      "chunkSize": 512,
+      "topK": 5,
+      "embeddingModel": "text-embedding-3-small"
+    },
+    "llmProvider": "openai",
+    "model": "gpt-4o",
+    "temperature": 0.1,
+    "maxTokens": 2000,
+    "responseFormat": "structured"
+  },
+  "capabilities": [
+    "State-specific regulation lookup",
+    "Compliance audit and gap analysis",
+    "Licensing requirement guidance",
+    "Packaging and labeling compliance",
+    "Testing requirement analysis",
+    "Transportation regulations",
+    "Advertising compliance review",
+    "Multi-state expansion planning"
+  ],
+  "specializations": [
+    "California regulations (DCC)",
+    "Colorado regulations (MED)",
+    "Washington state compliance",
+    "Federal compliance frameworks",
+    "Interstate commerce requirements"
+  ],
+  "dataSource": {
+    "type": "regulatory-database",
+    "updateFrequency": "daily",
+    "coverage": "24 legal states",
+    "lastUpdate": "2025-01-13T20:00:00Z"
+  },
+  "performanceTargets": {
+    "accuracy": 95,
+    "responseTime": 3000,
+    "confidenceThreshold": 80,
+    "baselineScore": 85
+  }
+}

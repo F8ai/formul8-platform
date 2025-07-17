@@ -1,0 +1,87 @@
+{
+  "agentType": "patent",
+  "description": "Patent Agent - Freedom to Operate (FTO) Analysis",
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "patent_001",
+      "question": "What is a Freedom to Operate (FTO) analysis and why is it important for cannabis product development?",
+      "category": "fto_basics",
+      "difficulty": "basic",
+      "expected_answer": "An FTO analysis evaluates whether a product or process can be developed, manufactured, or sold without infringing existing patents. It's crucial for cannabis companies to avoid costly patent litigation and ensure product launch safety.",
+      "keywords": ["freedom to operate", "patent infringement", "product development", "patent landscape"]
+    },
+    {
+      "id": "patent_002",
+      "question": "How do you search for relevant cannabis patents when conducting FTO analysis?",
+      "category": "patent_search",
+      "difficulty": "intermediate",
+      "expected_answer": "Use patent databases like USPTO, Google Patents, and specialized cannabis patent collections. Search using relevant keywords, classification codes, and inventor names. Focus on active patents within product's geographic markets.",
+      "keywords": ["patent search", "USPTO", "patent databases", "cannabis patents"]
+    },
+    {
+      "id": "patent_003",
+      "question": "What are the key components of a cannabis patent that should be analyzed during FTO review?",
+      "category": "patent_analysis",
+      "difficulty": "intermediate",
+      "expected_answer": "Analyze patent claims (independent and dependent), specification details, prosecution history, patent term, geographic scope, and enforcement history. Claims define the protected invention scope.",
+      "keywords": ["patent claims", "specification", "prosecution history", "patent analysis"]
+    },
+    {
+      "id": "patent_004",
+      "question": "How do you assess patent infringement risk for a new cannabis extraction method?",
+      "category": "infringement_analysis",
+      "difficulty": "advanced",
+      "expected_answer": "Compare extraction method elements to patent claims using claim construction principles. Analyze literal infringement and doctrine of equivalents. Consider method claims, apparatus claims, and composition claims.",
+      "keywords": ["patent infringement", "extraction method", "claim construction", "doctrine of equivalents"]
+    },
+    {
+      "id": "patent_005",
+      "question": "What strategies can mitigate patent infringement risks in cannabis product development?",
+      "category": "risk_mitigation",
+      "difficulty": "intermediate",
+      "expected_answer": "Design around existing patents, file continuation applications, license patents, challenge patent validity, modify product formulations, or delay launch until patent expiration.",
+      "keywords": ["design around", "patent licensing", "patent validity", "risk mitigation"]
+    },
+    {
+      "id": "patent_006",
+      "question": "How do trademark considerations factor into cannabis FTO analysis?",
+      "category": "trademark_analysis",
+      "difficulty": "basic",
+      "expected_answer": "Evaluate trademark conflicts for brand names, product names, and packaging. Check federal and state registrations, common law rights, and geographic limitations. Cannabis trademarks face unique federal restrictions.",
+      "keywords": ["trademark search", "brand protection", "trademark infringement", "cannabis trademarks"]
+    },
+    {
+      "id": "patent_007",
+      "question": "What are the filing opportunities and strategies for cannabis patents?",
+      "category": "patent_strategy",
+      "difficulty": "advanced",
+      "expected_answer": "File utility patents for novel processes, compositions, and methods. Consider provisional applications for early priority. Develop patent portfolio strategy including continuation applications and divisional filings.",
+      "keywords": ["patent filing", "utility patents", "provisional applications", "patent portfolio"]
+    },
+    {
+      "id": "patent_008",
+      "question": "How do you evaluate the competitive landscape in cannabis patent analysis?",
+      "category": "competitive_analysis",
+      "difficulty": "intermediate",
+      "expected_answer": "Analyze competitor patent portfolios, identify key patent holders, assess patent clustering in technology areas, evaluate licensing opportunities, and monitor patent application trends.",
+      "keywords": ["competitive landscape", "patent portfolio", "patent holders", "technology trends"]
+    },
+    {
+      "id": "patent_009",
+      "question": "What are the unique challenges in cannabis patent FTO analysis?",
+      "category": "cannabis_challenges",
+      "difficulty": "advanced",
+      "expected_answer": "Federal illegality creates enforcement uncertainties, state law variations affect geographic scope, rapidly evolving regulations impact patentability, and prior art documentation is often incomplete.",
+      "keywords": ["cannabis patents", "federal illegality", "state regulations", "prior art"]
+    },
+    {
+      "id": "patent_010",
+      "question": "How do you estimate costs and timelines for cannabis patent FTO analysis?",
+      "category": "project_management",
+      "difficulty": "basic",
+      "expected_answer": "FTO analysis typically costs $15,000-$50,000 and takes 4-12 weeks depending on scope. Factors include technology complexity, patent landscape density, and geographic coverage requirements.",
+      "keywords": ["FTO costs", "project timeline", "patent analysis", "budget planning"]
+    }
+  ]
+}

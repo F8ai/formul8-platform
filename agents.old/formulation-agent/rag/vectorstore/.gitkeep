@@ -1,0 +1,2 @@
+# FAISS vectorstore files will be created here during agent initialization
+# This directory is preserved for vector index storage

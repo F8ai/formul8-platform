@@ -1,0 +1,39 @@
+# AstraDB Configuration for Spectra Agent
+astradb:
+  collection_name: "cannabis_spectra_vectors"
+  vector_dimension: 1536
+  distance_metric: "cosine"
+  
+  # Connection (loaded from environment)
+  token_env: "ASTRA_DB_APPLICATION_TOKEN"
+  endpoint_env: "ASTRA_DB_API_ENDPOINT"
+
+# Embedding configuration
+embedding:
+  provider: "openai"
+  model: "text-embedding-3-small"
+  api_key_env: "OPENAI_API_KEY"
+
+# Retrieval settings
+retrieval:
+  top_k: 5
+  similarity_threshold: 0.7
+  
+# Agent-specific metadata schema
+metadata_schema:
+  required_fields:
+    - agent_type
+    - source
+    - created_at
+  
+  optional_fields:
+    - test_type
+    - analysis_method
+    - sample_type
+    - testing_facility
+
+# Performance settings
+performance:
+  batch_size: 50
+  max_concurrent_queries: 5
+  cache_ttl: 3600

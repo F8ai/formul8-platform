@@ -1,0 +1,34 @@
+retrieval:
+  type: "faiss"
+  index_path: "./retriever.faiss"
+  corpus_path: "./corpus.jsonl"
+  
+chunking:
+  chunk_size: 512
+  chunk_overlap: 50
+  strategy: "semantic"
+  
+embedding:
+  model: "text-embedding-3-small"
+  provider: "openai"
+  dimensions: 1536
+  
+retrieval_params:
+  top_k: 5
+  similarity_threshold: 0.7
+  rerank: true
+  
+corpus:
+  sources:
+    - "california_dcc_regulations.pdf"
+    - "colorado_med_rules.pdf" 
+    - "washington_lcb_wac.pdf"
+    - "federal_csa_guidelines.pdf"
+  update_frequency: "daily"
+  last_updated: "2025-01-13T20:00:00Z"
+  
+generation:
+  model: "gpt-4o"
+  temperature: 0.1
+  max_tokens: 2000
+  context_window: 8000

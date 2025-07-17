@@ -1,0 +1,17 @@
+{
+  "state": "co",
+  "started_at": "2025-07-15T02:46:55.697946",
+  "current_phase": "validation",
+  "completed_phases": [
+    "citation_extraction",
+    "validation"
+  ],
+  "failed_phases": [],
+  "metrics": {
+    "files_mirrored": 0,
+    "citations_extracted": 0,
+    "vectors_created": 0,
+    "processing_time": 0.010972738265991211
+  },
+  "errors": []
+}

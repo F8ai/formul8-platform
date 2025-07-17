@@ -1,0 +1,36 @@
+# Compliance Agent Requirements
+# Core Flask API framework
+Flask==3.0.0
+Werkzeug==3.0.1
+
+# Async HTTP requests for regulation downloading
+aiohttp==3.9.1
+asyncio==3.4.3
+
+# HTML parsing for extracting regulation text
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# Task scheduling for daily updates
+schedule==1.2.0
+
+# Database for regulation storage
+sqlite3==0.0.0  # Built into Python
+
+# Data handling
+pandas==2.1.4
+numpy==1.24.3
+
+# Logging and utilities
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Development
+black==23.11.0
+flake8==6.1.0
+astrapy>=2.0.0
+cassandra-driver>=3.29.0
