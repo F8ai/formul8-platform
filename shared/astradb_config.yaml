@@ -1,0 +1,157 @@
+# AstraDB Configuration for Cannabis AI Agents
+# This configuration file defines vector storage settings for all 9 agents
+
+# Global AstraDB Settings
+astradb:
+  # Connection settings (will be loaded from environment variables)
+  token_env: "ASTRA_DB_APPLICATION_TOKEN"
+  endpoint_env: "ASTRA_DB_API_ENDPOINT"
+  
+  # Vector settings
+  vector_dimension: 1536  # OpenAI text-embedding-3-small
+  distance_metric: "cosine"
+  
+  # Embedding settings
+  embedding_model: "text-embedding-3-small"
+  embedding_provider: "openai"
+  embedding_api_key_env: "OPENAI_API_KEY"
+
+# Agent-specific configurations
+agents:
+  compliance:
+    collection_name: "cannabis_compliance_vectors"
+    description: "Cannabis regulatory compliance and legal requirements"
+    metadata_schema:
+      - state
+      - regulation_type
+      - compliance_category
+      - effective_date
+      - citation
+    
+  formulation:
+    collection_name: "cannabis_formulation_vectors"
+    description: "Cannabis product formulation and molecular analysis"
+    metadata_schema:
+      - product_type
+      - cannabinoid_profile
+      - terpene_profile
+      - formulation_method
+      - potency_range
+    
+  marketing:
+    collection_name: "cannabis_marketing_vectors"
+    description: "Cannabis marketing strategies and campaign data"
+    metadata_schema:
+      - campaign_type
+      - target_audience
+      - platform
+      - compliance_level
+      - market_segment
+    
+
+    
+  operations:
+    collection_name: "cannabis_operations_vectors"
+    description: "Cannabis operations and business processes"
+    metadata_schema:
+      - operation_type
+      - business_function
+      - process_category
+      - efficiency_metric
+      - compliance_level
+    
+  sourcing:
+    collection_name: "cannabis_sourcing_vectors"
+    description: "Cannabis supply chain and vendor management"
+    metadata_schema:
+      - vendor_type
+      - product_category
+      - quality_grade
+      - certification_level
+      - supply_chain_stage
+    
+  patent:
+    collection_name: "cannabis_patent_vectors"
+    description: "Cannabis intellectual property and patent analysis"
+    metadata_schema:
+      - patent_type
+      - filing_date
+      - patent_status
+      - technology_area
+      - inventor_count
+    
+  spectra:
+    collection_name: "cannabis_spectra_vectors"
+    description: "Cannabis testing and Certificate of Analysis data"
+    metadata_schema:
+      - test_type
+      - analysis_method
+      - sample_type
+      - testing_facility
+      - certification_date
+    
+
+
+# Search and retrieval settings
+retrieval:
+  default_top_k: 5
+  max_top_k: 20
+  similarity_threshold: 0.7
+  
+  # Search strategies
+  search_strategies:
+    semantic: "vector_search"
+    hybrid: "vector_plus_metadata"
+    filtered: "metadata_filter_first"
+  
+  # Cross-agent search settings
+  cross_agent:
+    enabled: true
+    max_agents: 3
+    results_per_agent: 3
+    consensus_threshold: 0.8
+
+# Performance and optimization
+performance:
+  batch_size: 50
+  max_concurrent_requests: 10
+  cache_ttl: 3600  # 1 hour
+  
+  # Indexing settings
+  indexing:
+    chunk_size: 1000
+    chunk_overlap: 200
+    text_splitter: "recursive_character"
+  
+  # Monitoring
+  monitoring:
+    track_queries: true
+    track_performance: true
+    track_accuracy: true
+    log_level: "INFO"
+
+# Migration settings
+migration:
+  backup_enabled: true
+  backup_path: "./backups"
+  verify_after_migration: true
+  cleanup_old_indexes: false  # Keep FAISS indexes as backup
+  
+  # Batch processing
+  batch_processing:
+    enabled: true
+    batch_size: 100
+    max_workers: 4
+    progress_reporting: true
+
+# Security settings
+security:
+  encrypt_metadata: false
+  audit_logging: true
+  access_control: "agent_based"
+  
+  # Data retention
+  data_retention:
+    max_documents_per_agent: 100000
+    auto_cleanup_enabled: false
+    retention_period_days: 365

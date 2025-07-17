@@ -1,12 +1,40 @@
-modules = ["nodejs-20"]
+modules = ["nodejs-20", "web", "postgresql-16", "python-3.11", "python3"]
+run = "npm run dev"
+hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["bash", "bc", "cairo", "ffmpeg-full", "freetype", "gh", "ghostscript", "glibcLocales", "gobject-introspection", "gtk3", "iana-etc", "libev", "libxcrypt", "libyaml", "pkg-config", "qhull", "tcl", "tk", "wget", "xsimd"]
+
+[deployment]
+deploymentTarget = "autoscale"
+build = ["npm", "run", "build"]
+run = ["npm", "run", "start"]
+
+[env]
+PORT = "5000"
+
 [workflows]
-runButton = "Run Formul8 Platform"
+runButton = "Project"
 
 [[workflows.workflow]]
-name = "Run Formul8 Platform"
-author = 42906269
-mode = "sequential"
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
+waitForPort = 5000
+
+[[ports]]
+localPort = 5000
+externalPort = 80

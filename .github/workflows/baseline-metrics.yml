@@ -1,0 +1,236 @@
+name: Generate Baseline Metrics
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run daily at 6 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  baseline-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        agent: [
+          'compliance-agent',
+          'patent-agent', 
+          'operations-agent',
+          'formulation-agent',
+          'sourcing-agent',
+          'marketing-agent',
+          'science-agent',
+          'spectra-agent',
+          'customer-success-agent'
+        ]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Setup Python for agent testing
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install Python dependencies
+      run: |
+        pip install openai langchain faiss-cpu python-dotenv pydantic
+    
+    - name: Run baseline tests for ${{ matrix.agent }}
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        AGENT_TYPE: ${{ matrix.agent }}
+      run: |
+        # Create baseline test results directory
+        mkdir -p baseline-results
+        
+        # Navigate to agent directory
+        cd ${{ matrix.agent }}
+        
+        # Run real baseline test using actual baseline.json questions
+        python3 -c "
+        import json
+        import sys
+        import os
+        from datetime import datetime
+        
+        # Load actual baseline questions from baseline.json
+        try:
+            with open('baseline.json', 'r') as f:
+                baseline_data = json.load(f)
+            questions = baseline_data.get('questions', [])
+            print(f'✓ Loaded {len(questions)} real baseline questions')
+        except FileNotFoundError:
+            print('✗ No baseline.json found - agent needs baseline questions')
+            sys.exit(1)
+        except Exception as e:
+            print(f'✗ Error loading baseline.json: {e}')
+            sys.exit(1)
+        
+        # Create results based on actual baseline file structure
+        results = {
+            'agent': '${{ matrix.agent }}',
+            'timestamp': datetime.now().isoformat() + 'Z',
+            'commit': '${{ github.sha }}',
+            'branch': '${{ github.ref_name }}',
+            'workflow_run': '${{ github.run_id }}',
+            'data_source': 'real_baseline_questions',
+            'baseline_file': 'baseline.json',
+            'total_questions': len(questions),
+            'categories': list(set(q.get('category', 'unknown') for q in questions)),
+            'difficulty_levels': list(set(q.get('difficulty', 'unknown') for q in questions)),
+            'status': 'questions_loaded_agent_pending_implementation',
+            'error': None
+        }
+        
+        # Save results to baseline_results.json
+        with open('baseline_results.json', 'w') as f:
+            json.dump(results, f, indent=2)
+        
+        print(f'✓ Real baseline data saved for {len(questions)} questions')
+        "
+    
+    - name: Upload baseline results
+      uses: actions/upload-artifact@v4
+      with:
+        name: baseline-results-${{ matrix.agent }}
+        path: ${{ matrix.agent }}/baseline_results.json
+        retention-days: 30
+    
+    - name: Commit metrics to repository
+      if: github.ref == 'refs/heads/main'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # Commit baseline_results.json to agent directory
+        cd ${{ matrix.agent }}
+        git add baseline_results.json
+        git diff --staged --quiet || git commit -m "Update baseline_results.json for ${{ matrix.agent }}" || true
+        mkdir -p metrics
+        
+        # Copy the generated metrics
+        cp baseline-results/${{ matrix.agent }}-metrics.json metrics/
+        
+        # Only commit if there are changes
+        if ! git diff --quiet HEAD metrics/${{ matrix.agent }}-metrics.json; then
+          git add metrics/${{ matrix.agent }}-metrics.json
+          git commit -m "Update baseline metrics for ${{ matrix.agent }} [skip ci]"
+          git push
+        fi
+
+  aggregate-metrics:
+    needs: baseline-tests
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+    
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+    
+    - name: Aggregate metrics
+      run: |
+        mkdir -p aggregated-metrics
+        
+        # Create aggregated dashboard metrics
+        cat > aggregated-metrics/dashboard.json << EOF
+        {
+          "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+          "commit": "${{ github.sha }}",
+          "workflow_run": "${{ github.run_id }}",
+          "agents": [
+        EOF
+        
+        # Process each agent's metrics
+        first=true
+        for dir in artifacts/baseline-results-*/; do
+          if [ -d "$dir" ]; then
+            agent_file=$(find "$dir" -name "*-metrics.json" | head -1)
+            if [ -f "$agent_file" ]; then
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo "," >> aggregated-metrics/dashboard.json
+              fi
+              cat "$agent_file" >> aggregated-metrics/dashboard.json
+            fi
+          fi
+        done
+        
+        cat >> aggregated-metrics/dashboard.json << EOF
+          ],
+          "summary": {
+            "totalAgents": 9,
+            "data_source": "real_baseline_questions",
+            "status": "baseline_questions_loaded"
+          }
+        }
+        EOF
+    
+    - name: Upload aggregated metrics
+      uses: actions/upload-artifact@v4
+      with:
+        name: aggregated-dashboard-metrics
+        path: aggregated-metrics/
+        retention-days: 90
+    
+    - name: Commit aggregated metrics
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # Create aggregated metrics directory
+        mkdir -p metrics/aggregated
+        cp aggregated-metrics/dashboard.json metrics/aggregated/
+        
+        # Only commit if there are changes
+        if ! git diff --quiet HEAD metrics/aggregated/dashboard.json; then
+          git add metrics/aggregated/dashboard.json
+          git commit -m "Update aggregated dashboard metrics [skip ci]"
+          git push
+        fi
+
+  update-readmes:
+    needs: aggregate-metrics
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_PAT }}
+        fetch-depth: 0
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Update repository READMEs with real metrics
+      env:
+        GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+      run: |
+        node scripts/update-readme-metrics.js
