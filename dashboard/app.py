@@ -1,314 +1,437 @@
 #!/usr/bin/env python3
 """
-Metabolomics Data Dashboard
+Metabolomics Network Dashboard
 
-A web-based dashboard for exploring and visualizing metabolomics data,
-genome information, and download status.
+A web-based dashboard for visualizing metabolic networks using Cytoscape.js,
+showing metabolites as nodes and enzymes as edges, with metrics on disconnected components.
 """
 
 import os
 import json
 import pandas as pd
-import plotly.graph_objs as go
-import plotly.express as px
-from plotly.subplots import make_subplots
+import networkx as nx
 from flask import Flask, render_template, jsonify, request, send_from_directory
 from pathlib import Path
 import datetime
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import subprocess
 import sys
+import re
+from collections import defaultdict
 
 app = Flask(__name__)
 
-class DataAnalyzer:
-    """Analyze and process metabolomics data for dashboard."""
+class MetabolicNetworkAnalyzer:
+    """Analyze and process metabolic networks for dashboard visualization."""
     
     def __init__(self, base_dir: str = "."):
         self.base_dir = Path(base_dir)
         self.genomes_dir = self.base_dir / "genomes"
+        self.networks_dir = self.base_dir / "networks"
+        self.networks_dir.mkdir(exist_ok=True)
         
-    def get_species_info(self) -> Dict:
-        """Get information about available species."""
-        species_info = {
+        # Species information
+        self.species = {
             "c.sativa": {
                 "name": "Cannabis sativa",
                 "taxid": "3483",
-                "assembly": "GCA_000230575.2",
-                "genome_size_mb": 828,
-                "chromosomes": 10,
-                "key_features": ["Cannabinoid biosynthesis", "Terpene synthases", "Secondary metabolites"]
+                "key_pathways": [
+                    "Cannabinoid biosynthesis",
+                    "Terpene biosynthesis", 
+                    "Fatty acid metabolism",
+                    "Secondary metabolite pathways"
+                ]
             },
             "p.cubensis": {
-                "name": "Psilocybe cubensis", 
+                "name": "Psilocybe cubensis",
                 "taxid": "5341",
-                "assembly": "GCA_000708925.1",
-                "genome_size_mb": 35,
-                "chromosomes": 8,
-                "key_features": ["Psilocybin biosynthesis", "Tryptamine pathways", "Fungal metabolism"]
+                "key_pathways": [
+                    "Tryptamine biosynthesis",
+                    "Psilocybin pathway",
+                    "Amino acid metabolism",
+                    "Fungal secondary metabolism"
+                ]
             }
         }
-        return species_info
     
-    def get_file_status(self) -> Dict:
-        """Check status of downloaded files."""
-        status = {}
-        species_info = self.get_species_info()
+    def parse_gff_annotations(self, species: str) -> Dict:
+        """Parse GFF annotations to extract gene information."""
+        gff_file = self.genomes_dir / species / f"{species}_genomic.gff"
+        genes = {}
         
-        for species, info in species_info.items():
-            species_dir = self.genomes_dir / species
-            status[species] = {
-                "name": info["name"],
-                "files": {},
-                "total_size_mb": 0,
-                "last_updated": None
-            }
-            
-            if species_dir.exists():
-                # Check for specific files
-                expected_files = [
-                    f"{species}_assembly_report.txt",
-                    f"{species}_genomic.fna",
-                    f"{species}_protein.faa", 
-                    f"{species}_genomic.gff",
-                    f"{species}_swissprot.fasta",
-                    f"{species}_swissprot.json",
-                    f"{species}_trembl.fasta",
-                    f"{species}_blast_results.txt",
-                    f"{species}_download_summary.md"
-                ]
+        if not gff_file.exists():
+            return genes
+        
+        with open(gff_file) as f:
+            for line in f:
+                if line.startswith('#'):
+                    continue
                 
-                for filename in expected_files:
-                    file_path = species_dir / filename
-                    if file_path.exists():
-                        size_mb = file_path.stat().st_size / (1024 * 1024)
-                        mtime = datetime.datetime.fromtimestamp(file_path.stat().st_mtime)
-                        status[species]["files"][filename] = {
-                            "exists": True,
-                            "size_mb": round(size_mb, 2),
-                            "modified": mtime.strftime("%Y-%m-%d %H:%M:%S")
+                parts = line.strip().split('\t')
+                if len(parts) < 9:
+                    continue
+                
+                feature_type = parts[2]
+                if feature_type == 'gene':
+                    attributes = parts[8]
+                    gene_id = self._extract_attribute(attributes, 'ID')
+                    gene_name = self._extract_attribute(attributes, 'Name')
+                    
+                    if gene_id:
+                        genes[gene_id] = {
+                            'name': gene_name or gene_id,
+                            'chromosome': parts[0],
+                            'start': int(parts[3]),
+                            'end': int(parts[4]),
+                            'strand': parts[6],
+                            'type': feature_type
                         }
-                        status[species]["total_size_mb"] += size_mb
-                        
-                        if status[species]["last_updated"] is None or mtime > status[species]["last_updated"]:
-                            status[species]["last_updated"] = mtime
-                    else:
-                        status[species]["files"][filename] = {
-                            "exists": False,
-                            "size_mb": 0,
-                            "modified": None
-                        }
-            else:
-                status[species]["files"] = {f"{species}_{f}": {"exists": False, "size_mb": 0, "modified": None} 
-                                          for f in ["assembly_report.txt", "genomic.fna", "protein.faa", "genomic.gff"]}
         
-        return status
+        return genes
     
-    def get_genome_stats(self) -> Dict:
-        """Calculate genome statistics."""
-        stats = {}
-        species_info = self.get_species_info()
+    def _extract_attribute(self, attributes: str, key: str) -> Optional[str]:
+        """Extract attribute value from GFF attributes string."""
+        pattern = rf'{key}=([^;]+)'
+        match = re.search(pattern, attributes)
+        return match.group(1) if match else None
+    
+    def parse_protein_annotations(self, species: str) -> Dict:
+        """Parse protein FASTA to extract protein information."""
+        protein_file = self.genomes_dir / species / f"{species}_protein.faa"
+        proteins = {}
         
-        for species, info in species_info.items():
-            species_dir = self.genomes_dir / species
-            stats[species] = {
-                "name": info["name"],
-                "genome_size_mb": info["genome_size_mb"],
-                "chromosomes": info["chromosomes"],
-                "protein_count": 0,
-                "gene_count": 0,
-                "swissprot_hits": 0,
-                "trembl_hits": 0
+        if not protein_file.exists():
+            return proteins
+        
+        current_protein = None
+        with open(protein_file) as f:
+            for line in f:
+                if line.startswith('>'):
+                    # Parse header line
+                    header = line.strip()[1:]  # Remove '>'
+                    parts = header.split(' ')
+                    protein_id = parts[0]
+                    
+                    # Extract description
+                    description = ' '.join(parts[1:]) if len(parts) > 1 else ''
+                    
+                    proteins[protein_id] = {
+                        'id': protein_id,
+                        'description': description,
+                        'sequence': ''
+                    }
+                    current_protein = protein_id
+                elif current_protein:
+                    proteins[current_protein]['sequence'] += line.strip()
+        
+        return proteins
+    
+    def parse_blast_results(self, species: str) -> Dict:
+        """Parse BLAST results to get protein annotations."""
+        blast_file = self.genomes_dir / species / f"{species}_blast_results.txt"
+        annotations = {}
+        
+        if not blast_file.exists():
+            return annotations
+        
+        with open(blast_file) as f:
+            for line in f:
+                parts = line.strip().split('\t')
+                if len(parts) >= 13:
+                    query_id = parts[0]
+                    subject_id = parts[1]
+                    identity = float(parts[2])
+                    evalue = float(parts[10])
+                    subject_title = parts[12]
+                    
+                    if query_id not in annotations:
+                        annotations[query_id] = []
+                    
+                    annotations[query_id].append({
+                        'subject_id': subject_id,
+                        'identity': identity,
+                        'evalue': evalue,
+                        'title': subject_title
+                    })
+        
+        return annotations
+    
+    def build_metabolic_network(self, species: str) -> Dict:
+        """Build metabolic network from genome data."""
+        print(f"Building metabolic network for {species}...")
+        
+        # Load data
+        genes = self.parse_gff_annotations(species)
+        proteins = self.parse_protein_annotations(species)
+        blast_annotations = self.parse_blast_results(species)
+        
+        # Create network
+        network = {
+            'nodes': [],
+            'edges': [],
+            'metabolites': {},
+            'enzymes': {},
+            'disconnected_metabolites': [],
+            'disconnected_enzymes': []
+        }
+        
+        # Add metabolite nodes (from KEGG pathways)
+        metabolites = self._get_kegg_metabolites(species)
+        for met_id, met_info in metabolites.items():
+            network['nodes'].append({
+                'id': met_id,
+                'label': met_info['name'],
+                'type': 'metabolite',
+                'kegg_id': met_info.get('kegg_id'),
+                'formula': met_info.get('formula'),
+                'mass': met_info.get('mass'),
+                'pathway': met_info.get('pathway')
+            })
+            network['metabolites'][met_id] = met_info
+        
+        # Add enzyme nodes and edges
+        enzyme_count = 0
+        for protein_id, protein_info in proteins.items():
+            # Check if protein has metabolic annotations
+            if protein_id in blast_annotations:
+                best_hit = blast_annotations[protein_id][0]  # Best hit
+                
+                # Extract enzyme information from annotation
+                enzyme_info = self._extract_enzyme_info(best_hit['title'])
+                
+                if enzyme_info:
+                    enzyme_id = f"enzyme_{enzyme_count}"
+                    enzyme_count += 1
+                    
+                    # Add enzyme node
+                    network['nodes'].append({
+                        'id': enzyme_id,
+                        'label': enzyme_info['name'],
+                        'type': 'enzyme',
+                        'protein_id': protein_id,
+                        'ec_number': enzyme_info.get('ec_number'),
+                        'reaction': enzyme_info.get('reaction'),
+                        'pathway': enzyme_info.get('pathway')
+                    })
+                    
+                    # Add edges to metabolites
+                    if enzyme_info.get('substrates'):
+                        for substrate in enzyme_info['substrates']:
+                            if substrate in metabolites:
+                                network['edges'].append({
+                                    'id': f"{enzyme_id}_{substrate}",
+                                    'source': substrate,
+                                    'target': enzyme_id,
+                                    'type': 'substrate',
+                                    'reaction': enzyme_info.get('reaction')
+                                })
+                    
+                    if enzyme_info.get('products'):
+                        for product in enzyme_info['products']:
+                            if product in metabolites:
+                                network['edges'].append({
+                                    'id': f"{enzyme_id}_{product}",
+                                    'source': enzyme_id,
+                                    'target': product,
+                                    'type': 'product',
+                                    'reaction': enzyme_info.get('reaction')
+                                })
+                    
+                    network['enzymes'][enzyme_id] = enzyme_info
+        
+        # Identify disconnected components
+        network['disconnected_metabolites'] = self._find_disconnected_metabolites(network)
+        network['disconnected_enzymes'] = self._find_disconnected_enzymes(network)
+        
+        # Save network
+        network_file = self.networks_dir / f"{species}_network.json"
+        with open(network_file, 'w') as f:
+            json.dump(network, f, indent=2)
+        
+        return network
+    
+    def _get_kegg_metabolites(self, species: str) -> Dict:
+        """Get KEGG metabolites for the species."""
+        # This would typically query KEGG API
+        # For now, return some example metabolites based on species
+        if species == "c.sativa":
+            return {
+                "met_001": {"name": "THCA", "kegg_id": "C16514", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
+                "met_002": {"name": "CBDA", "kegg_id": "C16515", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
+                "met_003": {"name": "Geranyl pyrophosphate", "kegg_id": "C00235", "formula": "C10H20O7P2", "mass": 314.21, "pathway": "Terpene biosynthesis"},
+                "met_004": {"name": "Farnesyl pyrophosphate", "kegg_id": "C00448", "formula": "C15H28O7P2", "mass": 382.33, "pathway": "Terpene biosynthesis"},
+                "met_005": {"name": "Olivetolic acid", "kegg_id": "C16516", "formula": "C12H16O4", "mass": 224.26, "pathway": "Cannabinoid biosynthesis"}
             }
-            
-            # Count proteins
-            protein_file = species_dir / f"{species}_protein.faa"
-            if protein_file.exists():
-                with open(protein_file) as f:
-                    stats[species]["protein_count"] = sum(1 for line in f if line.startswith(">"))
-            
-            # Count genes from GFF
-            gff_file = species_dir / f"{species}_genomic.gff"
-            if gff_file.exists():
-                with open(gff_file) as f:
-                    stats[species]["gene_count"] = sum(1 for line in f if line.startswith("#") == False and "gene" in line.split("\t")[2])
-            
-            # Count SwissProt entries
-            swissprot_file = species_dir / f"{species}_swissprot.fasta"
-            if swissprot_file.exists():
-                with open(swissprot_file) as f:
-                    stats[species]["swissprot_hits"] = sum(1 for line in f if line.startswith(">"))
-            
-            # Count TrEMBL entries
-            trembl_file = species_dir / f"{species}_trembl.fasta"
-            if trembl_file.exists():
-                with open(trembl_file) as f:
-                    stats[species]["trembl_hits"] = sum(1 for line in f if line.startswith(">"))
-        
-        return stats
+        elif species == "p.cubensis":
+            return {
+                "met_001": {"name": "Psilocybin", "kegg_id": "C16517", "formula": "C12H17N2O4P", "mass": 284.25, "pathway": "Tryptamine biosynthesis"},
+                "met_002": {"name": "Psilocin", "kegg_id": "C16518", "formula": "C12H16N2O", "mass": 204.27, "pathway": "Tryptamine biosynthesis"},
+                "met_003": {"name": "Tryptophan", "kegg_id": "C00078", "formula": "C11H12N2O2", "mass": 204.23, "pathway": "Amino acid metabolism"},
+                "met_004": {"name": "Tryptamine", "kegg_id": "C00398", "formula": "C10H12N2", "mass": 160.22, "pathway": "Tryptamine biosynthesis"},
+                "met_005": {"name": "Serotonin", "kegg_id": "C00780", "formula": "C10H12N2O", "mass": 176.22, "pathway": "Tryptamine biosynthesis"}
+            }
+        return {}
     
-    def create_genome_comparison_chart(self) -> str:
-        """Create a comparison chart of genome statistics."""
-        stats = self.get_genome_stats()
-        
-        # Prepare data for plotting
-        species_names = [stats[s]["name"] for s in stats.keys()]
-        genome_sizes = [stats[s]["genome_size_mb"] for s in stats.keys()]
-        protein_counts = [stats[s]["protein_count"] for s in stats.keys()]
-        gene_counts = [stats[s]["gene_count"] for s in stats.keys()]
-        
-        # Create subplots
-        fig = make_subplots(
-            rows=2, cols=2,
-            subplot_titles=('Genome Size (MB)', 'Protein Count', 'Gene Count', 'Data Coverage'),
-            specs=[[{"type": "bar"}, {"type": "bar"}],
-                   [{"type": "bar"}, {"type": "pie"}]]
-        )
-        
-        # Genome size
-        fig.add_trace(
-            go.Bar(x=species_names, y=genome_sizes, name="Genome Size (MB)", marker_color='lightblue'),
-            row=1, col=1
-        )
-        
-        # Protein count
-        fig.add_trace(
-            go.Bar(x=species_names, y=protein_counts, name="Protein Count", marker_color='lightgreen'),
-            row=1, col=2
-        )
-        
-        # Gene count
-        fig.add_trace(
-            go.Bar(x=species_names, y=gene_counts, name="Gene Count", marker_color='lightcoral'),
-            row=2, col=1
-        )
-        
-        # Data coverage pie chart
-        total_files = len(stats) * 9  # 9 expected files per species
-        existing_files = sum(1 for s in stats.values() for f in s.values() if isinstance(f, dict) and f.get("exists", False))
-        missing_files = total_files - existing_files
-        
-        fig.add_trace(
-            go.Pie(labels=['Downloaded', 'Missing'], values=[existing_files, missing_files], 
-                   marker_colors=['lightgreen', 'lightcoral']),
-            row=2, col=2
-        )
-        
-        fig.update_layout(height=600, title_text="Genome Data Overview")
-        
-        return fig.to_html(full_html=False)
+    def _extract_enzyme_info(self, annotation: str) -> Optional[Dict]:
+        """Extract enzyme information from BLAST annotation."""
+        # This is a simplified parser - in practice, you'd use more sophisticated parsing
+        if "transferase" in annotation.lower():
+            return {
+                "name": "Transferase",
+                "ec_number": "2.x.x.x",
+                "reaction": "Transfer of functional group",
+                "pathway": "Metabolism",
+                "substrates": ["met_001"],
+                "products": ["met_002"]
+            }
+        elif "synthase" in annotation.lower():
+            return {
+                "name": "Synthase",
+                "ec_number": "4.x.x.x",
+                "reaction": "Synthesis reaction",
+                "pathway": "Biosynthesis",
+                "substrates": ["met_003"],
+                "products": ["met_004"]
+            }
+        elif "reductase" in annotation.lower():
+            return {
+                "name": "Reductase",
+                "ec_number": "1.x.x.x",
+                "reaction": "Reduction reaction",
+                "pathway": "Metabolism",
+                "substrates": ["met_005"],
+                "products": ["met_001"]
+            }
+        return None
     
-    def create_file_status_chart(self) -> str:
-        """Create a chart showing file download status."""
-        status = self.get_file_status()
+    def _find_disconnected_metabolites(self, network: Dict) -> List:
+        """Find metabolites that are not connected to the main network."""
+        connected_metabolites = set()
         
-        # Prepare data
-        file_types = ["Assembly Report", "Genome FASTA", "Protein FASTA", "GFF Annotation", 
-                     "SwissProt FASTA", "SwissProt JSON", "TrEMBL FASTA", "BLAST Results", "Summary"]
+        for edge in network['edges']:
+            if edge['source'] in network['metabolites']:
+                connected_metabolites.add(edge['source'])
+            if edge['target'] in network['metabolites']:
+                connected_metabolites.add(edge['target'])
         
-        species_names = [status[s]["name"] for s in status.keys()]
-        
-        # Create heatmap data
-        heatmap_data = []
-        for species in status.keys():
-            row = []
-            for file_type in file_types:
-                file_key = f"{species}_{file_type.lower().replace(' ', '_')}.txt"
-                if file_key in status[species]["files"]:
-                    row.append(1 if status[species]["files"][file_key]["exists"] else 0)
-                else:
-                    row.append(0)
-            heatmap_data.append(row)
-        
-        fig = go.Figure(data=go.Heatmap(
-            z=heatmap_data,
-            x=file_types,
-            y=species_names,
-            colorscale='RdYlGn',
-            showscale=True
-        ))
-        
-        fig.update_layout(
-            title="File Download Status",
-            xaxis_title="File Types",
-            yaxis_title="Species",
-            height=400
-        )
-        
-        return fig.to_html(full_html=False)
-    
-    def get_download_logs(self) -> List[Dict]:
-        """Get recent download activity logs."""
-        logs = []
-        
-        # Check for download summary files
-        for species in ["c.sativa", "p.cubensis"]:
-            summary_file = self.genomes_dir / species / f"{species}_download_summary.md"
-            if summary_file.exists():
-                mtime = datetime.datetime.fromtimestamp(summary_file.stat().st_mtime)
-                logs.append({
-                    "timestamp": mtime.strftime("%Y-%m-%d %H:%M:%S"),
-                    "species": species,
-                    "action": "Download completed",
-                    "status": "Success"
+        disconnected = []
+        for met_id, met_info in network['metabolites'].items():
+            if met_id not in connected_metabolites:
+                disconnected.append({
+                    'id': met_id,
+                    'name': met_info['name'],
+                    'pathway': met_info.get('pathway'),
+                    'formula': met_info.get('formula')
                 })
         
-        # Sort by timestamp
-        logs.sort(key=lambda x: x["timestamp"], reverse=True)
-        return logs[:10]  # Return last 10 entries
+        return disconnected
+    
+    def _find_disconnected_enzymes(self, network: Dict) -> List:
+        """Find enzymes that are not connected to metabolites."""
+        connected_enzymes = set()
+        
+        for edge in network['edges']:
+            if edge['source'] in network['enzymes']:
+                connected_enzymes.add(edge['source'])
+            if edge['target'] in network['enzymes']:
+                connected_enzymes.add(edge['target'])
+        
+        disconnected = []
+        for enzyme_id, enzyme_info in network['enzymes'].items():
+            if enzyme_id not in connected_enzymes:
+                disconnected.append({
+                    'id': enzyme_id,
+                    'name': enzyme_info['name'],
+                    'ec_number': enzyme_info.get('ec_number'),
+                    'pathway': enzyme_info.get('pathway')
+                })
+        
+        return disconnected
+    
+    def get_network_metrics(self, species: str) -> Dict:
+        """Get comprehensive metrics for the metabolic network."""
+        network_file = self.networks_dir / f"{species}_network.json"
+        
+        if not network_file.exists():
+            # Build network if it doesn't exist
+            network = self.build_metabolic_network(species)
+        else:
+            with open(network_file) as f:
+                network = json.load(f)
+        
+        # Calculate metrics
+        total_metabolites = len(network['metabolites'])
+        total_enzymes = len(network['enzymes'])
+        total_edges = len(network['edges'])
+        
+        # Network analysis using NetworkX
+        G = nx.DiGraph()
+        for edge in network['edges']:
+            G.add_edge(edge['source'], edge['target'])
+        
+        # Calculate network metrics
+        metrics = {
+            'total_metabolites': total_metabolites,
+            'total_enzymes': total_enzymes,
+            'total_edges': total_edges,
+            'connected_metabolites': total_metabolites - len(network['disconnected_metabolites']),
+            'connected_enzymes': total_enzymes - len(network['disconnected_enzymes']),
+            'disconnected_metabolites': len(network['disconnected_metabolites']),
+            'disconnected_enzymes': len(network['disconnected_enzymes']),
+            'network_density': nx.density(G) if G.number_of_edges() > 0 else 0,
+            'average_degree': sum(dict(G.degree()).values()) / G.number_of_nodes() if G.number_of_nodes() > 0 else 0,
+            'number_of_components': nx.number_strongly_connected_components(G),
+            'largest_component_size': len(max(nx.strongly_connected_components(G), key=len)) if G.number_of_nodes() > 0 else 0
+        }
+        
+        return metrics
 
 # Initialize analyzer
-analyzer = DataAnalyzer()
+analyzer = MetabolicNetworkAnalyzer()
 
 @app.route('/')
 def index():
     """Main dashboard page."""
-    species_info = analyzer.get_species_info()
-    file_status = analyzer.get_file_status()
-    genome_stats = analyzer.get_genome_stats()
-    download_logs = analyzer.get_download_logs()
+    species_info = analyzer.species
+    networks = {}
+    metrics = {}
+    
+    for species in species_info.keys():
+        try:
+            networks[species] = analyzer.build_metabolic_network(species)
+            metrics[species] = analyzer.get_network_metrics(species)
+        except Exception as e:
+            print(f"Error processing {species}: {e}")
+            networks[species] = {'nodes': [], 'edges': [], 'metabolites': {}, 'enzymes': {}}
+            metrics[species] = {}
     
     return render_template('index.html',
                          species_info=species_info,
-                         file_status=file_status,
-                         genome_stats=genome_stats,
-                         download_logs=download_logs)
+                         networks=networks,
+                         metrics=metrics)
 
-@app.route('/api/stats')
-def api_stats():
-    """API endpoint for genome statistics."""
-    return jsonify(analyzer.get_genome_stats())
-
-@app.route('/api/status')
-def api_status():
-    """API endpoint for file status."""
-    return jsonify(analyzer.get_file_status())
-
-@app.route('/api/charts/genome-comparison')
-def api_genome_comparison():
-    """API endpoint for genome comparison chart."""
-    return analyzer.create_genome_comparison_chart()
-
-@app.route('/api/charts/file-status')
-def api_file_status():
-    """API endpoint for file status chart."""
-    return analyzer.create_file_status_chart()
-
-@app.route('/download/<species>')
-def download_species(species):
-    """Trigger download for a specific species."""
+@app.route('/api/network/<species>')
+def api_network(species):
+    """API endpoint for network data."""
     try:
-        # Run the download script for the specific species
-        result = subprocess.run([
-            sys.executable, "download_genomes.py", "--species", species
-        ], capture_output=True, text=True)
-        
-        if result.returncode == 0:
-            return jsonify({"status": "success", "message": f"Download started for {species}"})
-        else:
-            return jsonify({"status": "error", "message": result.stderr})
+        network = analyzer.build_metabolic_network(species)
+        return jsonify(network)
     except Exception as e:
-        return jsonify({"status": "error", "message": str(e)})
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/metrics/<species>')
+def api_metrics(species):
+    """API endpoint for network metrics."""
+    try:
+        metrics = analyzer.get_network_metrics(species)
+        return jsonify(metrics)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/species')
+def api_species():
+    """API endpoint for species information."""
+    return jsonify(analyzer.species)
 
 @app.route('/static/<path:filename>')
 def static_files(filename):

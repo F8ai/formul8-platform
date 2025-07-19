@@ -1,30 +1,36 @@
-// Metabolomics Data Dashboard JavaScript
+// Metabolic Network Dashboard JavaScript
 
 // Global variables
-let refreshInterval;
-let currentTimeInterval;
+let cy;
+let currentSpecies = null;
+let currentNetwork = null;
+let currentMetrics = null;
+let labelsVisible = true;
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Metabolomics Data Dashboard initialized');
+    console.log('Metabolic Network Dashboard initialized');
     
     // Start real-time updates
     startRealTimeUpdates();
     
-    // Load charts
-    loadCharts();
+    // Initialize Cytoscape
+    initializeCytoscape();
     
-    // Set up auto-refresh
-    setupAutoRefresh();
+    // Set up event listeners
+    setupEventListeners();
     
-    // Initialize tooltips
-    initializeTooltips();
+    // Load first species by default
+    const speciesButtons = document.querySelectorAll('.btn-outline-primary');
+    if (speciesButtons.length > 0) {
+        loadSpecies('c.sativa');
+    }
 });
 
 // Real-time clock
 function startRealTimeUpdates() {
     updateCurrentTime();
-    currentTimeInterval = setInterval(updateCurrentTime, 1000);
+    setInterval(updateCurrentTime, 1000);
 }
 
 function updateCurrentTime() {
@@ -36,124 +42,485 @@ function updateCurrentTime() {
     }
 }
 
-// Load interactive charts
-function loadCharts() {
-    loadGenomeComparisonChart();
-    loadFileStatusChart();
-}
-
-function loadGenomeComparisonChart() {
-    fetch('/api/charts/genome-comparison')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('genome-comparison-chart').innerHTML = html;
-            console.log('Genome comparison chart loaded');
-        })
-        .catch(error => {
-            console.error('Error loading genome comparison chart:', error);
-            showError('Failed to load genome comparison chart');
-        });
-}
-
-function loadFileStatusChart() {
-    fetch('/api/charts/file-status')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('file-status-chart').innerHTML = html;
-            console.log('File status chart loaded');
-        })
-        .catch(error => {
-            console.error('Error loading file status chart:', error);
-            showError('Failed to load file status chart');
-        });
-}
-
-// Auto-refresh functionality
-function setupAutoRefresh() {
-    // Refresh data every 30 seconds
-    refreshInterval = setInterval(refreshData, 30000);
-}
-
-function refreshData() {
-    console.log('Refreshing dashboard data...');
+// Initialize Cytoscape.js
+function initializeCytoscape() {
+    cy = cytoscape({
+        container: document.getElementById('cy'),
+        style: [
+            {
+                selector: 'node[type="metabolite"]',
+                style: {
+                    'background-color': '#e74c3c',
+                    'label': 'data(label)',
+                    'color': '#fff',
+                    'text-valign': 'center',
+                    'text-halign': 'center',
+                    'text-wrap': 'wrap',
+                    'text-max-width': '80px',
+                    'font-size': '10px',
+                    'font-weight': 'bold',
+                    'width': '40px',
+                    'height': '40px',
+                    'border-width': '2px',
+                    'border-color': '#fff',
+                    'border-opacity': 1
+                }
+            },
+            {
+                selector: 'node[type="enzyme"]',
+                style: {
+                    'background-color': '#3498db',
+                    'label': 'data(label)',
+                    'color': '#fff',
+                    'text-valign': 'center',
+                    'text-halign': 'center',
+                    'text-wrap': 'wrap',
+                    'text-max-width': '100px',
+                    'font-size': '9px',
+                    'font-weight': 'bold',
+                    'width': '50px',
+                    'height': '30px',
+                    'shape': 'rectangle',
+                    'border-width': '2px',
+                    'border-color': '#fff',
+                    'border-opacity': 1
+                }
+            },
+            {
+                selector: 'edge[type="substrate"]',
+                style: {
+                    'width': 3,
+                    'line-color': '#f39c12',
+                    'target-arrow-color': '#f39c12',
+                    'target-arrow-shape': 'triangle',
+                    'curve-style': 'bezier',
+                    'label': 'data(reaction)',
+                    'font-size': '8px',
+                    'text-rotation': 'autorotate',
+                    'text-margin-y': '-10px'
+                }
+            },
+            {
+                selector: 'edge[type="product"]',
+                style: {
+                    'width': 3,
+                    'line-color': '#27ae60',
+                    'target-arrow-color': '#27ae60',
+                    'target-arrow-shape': 'triangle',
+                    'curve-style': 'bezier',
+                    'label': 'data(reaction)',
+                    'font-size': '8px',
+                    'text-rotation': 'autorotate',
+                    'text-margin-y': '-10px'
+                }
+            },
+            {
+                selector: 'node:selected',
+                style: {
+                    'border-color': '#f39c12',
+                    'border-width': '3px',
+                    'border-opacity': 1
+                }
+            },
+            {
+                selector: 'edge:selected',
+                style: {
+                    'width': 5,
+                    'line-color': '#f39c12'
+                }
+            }
+        ],
+        layout: {
+            name: 'cose',
+            animate: 'end',
+            animationDuration: 1000,
+            nodeDimensionsIncludeLabels: true,
+            fit: true,
+            padding: 50
+        }
+    });
     
-    // Refresh charts
-    loadCharts();
-    
-    // Refresh stats
-    refreshStats();
-    
-    // Show refresh indicator
-    showRefreshIndicator();
+    // Add event listeners to Cytoscape
+    setupCytoscapeEvents();
 }
 
-function refreshStats() {
-    fetch('/api/stats')
+// Setup Cytoscape event listeners
+function setupCytoscapeEvents() {
+    // Node click events
+    cy.on('tap', 'node', function(evt) {
+        const node = evt.target;
+        showNodeDetails(node);
+    });
+    
+    // Edge click events
+    cy.on('tap', 'edge', function(evt) {
+        const edge = evt.target;
+        showEdgeDetails(edge);
+    });
+    
+    // Background click to deselect
+    cy.on('tap', function(evt) {
+        if (evt.target === cy) {
+            hideDetails();
+        }
+    });
+    
+    // Mouse over events for tooltips
+    cy.on('mouseover', 'node', function(evt) {
+        const node = evt.target;
+        showNodeTooltip(node, evt.renderedPosition);
+    });
+    
+    cy.on('mouseout', 'node', function(evt) {
+        hideTooltip();
+    });
+}
+
+// Load species data
+function loadSpecies(species) {
+    console.log(`Loading species: ${species}`);
+    
+    // Update button states
+    updateSpeciesButtons(species);
+    
+    // Show loading state
+    showLoading();
+    
+    // Load network data
+    fetch(`/api/network/${species}`)
         .then(response => response.json())
         .then(data => {
-            updateStatsDisplay(data);
+            currentNetwork = data;
+            currentSpecies = species;
+            loadNetworkData(data);
         })
         .catch(error => {
-            console.error('Error refreshing stats:', error);
+            console.error('Error loading network:', error);
+            showError('Failed to load network data');
+        });
+    
+    // Load metrics
+    fetch(`/api/metrics/${species}`)
+        .then(response => response.json())
+        .then(data => {
+            currentMetrics = data;
+            displayMetrics(data);
+        })
+        .catch(error => {
+            console.error('Error loading metrics:', error);
         });
 }
 
-function updateStatsDisplay(stats) {
-    // Update the stats cards with new data
-    Object.keys(stats).forEach(species => {
-        const stat = stats[species];
-        const card = document.querySelector(`[data-species="${species}"]`);
-        if (card) {
-            // Update protein count
-            const proteinElement = card.querySelector('.protein-count');
-            if (proteinElement) {
-                proteinElement.textContent = stat.protein_count;
-            }
-            
-            // Update gene count
-            const geneElement = card.querySelector('.gene-count');
-            if (geneElement) {
-                geneElement.textContent = stat.gene_count;
-            }
+// Update species selection buttons
+function updateSpeciesButtons(selectedSpecies) {
+    const buttons = document.querySelectorAll('.btn-outline-primary');
+    buttons.forEach(button => {
+        if (button.onclick.toString().includes(selectedSpecies)) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
         }
     });
 }
 
-// Download functionality
-function downloadSpecies(species) {
-    console.log(`Starting download for ${species}`);
+// Load network data into Cytoscape
+function loadNetworkData(network) {
+    // Clear existing elements
+    cy.elements().remove();
     
-    // Show loading state
-    const button = event.target;
-    const originalText = button.innerHTML;
-    button.innerHTML = '<span class="loading"></span> Downloading...';
-    button.disabled = true;
-    
-    fetch(`/download/${species}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                showSuccess(`Download started for ${species}`);
-                // Refresh data after a delay
-                setTimeout(() => {
-                    refreshData();
-                }, 5000);
-            } else {
-                showError(`Download failed: ${data.message}`);
+    // Add nodes
+    network.nodes.forEach(node => {
+        cy.add({
+            group: 'nodes',
+            data: {
+                id: node.id,
+                label: node.label,
+                type: node.type,
+                kegg_id: node.kegg_id,
+                formula: node.formula,
+                mass: node.mass,
+                pathway: node.pathway,
+                protein_id: node.protein_id,
+                ec_number: node.ec_number,
+                reaction: node.reaction
             }
-        })
-        .catch(error => {
-            console.error('Download error:', error);
-            showError('Download failed. Please try again.');
-        })
-        .finally(() => {
-            // Restore button state
-            button.innerHTML = originalText;
-            button.disabled = false;
         });
+    });
+    
+    // Add edges
+    network.edges.forEach(edge => {
+        cy.add({
+            group: 'edges',
+            data: {
+                id: edge.id,
+                source: edge.source,
+                target: edge.target,
+                type: edge.type,
+                reaction: edge.reaction
+            }
+        });
+    });
+    
+    // Apply layout
+    const layout = cy.layout({
+        name: 'cose',
+        animate: 'end',
+        animationDuration: 1000,
+        nodeDimensionsIncludeLabels: true,
+        fit: true,
+        padding: 50
+    });
+    
+    layout.run();
+    
+    // Display disconnected components
+    displayDisconnectedComponents(network);
+    
+    // Hide loading
+    hideLoading();
+    
+    // Show sections
+    document.getElementById('metrics-section').style.display = 'block';
+    document.getElementById('disconnected-section').style.display = 'block';
+}
+
+// Display network metrics
+function displayMetrics(metrics) {
+    const metricsContent = document.getElementById('metrics-content');
+    
+    const metricsHTML = `
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.total_metabolites || 0}</div>
+                <div class="metric-label">Total Metabolites</div>
+                <div class="metric-description">Compounds in network</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.total_enzymes || 0}</div>
+                <div class="metric-label">Total Enzymes</div>
+                <div class="metric-description">Proteins in network</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.total_edges || 0}</div>
+                <div class="metric-label">Total Reactions</div>
+                <div class="metric-description">Metabolic reactions</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.network_density ? metrics.network_density.toFixed(3) : 0}</div>
+                <div class="metric-label">Network Density</div>
+                <div class="metric-description">Connection density</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.disconnected_metabolites || 0}</div>
+                <div class="metric-label">Disconnected Metabolites</div>
+                <div class="metric-description">Unconnected compounds</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.disconnected_enzymes || 0}</div>
+                <div class="metric-label">Disconnected Enzymes</div>
+                <div class="metric-description">Unconnected proteins</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.number_of_components || 0}</div>
+                <div class="metric-label">Network Components</div>
+                <div class="metric-description">Connected subgraphs</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric-card">
+                <div class="metric-value">${metrics.largest_component_size || 0}</div>
+                <div class="metric-label">Largest Component</div>
+                <div class="metric-description">Main network size</div>
+            </div>
+        </div>
+    `;
+    
+    metricsContent.innerHTML = metricsHTML;
+}
+
+// Display disconnected components
+function displayDisconnectedComponents(network) {
+    // Display disconnected metabolites
+    const metabolitesTable = document.getElementById('disconnected-metabolites-table').getElementsByTagName('tbody')[0];
+    metabolitesTable.innerHTML = '';
+    
+    network.disconnected_metabolites.forEach(metabolite => {
+        const row = metabolitesTable.insertRow();
+        row.innerHTML = `
+            <td><strong>${metabolite.name}</strong></td>
+            <td>${metabolite.pathway || 'Unknown'}</td>
+            <td>${metabolite.formula || 'N/A'}</td>
+        `;
+    });
+    
+    // Display disconnected enzymes
+    const enzymesTable = document.getElementById('disconnected-enzymes-table').getElementsByTagName('tbody')[0];
+    enzymesTable.innerHTML = '';
+    
+    network.disconnected_enzymes.forEach(enzyme => {
+        const row = enzymesTable.insertRow();
+        row.innerHTML = `
+            <td><strong>${enzyme.name}</strong></td>
+            <td>${enzyme.ec_number || 'N/A'}</td>
+            <td>${enzyme.pathway || 'Unknown'}</td>
+        `;
+    });
+}
+
+// Show node details
+function showNodeDetails(node) {
+    const data = node.data();
+    let details = '';
+    
+    if (data.type === 'metabolite') {
+        details = `
+            <h6>Metabolite: ${data.label}</h6>
+            <p><strong>KEGG ID:</strong> ${data.kegg_id || 'N/A'}</p>
+            <p><strong>Formula:</strong> ${data.formula || 'N/A'}</p>
+            <p><strong>Mass:</strong> ${data.mass || 'N/A'}</p>
+            <p><strong>Pathway:</strong> ${data.pathway || 'Unknown'}</p>
+        `;
+    } else if (data.type === 'enzyme') {
+        details = `
+            <h6>Enzyme: ${data.label}</h6>
+            <p><strong>Protein ID:</strong> ${data.protein_id || 'N/A'}</p>
+            <p><strong>EC Number:</strong> ${data.ec_number || 'N/A'}</p>
+            <p><strong>Reaction:</strong> ${data.reaction || 'N/A'}</p>
+            <p><strong>Pathway:</strong> ${data.pathway || 'Unknown'}</p>
+        `;
+    }
+    
+    showDetailsPanel(details);
+}
+
+// Show edge details
+function showEdgeDetails(edge) {
+    const data = edge.data();
+    const details = `
+        <h6>Reaction: ${data.reaction || 'Unknown'}</h6>
+        <p><strong>Type:</strong> ${data.type}</p>
+        <p><strong>From:</strong> ${data.source}</p>
+        <p><strong>To:</strong> ${data.target}</p>
+    `;
+    
+    showDetailsPanel(details);
+}
+
+// Show details panel
+function showDetailsPanel(content) {
+    // Remove existing details panel
+    const existingPanel = document.querySelector('.network-info');
+    if (existingPanel) {
+        existingPanel.remove();
+    }
+    
+    // Create new details panel
+    const panel = document.createElement('div');
+    panel.className = 'network-info';
+    panel.innerHTML = content;
+    
+    // Add close button
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '×';
+    closeBtn.className = 'btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-1';
+    closeBtn.onclick = hideDetails;
+    panel.appendChild(closeBtn);
+    
+    document.getElementById('cy').appendChild(panel);
+}
+
+// Hide details panel
+function hideDetails() {
+    const panel = document.querySelector('.network-info');
+    if (panel) {
+        panel.remove();
+    }
+}
+
+// Show node tooltip
+function showNodeTooltip(node, position) {
+    const data = node.data();
+    const tooltip = document.createElement('div');
+    tooltip.className = 'cytoscape-tooltip';
+    tooltip.innerHTML = `
+        <strong>${data.label}</strong><br>
+        Type: ${data.type}<br>
+        ${data.pathway ? `Pathway: ${data.pathway}` : ''}
+    `;
+    
+    tooltip.style.left = position.x + 10 + 'px';
+    tooltip.style.top = position.y - 10 + 'px';
+    
+    document.body.appendChild(tooltip);
+}
+
+// Hide tooltip
+function hideTooltip() {
+    const tooltip = document.querySelector('.cytoscape-tooltip');
+    if (tooltip) {
+        tooltip.remove();
+    }
+}
+
+// Network control functions
+function resetView() {
+    cy.fit();
+    cy.center();
+}
+
+function toggleLabels() {
+    labelsVisible = !labelsVisible;
+    
+    if (labelsVisible) {
+        cy.nodes().style('label', 'data(label)');
+    } else {
+        cy.nodes().style('label', '');
+    }
+}
+
+function exportNetwork() {
+    if (!currentNetwork) {
+        showError('No network data to export');
+        return;
+    }
+    
+    const dataStr = JSON.stringify(currentNetwork, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${currentSpecies}_metabolic_network.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showSuccess('Network exported successfully');
 }
 
 // Utility functions
+function showLoading() {
+    const cyContainer = document.getElementById('cy');
+    cyContainer.innerHTML = '<div class="d-flex justify-content-center align-items-center h-100"><div class="loading"></div> Loading network...</div>';
+}
+
+function hideLoading() {
+    // Cytoscape will handle the display
+}
+
 function showSuccess(message) {
     showAlert(message, 'success');
 }
@@ -162,24 +529,17 @@ function showError(message) {
     showAlert(message, 'danger');
 }
 
-function showWarning(message) {
-    showAlert(message, 'warning');
-}
-
 function showAlert(message, type) {
-    // Create alert element
     const alertDiv = document.createElement('div');
-    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
     alertDiv.innerHTML = `
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
     
-    // Insert at top of container
-    const container = document.querySelector('.container-fluid');
-    container.insertBefore(alertDiv, container.firstChild);
+    document.body.appendChild(alertDiv);
     
-    // Auto-dismiss after 5 seconds
     setTimeout(() => {
         if (alertDiv.parentNode) {
             alertDiv.remove();
@@ -187,150 +547,69 @@ function showAlert(message, type) {
     }, 5000);
 }
 
-function showRefreshIndicator() {
-    // Add a subtle refresh indicator
-    const navbar = document.querySelector('.navbar');
-    const indicator = document.createElement('div');
-    indicator.className = 'refresh-indicator';
-    indicator.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i>';
-    indicator.style.cssText = `
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        background: rgba(0, 123, 255, 0.9);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 20px;
-        font-size: 14px;
-        z-index: 1000;
-        animation: fadeInOut 2s ease-in-out;
-    `;
-    
-    document.body.appendChild(indicator);
-    
-    setTimeout(() => {
-        if (indicator.parentNode) {
-            indicator.remove();
+// Setup event listeners
+function setupEventListeners() {
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(event) {
+        // Ctrl/Cmd + R to reset view
+        if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
+            event.preventDefault();
+            resetView();
         }
-    }, 2000);
-}
-
-// Initialize tooltips
-function initializeTooltips() {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-}
-
-// Search and filter functionality
-function setupSearch() {
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            filterTableRows(searchTerm);
-        });
-    }
-}
-
-function filterTableRows(searchTerm) {
-    const tableRows = document.querySelectorAll('tbody tr');
-    
-    tableRows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        if (text.includes(searchTerm)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
+        
+        // Ctrl/Cmd + E to export
+        if ((event.ctrlKey || event.metaKey) && event.key === 'e') {
+            event.preventDefault();
+            exportNetwork();
+        }
+        
+        // L to toggle labels
+        if (event.key === 'l' || event.key === 'L') {
+            event.preventDefault();
+            toggleLabels();
         }
     });
 }
 
-// Export functionality
-function exportData(format = 'csv') {
-    fetch('/api/stats')
-        .then(response => response.json())
-        .then(data => {
-            if (format === 'csv') {
-                exportToCSV(data);
-            } else if (format === 'json') {
-                exportToJSON(data);
-            }
-        })
-        .catch(error => {
-            console.error('Export error:', error);
-            showError('Export failed');
-        });
-}
-
-function exportToCSV(data) {
-    let csv = 'Species,Genome Size (MB),Chromosomes,Proteins,Genes,SwissProt Hits,TrEMBL Hits\n';
+// Search functionality
+function searchNetwork(query) {
+    if (!query) {
+        cy.nodes().removeClass('node-highlight');
+        return;
+    }
     
-    Object.keys(data).forEach(species => {
-        const stat = data[species];
-        csv += `${stat.name},${stat.genome_size_mb},${stat.chromosomes},${stat.protein_count},${stat.gene_count},${stat.swissprot_hits},${stat.trembl_hits}\n`;
+    const nodes = cy.nodes();
+    nodes.removeClass('node-highlight');
+    
+    nodes.forEach(node => {
+        const data = node.data();
+        if (data.label.toLowerCase().includes(query.toLowerCase()) ||
+            (data.pathway && data.pathway.toLowerCase().includes(query.toLowerCase()))) {
+            node.addClass('node-highlight');
+        }
     });
-    
-    downloadFile(csv, 'metabolomics_data.csv', 'text/csv');
 }
 
-function exportToJSON(data) {
-    const json = JSON.stringify(data, null, 2);
-    downloadFile(json, 'metabolomics_data.json', 'application/json');
+// Network analysis functions
+function highlightPathway(pathway) {
+    cy.nodes().removeClass('node-highlight');
+    
+    cy.nodes().forEach(node => {
+        const data = node.data();
+        if (data.pathway === pathway) {
+            node.addClass('node-highlight');
+        }
+    });
 }
 
-function downloadFile(content, filename, contentType) {
-    const blob = new Blob([content], { type: contentType });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
+function showConnectedComponents() {
+    const components = cy.elements().components();
+    console.log(`Network has ${components.length} connected components`);
+    
+    components.forEach((component, index) => {
+        console.log(`Component ${index + 1}: ${component.nodes().length} nodes, ${component.edges().length} edges`);
+    });
 }
-
-// Keyboard shortcuts
-document.addEventListener('keydown', function(event) {
-    // Ctrl/Cmd + R to refresh
-    if ((event.ctrlKey || event.metaKey) && event.key === 'r') {
-        event.preventDefault();
-        refreshData();
-    }
-    
-    // Ctrl/Cmd + E to export
-    if ((event.ctrlKey || event.metaKey) && event.key === 'e') {
-        event.preventDefault();
-        exportData('csv');
-    }
-});
-
-// Cleanup on page unload
-window.addEventListener('beforeunload', function() {
-    if (refreshInterval) {
-        clearInterval(refreshInterval);
-    }
-    if (currentTimeInterval) {
-        clearInterval(currentTimeInterval);
-    }
-});
-
-// Add CSS for refresh indicator animation
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInOut {
-        0% { opacity: 0; transform: scale(0.8); }
-        50% { opacity: 1; transform: scale(1); }
-        100% { opacity: 0; transform: scale(0.8); }
-    }
-    
-    .refresh-indicator {
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-`;
-document.head.appendChild(style);
 
 // Performance monitoring
 function logPerformance() {

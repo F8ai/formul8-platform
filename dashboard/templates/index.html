@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metabolomics Data Dashboard</title>
+    <title>Metabolic Network Dashboard</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Cytoscape.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>
     <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
@@ -19,8 +19,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <i class="fas fa-dna me-2"></i>
-                Metabolomics Data Dashboard
+                <i class="fas fa-network-wired me-2"></i>
+                Metabolic Network Dashboard
             </a>
             <div class="navbar-nav ms-auto">
                 <span class="navbar-text">
@@ -38,210 +38,183 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title">
-                            <i class="fas fa-chart-line me-2"></i>
-                            Genome Data Overview
+                            <i class="fas fa-project-diagram me-2"></i>
+                            Metabolic Network Analysis
                         </h1>
                         <p class="card-text">
-                            Real-time monitoring and visualization of metabolomics data, genome information, 
-                            and download status for C. sativa and P. cubensis.
+                            Interactive visualization of metabolic networks showing metabolites as nodes and enzymes as edges.
+                            Explore disconnected compounds and enzymes for each species.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Quick Stats -->
+        <!-- Species Selection -->
         <div class="row mb-4">
-            {% for species, stats in genome_stats.items() %}
-            <div class="col-md-6">
-                <div class="card h-100">
+            <div class="col-12">
+                <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">
                             <i class="fas fa-leaf me-2"></i>
-                            {{ stats.name }}
+                            Select Species
                         </h5>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="stat-item">
-                                    <div class="stat-value">{{ stats.genome_size_mb }}</div>
-                                    <div class="stat-label">Genome Size (MB)</div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="stat-item">
-                                    <div class="stat-value">{{ stats.chromosomes }}</div>
-                                    <div class="stat-label">Chromosomes</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-6">
-                                <div class="stat-item">
-                                    <div class="stat-value">{{ stats.protein_count }}</div>
-                                    <div class="stat-label">Proteins</div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="stat-item">
-                                    <div class="stat-value">{{ stats.gene_count }}</div>
-                                    <div class="stat-label">Genes</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <button class="btn btn-sm btn-outline-primary" onclick="downloadSpecies('{{ species }}')">
-                                <i class="fas fa-download me-1"></i>
-                                Download Data
+                        <div class="btn-group" role="group">
+                            {% for species_id, species_info in species_info.items() %}
+                            <button type="button" class="btn btn-outline-primary" onclick="loadSpecies('{{ species_id }}')">
+                                <i class="fas fa-dna me-1"></i>
+                                {{ species_info.name }}
                             </button>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
 
-        <!-- Charts Row -->
-        <div class="row mb-4">
+        <!-- Network Metrics -->
+        <div class="row mb-4" id="metrics-section" style="display: none;">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">
                             <i class="fas fa-chart-bar me-2"></i>
-                            Genome Comparison
+                            Network Metrics
                         </h5>
                     </div>
                     <div class="card-body">
-                        <div id="genome-comparison-chart"></div>
+                        <div class="row" id="metrics-content">
+                            <!-- Metrics will be populated here -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- File Status -->
+        <!-- Network Visualization -->
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">
-                            <i class="fas fa-file-alt me-2"></i>
-                            File Download Status
+                            <i class="fas fa-sitemap me-2"></i>
+                            Metabolic Network
                         </h5>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="resetView()">
+                                <i class="fas fa-home me-1"></i>
+                                Reset View
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="toggleLabels()">
+                                <i class="fas fa-tag me-1"></i>
+                                Toggle Labels
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="exportNetwork()">
+                                <i class="fas fa-download me-1"></i>
+                                Export
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
-                        <div id="file-status-chart"></div>
+                        <div id="cy" style="height: 600px; border: 1px solid #ddd; border-radius: 8px;"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Detailed File Status -->
-        <div class="row mb-4">
-            {% for species, status in file_status.items() %}
+        <!-- Disconnected Components -->
+        <div class="row mb-4" id="disconnected-section" style="display: none;">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">
-                            <i class="fas fa-folder me-2"></i>
-                            {{ status.name }} Files
+                            <i class="fas fa-unlink me-2"></i>
+                            Disconnected Metabolites
                         </h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-sm">
+                            <table class="table table-sm" id="disconnected-metabolites-table">
                                 <thead>
                                     <tr>
-                                        <th>File Type</th>
-                                        <th>Status</th>
-                                        <th>Size (MB)</th>
-                                        <th>Modified</th>
+                                        <th>Metabolite</th>
+                                        <th>Pathway</th>
+                                        <th>Formula</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for filename, file_info in status.files.items() %}
-                                    <tr>
-                                        <td>{{ filename.replace(species + '_', '').replace('.txt', '').replace('.fna', '').replace('.faa', '').replace('.fasta', '').replace('.json', '').replace('.md', '').replace('_', ' ').title() }}</td>
-                                        <td>
-                                            {% if file_info.exists %}
-                                            <span class="badge bg-success">
-                                                <i class="fas fa-check me-1"></i>
-                                                Downloaded
-                                            </span>
-                                            {% else %}
-                                            <span class="badge bg-warning">
-                                                <i class="fas fa-clock me-1"></i>
-                                                Pending
-                                            </span>
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ file_info.size_mb }}</td>
-                                        <td>{{ file_info.modified or 'N/A' }}</td>
-                                    </tr>
-                                    {% endfor %}
+                                    <!-- Will be populated -->
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="mt-3">
-                            <small class="text-muted">
-                                <i class="fas fa-info-circle me-1"></i>
-                                Total Size: {{ "%.2f"|format(status.total_size_mb) }} MB
-                                {% if status.last_updated %}
-                                | Last Updated: {{ status.last_updated.strftime('%Y-%m-%d %H:%M:%S') if status.last_updated else 'N/A' }}
-                                {% endif %}
-                            </small>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-unlink me-2"></i>
+                            Disconnected Enzymes
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm" id="disconnected-enzymes-table">
+                                <thead>
+                                    <tr>
+                                        <th>Enzyme</th>
+                                        <th>EC Number</th>
+                                        <th>Pathway</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Will be populated -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Recent Activity -->
+        <!-- Network Legend -->
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title mb-0">
-                            <i class="fas fa-history me-2"></i>
-                            Recent Activity
+                            <i class="fas fa-info-circle me-2"></i>
+                            Network Legend
                         </h5>
                     </div>
                     <div class="card-body">
-                        {% if download_logs %}
-                        <div class="table-responsive">
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Timestamp</th>
-                                        <th>Species</th>
-                                        <th>Action</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for log in download_logs %}
-                                    <tr>
-                                        <td>{{ log.timestamp }}</td>
-                                        <td>{{ log.species }}</td>
-                                        <td>{{ log.action }}</td>
-                                        <td>
-                                            <span class="badge bg-success">
-                                                <i class="fas fa-check me-1"></i>
-                                                {{ log.status }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Node Types:</h6>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="legend-node metabolite-node me-2"></div>
+                                    <span>Metabolites (compounds)</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="legend-node enzyme-node me-2"></div>
+                                    <span>Enzymes (proteins)</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Edge Types:</h6>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="legend-edge substrate-edge me-2"></div>
+                                    <span>Substrate → Enzyme</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="legend-edge product-edge me-2"></div>
+                                    <span>Enzyme → Product</span>
+                                </div>
+                            </div>
                         </div>
-                        {% else %}
-                        <div class="text-center text-muted">
-                            <i class="fas fa-inbox fa-3x mb-3"></i>
-                            <p>No recent activity</p>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -254,9 +227,9 @@
             <div class="row">
                 <div class="col-12 text-center">
                     <small class="text-muted">
-                        Metabolomics Data Dashboard | 
+                        Metabolic Network Dashboard | 
                         <i class="fas fa-code me-1"></i>
-                        Powered by Flask & Plotly
+                        Powered by Cytoscape.js & Flask
                     </small>
                 </div>
             </div>
