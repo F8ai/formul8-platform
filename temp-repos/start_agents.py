@@ -13,8 +13,8 @@ import signal
 from typing import List, Dict
 import argparse
 
-# Add shared directory to path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'metabolomics-data', 'shared'))
+# Add base-agent shared directory to path
+sys.path.append(os.path.join(os.path.dirname(__file__), 'base-agent', 'shared'))
 from port_config import PORTS, COMPONENT_DESCRIPTIONS
 
 class AgentManager:
