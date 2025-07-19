@@ -1,35 +1,71 @@
 [submodule "agents/compliance-agent"]
-	path = agents/compliance-agent
-	url = https://github.com/F8ai/compliance-agent.git
+        path = agents/compliance-agent
+        url = https://github.com/F8ai/compliance-agent.git
 
 [submodule "agents/formulation-agent"]
-	path = agents/formulation-agent
-	url = https://github.com/F8ai/formulation-agent.git
+        path = agents/formulation-agent
+        url = https://github.com/F8ai/formulation-agent.git
 
 [submodule "agents/marketing-agent"]
-	path = agents/marketing-agent
-	url = https://github.com/F8ai/marketing-agent.git
+        path = agents/marketing-agent
+        url = https://github.com/F8ai/marketing-agent.git
 
 [submodule "agents/operations-agent"]
-	path = agents/operations-agent
-	url = https://github.com/F8ai/operations-agent.git
+        path = agents/operations-agent
+        url = https://github.com/F8ai/operations-agent.git
 
 [submodule "agents/sourcing-agent"]
-	path = agents/sourcing-agent
-	url = https://github.com/F8ai/sourcing-agent.git
+        path = agents/sourcing-agent
+        url = https://github.com/F8ai/sourcing-agent.git
 
 [submodule "agents/patent-agent"]
-	path = agents/patent-agent
-	url = https://github.com/F8ai/patent-agent.git
+        path = agents/patent-agent
+        url = https://github.com/F8ai/patent-agent.git
 
 [submodule "agents/science-agent"]
-	path = agents/science-agent
-	url = https://github.com/F8ai/science-agent.git
+        path = agents/science-agent
+        url = https://github.com/F8ai/science-agent.git
 
 [submodule "agents/spectra-agent"]
-	path = agents/spectra-agent
-	url = https://github.com/F8ai/spectra-agent.git
+        path = agents/spectra-agent
+        url = https://github.com/F8ai/spectra-agent.git
 
 [submodule "agents/customer-success-agent"]
-	path = agents/customer-success-agent
-	url = https://github.com/F8ai/customer-success-agent.git
+        path = agents/customer-success-agent
+        url = https://github.com/F8ai/customer-success-agent.git
+
+[submodule "agents/compliance-agent/data"]
+        path = agents/compliance-agent/data
+        url = https://github.com/F8ai/compliance-data.git
+
+[submodule "agents/formulation-agent/data"]
+        path = agents/formulation-agent/data
+        url = https://github.com/F8ai/formulation-data.git
+
+[submodule "agents/marketing-agent/data"]
+        path = agents/marketing-agent/data
+        url = https://github.com/F8ai/marketing-data.git
+
+[submodule "agents/operations-agent/data"]
+        path = agents/operations-agent/data
+        url = https://github.com/F8ai/operations-data.git
+
+[submodule "agents/sourcing-agent/data"]
+        path = agents/sourcing-agent/data
+        url = https://github.com/F8ai/sourcing-data.git
+
+[submodule "agents/patent-agent/data"]
+        path = agents/patent-agent/data
+        url = https://github.com/F8ai/patent-data.git
+
+[submodule "agents/science-agent/data"]
+        path = agents/science-agent/data
+        url = https://github.com/F8ai/science-data.git
+
+[submodule "agents/spectra-agent/data"]
+        path = agents/spectra-agent/data
+        url = https://github.com/F8ai/spectra-data.git
+
+[submodule "agents/customer-success-agent/data"]
+        path = agents/customer-success-agent/data
+        url = https://github.com/F8ai/customer-success-data.git

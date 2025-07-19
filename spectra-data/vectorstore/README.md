@@ -1,0 +1,1 @@
+# Spectra vector store indices

@@ -1,0 +1,1 @@
+# Operations vector store indices

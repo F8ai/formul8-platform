@@ -24,6 +24,7 @@ import { insertProjectSchema, insertQuerySchema } from "@shared/schema";
 import { orchestrator } from "./services/orchestrator";
 import { registerBenchmarkRoutes } from "./routes/benchmarks";
 import { registerAgentManagementRoutes } from "./routes/agent-management";
+import federationRouter from "./routes/federation";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -233,6 +234,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // AstraDB vector search routes
   app.use('/api/astradb', astradbRouter);
+
+  // Federation routes
+  app.use('/api/federation', federationRouter);
 
   // Roadmap routes
   app.get('/api/roadmap/features', getRoadmapFeatures);

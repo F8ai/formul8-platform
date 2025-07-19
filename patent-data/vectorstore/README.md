@@ -1,0 +1,1 @@
+# Patent vector store indices
