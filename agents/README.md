@@ -8,6 +8,7 @@ This directory contains Git submodules for all Formul8 agents. Each agent is mai
 - **customer-success-agent** - Customer success and support automation
 - **formulation-agent** - RDKit molecular analysis and formulation optimization
 - **marketing-agent** - N8N workflows and marketing intelligence
+- **metabolomics-agent** - Metabolomics data analysis and gene interpretation
 - **operations-agent** - Operations and process automation
 - **patent-agent** - Patent research and analysis
 - **science-agent** - PubMed integration and evidence analysis
@@ -77,6 +78,7 @@ git commit -m "Remove agent-name submodule"
 - https://github.com/F8ai/customer-success-agent
 - https://github.com/F8ai/formulation-agent
 - https://github.com/F8ai/marketing-agent
+- https://github.com/F8ai/metabolomics-agent
 - https://github.com/F8ai/operations-agent
 - https://github.com/F8ai/patent-agent
 - https://github.com/F8ai/science-agent
