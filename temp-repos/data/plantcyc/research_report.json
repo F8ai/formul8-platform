@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-07-19 15:04:25",
+  "target_species": "Cannabis sativa",
+  "plantcyc_goals": {
+    "compounds": 2510,
+    "enzymatic_reactions": 3008,
+    "enzymes": 5509
+  },
+  "findings": {
+    "plantcyc_web_accessible": false,
+    "plantcyc_api_accessible": false,
+    "c_sativa_available": false,
+    "alternative_sources": []
+  },
+  "recommendations": [
+    "Contact PlantCyc directly for C. sativa data access",
+    "Explore KEGG database for C. sativa metabolic data",
+    "Consider building custom metabolic network from genome annotations",
+    "Use existing C. sativa genome assemblies for pathway reconstruction"
+  ],
+  "next_steps": [
+    "Research PlantCyc licensing and access requirements",
+    "Explore academic partnerships for data access",
+    "Develop custom metabolic network reconstruction pipeline",
+    "Integrate multiple data sources for comprehensive coverage"
+  ]
+}

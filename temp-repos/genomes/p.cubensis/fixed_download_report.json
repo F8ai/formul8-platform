@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-07-19 15:36:03",
+  "target_species": "Psilocybe cubensis",
+  "download_results": {
+    "GCA_000708925.1": {
+      "download": {
+        "assembly": "GCA_000708925.1",
+        "files_downloaded": [],
+        "files_failed": [],
+        "total_size": 0
+      },
+      "extract": {
+        "extracted": [
+          "GCA_000708925.1_rna_from_genomic.fna",
+          "GCA_000708925.1_cds_from_genomic.fna",
+          "GCA_000708925.1_genomic.gff",
+          "GCA_000708925.1_genomic.fna",
+          "GCA_000708925.1_protein.faa"
+        ],
+        "failed": []
+      }
+    },
+    "GCA_001272575.2": {
+      "download": {
+        "assembly": "GCA_001272575.2",
+        "files_downloaded": [],
+        "files_failed": [],
+        "total_size": 0
+      },
+      "extract": {
+        "extracted": [
+          "GCA_001272575.2_protein.faa",
+          "GCA_001272575.2_rna_from_genomic.fna",
+          "GCA_001272575.2_cds_from_genomic.fna",
+          "GCA_001272575.2_genomic.fna",
+          "GCA_001272575.2_genomic.gff"
+        ],
+        "failed": []
+      }
+    }
+  },
+  "summary": {
+    "total_assemblies": 2,
+    "successful_downloads": 0,
+    "web_downloads": 2
+  }
+}

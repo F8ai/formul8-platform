@@ -1,0 +1,100 @@
+{
+  "timestamp": "2025-07-19 15:39:37",
+  "target_species": "Psilocybe cubensis",
+  "download_results": {
+    "GCA_000708925.1": {
+      "assembly": "GCA_000708925.1",
+      "files_downloaded": [
+        {
+          "filename": "GCA_000708925.1_ASM70892v1_genomic.fna.gz",
+          "type": "genomic_fna",
+          "size_bytes": 362859576,
+          "size_mb": 346.0498580932617
+        },
+        {
+          "filename": "GCA_000708925.1_ASM70892v1_protein.faa.gz",
+          "type": "protein_faa",
+          "size_bytes": 2930889,
+          "size_mb": 2.7951135635375977
+        },
+        {
+          "filename": "GCA_000708925.1_ASM70892v1_genomic.gff.gz",
+          "type": "genomic_gff",
+          "size_bytes": 6273621,
+          "size_mb": 5.9829912185668945
+        },
+        {
+          "filename": "GCA_000708925.1_ASM70892v1_cds_from_genomic.fna.gz",
+          "type": "cds_fna",
+          "size_bytes": 5466139,
+          "size_mb": 5.212916374206543
+        },
+        {
+          "filename": "GCA_000708925.1_ASM70892v1_rna_from_genomic.fna.gz",
+          "type": "rna_fna",
+          "size_bytes": 5229661,
+          "size_mb": 4.987393379211426
+        }
+      ],
+      "files_failed": [],
+      "files_extracted": [
+        "GCA_000708925.1_ASM70892v1_genomic.fna",
+        "GCA_000708925.1_ASM70892v1_protein.faa",
+        "GCA_000708925.1_ASM70892v1_genomic.gff",
+        "GCA_000708925.1_ASM70892v1_cds_from_genomic.fna",
+        "GCA_000708925.1_ASM70892v1_rna_from_genomic.fna"
+      ],
+      "total_size": 382759886
+    },
+    "GCA_001272575.2": {
+      "assembly": "GCA_001272575.2",
+      "files_downloaded": [
+        {
+          "filename": "GCA_001272575.2_ASM127257v2_genomic.fna.gz",
+          "type": "genomic_fna",
+          "size_bytes": 7688048,
+          "size_mb": 7.3318939208984375
+        },
+        {
+          "filename": "GCA_001272575.2_ASM127257v2_protein.faa.gz",
+          "type": "protein_faa",
+          "size_bytes": 2511001,
+          "size_mb": 2.39467716217041
+        },
+        {
+          "filename": "GCA_001272575.2_ASM127257v2_genomic.gff.gz",
+          "type": "genomic_gff",
+          "size_bytes": 1137753,
+          "size_mb": 1.0850458145141602
+        },
+        {
+          "filename": "GCA_001272575.2_ASM127257v2_cds_from_genomic.fna.gz",
+          "type": "cds_fna",
+          "size_bytes": 4069589,
+          "size_mb": 3.8810625076293945
+        },
+        {
+          "filename": "GCA_001272575.2_ASM127257v2_rna_from_genomic.fna.gz",
+          "type": "rna_fna",
+          "size_bytes": 4034270,
+          "size_mb": 3.847379684448242
+        }
+      ],
+      "files_failed": [],
+      "files_extracted": [
+        "GCA_001272575.2_ASM127257v2_genomic.fna",
+        "GCA_001272575.2_ASM127257v2_protein.faa",
+        "GCA_001272575.2_ASM127257v2_genomic.gff",
+        "GCA_001272575.2_ASM127257v2_cds_from_genomic.fna",
+        "GCA_001272575.2_ASM127257v2_rna_from_genomic.fna"
+      ],
+      "total_size": 19440661
+    }
+  },
+  "summary": {
+    "total_assemblies": 2,
+    "total_files_downloaded": 10,
+    "total_files_failed": 0,
+    "total_size_mb": 383.5683317184448
+  }
+}

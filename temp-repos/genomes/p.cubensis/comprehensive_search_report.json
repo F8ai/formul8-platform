@@ -1,0 +1,114 @@
+{
+  "timestamp": "2025-07-19 15:12:12",
+  "target_species": "Psilocybe cubensis",
+  "search_results": {
+    "ncbi": {
+      "found": false,
+      "genomes": [],
+      "error": null
+    },
+    "ensembl_fungi": {
+      "found": true,
+      "genomes": [
+        {
+          "name": "Psilocybe cubensis",
+          "source": "Ensembl Fungi",
+          "url": null,
+          "assembly": null,
+          "status": "found"
+        },
+        {
+          "name": "Psilocybe cubensis",
+          "source": "Ensembl Fungi",
+          "url": "/Multi/UserData/ManageData?time=1752959531",
+          "assembly": null,
+          "status": "found"
+        },
+        {
+          "name": "Psilocybe cubensis",
+          "source": "Ensembl Fungi",
+          "url": null,
+          "assembly": null,
+          "status": "found"
+        },
+        {
+          "name": "Psilocybe cubensis",
+          "source": "Ensembl Fungi",
+          "url": null,
+          "assembly": null,
+          "status": "found"
+        },
+        {
+          "name": "Psilocybe cubensis",
+          "source": "Ensembl Fungi",
+          "url": "?q=Psilocybe cubensis*;species=all;collection=all;site=ensembl",
+          "assembly": null,
+          "status": "found"
+        },
+        {
+          "name": "Psilocybe cubensis",
+          "source": "Ensembl Fungi",
+          "url": null,
+          "assembly": null,
+          "status": "found"
+        }
+      ],
+      "error": null
+    },
+    "fungidb": {
+      "found": false,
+      "genomes": [],
+      "error": null
+    },
+    "known_genomes": {
+      "found": true,
+      "genomes": [
+        {
+          "name": "Psilocybe cubensis",
+          "assembly": "GCA_000708925.1",
+          "source": "NCBI",
+          "url": "https://www.ncbi.nlm.nih.gov/assembly/GCA_000708925.1",
+          "status": "published",
+          "reference": "van der Heijden et al. 2015"
+        },
+        {
+          "name": "Psilocybe cubensis",
+          "assembly": "GCA_001272575.2",
+          "source": "NCBI",
+          "url": "https://www.ncbi.nlm.nih.gov/assembly/GCA_001272575.2",
+          "status": "published",
+          "reference": "Reynolds et al. 2018"
+        }
+      ],
+      "error": null
+    }
+  },
+  "known_genomes": [
+    {
+      "assembly": "GCA_000708925.1",
+      "source": "NCBI",
+      "url": "https://www.ncbi.nlm.nih.gov/assembly/GCA_000708925.1",
+      "status": "available"
+    },
+    {
+      "assembly": "GCA_001272575.2",
+      "source": "NCBI",
+      "url": "https://www.ncbi.nlm.nih.gov/assembly/GCA_001272575.2",
+      "status": "available"
+    }
+  ],
+  "recommendations": [
+    "Download P. cubensis genome assembly GCA_000708925.1 from NCBI",
+    "Download P. cubensis genome assembly GCA_001272575.2 from NCBI",
+    "Generate custom genome annotations using Prokka or similar tools",
+    "Perform BLAST searches against protein databases for functional annotation",
+    "Integrate genome data with metabolic network reconstruction"
+  ],
+  "next_steps": [
+    "Download genome assemblies from NCBI",
+    "Generate GFF annotations from genome sequences",
+    "Extract protein sequences for BLAST analysis",
+    "Build metabolic network from genome annotations",
+    "Compare with dashboard PlantCyc goals"
+  ]
+}
