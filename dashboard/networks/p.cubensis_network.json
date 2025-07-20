@@ -1,0 +1,121 @@
+{
+  "nodes": [
+    {
+      "id": "met_001",
+      "label": "Psilocybin",
+      "type": "metabolite",
+      "kegg_id": "C16517",
+      "formula": "C12H17N2O4P",
+      "mass": 284.25,
+      "pathway": "Tryptamine biosynthesis"
+    },
+    {
+      "id": "met_002",
+      "label": "Psilocin",
+      "type": "metabolite",
+      "kegg_id": "C16518",
+      "formula": "C12H16N2O",
+      "mass": 204.27,
+      "pathway": "Tryptamine biosynthesis"
+    },
+    {
+      "id": "met_003",
+      "label": "Tryptophan",
+      "type": "metabolite",
+      "kegg_id": "C00078",
+      "formula": "C11H12N2O2",
+      "mass": 204.23,
+      "pathway": "Amino acid metabolism"
+    },
+    {
+      "id": "met_004",
+      "label": "Tryptamine",
+      "type": "metabolite",
+      "kegg_id": "C00398",
+      "formula": "C10H12N2",
+      "mass": 160.22,
+      "pathway": "Tryptamine biosynthesis"
+    },
+    {
+      "id": "met_005",
+      "label": "Serotonin",
+      "type": "metabolite",
+      "kegg_id": "C00780",
+      "formula": "C10H12N2O",
+      "mass": 176.22,
+      "pathway": "Tryptamine biosynthesis"
+    }
+  ],
+  "edges": [],
+  "metabolites": {
+    "met_001": {
+      "name": "Psilocybin",
+      "kegg_id": "C16517",
+      "formula": "C12H17N2O4P",
+      "mass": 284.25,
+      "pathway": "Tryptamine biosynthesis"
+    },
+    "met_002": {
+      "name": "Psilocin",
+      "kegg_id": "C16518",
+      "formula": "C12H16N2O",
+      "mass": 204.27,
+      "pathway": "Tryptamine biosynthesis"
+    },
+    "met_003": {
+      "name": "Tryptophan",
+      "kegg_id": "C00078",
+      "formula": "C11H12N2O2",
+      "mass": 204.23,
+      "pathway": "Amino acid metabolism"
+    },
+    "met_004": {
+      "name": "Tryptamine",
+      "kegg_id": "C00398",
+      "formula": "C10H12N2",
+      "mass": 160.22,
+      "pathway": "Tryptamine biosynthesis"
+    },
+    "met_005": {
+      "name": "Serotonin",
+      "kegg_id": "C00780",
+      "formula": "C10H12N2O",
+      "mass": 176.22,
+      "pathway": "Tryptamine biosynthesis"
+    }
+  },
+  "enzymes": {},
+  "disconnected_metabolites": [
+    {
+      "id": "met_001",
+      "name": "Psilocybin",
+      "pathway": "Tryptamine biosynthesis",
+      "formula": "C12H17N2O4P"
+    },
+    {
+      "id": "met_002",
+      "name": "Psilocin",
+      "pathway": "Tryptamine biosynthesis",
+      "formula": "C12H16N2O"
+    },
+    {
+      "id": "met_003",
+      "name": "Tryptophan",
+      "pathway": "Amino acid metabolism",
+      "formula": "C11H12N2O2"
+    },
+    {
+      "id": "met_004",
+      "name": "Tryptamine",
+      "pathway": "Tryptamine biosynthesis",
+      "formula": "C10H12N2"
+    },
+    {
+      "id": "met_005",
+      "name": "Serotonin",
+      "pathway": "Tryptamine biosynthesis",
+      "formula": "C10H12N2O"
+    }
+  ],
+  "disconnected_enzymes": []
+}

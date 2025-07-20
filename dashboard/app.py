@@ -8,7 +8,6 @@ showing metabolites as nodes and enzymes as edges, with metrics on disconnected 
 
 import os
 import json
-import pandas as pd
 import networkx as nx
 from flask import Flask, render_template, jsonify, request, send_from_directory
 from pathlib import Path
@@ -252,16 +251,34 @@ class MetabolicNetworkAnalyzer:
     
     def _get_kegg_metabolites(self, species: str) -> Dict:
         """Get KEGG metabolites for the species."""
-        # This would typically query KEGG API
-        # For now, return some example metabolites based on species
+        metabolites = {}
+        
         if species == "c.sativa":
-            return {
-                "met_001": {"name": "THCA", "kegg_id": "C16514", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
-                "met_002": {"name": "CBDA", "kegg_id": "C16515", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
-                "met_003": {"name": "Geranyl pyrophosphate", "kegg_id": "C00235", "formula": "C10H20O7P2", "mass": 314.21, "pathway": "Terpene biosynthesis"},
-                "met_004": {"name": "Farnesyl pyrophosphate", "kegg_id": "C00448", "formula": "C15H28O7P2", "mass": 382.33, "pathway": "Terpene biosynthesis"},
-                "met_005": {"name": "Olivetolic acid", "kegg_id": "C16516", "formula": "C12H16O4", "mass": 224.26, "pathway": "Cannabinoid biosynthesis"}
-            }
+            # Load cannabis compounds from our database
+            cannabis_file = self.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "compounds" / "cannabis_compounds.json"
+            if cannabis_file.exists():
+                with open(cannabis_file) as f:
+                    cannabis_data = json.load(f)
+                    for compound in cannabis_data.get('compounds', []):
+                        metabolites[compound['id']] = {
+                            "name": compound['name'],
+                            "kegg_id": compound.get('kegg_id'),
+                            "formula": compound['formula'],
+                            "mass": compound['mass'],
+                            "pathway": compound['pathway'],
+                            "description": compound.get('description'),
+                            "biological_activity": compound.get('biological_activity'),
+                            "concentration_range": compound.get('concentration_range')
+                        }
+            else:
+                # Fallback to example metabolites
+                metabolites = {
+                    "met_001": {"name": "THCA", "kegg_id": "C16514", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
+                    "met_002": {"name": "CBDA", "kegg_id": "C16515", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
+                    "met_003": {"name": "Geranyl pyrophosphate", "kegg_id": "C00235", "formula": "C10H20O7P2", "mass": 314.21, "pathway": "Terpene biosynthesis"},
+                    "met_004": {"name": "Farnesyl pyrophosphate", "kegg_id": "C00448", "formula": "C15H28O7P2", "mass": 382.33, "pathway": "Terpene biosynthesis"},
+                    "met_005": {"name": "Olivetolic acid", "kegg_id": "C16516", "formula": "C12H16O4", "mass": 224.26, "pathway": "Cannabinoid biosynthesis"}
+                }
         elif species == "p.cubensis":
             return {
                 "met_001": {"name": "Psilocybin", "kegg_id": "C16517", "formula": "C12H17N2O4P", "mass": 284.25, "pathway": "Tryptamine biosynthesis"},
@@ -270,11 +287,32 @@ class MetabolicNetworkAnalyzer:
                 "met_004": {"name": "Tryptamine", "kegg_id": "C00398", "formula": "C10H12N2", "mass": 160.22, "pathway": "Tryptamine biosynthesis"},
                 "met_005": {"name": "Serotonin", "kegg_id": "C00780", "formula": "C10H12N2O", "mass": 176.22, "pathway": "Tryptamine biosynthesis"}
             }
-        return {}
+        return metabolites
     
     def _extract_enzyme_info(self, annotation: str) -> Optional[Dict]:
         """Extract enzyme information from BLAST annotation."""
-        # This is a simplified parser - in practice, you'd use more sophisticated parsing
+        # Load cannabis enzymes from our database
+        cannabis_file = self.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "enzymes" / "cannabis_enzymes.json"
+        if cannabis_file.exists():
+            with open(cannabis_file) as f:
+                cannabis_data = json.load(f)
+                for enzyme in cannabis_data.get('enzymes', []):
+                    # Check if annotation contains enzyme name or EC number
+                    if (enzyme['name'].lower() in annotation.lower() or 
+                        enzyme['ec_number'] in annotation or
+                        enzyme['id'].lower() in annotation.lower()):
+                        return {
+                            "name": enzyme['name'],
+                            "ec_number": enzyme['ec_number'],
+                            "reaction": enzyme['reaction'],
+                            "pathway": enzyme['pathway'],
+                            "substrates": [enzyme['substrate']],
+                            "products": [enzyme['product']],
+                            "uniprot_id": enzyme.get('uniprot_id'),
+                            "kegg_id": enzyme.get('kegg_id')
+                        }
+        
+        # Fallback to generic parsing
         if "transferase" in annotation.lower():
             return {
                 "name": "Transferase",
@@ -433,10 +471,62 @@ def api_species():
     """API endpoint for species information."""
     return jsonify(analyzer.species)
 
+@app.route('/api/cannabis/compounds')
+def api_cannabis_compounds():
+    """API endpoint for cannabis compounds."""
+    try:
+        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "compounds" / "cannabis_compounds.json"
+        if cannabis_file.exists():
+            with open(cannabis_file) as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({'error': 'Cannabis compounds data not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cannabis/enzymes')
+def api_cannabis_enzymes():
+    """API endpoint for cannabis enzymes."""
+    try:
+        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "enzymes" / "cannabis_enzymes.json"
+        if cannabis_file.exists():
+            with open(cannabis_file) as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({'error': 'Cannabis enzymes data not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cannabis/pathways')
+def api_cannabis_pathways():
+    """API endpoint for cannabis pathways."""
+    try:
+        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "pathways" / "cannabis_pathways.json"
+        if cannabis_file.exists():
+            with open(cannabis_file) as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({'error': 'Cannabis pathways data not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cannabis/network')
+def api_cannabis_network():
+    """API endpoint for cannabis metabolic network."""
+    try:
+        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "cannabis_network.json"
+        if cannabis_file.exists():
+            with open(cannabis_file) as f:
+                return jsonify(json.load(f))
+        else:
+            return jsonify({'error': 'Cannabis network data not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/static/<path:filename>')
 def static_files(filename):
     """Serve static files."""
     return send_from_directory('static', filename)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000) 
+    app.run(debug=True, host='0.0.0.0', port=3000) 

@@ -1,0 +1,186 @@
+{
+  "nodes": [
+    {
+      "id": "cbd",
+      "label": "Cannabidiol",
+      "type": "metabolite",
+      "kegg_id": "C16539",
+      "formula": "C21H30O2",
+      "mass": 314.47,
+      "pathway": "Cannabinoid biosynthesis"
+    },
+    {
+      "id": "thc",
+      "label": "\u03949-Tetrahydrocannabinol",
+      "type": "metabolite",
+      "kegg_id": "C16540",
+      "formula": "C21H30O2",
+      "mass": 314.47,
+      "pathway": "Cannabinoid biosynthesis"
+    },
+    {
+      "id": "cbn",
+      "label": "Cannabinol",
+      "type": "metabolite",
+      "kegg_id": "C16541",
+      "formula": "C21H26O2",
+      "mass": 310.44,
+      "pathway": "Cannabinoid degradation"
+    },
+    {
+      "id": "cbg",
+      "label": "Cannabigerol",
+      "type": "metabolite",
+      "kegg_id": "C16542",
+      "formula": "C21H32O2",
+      "mass": 316.49,
+      "pathway": "Cannabinoid biosynthesis"
+    },
+    {
+      "id": "cbc",
+      "label": "Cannabichromene",
+      "type": "metabolite",
+      "kegg_id": "C16543",
+      "formula": "C21H30O2",
+      "mass": 314.47,
+      "pathway": "Cannabinoid biosynthesis"
+    },
+    {
+      "id": "thcv",
+      "label": "Tetrahydrocannabivarin",
+      "type": "metabolite",
+      "kegg_id": "C16544",
+      "formula": "C19H26O2",
+      "mass": 286.41,
+      "pathway": "Cannabinoid biosynthesis"
+    },
+    {
+      "id": "cbdv",
+      "label": "Cannabidivarin",
+      "type": "metabolite",
+      "kegg_id": "C16545",
+      "formula": "C19H26O2",
+      "mass": 286.41,
+      "pathway": "Cannabinoid biosynthesis"
+    }
+  ],
+  "edges": [],
+  "metabolites": {
+    "cbd": {
+      "name": "Cannabidiol",
+      "kegg_id": "C16539",
+      "formula": "C21H30O2",
+      "mass": 314.47,
+      "pathway": "Cannabinoid biosynthesis",
+      "description": "Major non-psychoactive cannabinoid",
+      "biological_activity": "Anti-inflammatory, anti-anxiety, anti-epileptic",
+      "concentration_range": "0.1-15%"
+    },
+    "thc": {
+      "name": "\u03949-Tetrahydrocannabinol",
+      "kegg_id": "C16540",
+      "formula": "C21H30O2",
+      "mass": 314.47,
+      "pathway": "Cannabinoid biosynthesis",
+      "description": "Primary psychoactive cannabinoid",
+      "biological_activity": "Psychoactive, analgesic, anti-emetic",
+      "concentration_range": "0.1-30%"
+    },
+    "cbn": {
+      "name": "Cannabinol",
+      "kegg_id": "C16541",
+      "formula": "C21H26O2",
+      "mass": 310.44,
+      "pathway": "Cannabinoid degradation",
+      "description": "Oxidation product of THC",
+      "biological_activity": "Mildly psychoactive, sedative",
+      "concentration_range": "0.01-5%"
+    },
+    "cbg": {
+      "name": "Cannabigerol",
+      "kegg_id": "C16542",
+      "formula": "C21H32O2",
+      "mass": 316.49,
+      "pathway": "Cannabinoid biosynthesis",
+      "description": "Precursor to other cannabinoids",
+      "biological_activity": "Anti-inflammatory, antibacterial",
+      "concentration_range": "0.01-5%"
+    },
+    "cbc": {
+      "name": "Cannabichromene",
+      "kegg_id": "C16543",
+      "formula": "C21H30O2",
+      "mass": 314.47,
+      "pathway": "Cannabinoid biosynthesis",
+      "description": "Minor cannabinoid with anti-inflammatory properties",
+      "biological_activity": "Anti-inflammatory, analgesic",
+      "concentration_range": "0.01-3%"
+    },
+    "thcv": {
+      "name": "Tetrahydrocannabivarin",
+      "kegg_id": "C16544",
+      "formula": "C19H26O2",
+      "mass": 286.41,
+      "pathway": "Cannabinoid biosynthesis",
+      "description": "Propyl analogue of THC",
+      "biological_activity": "Appetite suppressant, anti-epileptic",
+      "concentration_range": "0.01-5%"
+    },
+    "cbdv": {
+      "name": "Cannabidivarin",
+      "kegg_id": "C16545",
+      "formula": "C19H26O2",
+      "mass": 286.41,
+      "pathway": "Cannabinoid biosynthesis",
+      "description": "Propyl analogue of CBD",
+      "biological_activity": "Anti-epileptic, anti-inflammatory",
+      "concentration_range": "0.01-3%"
+    }
+  },
+  "enzymes": {},
+  "disconnected_metabolites": [
+    {
+      "id": "cbd",
+      "name": "Cannabidiol",
+      "pathway": "Cannabinoid biosynthesis",
+      "formula": "C21H30O2"
+    },
+    {
+      "id": "thc",
+      "name": "\u03949-Tetrahydrocannabinol",
+      "pathway": "Cannabinoid biosynthesis",
+      "formula": "C21H30O2"
+    },
+    {
+      "id": "cbn",
+      "name": "Cannabinol",
+      "pathway": "Cannabinoid degradation",
+      "formula": "C21H26O2"
+    },
+    {
+      "id": "cbg",
+      "name": "Cannabigerol",
+      "pathway": "Cannabinoid biosynthesis",
+      "formula": "C21H32O2"
+    },
+    {
+      "id": "cbc",
+      "name": "Cannabichromene",
+      "pathway": "Cannabinoid biosynthesis",
+      "formula": "C21H30O2"
+    },
+    {
+      "id": "thcv",
+      "name": "Tetrahydrocannabivarin",
+      "pathway": "Cannabinoid biosynthesis",
+      "formula": "C19H26O2"
+    },
+    {
+      "id": "cbdv",
+      "name": "Cannabidivarin",
+      "pathway": "Cannabinoid biosynthesis",
+      "formula": "C19H26O2"
+    }
+  ],
+  "disconnected_enzymes": []
+}
