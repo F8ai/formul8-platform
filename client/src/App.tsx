@@ -33,6 +33,7 @@ import Roadmap from "@/pages/roadmap";
 import ComplianceAgent from "@/pages/ComplianceAgent";
 import BaselineAssessment from "@/pages/BaselineAssessment";
 import Federated from "@/pages/Federated";
+import ComputePage from "@/pages/compute";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -45,6 +46,7 @@ function Router() {
       <Route path="/real-metrics" component={RealMetrics} />
       <Route path="/roadmap" component={Roadmap} />
       <Route path="/federated" component={Federated} />
+      <Route path="/compute" component={ComputePage} />
       <Route path="/agent-detail/:id">
         {params => <AgentDetail agentId={params.id} />}
       </Route>
