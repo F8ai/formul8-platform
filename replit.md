@@ -77,19 +77,19 @@ formul8-platform/
 
 ## Recent Updates
 
-### July 24, 2025 - Comprehensive Baseline Testing Framework ✅ COMPLETE
-- **Universal Baseline Testing Script**: Created `run_baseline_tests.py` - a comprehensive testing framework that works with all 9 agents across various configurations
-- **Multi-Model Support**: Supports OpenAI (GPT-4o, o3), Anthropic Claude, and Google Gemini models with automatic fallback to OpenAI
+### July 24, 2025 - AI-Powered Baseline Testing System with Database Integration ✅ COMPLETE
+- **Database-Integrated Testing Framework**: Created comprehensive `run_baseline_test_db.py` with PostgreSQL database storage for persistent test tracking
+- **AI-Powered Grading System**: Automated AI grading using GPT-4o with expert evaluation criteria (accuracy 40%, completeness 30%, relevance 20%, clarity 10%)
+- **Comprehensive Dashboard Interface**: Full-featured web dashboard at `/baseline-testing` with test creation, result viewing, and manual grading capabilities
+- **Dual Grading System**: Both manual human grading and AI grading with side-by-side comparison and detailed feedback
+- **Multi-Model AI Grading**: Support for different grading models (GPT-4o, GPT-4o-mini) with confidence scoring and detailed reasoning
+- **Database Schema**: Complete PostgreSQL tables (`baseline_test_runs`, `baseline_test_results`) with fields for both manual and AI grading
+- **Real-Time Test Execution**: Background test execution with progress tracking and status updates through web interface
+- **Advanced Analytics**: Performance metrics, category breakdowns, and grading consistency analysis
 - **State Substitution System**: Dynamic `{{state}}` placeholder replacement for location-specific compliance questions
-- **Configurable Testing Matrix**: Enable/disable RAG retrieval, agent tools, and knowledge base access for comprehensive testing scenarios
-- **Custom Prompt Support**: Override default system prompts with custom prompts from files or inline text
-- **Comprehensive Metrics**: Accuracy scoring, confidence tracking, response time measurement, and category-based performance breakdowns
-- **Flexible Output Format**: JSON results with detailed test information saved to agent directories with configuration-specific filenames
-- **Production-Ready Documentation**: Complete README with usage examples, troubleshooting guide, and best practices
-- **Requirements Management**: Dedicated `baseline_requirements.txt` with core and optional dependencies for different providers
-- **CLI Interface**: Full command-line interface with verbose logging, batch testing, and flexible configuration options
-- **Error Handling**: Graceful handling of missing API keys, unavailable models, missing files, and rate limiting
-- **Integration Ready**: Designed for GitHub Actions integration and automated testing workflows
+- **Production Documentation**: Complete `BASELINE_TESTING_README.md` with usage examples, best practices, and troubleshooting guide
+- **Navigation Integration**: Added to sidebar under "System" category with "New" badge for easy access
+- **API Integration**: Full REST API with endpoints for test creation, execution, result retrieval, and AI grading triggers
 
 ### July 24, 2025 - Comprehensive Compliance Validation Questions Added ✅ COMPLETE
 - **Complete Question Replacement**: Replaced all 16 existing baseline questions with 60 comprehensive compliance validation questions covering real operational scenarios

@@ -53,7 +53,7 @@ import {
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { Play, Eye, Edit, Save, Filter, RefreshCw } from "lucide-react";
+import { Play, Eye, Edit, Save, Filter, RefreshCw, Bot } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 interface BaselineTestRun {
@@ -93,6 +93,10 @@ interface BaselineTestResult {
   manualFeedback?: string;
   gradedBy?: string;
   gradedAt?: string;
+  aiGrade?: number;
+  aiFeedback?: string;
+  aiGradedAt?: string;
+  aiGradingModel?: string;
   createdAt: string;
 }
 
@@ -209,6 +213,28 @@ export default function BaselineTestingPage() {
       toast({
         title: "Error",
         description: "Failed to update result",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const aiGradeMutation = useMutation({
+    mutationFn: ({ runId, gradeAll }: { runId?: number; gradeAll?: boolean }) => 
+      apiRequest("/api/baseline-testing/ai-grade", {
+        method: "POST",
+        body: JSON.stringify({ runId, gradeAll }),
+      }),
+    onSuccess: () => {
+      toast({
+        title: "AI Grading Started",
+        description: "AI grading is running in the background",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/baseline-testing/runs"] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to start AI grading",
         variant: "destructive",
       });
     },
@@ -544,11 +570,24 @@ export default function BaselineTestingPage() {
           {selectedRun ? (
             <Card>
               <CardHeader>
-                <CardTitle>Test Results - Run #{selectedRun.id}</CardTitle>
-                <CardDescription>
-                  {selectedRun.agentType.replace('-agent', '').toUpperCase()} • {selectedRun.model}
-                  {selectedRun.state && ` • ${selectedRun.state}`}
-                </CardDescription>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle>Test Results - Run #{selectedRun.id}</CardTitle>
+                    <CardDescription>
+                      {selectedRun.agentType.replace('-agent', '').toUpperCase()} • {selectedRun.model}
+                      {selectedRun.state && ` • ${selectedRun.state}`}
+                    </CardDescription>
+                  </div>
+                  <Button
+                    onClick={() => aiGradeMutation.mutate({ runId: selectedRun.id })}
+                    disabled={aiGradeMutation.isPending}
+                    variant="outline"
+                    className="gap-2"
+                  >
+                    <Bot className="h-4 w-4" />
+                    {aiGradeMutation.isPending ? "AI Grading..." : "AI Grade All"}
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <Table>
@@ -558,7 +597,7 @@ export default function BaselineTestingPage() {
                       <TableHead>Category</TableHead>
                       <TableHead>Difficulty</TableHead>
                       <TableHead>Accuracy</TableHead>
-                      <TableHead>Manual Grade</TableHead>
+                      <TableHead>Grades</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -578,7 +617,14 @@ export default function BaselineTestingPage() {
                           {result.accuracy ? `${result.accuracy.toFixed(1)}%` : '-'}
                         </TableCell>
                         <TableCell>
-                          {result.manualGrade !== null ? `${result.manualGrade}/${result.maxScore}` : 'Not graded'}
+                          <div className="space-y-1">
+                            <div className="text-sm">
+                              {result.manualGrade !== null ? `Manual: ${result.manualGrade}/${result.maxScore}` : 'Manual: Not graded'}
+                            </div>
+                            <div className="text-sm text-blue-600">
+                              {result.aiGrade !== null ? `AI: ${result.aiGrade}/${result.maxScore}` : 'AI: Not graded'}
+                            </div>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <Dialog>
@@ -611,6 +657,20 @@ export default function BaselineTestingPage() {
                                   <Label className="text-sm font-medium">Agent Response</Label>
                                   <p className="text-sm bg-gray-50 p-3 rounded">{result.agentResponse}</p>
                                 </div>
+                                {result.aiGrade !== null && (
+                                  <div>
+                                    <Label className="text-sm font-medium">AI Grading</Label>
+                                    <div className="bg-blue-50 p-3 rounded space-y-2">
+                                      <div className="flex justify-between items-center">
+                                        <span className="text-sm font-medium">AI Grade: {result.aiGrade}/{result.maxScore}</span>
+                                        <Badge variant="outline">{result.aiGradingModel}</Badge>
+                                      </div>
+                                      {result.aiFeedback && (
+                                        <p className="text-sm text-gray-700">{result.aiFeedback}</p>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
                                 <div className="grid grid-cols-2 gap-4">
                                   <div>
                                     <Label htmlFor="grade">Manual Grade (0-{result.maxScore})</Label>

@@ -21,3 +21,4 @@ pydantic
 python-dotenv
 pyyaml
 rdkit
+psycopg2-binary

@@ -1,301 +1,199 @@
-# Formul8 Platform Baseline Testing System
+# Baseline Testing System with AI Grading
 
-A comprehensive baseline testing framework for evaluating AI agents across different models, states, configurations, and capabilities.
+A comprehensive baseline testing framework for AI agents with database-backed result tracking, manual grading, and AI-powered automated grading.
 
 ## Features
 
-- **Multi-Model Support**: Test with OpenAI (GPT-4o, o3), Anthropic Claude, Google Gemini
-- **State Customization**: Dynamic `{{state}}` substitution for location-specific questions
-- **Configurable Components**: Enable/disable RAG, tools, and knowledge bases
-- **Custom Prompts**: Override default system prompts
-- **Comprehensive Metrics**: Accuracy, confidence, response time, category breakdowns
-- **Flexible Output**: JSON results with detailed test information
+### Core Testing Capabilities
+- **Multi-Agent Support**: Test all 9 specialized agents (compliance, formulation, marketing, operations, sourcing, patent, science, spectra, customer-success)
+- **Multi-Model Support**: OpenAI (GPT-4o, o3), Claude, Gemini models with automatic fallback
+- **State Substitution**: Dynamic `{{state}}` placeholder replacement for location-specific questions
+- **Configurable Testing Matrix**: Enable/disable RAG retrieval, agent tools, and knowledge base access
+- **Custom Prompt Support**: Override default system prompts with custom prompts
 
-## Quick Start
+### Database Integration
+- **PostgreSQL Backend**: All test runs and results stored in database for persistence and analysis
+- **Comprehensive Tracking**: Test configurations, execution metadata, and detailed results
+- **Performance Metrics**: Accuracy scoring, confidence tracking, response time measurement
+- **Category-Based Analysis**: Performance breakdowns by question category and difficulty
 
-### 1. Install Dependencies
+### AI-Powered Grading
+- **Automated AI Grading**: Uses GPT-4o to grade agent responses against expected answers
+- **Expert Evaluation Criteria**: 
+  - Factual accuracy (40%)
+  - Completeness of answer (30%)
+  - Relevance to question (20%)
+  - Clarity and professionalism (10%)
+- **Confidence Scoring**: AI provides confidence levels for its grading decisions
+- **Detailed Feedback**: Comprehensive explanations for grades assigned
+- **Model Selection**: Choose different models for grading (default: GPT-4o)
+
+### Manual Grading Interface
+- **Human Review**: Manual grading capabilities with detailed feedback
+- **Grade Comparison**: Side-by-side view of AI and manual grades
+- **Quality Assurance**: Track grading consistency and identify discrepancies
+- **User Attribution**: Track who performed manual grading with timestamps
+
+## Usage
+
+### Command Line Interface
+
+#### Basic Test Execution
+```bash
+# Run basic baseline test for compliance agent
+python3 run_baseline_test_db.py --agent compliance-agent
+
+# Test with specific model and state
+python3 run_baseline_test_db.py --agent compliance-agent --model gpt-4o --state CA
+
+# Enable various configuration options
+python3 run_baseline_test_db.py --agent compliance-agent --rag --tools --kb
+
+# Use custom system prompt
+python3 run_baseline_test_db.py --agent compliance-agent --custom-prompt "You are a cannabis compliance expert..."
+```
+
+#### AI Grading Options
+```bash
+# Enable AI grading (default)
+python3 run_baseline_test_db.py --agent compliance-agent --enable-ai-grading
+
+# Disable AI grading
+python3 run_baseline_test_db.py --agent compliance-agent --disable-ai-grading
+
+# Use specific model for grading
+python3 run_baseline_test_db.py --agent compliance-agent --grading-model gpt-4o-mini
+
+# Continue an existing test run
+python3 run_baseline_test_db.py --agent compliance-agent --run-id 123
+```
+
+### Web Dashboard
+
+Access the baseline testing dashboard at `/baseline-testing` in the web interface.
+
+#### Dashboard Features
+- **Test Creation**: Configure and create new baseline test runs
+- **Results Monitoring**: View test execution progress and results
+- **Manual Grading**: Review and grade individual test responses
+- **AI Grading Controls**: Trigger AI grading for specific runs or all results
+- **Filtering & Analysis**: Filter results by agent, model, status, etc.
+
+#### Creating a Test Run
+1. Navigate to "New Test" tab
+2. Select agent, model, and optional state
+3. Configure RAG, tools, and knowledge base settings
+4. Add custom prompt if needed
+5. Click "Create Test Run"
+
+#### AI Grading
+- **Automatic**: AI grading runs automatically during test execution (when enabled)
+- **Manual Trigger**: Use "AI Grade All" button to grade existing results
+- **Individual Grading**: Grade specific results through the results interface
+
+## Database Schema
+
+### Test Runs Table (`baseline_test_runs`)
+- Configuration settings (agent, model, state, features enabled)
+- Execution metadata (status, timing, statistics)
+- Aggregate performance metrics
+
+### Test Results Table (`baseline_test_results`)
+- Individual question/answer pairs
+- Agent responses and performance metrics
+- Manual grading fields (grade, feedback, grader, timestamp)
+- AI grading fields (grade, feedback, model, timestamp)
+
+## AI Grading Process
+
+1. **Question Analysis**: AI evaluates the original question and expected answer
+2. **Response Assessment**: Compares agent response against expected answer
+3. **Multi-Criteria Scoring**: Grades based on accuracy, completeness, relevance, clarity
+4. **Confidence Estimation**: AI provides confidence level in its grading decision
+5. **Detailed Feedback**: Explains reasoning behind the assigned grade
+6. **Database Storage**: Results stored with model attribution and timestamps
+
+## Performance Metrics
+
+### Accuracy Metrics
+- **Simple Accuracy**: Keyword-based matching between expected and actual answers
+- **AI-Graded Accuracy**: Model-based evaluation of response quality
+- **Category Performance**: Breakdown by question category and difficulty
+- **Comparative Analysis**: AI vs manual grading correlation
+
+### Execution Metrics
+- **Response Time**: Time taken to generate each response
+- **Success Rate**: Percentage of successfully completed questions
+- **Model Performance**: Comparison across different models
+- **Configuration Impact**: Performance variations with different settings
+
+## Requirements
+
+Install required Python dependencies:
 
 ```bash
 pip install -r baseline_requirements.txt
 ```
 
-### 2. Set API Keys
+### Core Dependencies
+- `openai>=1.0.0` - OpenAI API integration
+- `psycopg2-binary>=2.9.0` - PostgreSQL database connectivity
+- `langchain>=0.1.0` - LangChain framework (optional)
+- `python-dotenv>=1.0.0` - Environment variable management
 
-```bash
-export OPENAI_API_KEY="your-openai-key"
-export ANTHROPIC_API_KEY="your-anthropic-key"  # Optional
-export GOOGLE_API_KEY="your-google-key"        # Optional
-```
+### Environment Variables
+- `OPENAI_API_KEY` - Required for AI grading functionality
+- `PGHOST`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`, `PGPORT` - Database connection
 
-### 3. Run Basic Test
+## Best Practices
 
-```bash
-# Test compliance agent with default settings (GPT-4o)
-python run_baseline_tests.py --agent compliance-agent
+### Test Configuration
+- **Start Simple**: Begin with basic configuration, then add complexity
+- **State Testing**: Use state substitution for compliance-related questions
+- **Model Comparison**: Test same configuration across multiple models
+- **Baseline Consistency**: Use consistent prompts for comparable results
 
-# Test with specific state
-python run_baseline_tests.py --agent compliance-agent --state CA
+### AI Grading
+- **Model Selection**: Use appropriate grading model for question complexity
+- **Human Validation**: Periodically validate AI grades with manual review
+- **Confidence Thresholds**: Pay attention to low-confidence AI grades
+- **Feedback Analysis**: Review AI feedback to identify common issues
 
-# Test all agents
-python run_baseline_tests.py --agent all --model gpt-4o
-```
-
-## Usage Examples
-
-### Model Comparison
-```bash
-# Test with different models
-python run_baseline_tests.py --agent compliance-agent --model gpt-4o --state CA
-python run_baseline_tests.py --agent compliance-agent --model o3 --state CA
-python run_baseline_tests.py --agent compliance-agent --model claude-3-sonnet --state CA
-```
-
-### Configuration Testing
-```bash
-# Test with RAG enabled
-python run_baseline_tests.py --agent compliance-agent --rag --state CA
-
-# Test with all features enabled
-python run_baseline_tests.py --agent compliance-agent --rag --tools --kb --state NY
-
-# Test with custom prompt
-python run_baseline_tests.py --agent compliance-agent --prompt "custom_prompt.txt"
-```
-
-### Batch Testing
-```bash
-# Test all agents with specific configuration
-python run_baseline_tests.py --agent all --model gpt-4o --rag --state CO
-```
-
-## Command Line Options
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--agent`, `-a` | Agent to test or "all" | compliance-agent |
-| `--model`, `-m` | LLM model to use | gpt-4o |
-| `--state`, `-s` | State for {{state}} substitution | None |
-| `--prompt`, `-p` | Custom system prompt file/text | None |
-| `--rag` | Enable RAG retrieval | False |
-| `--tools` | Enable agent tools | False |
-| `--kb` | Enable knowledge base access | False |
-| `--verbose`, `-v` | Verbose logging | False |
-
-## Supported Models
-
-| Model | Provider | Description |
-|-------|----------|-------------|
-| `gpt-4o` | OpenAI | Default, balanced performance |
-| `gpt-4o-mini` | OpenAI | Faster, cost-effective |
-| `o3` | OpenAI | Latest reasoning model |
-| `claude-3-sonnet` | Anthropic | High-quality responses |
-| `claude-3-haiku` | Anthropic | Fast, efficient |
-| `gemini-pro` | Google | Google's advanced model |
-
-## Output Format
-
-Results are saved as JSON files in the agent directory:
-
-```
-agents/compliance-agent/
-├── baseline_results.json                    # Default configuration
-├── baseline_results_state_CA.json          # State-specific
-├── baseline_results_model_o3_state_CA.json # Model + state
-└── baseline_results_rag_tools_kb.json      # Full configuration
-```
-
-### Result Structure
-
-```json
-{
-  "agent": "compliance-agent",
-  "timestamp": "2025-01-24T20:30:00",
-  "model": "gpt-4o",
-  "state": "CA",
-  "configuration": {
-    "rag_enabled": true,
-    "tools_enabled": false,
-    "kb_enabled": true,
-    "custom_prompt": false
-  },
-  "summary": {
-    "total_questions": 60,
-    "successful_tests": 58,
-    "failed_tests": 2,
-    "avg_accuracy": 87.5,
-    "avg_confidence": 91.2,
-    "avg_response_time": 2.3
-  },
-  "category_breakdown": {
-    "sop_documentation": {
-      "count": 3,
-      "avg_accuracy": 92.0,
-      "avg_confidence": 95.0
-    }
-  },
-  "detailed_results": [...]
-}
-```
-
-## State Substitution
-
-The system automatically replaces `{{state}}` placeholders in questions:
-
-**Original Question:**
-```
-"Can you make me a compliant SOP for Cannabis Transport in {{state}}?"
-```
-
-**With --state CA:**
-```
-"Can you make me a compliant SOP for Cannabis Transport in CA?"
-```
-
-## RAG Configuration
-
-When `--rag` is enabled, the system:
-
-1. Loads `agents/{agent}/rag/corpus.jsonl`
-2. Performs keyword-based retrieval
-3. Adds relevant context to prompts
-
-## Knowledge Base Integration
-
-When `--kb` is enabled, the system:
-
-1. Loads `agents/{agent}/knowledge_base.ttl`
-2. Extracts relevant RDF triples
-3. Adds structured knowledge to prompts
-
-## Custom Prompts
-
-Provide custom system prompts via:
-
-```bash
-# From file
-python run_baseline_tests.py --agent compliance-agent --prompt my_prompt.txt
-
-# Inline text
-python run_baseline_tests.py --agent compliance-agent --prompt "You are a specialized cannabis expert..."
-```
-
-## Performance Benchmarking
-
-### Accuracy Calculation
-- Keyword overlap between expected and actual answers
-- Filtered common words (the, a, and, etc.)
-- Scored 0-100% based on coverage
-
-### Confidence Scoring
-- Agent's self-assessed confidence
-- Based on response characteristics
-- Reported 0-100%
-
-### Response Time
-- Measured from query to response
-- Includes model processing time
-- Reported in seconds
-
-## Error Handling
-
-The system gracefully handles:
-- Missing API keys (falls back to OpenAI)
-- Unavailable models (falls back to GPT-4o)
-- Missing RAG/KB files (continues without)
-- Network timeouts (retries with delays)
-- Rate limiting (automatic delays)
-
-## Integration with Existing Systems
-
-### GitHub Actions
-Integrate with existing workflows:
-
-```yaml
-- name: Run Baseline Tests
-  run: |
-    python run_baseline_tests.py --agent compliance-agent --model gpt-4o --state CA
-    python run_baseline_tests.py --agent all --rag --tools
-```
-
-### Automated Testing
-Schedule regular testing:
-
-```bash
-# Daily testing with different configurations
-0 2 * * * cd /path/to/formul8 && python run_baseline_tests.py --agent all --model gpt-4o
-0 3 * * * cd /path/to/formul8 && python run_baseline_tests.py --agent all --model o3 --rag
-```
+### Quality Assurance
+- **Regular Review**: Manually review random samples of AI-graded results
+- **Grade Calibration**: Ensure AI and manual grades are reasonably aligned
+- **Performance Tracking**: Monitor grading consistency over time
+- **Continuous Improvement**: Update grading criteria based on insights
 
 ## Troubleshooting
 
 ### Common Issues
+1. **Database Connection**: Verify PostgreSQL credentials and connectivity
+2. **API Rate Limits**: Implement appropriate delays between requests
+3. **Missing Questions**: Ensure baseline.json files exist for all agents
+4. **Grading Failures**: Check OpenAI API key and quota limits
 
-1. **API Key Errors**
-   ```bash
-   export OPENAI_API_KEY="your-key-here"
-   ```
+### Error Handling
+- All errors are logged with detailed context
+- Failed tests are marked as such in the database
+- Partial test runs can be resumed with `--run-id` parameter
+- AI grading failures fall back to simple accuracy calculation
 
-2. **Missing Dependencies**
-   ```bash
-   pip install -r baseline_requirements.txt
-   ```
+## Integration
 
-3. **Model Unavailable**
-   - System automatically falls back to GPT-4o
-   - Check provider API key is set
+The baseline testing system integrates with:
+- **Main Platform**: Web dashboard accessible through navigation
+- **Agent Repositories**: Reads baseline.json files from agent directories
+- **Database**: PostgreSQL for persistent storage and analysis
+- **OpenAI API**: For both agent responses and AI grading
+- **Monitoring**: Real-time status updates and progress tracking
 
-4. **No Baseline Questions**
-   - Ensure `agents/{agent}/baseline.json` exists
-   - Check JSON format is valid
+## Future Enhancements
 
-### Debug Mode
-
-Enable verbose logging:
-```bash
-python run_baseline_tests.py --agent compliance-agent --verbose
-```
-
-## Development
-
-### Adding New Models
-
-1. Add model configuration:
-```python
-self.model_configs["new-model"] = {
-    "provider": "provider-name",
-    "model": "model-id",
-    "temperature": 0.3
-}
-```
-
-2. Add provider initialization logic
-3. Update CLI choices
-
-### Custom Metrics
-
-Extend `_calculate_accuracy()` method for domain-specific scoring.
-
-### Agent-Specific Features
-
-Override methods in agent implementations for specialized testing.
-
-## Best Practices
-
-1. **Systematic Testing**: Test models systematically across configurations
-2. **State Coverage**: Test major cannabis states (CA, CO, NY, etc.)
-3. **Configuration Matrix**: Test RAG, tools, KB combinations
-4. **Regular Scheduling**: Run tests on code changes and daily
-5. **Result Analysis**: Compare trends over time
-6. **Documentation**: Keep test configurations documented
-
-## Contributing
-
-1. Add new baseline questions to `agents/{agent}/baseline.json`
-2. Follow existing JSON structure
-3. Use `{{state}}` for location-specific content
-4. Test with multiple configurations
-5. Update documentation as needed
-
----
-
-For questions or issues, refer to the main Formul8 platform documentation or create an issue in the repository.
+Planned improvements include:
+- **Advanced Analytics**: More sophisticated performance analysis
+- **Batch Processing**: Queue-based background job processing
+- **Model Comparison**: Side-by-side model performance comparison
+- **Export Capabilities**: CSV/Excel export for external analysis
+- **Notification System**: Email/Slack notifications for test completion
+- **A/B Testing**: Compare different prompt strategies

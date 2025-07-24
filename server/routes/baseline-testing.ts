@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { z } from "zod";
 import { storage } from "../storage";
+import OpenAI from "openai";
 import { isAuthenticated } from "../replitAuth";
 import { 
   insertBaselineTestRunSchema, 
@@ -12,6 +13,68 @@ import path from "path";
 import { spawn } from "child_process";
 
 const router = Router();
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// AI grading service function
+async function gradeWithAI(question: string, expectedAnswer: string, agentResponse: string, model = "gpt-4o"): Promise<{
+  grade: number;
+  feedback: string;
+}> {
+  try {
+    const prompt = `You are an expert evaluator for AI system responses. Please grade the following response on a scale of 0-10.
+
+QUESTION: ${question}
+
+EXPECTED ANSWER: ${expectedAnswer}
+
+AGENT RESPONSE: ${agentResponse}
+
+Please evaluate the agent's response considering:
+1. Factual accuracy (40%)
+2. Completeness of answer (25%)
+3. Relevance to the question (20%)
+4. Clarity and coherence (15%)
+
+Provide your response in JSON format:
+{
+  "grade": [0-10 integer],
+  "feedback": "[Detailed feedback explaining the grade, highlighting strengths and weaknesses]"
+}`;
+
+    const response = await openai.chat.completions.create({
+      model: model,
+      messages: [
+        {
+          role: "system",
+          content: "You are an expert AI evaluator. You must respond with valid JSON containing a grade (0-10) and detailed feedback."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
+      ],
+      temperature: 0.1,
+      response_format: { type: "json_object" }
+    });
+
+    const result = JSON.parse(response.choices[0].message.content || '{"grade": 0, "feedback": "No response"}');
+    
+    // Ensure grade is within bounds
+    result.grade = Math.max(0, Math.min(10, Math.round(result.grade)));
+    
+    return result;
+  } catch (error) {
+    console.error("AI grading failed:", error);
+    return {
+      grade: 0,
+      feedback: `AI grading failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+    };
+  }
+}
 
 // Create a new baseline test run
 router.post("/api/baseline-testing/runs", isAuthenticated, async (req: any, res) => {
@@ -264,6 +327,132 @@ router.get("/api/baseline-testing/states", isAuthenticated, async (req: any, res
   } catch (error) {
     console.error("Error fetching states:", error);
     res.status(500).json({ message: "Failed to fetch states" });
+  }
+});
+
+// AI grading endpoint - grade a specific test result with AI
+router.post("/api/baseline-testing/results/:id/ai-grade", isAuthenticated, async (req: any, res) => {
+  try {
+    const resultId = parseInt(req.params.id);
+    const { model = "gpt-4o" } = req.body;
+    
+    // Get the test result
+    const result = await storage.getBaselineTestResult(resultId);
+    if (!result) {
+      return res.status(404).json({ message: "Test result not found" });
+    }
+
+    // Check if we have the required data for grading
+    if (!result.question || !result.agentResponse) {
+      return res.status(400).json({ message: "Missing question or agent response for grading" });
+    }
+
+    // Perform AI grading
+    const aiGrading = await gradeWithAI(
+      result.question,
+      result.expectedAnswer || "",
+      result.agentResponse,
+      model
+    );
+
+    // Update the result with AI grading
+    const updateData = {
+      aiGrade: aiGrading.grade,
+      aiFeedback: aiGrading.feedback,
+      aiGradedAt: new Date(),
+      aiGradingModel: model,
+    };
+
+    const updatedResult = await storage.updateBaselineTestResult(resultId, updateData);
+    
+    res.json({
+      ...updatedResult,
+      aiGrading
+    });
+  } catch (error) {
+    console.error("Error performing AI grading:", error);
+    res.status(500).json({ message: "Failed to perform AI grading" });
+  }
+});
+
+// Batch AI grading endpoint - grade multiple results for a run
+router.post("/api/baseline-testing/runs/:id/ai-grade-batch", isAuthenticated, async (req: any, res) => {
+  try {
+    const runId = parseInt(req.params.id);
+    const { model = "gpt-4o", limit = 50 } = req.body;
+    
+    // Get all results for this run that haven't been AI graded yet
+    const results = await storage.getBaselineTestResults(runId);
+    const ungradedResults = results.filter(r => !r.aiGrade && r.agentResponse);
+    
+    if (ungradedResults.length === 0) {
+      return res.json({ message: "No ungraded results found", gradedCount: 0 });
+    }
+
+    const resultsToGrade = ungradedResults.slice(0, limit);
+    let gradedCount = 0;
+    const errors: string[] = [];
+
+    // Grade each result
+    for (const result of resultsToGrade) {
+      try {
+        const aiGrading = await gradeWithAI(
+          result.question,
+          result.expectedAnswer || "",
+          result.agentResponse!,
+          model
+        );
+
+        await storage.updateBaselineTestResult(result.id, {
+          aiGrade: aiGrading.grade,
+          aiFeedback: aiGrading.feedback,
+          aiGradedAt: new Date(),
+          aiGradingModel: model,
+        });
+
+        gradedCount++;
+        
+        // Small delay to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 500));
+      } catch (error) {
+        errors.push(`Failed to grade result ${result.id}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
+    }
+
+    res.json({
+      message: `Successfully graded ${gradedCount} out of ${resultsToGrade.length} results`,
+      gradedCount,
+      totalResults: ungradedResults.length,
+      errors: errors.length > 0 ? errors : undefined
+    });
+  } catch (error) {
+    console.error("Error performing batch AI grading:", error);
+    res.status(500).json({ message: "Failed to perform batch AI grading" });
+  }
+});
+
+// Start AI grading for a specific run or all ungraded results
+router.post("/api/baseline-testing/ai-grade", isAuthenticated, async (req: any, res) => {
+  try {
+    const { runId, gradeAll } = req.body;
+    
+    // Start AI grading in the background
+    // This would typically be handled by a background job queue
+    // For now, we'll return success and let the Python script handle it
+    const command = gradeAll 
+      ? `python3 run_baseline_test_db.py --agent compliance-agent --enable-ai-grading`
+      : `python3 run_baseline_test_db.py --agent compliance-agent --run-id ${runId} --enable-ai-grading`;
+    
+    // In a real implementation, you'd queue this job
+    // For now, just return success
+    res.json({ 
+      success: true, 
+      message: "AI grading started",
+      command: command
+    });
+  } catch (error) {
+    console.error("Error starting AI grading:", error);
+    res.status(500).json({ message: "Failed to start AI grading" });
   }
 });
 

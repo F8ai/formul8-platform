@@ -174,6 +174,10 @@ export const baselineTestResults = pgTable("baseline_test_results", {
   manualFeedback: text("manual_feedback"), // Manual feedback/comments
   gradedBy: varchar("graded_by").references(() => users.id),
   gradedAt: timestamp("graded_at"),
+  aiGrade: integer("ai_grade"), // AI grade from 0-10
+  aiFeedback: text("ai_feedback"), // AI feedback/evaluation
+  aiGradedAt: timestamp("ai_graded_at"),
+  aiGradingModel: varchar("ai_grading_model", { length: 100 }),
   metadata: jsonb("metadata"),
   createdAt: timestamp("created_at").defaultNow(),
 });

@@ -4,7 +4,7 @@ hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["bash", "bc", "cairo", "ffmpeg-full", "freetype", "gh", "ghostscript", "git-lfs", "glibcLocales", "gobject-introspection", "gtk3", "iana-etc", "libev", "libxcrypt", "libyaml", "pkg-config", "qhull", "tcl", "tk", "wget", "xsimd"]
+packages = ["bash", "bc", "cairo", "catch2", "comic-neue", "coordgenlibs", "eigen", "ffmpeg-full", "freetype", "gh", "ghostscript", "git-lfs", "glibcLocales", "gobject-introspection", "gtk3", "iana-etc", "inchi", "libev", "libxcrypt", "libyaml", "maeparser", "pkg-config", "qhull", "rapidjson", "tcl", "tk", "wget", "xsimd"]
 
 [deployment]
 deploymentTarget = "autoscale"

@@ -137,6 +137,73 @@ def calculate_simple_accuracy(agent_response, expected_answer):
     
     return min(accuracy, 100.0)
 
+def ai_grade_response(client, question, expected_answer, agent_response, grading_model="gpt-4o"):
+    """Use AI to grade the agent's response against expected answer."""
+    if not agent_response or not expected_answer:
+        return {"grade": 0, "feedback": "Missing response or expected answer", "confidence": 0.0}
+    
+    grading_prompt = f"""You are an expert evaluator for AI agents in the cannabis industry. Grade the agent's response on a scale of 0-10.
+
+QUESTION: {question}
+
+EXPECTED ANSWER: {expected_answer}
+
+AGENT'S RESPONSE: {agent_response}
+
+Evaluate based on:
+1. Factual accuracy (40%)
+2. Completeness of answer (30%) 
+3. Relevance to question (20%)
+4. Clarity and professionalism (10%)
+
+Provide your response in this exact JSON format:
+{{
+    "grade": <integer from 0-10>,
+    "feedback": "<detailed explanation of grade>",
+    "confidence": <float from 0.0-1.0>
+}}"""
+
+    try:
+        response = client.chat.completions.create(
+            model=grading_model,
+            messages=[
+                {"role": "system", "content": "You are an expert AI evaluator. Always respond with valid JSON only."},
+                {"role": "user", "content": grading_prompt}
+            ],
+            temperature=0.1,
+            max_tokens=500
+        )
+        
+        result_text = response.choices[0].message.content.strip()
+        
+        # Try to parse JSON response
+        import json
+        try:
+            result = json.loads(result_text)
+            return {
+                "grade": max(0, min(10, int(result.get("grade", 0)))),
+                "feedback": result.get("feedback", "No feedback provided"),
+                "confidence": max(0.0, min(1.0, float(result.get("confidence", 0.5))))
+            }
+        except json.JSONDecodeError:
+            # Fallback: extract grade from text
+            import re
+            grade_match = re.search(r'"grade":\s*(\d+)', result_text)
+            grade = int(grade_match.group(1)) if grade_match else 5
+            return {
+                "grade": max(0, min(10, grade)),
+                "feedback": result_text[:500],
+                "confidence": 0.7
+            }
+            
+    except Exception as e:
+        print(f"AI grading failed: {e}")
+        return {
+            "grade": 5,
+            "feedback": f"AI grading failed: {str(e)}",
+            "confidence": 0.0
+        }
+
 def create_test_run(conn, agent_type, model, state, rag_enabled, tools_enabled, kb_enabled, custom_prompt, user_id=None):
     """Create a new test run record in the database."""
     with conn.cursor() as cur:
@@ -170,14 +237,15 @@ def update_test_run(conn, run_id, status, stats=None):
             """, (status, run_id))
         conn.commit()
 
-def save_test_result(conn, run_id, question, result):
+def save_test_result(conn, run_id, question, result, ai_grading=None):
     """Save individual test result to database."""
     with conn.cursor() as cur:
         cur.execute("""
             INSERT INTO baseline_test_results 
             (run_id, question_id, question, expected_answer, agent_response, accuracy, 
-             confidence, response_time, category, difficulty)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+             confidence, response_time, category, difficulty, ai_grade, ai_feedback, 
+             ai_graded_at, ai_grading_model)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """, (
             run_id,
             question.get('id', f"q_{question.get('question', '')[:20]}"),
@@ -188,13 +256,17 @@ def save_test_result(conn, run_id, question, result):
             result.get('confidence', 0.0),
             result.get('response_time', 0.0),
             question.get('category', 'general'),
-            question.get('difficulty', 'intermediate')
+            question.get('difficulty', 'intermediate'),
+            ai_grading.get('grade') if ai_grading else None,
+            ai_grading.get('feedback') if ai_grading else None,
+            datetime.now() if ai_grading else None,
+            ai_grading.get('model') if ai_grading else None
         ))
         conn.commit()
 
 def run_baseline_test(agent_type, model='gpt-4o', state=None, rag_enabled=False, 
                      tools_enabled=False, kb_enabled=False, custom_prompt=None,
-                     user_id=None, run_id=None):
+                     user_id=None, run_id=None, enable_ai_grading=True, grading_model="gpt-4o"):
     """Main function to run baseline test and store results in database."""
     
     # Load questions
@@ -237,11 +309,25 @@ def run_baseline_test(agent_type, model='gpt-4o', state=None, rag_enabled=False,
                 failed_tests += 1
                 print(f"Question failed: {result.get('error', 'Unknown error')}")
             
-            # Save individual result
-            save_test_result(conn, run_id, question, result)
+            # AI grading if enabled and successful
+            ai_grading = None
+            if enable_ai_grading and result['success'] and result.get('agent_response'):
+                print(f"  AI grading question {i}...")
+                ai_grading = ai_grade_response(
+                    client, 
+                    question.get('question', ''), 
+                    question.get('expectedAnswer', ''), 
+                    result['agent_response'],
+                    grading_model
+                )
+                ai_grading['model'] = grading_model
+                print(f"  AI Grade: {ai_grading['grade']}/10 (confidence: {ai_grading['confidence']:.2f})")
+            
+            # Save individual result with AI grading
+            save_test_result(conn, run_id, question, result, ai_grading)
             
             # Small delay to avoid rate limiting
-            time.sleep(0.5)
+            time.sleep(0.8 if enable_ai_grading else 0.5)
         
         # Calculate final statistics
         total_accuracy = sum(r['accuracy'] for r in results if r['success'])
@@ -286,8 +372,14 @@ def main():
     parser.add_argument('--custom-prompt', help='Custom system prompt')
     parser.add_argument('--user-id', help='User ID for the test run')
     parser.add_argument('--run-id', type=int, help='Existing run ID to update')
+    parser.add_argument('--enable-ai-grading', action='store_true', default=True, help='Enable AI grading of responses')
+    parser.add_argument('--disable-ai-grading', action='store_true', help='Disable AI grading of responses')
+    parser.add_argument('--grading-model', default='gpt-4o', help='Model to use for AI grading')
     
     args = parser.parse_args()
+    
+    # Determine AI grading setting
+    enable_ai_grading = args.enable_ai_grading and not args.disable_ai_grading
     
     success = run_baseline_test(
         agent_type=args.agent,
@@ -298,7 +390,9 @@ def main():
         kb_enabled=args.kb,
         custom_prompt=args.custom_prompt,
         user_id=args.user_id,
-        run_id=args.run_id
+        run_id=args.run_id,
+        enable_ai_grading=enable_ai_grading,
+        grading_model=args.grading_model
     )
     
     sys.exit(0 if success else 1)
