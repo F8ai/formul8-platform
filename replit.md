@@ -77,6 +77,20 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 24, 2025 - Comprehensive Baseline Testing Framework ✅ COMPLETE
+- **Universal Baseline Testing Script**: Created `run_baseline_tests.py` - a comprehensive testing framework that works with all 9 agents across various configurations
+- **Multi-Model Support**: Supports OpenAI (GPT-4o, o3), Anthropic Claude, and Google Gemini models with automatic fallback to OpenAI
+- **State Substitution System**: Dynamic `{{state}}` placeholder replacement for location-specific compliance questions
+- **Configurable Testing Matrix**: Enable/disable RAG retrieval, agent tools, and knowledge base access for comprehensive testing scenarios
+- **Custom Prompt Support**: Override default system prompts with custom prompts from files or inline text
+- **Comprehensive Metrics**: Accuracy scoring, confidence tracking, response time measurement, and category-based performance breakdowns
+- **Flexible Output Format**: JSON results with detailed test information saved to agent directories with configuration-specific filenames
+- **Production-Ready Documentation**: Complete README with usage examples, troubleshooting guide, and best practices
+- **Requirements Management**: Dedicated `baseline_requirements.txt` with core and optional dependencies for different providers
+- **CLI Interface**: Full command-line interface with verbose logging, batch testing, and flexible configuration options
+- **Error Handling**: Graceful handling of missing API keys, unavailable models, missing files, and rate limiting
+- **Integration Ready**: Designed for GitHub Actions integration and automated testing workflows
+
 ### July 24, 2025 - Comprehensive Compliance Validation Questions Added ✅ COMPLETE
 - **Complete Question Replacement**: Replaced all 16 existing baseline questions with 60 comprehensive compliance validation questions covering real operational scenarios
 - **12 Operational Categories**: Added questions spanning SOP documentation, testing/infusion rules, labeling/packaging, edibles potency, formulation/ingredients, facility operations, extraction/production, inventory tracking, recordkeeping, waste management, employee training, and transport/transfer
