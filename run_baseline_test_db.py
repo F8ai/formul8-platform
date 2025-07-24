@@ -32,6 +32,74 @@ def get_db_connection():
         print(f"Database connection failed: {e}")
         sys.exit(1)
 
+def load_models_config():
+    """Load models configuration from models_config.json."""
+    config_file = Path("models_config.json")
+    if not config_file.exists():
+        print("Models config file not found, using default models")
+        return {
+            "models": {
+                "openai": {
+                    "gpt-4o": {"name": "GPT-4o", "provider": "openai", "model_id": "gpt-4o"}
+                }
+            },
+            "default_model": "gpt-4o"
+        }
+    
+    try:
+        with open(config_file, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error loading models config: {e}")
+        return {"models": {}, "default_model": "gpt-4o"}
+
+def load_agent_prompts(agent_type):
+    """Load prompts configuration for the specified agent."""
+    prompts_file = Path(f"agents/{agent_type}/prompts.json")
+    if not prompts_file.exists():
+        return {"prompts": {"default": {"system_prompt": "You are a helpful AI assistant."}}}
+    
+    try:
+        with open(prompts_file, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error loading prompts for {agent_type}: {e}")
+        return {"prompts": {"default": {"system_prompt": "You are a helpful AI assistant."}}}
+
+def save_agent_prompts(agent_type, prompts_data):
+    """Save prompts configuration for the specified agent."""
+    prompts_file = Path(f"agents/{agent_type}/prompts.json")
+    prompts_file.parent.mkdir(parents=True, exist_ok=True)
+    
+    try:
+        with open(prompts_file, 'w') as f:
+            json.dump(prompts_data, f, indent=2)
+        return True
+    except Exception as e:
+        print(f"Error saving prompts for {agent_type}: {e}")
+        return False
+
+def create_new_prompt(agent_type, prompt_name, prompt_text, description=""):
+    """Create and save a new prompt for an agent."""
+    prompts_data = load_agent_prompts(agent_type)
+    
+    new_prompt = {
+        "name": prompt_name,
+        "description": description,
+        "system_prompt": prompt_text,
+        "created_at": datetime.utcnow().isoformat() + "Z",
+        "created_by": "user"
+    }
+    
+    prompts_data["prompts"][prompt_name.lower().replace(" ", "-")] = new_prompt
+    
+    if save_agent_prompts(agent_type, prompts_data):
+        print(f"✓ Created new prompt '{prompt_name}' for {agent_type}")
+        return True
+    else:
+        print(f"✗ Failed to save prompt '{prompt_name}' for {agent_type}")
+        return False
+
 def load_baseline_questions(agent_type):
     """Load baseline questions for the specified agent."""
     baseline_file = Path(f"agents/{agent_type}/baseline.json")
@@ -61,12 +129,39 @@ def substitute_state_placeholders(question_text, state):
         return question_text.replace("{{state}}", state)
     return question_text
 
-def run_single_question(client, question, model, custom_prompt=None, state=None):
+def get_model_client(model_config):
+    """Get the appropriate client for the model provider."""
+    provider = model_config.get("provider", "openai")
+    
+    if provider == "openai":
+        return OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+    elif provider == "anthropic":
+        try:
+            import anthropic
+            return anthropic.Anthropic(api_key=os.getenv('ANTHROPIC_API_KEY'))
+        except ImportError:
+            print("Anthropic package not installed, falling back to OpenAI")
+            return OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+    elif provider == "xai":
+        # xAI uses OpenAI-compatible API
+        return OpenAI(
+            api_key=os.getenv('XAI_API_KEY'),
+            base_url="https://api.x.ai/v1"
+        )
+    elif provider == "google":
+        print("Google models not yet implemented, falling back to OpenAI")
+        return OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+    else:
+        print(f"Unknown provider {provider}, falling back to OpenAI")
+        return OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+
+def run_single_question(client, question, model_config, custom_prompt=None, state=None):
     """Run a single baseline question and return the result."""
     start_time = time.time()
     
     # Substitute state placeholders
     question_text = substitute_state_placeholders(question.get('question', ''), state)
+    model_id = model_config.get("model_id", model_config.get("name", "gpt-4o"))
     
     try:
         # Prepare the messages
@@ -81,16 +176,39 @@ def run_single_question(client, question, model, custom_prompt=None, state=None)
         
         messages.append({"role": "user", "content": question_text})
         
-        # Make API call
-        response = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=0.1,
-            max_tokens=1000
-        )
+        # Make API call based on provider
+        provider = model_config.get("provider", "openai")
+        
+        if provider == "openai" or provider == "xai":
+            response = client.chat.completions.create(
+                model=model_id,
+                messages=messages,
+                temperature=0.1,
+                max_tokens=1000
+            )
+            agent_response = response.choices[0].message.content.strip()
+        elif provider == "anthropic":
+            # For Anthropic, system prompt is separate
+            system_prompt = custom_prompt if custom_prompt else "You are a helpful AI assistant specializing in cannabis industry compliance and operations."
+            response = client.messages.create(
+                model=model_id,
+                max_tokens=1000,
+                temperature=0.1,
+                system=system_prompt,
+                messages=[{"role": "user", "content": question_text}]
+            )
+            agent_response = response.content[0].text.strip()
+        else:
+            # Fallback to OpenAI format
+            response = client.chat.completions.create(
+                model=model_id,
+                messages=messages,
+                temperature=0.1,
+                max_tokens=1000
+            )
+            agent_response = response.choices[0].message.content.strip()
         
         response_time = time.time() - start_time
-        agent_response = response.choices[0].message.content.strip()
         
         # Simple accuracy calculation (this could be enhanced with AI evaluation)
         expected_answer = question.get('expectedAnswer', '')
@@ -266,8 +384,36 @@ def save_test_result(conn, run_id, question, result, ai_grading=None):
 
 def run_baseline_test(agent_type, model='gpt-4o', state=None, rag_enabled=False, 
                      tools_enabled=False, kb_enabled=False, custom_prompt=None,
-                     user_id=None, run_id=None, enable_ai_grading=True, grading_model="gpt-4o"):
+                     user_id=None, run_id=None, enable_ai_grading=True, grading_model="gpt-4o",
+                     prompt_name=None, new_prompt=None, new_prompt_description=""):
     """Main function to run baseline test and store results in database."""
+    
+    # Load models and prompts configuration
+    models_config = load_models_config()
+    prompts_data = load_agent_prompts(agent_type)
+    
+    # Handle new prompt creation
+    if new_prompt:
+        if not prompt_name:
+            prompt_name = f"custom-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        create_new_prompt(agent_type, prompt_name, new_prompt, new_prompt_description)
+        custom_prompt = new_prompt
+    elif prompt_name and prompt_name in prompts_data.get("prompts", {}):
+        custom_prompt = prompts_data["prompts"][prompt_name]["system_prompt"]
+        print(f"Using prompt: {prompts_data['prompts'][prompt_name].get('name', prompt_name)}")
+    
+    # Find model configuration
+    model_config = None
+    for provider_models in models_config.get("models", {}).values():
+        if model in provider_models:
+            model_config = provider_models[model]
+            break
+    
+    if not model_config:
+        print(f"Model {model} not found in configuration, using default")
+        model_config = {"name": model, "provider": "openai", "model_id": model}
+    
+    print(f"Using model: {model_config.get('name', model)} ({model_config.get('provider', 'openai')})")
     
     # Load questions
     questions = load_baseline_questions(agent_type)
@@ -275,10 +421,10 @@ def run_baseline_test(agent_type, model='gpt-4o', state=None, rag_enabled=False,
         print(f"No questions found for agent: {agent_type}")
         return False
     
-    # Initialize OpenAI client
-    client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-    if not client.api_key:
-        print("OPENAI_API_KEY not found in environment variables")
+    # Initialize model client
+    client = get_model_client(model_config)
+    if not client:
+        print("Failed to initialize model client")
         return False
     
     # Connect to database
@@ -300,7 +446,7 @@ def run_baseline_test(agent_type, model='gpt-4o', state=None, rag_enabled=False,
         for i, question in enumerate(questions, 1):
             print(f"Processing question {i}/{len(questions)}: {question.get('id', 'unknown')}")
             
-            result = run_single_question(client, question, model, custom_prompt, state)
+            result = run_single_question(client, question, model_config, custom_prompt, state)
             results.append(result)
             
             if result['success']:
@@ -362,21 +508,49 @@ def run_baseline_test(agent_type, model='gpt-4o', state=None, rag_enabled=False,
         conn.close()
 
 def main():
-    parser = argparse.ArgumentParser(description='Run baseline tests with database integration')
+    parser = argparse.ArgumentParser(description='Run baseline tests with multi-model and prompt management support')
     parser.add_argument('--agent', required=True, help='Agent type to test')
-    parser.add_argument('--model', default='gpt-4o', help='Model to use')
+    parser.add_argument('--model', default='gpt-4o', help='Model to use (see --list-models)')
     parser.add_argument('--state', help='State for {{state}} substitution')
     parser.add_argument('--rag', action='store_true', help='Enable RAG')
     parser.add_argument('--tools', action='store_true', help='Enable tools')
     parser.add_argument('--kb', action='store_true', help='Enable knowledge base')
     parser.add_argument('--custom-prompt', help='Custom system prompt')
+    parser.add_argument('--prompt-name', help='Use named prompt from prompts.json')
+    parser.add_argument('--new-prompt', help='Create new prompt with this text')
+    parser.add_argument('--new-prompt-name', help='Name for the new prompt')
+    parser.add_argument('--new-prompt-description', help='Description for the new prompt')
     parser.add_argument('--user-id', help='User ID for the test run')
     parser.add_argument('--run-id', type=int, help='Existing run ID to update')
     parser.add_argument('--enable-ai-grading', action='store_true', default=True, help='Enable AI grading of responses')
     parser.add_argument('--disable-ai-grading', action='store_true', help='Disable AI grading of responses')
     parser.add_argument('--grading-model', default='gpt-4o', help='Model to use for AI grading')
+    parser.add_argument('--list-models', action='store_true', help='List available models and exit')
+    parser.add_argument('--list-prompts', action='store_true', help='List available prompts for agent and exit')
     
     args = parser.parse_args()
+    
+    # Handle list commands
+    if args.list_models:
+        models_config = load_models_config()
+        print("\nAvailable models:")
+        for provider, models in models_config.get("models", {}).items():
+            print(f"\n{provider.upper()}:")
+            for model_id, config in models.items():
+                print(f"  {model_id} - {config.get('name', model_id)}")
+                print(f"    {config.get('description', 'No description')}")
+                print(f"    Context: {config.get('context_window', 'Unknown')} tokens")
+                print(f"    Cost: ${config.get('cost_per_1k_tokens', 0)}/1k tokens")
+        return
+    
+    if args.list_prompts:
+        prompts_data = load_agent_prompts(args.agent)
+        print(f"\nAvailable prompts for {args.agent}:")
+        for prompt_id, prompt_data in prompts_data.get("prompts", {}).items():
+            print(f"  {prompt_id} - {prompt_data.get('name', prompt_id)}")
+            print(f"    {prompt_data.get('description', 'No description')}")
+            print(f"    Created: {prompt_data.get('created_at', 'Unknown')}")
+        return
     
     # Determine AI grading setting
     enable_ai_grading = args.enable_ai_grading and not args.disable_ai_grading
@@ -392,7 +566,10 @@ def main():
         user_id=args.user_id,
         run_id=args.run_id,
         enable_ai_grading=enable_ai_grading,
-        grading_model=args.grading_model
+        grading_model=args.grading_model,
+        prompt_name=args.prompt_name,
+        new_prompt=args.new_prompt,
+        new_prompt_description=args.new_prompt_description or ""
     )
     
     sys.exit(0 if success else 1)

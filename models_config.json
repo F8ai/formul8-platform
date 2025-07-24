@@ -1,0 +1,152 @@
+{
+  "models": {
+    "openai": {
+      "gpt-4o": {
+        "name": "GPT-4o",
+        "provider": "openai",
+        "model_id": "gpt-4o",
+        "api_base": "https://api.openai.com/v1",
+        "context_window": 128000,
+        "supports_vision": true,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.03,
+        "description": "Latest OpenAI model with enhanced reasoning capabilities"
+      },
+      "gpt-4o-mini": {
+        "name": "GPT-4o Mini",
+        "provider": "openai",
+        "model_id": "gpt-4o-mini",
+        "api_base": "https://api.openai.com/v1",
+        "context_window": 128000,
+        "supports_vision": true,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.015,
+        "description": "Faster, more cost-effective version of GPT-4o"
+      },
+      "o3": {
+        "name": "o3",
+        "provider": "openai",
+        "model_id": "o3",
+        "api_base": "https://api.openai.com/v1",
+        "context_window": 200000,
+        "supports_vision": false,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.06,
+        "description": "Advanced reasoning model optimized for complex problem solving"
+      },
+      "o1-preview": {
+        "name": "o1 Preview",
+        "provider": "openai",
+        "model_id": "o1-preview",
+        "api_base": "https://api.openai.com/v1",
+        "context_window": 128000,
+        "supports_vision": false,
+        "supports_function_calling": false,
+        "cost_per_1k_tokens": 0.15,
+        "description": "Preview of o1 model with enhanced reasoning capabilities"
+      },
+      "o1-mini": {
+        "name": "o1 Mini",
+        "provider": "openai",
+        "model_id": "o1-mini",
+        "api_base": "https://api.openai.com/v1",
+        "context_window": 128000,
+        "supports_vision": false,
+        "supports_function_calling": false,
+        "cost_per_1k_tokens": 0.03,
+        "description": "Smaller, faster version of o1 model"
+      }
+    },
+    "anthropic": {
+      "claude-3-5-sonnet-20241022": {
+        "name": "Claude 3.5 Sonnet",
+        "provider": "anthropic",
+        "model_id": "claude-3-5-sonnet-20241022",
+        "api_base": "https://api.anthropic.com",
+        "context_window": 200000,
+        "supports_vision": true,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.03,
+        "description": "Latest Claude model with excellent reasoning and coding capabilities"
+      },
+      "claude-3-opus-20240229": {
+        "name": "Claude 3 Opus",
+        "provider": "anthropic",
+        "model_id": "claude-3-opus-20240229",
+        "api_base": "https://api.anthropic.com",
+        "context_window": 200000,
+        "supports_vision": true,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.075,
+        "description": "Most capable Claude model for complex reasoning tasks"
+      },
+      "claude-3-5-haiku-20241022": {
+        "name": "Claude 3.5 Haiku",
+        "provider": "anthropic",
+        "model_id": "claude-3-5-haiku-20241022",
+        "api_base": "https://api.anthropic.com",
+        "context_window": 200000,
+        "supports_vision": false,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.0025,
+        "description": "Fast and efficient Claude model for quick responses"
+      }
+    },
+    "xai": {
+      "grok-2-vision-1212": {
+        "name": "Grok 2 Vision",
+        "provider": "xai",
+        "model_id": "grok-2-vision-1212",
+        "api_base": "https://api.x.ai/v1",
+        "context_window": 8192,
+        "supports_vision": true,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.02,
+        "description": "Grok model with vision capabilities for multimodal tasks"
+      },
+      "grok-2-1212": {
+        "name": "Grok 2",
+        "provider": "xai",
+        "model_id": "grok-2-1212",
+        "api_base": "https://api.x.ai/v1",
+        "context_window": 131072,
+        "supports_vision": false,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.02,
+        "description": "Latest Grok model for text-based reasoning tasks"
+      }
+    },
+    "google": {
+      "gemini-1.5-pro-002": {
+        "name": "Gemini 1.5 Pro",
+        "provider": "google",
+        "model_id": "gemini-1.5-pro-002",
+        "api_base": "https://generativelanguage.googleapis.com/v1beta",
+        "context_window": 2000000,
+        "supports_vision": true,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.0125,
+        "description": "Google's most capable model with massive context window"
+      },
+      "gemini-1.5-flash-002": {
+        "name": "Gemini 1.5 Flash",
+        "provider": "google",
+        "model_id": "gemini-1.5-flash-002",
+        "api_base": "https://generativelanguage.googleapis.com/v1beta",
+        "context_window": 1000000,
+        "supports_vision": true,
+        "supports_function_calling": true,
+        "cost_per_1k_tokens": 0.00075,
+        "description": "Fast and efficient Gemini model with large context"
+      }
+    }
+  },
+  "default_model": "gpt-4o",
+  "grading_models": ["gpt-4o", "gpt-4o-mini", "claude-3-5-sonnet-20241022", "o3"],
+  "model_categories": {
+    "reasoning": ["o3", "o1-preview", "claude-3-opus-20240229"],
+    "cost_effective": ["gpt-4o-mini", "claude-3-5-haiku-20241022", "gemini-1.5-flash-002"],
+    "vision": ["gpt-4o", "claude-3-5-sonnet-20241022", "grok-2-vision-1212", "gemini-1.5-pro-002"],
+    "large_context": ["gemini-1.5-pro-002", "gemini-1.5-flash-002", "claude-3-5-sonnet-20241022"]
+  }
+}

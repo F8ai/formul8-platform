@@ -11,6 +11,7 @@ import {
 } from "@shared/schema";
 import path from "path";
 import { spawn } from "child_process";
+import fs from "fs/promises";
 
 const router = Router();
 
@@ -18,6 +19,58 @@ const router = Router();
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// Load models configuration
+async function loadModelsConfig() {
+  try {
+    const configPath = path.join(process.cwd(), 'models_config.json');
+    const configData = await fs.readFile(configPath, 'utf8');
+    return JSON.parse(configData);
+  } catch (error) {
+    console.warn('Failed to load models config:', error);
+    return {
+      models: {
+        openai: {
+          "gpt-4o": { name: "GPT-4o", provider: "openai", model_id: "gpt-4o" }
+        }
+      },
+      default_model: "gpt-4o"
+    };
+  }
+}
+
+// Load agent prompts
+async function loadAgentPrompts(agentType: string) {
+  try {
+    const promptsPath = path.join(process.cwd(), 'agents', agentType, 'prompts.json');
+    const promptsData = await fs.readFile(promptsPath, 'utf8');
+    return JSON.parse(promptsData);
+  } catch (error) {
+    console.warn(`Failed to load prompts for ${agentType}:`, error);
+    return {
+      prompts: {
+        default: {
+          name: "Default Assistant",
+          system_prompt: "You are a helpful AI assistant.",
+          description: "Default system prompt"
+        }
+      }
+    };
+  }
+}
+
+// Save agent prompts
+async function saveAgentPrompts(agentType: string, promptsData: any) {
+  try {
+    const promptsPath = path.join(process.cwd(), 'agents', agentType, 'prompts.json');
+    await fs.mkdir(path.dirname(promptsPath), { recursive: true });
+    await fs.writeFile(promptsPath, JSON.stringify(promptsData, null, 2));
+    return true;
+  } catch (error) {
+    console.error(`Failed to save prompts for ${agentType}:`, error);
+    return false;
+  }
+}
 
 // AI grading service function
 async function gradeWithAI(question: string, expectedAnswer: string, agentResponse: string, model = "gpt-4o"): Promise<{
@@ -297,17 +350,24 @@ router.get("/api/baseline-testing/agents", isAuthenticated, async (req: any, res
 // Get available models for testing
 router.get("/api/baseline-testing/models", isAuthenticated, async (req: any, res) => {
   try {
-    const models = [
-      "gpt-4o",
-      "gpt-4o-mini", 
-      "o1-preview",
-      "o1-mini",
-      "o3",
-      "claude-3-5-sonnet-20241022",
-      "claude-3-5-haiku-20241022",
-      "claude-3-opus-20240229",
-      "gemini-1.5-pro-002"
-    ];
+    const modelsConfig = await loadModelsConfig();
+    const models = [];
+    
+    for (const [provider, providerModels] of Object.entries(modelsConfig.models || {})) {
+      for (const [modelId, config] of Object.entries(providerModels as Record<string, any>)) {
+        models.push({
+          id: modelId,
+          name: config.name,
+          provider: config.provider,
+          description: config.description,
+          context_window: config.context_window,
+          cost_per_1k_tokens: config.cost_per_1k_tokens,
+          supports_vision: config.supports_vision,
+          supports_function_calling: config.supports_function_calling
+        });
+      }
+    }
+    
     res.json(models);
   } catch (error) {
     console.error("Error fetching models:", error);
