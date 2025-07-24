@@ -77,6 +77,15 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 24, 2025 - Comprehensive Compliance Validation Questions Added ✅ COMPLETE
+- **Complete Question Replacement**: Replaced all 16 existing baseline questions with 60 comprehensive compliance validation questions covering real operational scenarios
+- **12 Operational Categories**: Added questions spanning SOP documentation, testing/infusion rules, labeling/packaging, edibles potency, formulation/ingredients, facility operations, extraction/production, inventory tracking, recordkeeping, waste management, employee training, and transport/transfer
+- **Real-World Focus**: Questions address actual day-to-day compliance challenges cannabis operators face, moving from theoretical to practical operational guidance
+- **Comprehensive Coverage**: 60 questions across beginner (21), intermediate (31), and advanced (8) difficulty levels
+- **Multi-State Applicability**: Most questions applicable across multiple states with state-specific variations noted where relevant
+- **Operational Excellence**: Questions focus on SOPs, testing requirements, packaging compliance, facility management, extraction procedures, inventory tracking, and transport regulations
+- **Enhanced Agent Capability**: Compliance agent now equipped with comprehensive baseline covering all major operational compliance areas for cannabis businesses
+
 ### July 17, 2025 - Complete Agent Submodule Architecture with Data Repositories ✅ COMPLETE
 - **All Agents Properly Configured**: Successfully fixed and deployed all 9 agents (compliance, formulation, marketing, operations, sourcing, patent, science, spectra, customer-success) with their individual GitHub repositories
 - **Data Submodule Integration**: Each agent now has its dedicated data repository properly configured as a submodule with Git LFS support for large files
