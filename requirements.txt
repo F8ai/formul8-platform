@@ -10,3 +10,14 @@ xlrd>=2.0.1
 flask>=2.3.0
 flask-cors>=4.0.0
 networkx>=3.0 
+google-api-python-client
+google-auth
+langchain
+langchain-community
+langchain-core
+langchain-openai
+openai
+pydantic
+python-dotenv
+pyyaml
+rdkit
