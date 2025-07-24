@@ -20,23 +20,32 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Load models configuration
+// Load models configuration from base-agent/models.json
 async function loadModelsConfig() {
-  try {
-    const configPath = path.join(process.cwd(), 'models_config.json');
-    const configData = await fs.readFile(configPath, 'utf8');
-    return JSON.parse(configData);
-  } catch (error) {
-    console.warn('Failed to load models config:', error);
-    return {
-      models: {
-        openai: {
-          "gpt-4o": { name: "GPT-4o", provider: "openai", model_id: "gpt-4o" }
-        }
-      },
-      default_model: "gpt-4o"
-    };
+  const configPaths = [
+    path.join(process.cwd(), 'agents', 'base-agent', 'models.json'),
+    path.join(process.cwd(), 'models_config.json'), // fallback
+    path.join(process.cwd(), 'models.json') // fallback
+  ];
+  
+  for (const configPath of configPaths) {
+    try {
+      const configData = await fs.readFile(configPath, 'utf8');
+      return JSON.parse(configData);
+    } catch (error) {
+      continue; // Try next path
+    }
   }
+  
+  console.warn('No models configuration found, using default');
+  return {
+    models: {
+      openai: {
+        "gpt-4o": { name: "GPT-4o", provider: "openai", model_id: "gpt-4o" }
+      }
+    },
+    default_model: "gpt-4o"
+  };
 }
 
 // Load agent prompts
