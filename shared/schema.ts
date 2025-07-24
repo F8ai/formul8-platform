@@ -133,7 +133,52 @@ export const userActivity = pgTable("user_activity", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-// Baseline exam results table
+// Baseline test runs table - captures each test run configuration
+export const baselineTestRuns = pgTable("baseline_test_runs", {
+  id: serial("id").primaryKey(),
+  agentType: varchar("agent_type").notNull(),
+  model: varchar("model").notNull().default("gpt-4o"),
+  state: varchar("state"), // State for {{state}} substitution
+  ragEnabled: boolean("rag_enabled").default(false),
+  toolsEnabled: boolean("tools_enabled").default(false),
+  kbEnabled: boolean("kb_enabled").default(false),
+  customPrompt: text("custom_prompt"), // Custom system prompt used
+  userId: varchar("user_id").references(() => users.id),
+  status: varchar("status").default("running"), // running, completed, failed
+  totalQuestions: integer("total_questions"),
+  successfulTests: integer("successful_tests"),
+  failedTests: integer("failed_tests"),
+  avgAccuracy: decimal("avg_accuracy", { precision: 5, scale: 2 }),
+  avgConfidence: decimal("avg_confidence", { precision: 5, scale: 2 }),
+  avgResponseTime: decimal("avg_response_time", { precision: 7, scale: 2 }),
+  categoryBreakdown: jsonb("category_breakdown"),
+  createdAt: timestamp("created_at").defaultNow(),
+  completedAt: timestamp("completed_at"),
+});
+
+// Individual baseline test results table - captures each question/answer
+export const baselineTestResults = pgTable("baseline_test_results", {
+  id: serial("id").primaryKey(),
+  runId: integer("run_id").notNull().references(() => baselineTestRuns.id),
+  questionId: varchar("question_id").notNull(),
+  question: text("question").notNull(),
+  expectedAnswer: text("expected_answer"),
+  agentResponse: text("agent_response"),
+  accuracy: decimal("accuracy", { precision: 5, scale: 2 }),
+  confidence: decimal("confidence", { precision: 5, scale: 2 }),
+  responseTime: decimal("response_time", { precision: 7, scale: 2 }),
+  category: varchar("category"),
+  difficulty: varchar("difficulty"),
+  maxScore: integer("max_score").default(10),
+  manualGrade: integer("manual_grade"), // Manual grade from 0-10
+  manualFeedback: text("manual_feedback"), // Manual feedback/comments
+  gradedBy: varchar("graded_by").references(() => users.id),
+  gradedAt: timestamp("graded_at"),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Baseline exam results table (legacy - keeping for compatibility)
 export const baselineExamResults = pgTable("baseline_exam_results", {
   id: serial("id").primaryKey(),
   agentType: varchar("agent_type").notNull(),
@@ -331,6 +376,25 @@ export const baselineExamResultsRelations = relations(baselineExamResults, ({ on
   }),
 }));
 
+export const baselineTestRunsRelations = relations(baselineTestRuns, ({ one, many }) => ({
+  user: one(users, {
+    fields: [baselineTestRuns.userId],
+    references: [users.id],
+  }),
+  results: many(baselineTestResults),
+}));
+
+export const baselineTestResultsRelations = relations(baselineTestResults, ({ one }) => ({
+  run: one(baselineTestRuns, {
+    fields: [baselineTestResults.runId],
+    references: [baselineTestRuns.id],
+  }),
+  grader: one(users, {
+    fields: [baselineTestResults.gradedBy],
+    references: [users.id],
+  }),
+}));
+
 export const costsRelations = relations(costs, ({ one }) => ({
   user: one(users, {
     fields: [costs.userId],
@@ -424,6 +488,18 @@ export const insertBaselineExamResultSchema = createInsertSchema(baselineExamRes
   createdAt: true,
 });
 
+export const insertBaselineTestRunSchema = createInsertSchema(baselineTestRuns).omit({
+  id: true,
+  createdAt: true,
+  completedAt: true,
+});
+
+export const insertBaselineTestResultSchema = createInsertSchema(baselineTestResults).omit({
+  id: true,
+  createdAt: true,
+  gradedAt: true,
+});
+
 // Types
 export type UpsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
@@ -441,6 +517,10 @@ export type UserActivity = typeof userActivity.$inferSelect;
 export type InsertUserActivity = z.infer<typeof insertUserActivitySchema>;
 export type BaselineExamResult = typeof baselineExamResults.$inferSelect;
 export type InsertBaselineExamResult = z.infer<typeof insertBaselineExamResultSchema>;
+export type BaselineTestRun = typeof baselineTestRuns.$inferSelect;
+export type InsertBaselineTestRun = z.infer<typeof insertBaselineTestRunSchema>;
+export type BaselineTestResult = typeof baselineTestResults.$inferSelect;
+export type InsertBaselineTestResult = z.infer<typeof insertBaselineTestResultSchema>;
 
 // Cost tracking schemas
 export const insertCostSchema = createInsertSchema(costs).omit({

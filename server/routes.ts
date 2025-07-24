@@ -15,6 +15,7 @@ import complianceRoutes from "./routes/compliance-routes";
 import complianceRouter from "./routes/compliance";
 import baselineMetricsRoutes from "./routes/baseline-metrics";
 import baselineAssessmentRoutes from "./routes/baseline-assessment";
+import baselineTestingRoutes from "./routes/baseline-testing";
 import corpusQARoutes from "./routes/corpus-qa";
 import artifactsRouter from "./routes/artifacts";
 import astradbRouter from "./routes/astradb";
@@ -42,6 +43,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Baseline assessment routes
   app.use(baselineAssessmentRoutes);
+
+  // Baseline testing routes
+  app.use(baselineTestingRoutes);
 
   // Serve compliance agent HTML dashboard (public route - no auth required)
   app.get('/dashboard/compliance', (req, res) => {

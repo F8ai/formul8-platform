@@ -11,6 +11,8 @@ import {
   agentTools,
   artifactHistory,
   baselineExamResults,
+  baselineTestRuns,
+  baselineTestResults,
   type User,
   type UpsertUser,
   type Project,
@@ -33,6 +35,10 @@ import {
   type InsertArtifactHistory,
   type BaselineExamResult,
   type InsertBaselineExamResult,
+  type BaselineTestRun,
+  type InsertBaselineTestRun,
+  type BaselineTestResult,
+  type InsertBaselineTestResult,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, or } from "drizzle-orm";
@@ -80,10 +86,35 @@ export interface IStorage {
   logUserActivity(activity: InsertUserActivity): Promise<UserActivity>;
   getUserActivity(userId: string, limit?: number): Promise<UserActivity[]>;
   
-  // Baseline exam operations
+  // Baseline exam operations (legacy)
   createBaselineExamResult(result: InsertBaselineExamResult): Promise<BaselineExamResult>;
   getLatestBaselineExamResults(): Promise<BaselineExamResult[]>;
   getBaselineExamResultsForAgent(agentType: string): Promise<BaselineExamResult[]>;
+
+  // Baseline testing operations
+  createBaselineTestRun(run: InsertBaselineTestRun): Promise<BaselineTestRun>;
+  updateBaselineTestRun(id: number, updates: Partial<BaselineTestRun>): Promise<BaselineTestRun | undefined>;
+  getBaselineTestRun(id: number): Promise<BaselineTestRun | undefined>;
+  getBaselineTestRuns(filters?: {
+    agentType?: string;
+    model?: string;
+    state?: string;
+    userId?: string;
+    limit?: number;
+  }): Promise<BaselineTestRun[]>;
+  
+  createBaselineTestResult(result: InsertBaselineTestResult): Promise<BaselineTestResult>;
+  updateBaselineTestResult(id: number, updates: Partial<BaselineTestResult>): Promise<BaselineTestResult | undefined>;
+  getBaselineTestResults(runId: number): Promise<BaselineTestResult[]>;
+  getBaselineTestResultsWithFilters(filters: {
+    runId?: number;
+    agentType?: string;
+    category?: string;
+    difficulty?: string;
+    manualGrade?: number;
+    gradedBy?: string;
+    limit?: number;
+  }): Promise<BaselineTestResult[]>;
 
   // User artifacts operations
   createArtifact(artifact: InsertUserArtifact): Promise<UserArtifact>;
@@ -356,6 +387,109 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(baselineExamResults.examDate))
       .limit(10);
     return results;
+  }
+
+  // Baseline testing operations
+  async createBaselineTestRun(run: InsertBaselineTestRun): Promise<BaselineTestRun> {
+    const [newRun] = await db.insert(baselineTestRuns).values(run).returning();
+    return newRun;
+  }
+
+  async updateBaselineTestRun(id: number, updates: Partial<BaselineTestRun>): Promise<BaselineTestRun | undefined> {
+    const [updated] = await db
+      .update(baselineTestRuns)
+      .set(updates)
+      .where(eq(baselineTestRuns.id, id))
+      .returning();
+    return updated;
+  }
+
+  async getBaselineTestRun(id: number): Promise<BaselineTestRun | undefined> {
+    const [run] = await db
+      .select()
+      .from(baselineTestRuns)
+      .where(eq(baselineTestRuns.id, id));
+    return run;
+  }
+
+  async getBaselineTestRuns(filters: {
+    agentType?: string;
+    model?: string;
+    state?: string;
+    userId?: string;
+    limit?: number;
+  } = {}): Promise<BaselineTestRun[]> {
+    let query = db.select().from(baselineTestRuns);
+
+    const conditions = [];
+    if (filters.agentType) conditions.push(eq(baselineTestRuns.agentType, filters.agentType));
+    if (filters.model) conditions.push(eq(baselineTestRuns.model, filters.model));
+    if (filters.state) conditions.push(eq(baselineTestRuns.state, filters.state));
+    if (filters.userId) conditions.push(eq(baselineTestRuns.userId, filters.userId));
+
+    if (conditions.length > 0) {
+      query = query.where(and(...conditions));
+    }
+
+    return await query
+      .orderBy(desc(baselineTestRuns.createdAt))
+      .limit(filters.limit || 50);
+  }
+
+  async createBaselineTestResult(result: InsertBaselineTestResult): Promise<BaselineTestResult> {
+    const [newResult] = await db.insert(baselineTestResults).values(result).returning();
+    return newResult;
+  }
+
+  async updateBaselineTestResult(id: number, updates: Partial<BaselineTestResult>): Promise<BaselineTestResult | undefined> {
+    const [updated] = await db
+      .update(baselineTestResults)
+      .set(updates)
+      .where(eq(baselineTestResults.id, id))
+      .returning();
+    return updated;
+  }
+
+  async getBaselineTestResults(runId: number): Promise<BaselineTestResult[]> {
+    return await db
+      .select()
+      .from(baselineTestResults)
+      .where(eq(baselineTestResults.runId, runId))
+      .orderBy(baselineTestResults.questionId);
+  }
+
+  async getBaselineTestResultsWithFilters(filters: {
+    runId?: number;
+    agentType?: string;
+    category?: string;
+    difficulty?: string;
+    manualGrade?: number;
+    gradedBy?: string;
+    limit?: number;
+  }): Promise<BaselineTestResult[]> {
+    let query = db
+      .select()
+      .from(baselineTestResults)
+      .leftJoin(baselineTestRuns, eq(baselineTestResults.runId, baselineTestRuns.id));
+
+    const conditions = [];
+    if (filters.runId) conditions.push(eq(baselineTestResults.runId, filters.runId));
+    if (filters.agentType) conditions.push(eq(baselineTestRuns.agentType, filters.agentType));
+    if (filters.category) conditions.push(eq(baselineTestResults.category, filters.category));
+    if (filters.difficulty) conditions.push(eq(baselineTestResults.difficulty, filters.difficulty));
+    if (filters.manualGrade !== undefined) conditions.push(eq(baselineTestResults.manualGrade, filters.manualGrade));
+    if (filters.gradedBy) conditions.push(eq(baselineTestResults.gradedBy, filters.gradedBy));
+
+    if (conditions.length > 0) {
+      query = query.where(and(...conditions));
+    }
+
+    const results = await query
+      .orderBy(desc(baselineTestResults.createdAt))
+      .limit(filters.limit || 100);
+
+    // Return only the baseline test results, not the joined run data
+    return results.map(r => r.baseline_test_results);
   }
 
   // User artifacts operations

@@ -99,6 +99,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
       category: "System",
       items: [
         { href: "/baselines", icon: Database, label: "Baseline Management", active: location === "/baselines" },
+        { href: "/baseline-testing", icon: FlaskConical, label: "🧪 Baseline Testing", badge: "New", active: location === "/baseline-testing" },
       ]
     }
   ];

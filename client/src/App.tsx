@@ -32,6 +32,7 @@ import GoodFORUseCase from "@/pages/use/goodfor";
 import Roadmap from "@/pages/roadmap";
 import ComplianceAgent from "@/pages/ComplianceAgent";
 import BaselineAssessment from "@/pages/BaselineAssessment";
+import BaselineTestingPage from "@/pages/BaselineTestingPage";
 import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
 
@@ -69,6 +70,7 @@ function Router() {
           <Route path="/agents-dashboard" component={AgentsDashboard} />
           <Route path="/baselines" component={BaselineManagement} />
           <Route path="/baseline-assessment" component={BaselineAssessment} />
+          <Route path="/baseline-testing" component={BaselineTestingPage} />
           <Route path="/langgraph" component={LangGraphDashboard} />
           <Route path="/corpus-qa" component={CorpusQA} />
           <Route path="/mvp" component={MVP} />
