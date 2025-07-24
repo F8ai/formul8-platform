@@ -33,8 +33,8 @@ def get_db_connection():
         sys.exit(1)
 
 def load_models_config():
-    """Load models configuration from models_config.json."""
-    config_file = Path("models_config.json")
+    """Load models configuration from agents/base-agent/models.json."""
+    config_file = Path("agents/base-agent/models.json")
     if not config_file.exists():
         print("Models config file not found, using default models")
         return {
