@@ -257,9 +257,20 @@ export default function BaselineTableViewer() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {availableModels.map(model => {
                   const metrics = modelMetrics[model];
+                  const hasRealData = questions.some((q: any) => 
+                    q.modelResponses?.some((r: ModelResponse) => r.model === model && r.status === 'success')
+                  );
+                  
                   return (
-                    <div key={model} className="border rounded-lg p-4 bg-muted/30">
-                      <div className="font-medium text-sm mb-3 text-center">{model}</div>
+                    <div key={model} className={`border rounded-lg p-4 ${hasRealData ? 'bg-muted/30' : 'bg-yellow-50/50 opacity-70'}`}>
+                      <div className="font-medium text-sm mb-3 text-center flex items-center justify-center gap-1">
+                        {model}
+                        {!hasRealData && (
+                          <Badge variant="outline" className="text-xs bg-yellow-100 text-yellow-700 border-yellow-300">
+                            SIMULATED
+                          </Badge>
+                        )}
+                      </div>
                       <div className="space-y-2 text-xs">
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Tests:</span>
@@ -268,8 +279,9 @@ export default function BaselineTableViewer() {
                         {metrics.totalCost > 0 && (
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Total Cost:</span>
-                            <span className="font-medium text-green-600">
+                            <span className={`font-medium ${hasRealData ? 'text-green-600' : 'text-yellow-600'}`}>
                               ${metrics.totalCost.toFixed(4)}
+                              {!hasRealData && <span className="text-xs ml-1">(est.)</span>}
                             </span>
                           </div>
                         )}
@@ -278,14 +290,16 @@ export default function BaselineTableViewer() {
                             <span className="text-muted-foreground">Avg Grade:</span>
                             <Badge variant={metrics.avgGrade >= 80 ? "default" : metrics.avgGrade >= 60 ? "secondary" : "destructive"} className="text-xs">
                               {metrics.avgGrade.toFixed(1)}%
+                              {!hasRealData && <span className="ml-1">(sim.)</span>}
                             </Badge>
                           </div>
                         )}
                         {metrics.avgResponseTime > 0 && (
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Avg Time:</span>
-                            <span className="font-medium text-blue-600">
+                            <span className={`font-medium ${hasRealData ? 'text-blue-600' : 'text-yellow-600'}`}>
                               {(metrics.avgResponseTime / 1000).toFixed(1)}s
+                              {!hasRealData && <span className="text-xs ml-1">(est.)</span>}
                             </span>
                           </div>
                         )}
@@ -447,13 +461,20 @@ export default function BaselineTableViewer() {
                                     return (
                                       <TableCell key={model} className="text-center">
                                         {response && !isUntestedModel ? (
-                                          <div className="space-y-2">
-                                            <Badge 
-                                              variant={response.grade >= 80 ? "default" : response.grade >= 60 ? "secondary" : "destructive"}
-                                              className="text-xs"
-                                            >
-                                              {response.grade}%
-                                            </Badge>
+                                          <div className={`space-y-2 ${response.status === 'success' ? '' : 'opacity-60 grayscale'}`}>
+                                            <div className="flex items-center gap-1">
+                                              <Badge 
+                                                variant={response.grade >= 80 ? "default" : response.grade >= 60 ? "secondary" : "destructive"}
+                                                className="text-xs"
+                                              >
+                                                {response.grade}%
+                                              </Badge>
+                                              {response.status !== 'success' && (
+                                                <Badge variant="outline" className="text-xs bg-yellow-50 text-yellow-700 border-yellow-300">
+                                                  SIMULATED
+                                                </Badge>
+                                              )}
+                                            </div>
                                             <div className="text-xs text-muted-foreground">
                                               {response.confidence}% conf
                                             </div>
@@ -470,7 +491,12 @@ export default function BaselineTableViewer() {
                                               )}
                                             </div>
                                             <div className="max-w-xs p-2 bg-muted rounded text-xs text-left">
-                                              <div className="font-semibold mb-1">Response:</div>
+                                              <div className="font-semibold mb-1 flex items-center gap-1">
+                                                Response:
+                                                {response.status !== 'success' && (
+                                                  <span className="text-yellow-600 text-xs">(Simulated)</span>
+                                                )}
+                                              </div>
                                               <p className="line-clamp-4 text-muted-foreground">
                                                 {response.answer}
                                               </p>
@@ -478,7 +504,8 @@ export default function BaselineTableViewer() {
                                                 <button 
                                                   className="text-primary hover:underline mt-1"
                                                   onClick={() => {
-                                                    alert(`Full ${model} Response:\n\n${response.answer}`);
+                                                    const title = response.status === 'success' ? `Full ${model} Response` : `Full ${model} Response (SIMULATED DATA)`;
+                                                    alert(`${title}:\n\n${response.answer}`);
                                                   }}
                                                 >
                                                   Show full response

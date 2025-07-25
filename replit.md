@@ -10,6 +10,7 @@ The Formul8 Platform is the main repository for the comprehensive AI-powered can
 - **Background**: PhD in computational biology, 30 years expertise in software and AI
 - **Pricing structure**: $300/hour (contractor pays AI costs) OR $150/hour + 1.5% revenue share
 - **Data Policy**: Never use mock data - always fetch real data from authentic sources (GitHub, APIs, databases)
+- **Data Integrity**: Grey out and clearly label any simulated/generated data to distinguish from real API responses
 
 ## System Architecture
 
