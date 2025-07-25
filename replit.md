@@ -77,6 +77,17 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 25, 2025 - Real Model Integration with API Testing ✅ ACTIVE
+- **Model Integration Service**: Created comprehensive model-integration.ts service supporting OpenAI, Anthropic, and Google AI APIs
+- **Real API Testing**: Added POST endpoint /api/agents/:agentType/baseline-questions/:questionId/test/:model for authentic model testing
+- **Run Test Buttons**: Updated BaselineTableViewer to show "Run Test" buttons for untested models instead of generated placeholder responses
+- **API Key Management**: Implemented proper API key checking and error handling for missing keys (ANTHROPIC_API_KEY, GEMINI_API_KEY needed)
+- **Real Response Processing**: Models now generate authentic responses with real confidence scoring, grading, response times, and cost calculations
+- **Live Testing Interface**: Users can click "Run Test" buttons to trigger real API calls and see authentic model responses replace placeholder text
+- **Multi-Provider Support**: Framework supports OpenAI GPT-4o (working), Anthropic Claude (needs key), and Google Gemini (needs key)
+- **Cost Tracking**: Real cost calculation based on estimated token usage for each provider
+- **AI-Powered Grading**: Automated grading system using GPT-4o-mini to evaluate response quality against expected answers
+
 ### July 25, 2025 - Full LLM Response Display with State Column ✅ COMPLETE
 - **Full Response Display**: Baseline table now shows actual LLM responses in preview cards with "Show full response" option for complete model answers
 - **State Column Added**: Added dedicated state column showing CO, MULTI, or other state-specific compliance contexts for each question

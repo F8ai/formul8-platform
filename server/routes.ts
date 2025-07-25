@@ -29,6 +29,7 @@ import federationRouter from "./routes/federation";
 import { z } from "zod";
 import fs from "fs/promises";
 import OpenAI from "openai";
+import { modelIntegrationService } from "./services/model-integration";
 
 // Initialize OpenAI client for baseline testing
 const openai = new OpenAI({
@@ -332,36 +333,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
             });
           }
           
-          // Add additional models for comparison using comprehensive responses
-          baseQuestion.modelResponses.push(
-            {
-              model: 'gpt-4o',
-              answer: `Professional cannabis compliance guidance based on current regulations:\n\n${q.expected_answer}\n\nAdditional considerations include:\n- Ensuring all documentation is current and properly filed with regulatory authorities\n- Maintaining proper chain of custody throughout all processes\n- Regular training updates for staff on evolving compliance requirements\n- Implementation of robust quality control measures\n- Proper record retention policies per state requirements\n- Regular compliance audits and corrective action protocols\n\nIt's essential to consult with legal counsel familiar with cannabis regulations in your jurisdiction to ensure full compliance with all applicable laws and regulations.`,
-              confidence: Math.floor(Math.random() * 15) + 80, // 80-94%
-              grade: Math.floor(Math.random() * 15) + 80, // 80-94%
-              gradingConfidence: 88,
-              responseTime: Math.floor(Math.random() * 800) + 1200,
-              cost: 0.002
-            },
-            {
-              model: 'claude-3.5-sonnet',
-              answer: `Comprehensive regulatory analysis addressing cannabis compliance requirements:\n\n${q.expected_answer}\n\nKey regulatory frameworks to consider:\n\n1. State-specific cannabis control board regulations\n2. Local municipality licensing requirements\n3. Federal compliance considerations (banking, taxation)\n4. Environmental health and safety standards\n5. Product testing and laboratory certification requirements\n6. Advertising and marketing compliance restrictions\n7. Security and surveillance system requirements\n8. Financial reporting and tax compliance obligations\n\nImplementation best practices:\n- Develop comprehensive standard operating procedures\n- Establish regular compliance monitoring systems\n- Maintain detailed documentation and audit trails\n- Engage qualified compliance consultants when needed\n- Stay current with regulatory updates and industry changes\n\nRegular review and updates of compliance protocols are essential as cannabis regulations continue to evolve at both state and local levels.`,
-              confidence: Math.floor(Math.random() * 10) + 85, // 85-94%
-              grade: Math.floor(Math.random() * 10) + 85, // 85-94%
-              gradingConfidence: 90,
-              responseTime: Math.floor(Math.random() * 600) + 1400,
-              cost: 0.0015
-            },
-            {
-              model: 'gemini-1.5-pro',
-              answer: `Based on cannabis industry regulations and compliance best practices:\n\n${q.expected_answer}\n\nDetailed compliance framework:\n\nRegulatory Compliance Components:\n• Licensing and permit maintenance\n• Product testing and quality assurance protocols\n• Inventory tracking and seed-to-sale monitoring\n• Financial record keeping and tax compliance\n• Security system implementation and monitoring\n• Employee training and certification programs\n• Waste disposal and environmental compliance\n• Transportation and distribution protocols\n\nOperational Considerations:\n- Regular internal compliance audits\n- Staff training on current regulations\n- Documentation management systems\n- Corrective action procedures\n- Regulatory change monitoring\n- Legal counsel consultation protocols\n\nRisk Mitigation Strategies:\n- Proactive compliance monitoring\n- Regular policy updates\n- Staff accountability measures\n- Third-party compliance assessments\n- Contingency planning for regulatory changes\n\nStaying compliant requires ongoing attention to regulatory developments and maintaining robust internal controls to ensure adherence to all applicable cannabis industry regulations.`,
-              confidence: Math.floor(Math.random() * 12) + 78, // 78-89%
-              grade: Math.floor(Math.random() * 12) + 78, // 78-89%
-              gradingConfidence: 87,
-              responseTime: Math.floor(Math.random() * 900) + 1600,
-              cost: 0.0018
+          // Add additional models - will be populated with real responses via API
+          const additionalModels = ['gpt-4o', 'claude-3.5-sonnet', 'gemini-1.5-pro'];
+          for (const model of additionalModels) {
+            const existingResponse = baseQuestion.modelResponses.find(r => r.model === model);
+            if (!existingResponse) {
+              baseQuestion.modelResponses.push({
+                model: model,
+                answer: 'Click "Run Test" to generate real response from this model',
+                confidence: 0,
+                grade: 0,
+                gradingConfidence: 0,
+                responseTime: 0,
+                cost: 0,
+                status: 'not_tested'
+              });
             }
-          );
+          }
           
           return baseQuestion;
         });
@@ -404,6 +392,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error(`Error loading baseline questions with responses for ${agentType}:`, error);
       res.status(500).json({ error: 'Failed to load baseline questions with responses' });
+    }
+  });
+
+  // API endpoint to run real model test on a specific question
+  app.post('/api/agents/:agentType/baseline-questions/:questionId/test/:model', async (req, res) => {
+    const { agentType, questionId, model } = req.params;
+    
+    try {
+      // Load the baseline question
+      const agentPath = path.join(process.cwd(), 'agents', `${agentType}-agent`);
+      const baselineFile = path.join(agentPath, 'baseline.json');
+      const baselineData = await fs.readFile(baselineFile, 'utf8');
+      const baseline = JSON.parse(baselineData);
+      
+      const question = baseline.questions.find((q: any) => q.id === questionId);
+      if (!question) {
+        return res.status(404).json({ error: 'Question not found' });
+      }
+      
+      // Run the real model test
+      const result = await modelIntegrationService.testQuestion({
+        id: question.id,
+        question: question.question.replace(/\{\{state\}\}/g, 'CO'),
+        expected_answer: question.expected_answer.replace(/\{\{state\}\}/g, 'CO'),
+        category: question.category,
+        difficulty: question.difficulty,
+        max_score: question.max_score
+      }, model);
+      
+      res.json(result);
+    } catch (error) {
+      console.error(`Error testing model ${model} on question ${questionId}:`, error);
+      res.status(500).json({ error: 'Failed to test model' });
     }
   });
 

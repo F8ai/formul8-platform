@@ -36,6 +36,7 @@ interface ModelResponse {
   gradingConfidence: number;
   responseTime?: number;
   cost?: number;
+  status?: string;
 }
 
 export default function BaselineTableViewer() {
@@ -43,6 +44,7 @@ export default function BaselineTableViewer() {
   const [difficultyFilter, setDifficultyFilter] = useState('all');
   const [stateFilter, setStateFilter] = useState('all');
   const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
+  const [testingModels, setTestingModels] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   // Fetch baseline questions with model responses
@@ -54,6 +56,49 @@ export default function BaselineTableViewer() {
       return response.json();
     }
   });
+
+  // Function to run a real model test
+  const runModelTest = async (questionId: string, model: string) => {
+    const testKey = `${questionId}-${model}`;
+    setTestingModels(prev => new Set(prev).add(testKey));
+    
+    try {
+      const response = await fetch(`/api/agents/compliance/baseline-questions/${questionId}/test/${model}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to test model: ${response.statusText}`);
+      }
+      
+      await response.json();
+      
+      // Refresh questions to get updated data
+      await refetchQuestions();
+      
+      toast({
+        title: "Model test completed",
+        description: `${model} has been tested on question ${questionId}`,
+      });
+    } catch (error) {
+      console.error(`Error testing model ${model}:`, error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      toast({
+        title: "Model test failed",
+        description: `Failed to test ${model}: ${errorMessage}`,
+        variant: "destructive"
+      });
+    } finally {
+      setTestingModels(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(testKey);
+        return newSet;
+      });
+    }
+  };
 
   const questions = questionsData.map((q: any) => ({
     ...q,
@@ -70,6 +115,31 @@ export default function BaselineTableViewer() {
     });
     return Array.from(modelSet).sort();
   }, [questions]);
+
+  // Calculate cost and performance metrics
+  const modelMetrics = useMemo(() => {
+    const metrics: Record<string, {
+      totalCost: number,
+      avgResponseTime: number,
+      avgGrade: number,
+      testCount: number
+    }> = {};
+
+    availableModels.forEach(model => {
+      const responses = questions.flatMap((q: any) => 
+        q.modelResponses?.filter((r: ModelResponse) => r.model === model && r.cost && r.cost > 0) || []
+      );
+      
+      metrics[model] = {
+        totalCost: responses.reduce((sum, r) => sum + (r.cost || 0), 0),
+        avgResponseTime: responses.length > 0 ? responses.reduce((sum, r) => sum + (r.responseTime || 0), 0) / responses.length : 0,
+        avgGrade: responses.length > 0 ? responses.reduce((sum, r) => sum + r.grade, 0) / responses.length : 0,
+        testCount: responses.length
+      };
+    });
+
+    return metrics;
+  }, [questions, availableModels]);
 
   // Group questions by category
   const questionsByCategory = useMemo(() => {
@@ -173,6 +243,60 @@ export default function BaselineTableViewer() {
             Refresh
           </Button>
         </div>
+
+        {/* Model Performance Metrics */}
+        {availableModels.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Model Performance & Cost Metrics</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Real-time costs and performance from actual API calls
+              </p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {availableModels.map(model => {
+                  const metrics = modelMetrics[model];
+                  return (
+                    <div key={model} className="border rounded-lg p-4 bg-muted/30">
+                      <div className="font-medium text-sm mb-3 text-center">{model}</div>
+                      <div className="space-y-2 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Tests:</span>
+                          <span className="font-medium">{metrics.testCount}</span>
+                        </div>
+                        {metrics.totalCost > 0 && (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Total Cost:</span>
+                            <span className="font-medium text-green-600">
+                              ${metrics.totalCost.toFixed(4)}
+                            </span>
+                          </div>
+                        )}
+                        {metrics.avgGrade > 0 && (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Avg Grade:</span>
+                            <Badge variant={metrics.avgGrade >= 80 ? "default" : metrics.avgGrade >= 60 ? "secondary" : "destructive"} className="text-xs">
+                              {metrics.avgGrade.toFixed(1)}%
+                            </Badge>
+                          </div>
+                        )}
+                        {metrics.avgResponseTime > 0 && (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Avg Time:</span>
+                            <span className="font-medium text-blue-600">
+                              {(metrics.avgResponseTime / 1000).toFixed(1)}s
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Filters */}
         <Card>
@@ -316,9 +440,13 @@ export default function BaselineTableViewer() {
                                   </TableCell>
                                   {availableModels.map(model => {
                                     const response = getModelResponse(question, model);
+                                    const testKey = `${question.id.toString()}-${model}`;
+                                    const isTesting = testingModels.has(testKey);
+                                    const isUntestedModel = response && response.answer === 'Click "Run Test" to generate real response from this model';
+                                    
                                     return (
                                       <TableCell key={model} className="text-center">
-                                        {response ? (
+                                        {response && !isUntestedModel ? (
                                           <div className="space-y-2">
                                             <Badge 
                                               variant={response.grade >= 80 ? "default" : response.grade >= 60 ? "secondary" : "destructive"}
@@ -328,6 +456,18 @@ export default function BaselineTableViewer() {
                                             </Badge>
                                             <div className="text-xs text-muted-foreground">
                                               {response.confidence}% conf
+                                            </div>
+                                            <div className="flex justify-between text-xs">
+                                              {response.cost && response.cost > 0 && (
+                                                <span className="text-green-600 font-medium">
+                                                  ${response.cost.toFixed(4)}
+                                                </span>
+                                              )}
+                                              {response.responseTime && response.responseTime > 0 && (
+                                                <span className="text-blue-600">
+                                                  {(response.responseTime / 1000).toFixed(1)}s
+                                                </span>
+                                              )}
                                             </div>
                                             <div className="max-w-xs p-2 bg-muted rounded text-xs text-left">
                                               <div className="font-semibold mb-1">Response:</div>
@@ -347,9 +487,29 @@ export default function BaselineTableViewer() {
                                             </div>
                                           </div>
                                         ) : (
-                                          <Badge variant="outline" className="text-xs">
-                                            No response
-                                          </Badge>
+                                          <div className="space-y-2">
+                                            <Button
+                                              size="sm"
+                                              variant="outline"
+                                              onClick={() => runModelTest(question.id.toString(), model)}
+                                              disabled={isTesting}
+                                              className="text-xs"
+                                            >
+                                              {isTesting ? (
+                                                <>
+                                                  <RefreshCw className="h-3 w-3 animate-spin mr-1" />
+                                                  Testing...
+                                                </>
+                                              ) : (
+                                                'Run Test'
+                                              )}
+                                            </Button>
+                                            {isUntestedModel && (
+                                              <div className="text-xs text-muted-foreground">
+                                                Real API
+                                              </div>
+                                            )}
+                                          </div>
                                         )}
                                       </TableCell>
                                     );
