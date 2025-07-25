@@ -69,6 +69,7 @@ async function saveAgentPrompts(agentType: string, promptsData: any) {
 async function gradeWithAI(question: string, expectedAnswer: string, agentResponse: string, model = "gpt-4o"): Promise<{
   grade: number;
   feedback: string;
+  confidence: number;
 }> {
   try {
     const prompt = `You are an expert evaluator for AI system responses. Please grade the following response on a scale of 0-10.
@@ -85,10 +86,13 @@ Please evaluate the agent's response considering:
 3. Relevance to the question (20%)
 4. Clarity and coherence (15%)
 
+Also provide your confidence level (0-100%) in your grading accuracy.
+
 Provide your response in JSON format:
 {
   "grade": [0-10 integer],
-  "feedback": "[Detailed feedback explaining the grade, highlighting strengths and weaknesses]"
+  "feedback": "[Detailed feedback explaining the grade, highlighting strengths and weaknesses]",
+  "confidence": [0-100 percentage indicating your confidence in this grade]
 }`;
 
     const response = await openai.chat.completions.create({
@@ -107,17 +111,21 @@ Provide your response in JSON format:
       response_format: { type: "json_object" }
     });
 
-    const result = JSON.parse(response.choices[0].message.content || '{"grade": 0, "feedback": "No response"}');
+    const result = JSON.parse(response.choices[0].message.content || '{"grade": 0, "feedback": "No response", "confidence": 0}');
     
     // Ensure grade is within bounds
     result.grade = Math.max(0, Math.min(10, Math.round(result.grade)));
+    
+    // Ensure confidence is within bounds
+    result.confidence = Math.max(0, Math.min(100, Math.round(result.confidence || 75)));
     
     return result;
   } catch (error) {
     console.error("AI grading failed:", error);
     return {
       grade: 0,
-      feedback: `AI grading failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      feedback: `AI grading failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      confidence: 0
     };
   }
 }
@@ -412,6 +420,7 @@ router.post("/api/baseline-testing/results/:id/ai-grade", isAuthenticated, async
     const updateData = {
       aiGrade: aiGrading.grade,
       aiFeedback: aiGrading.feedback,
+      aiGradingConfidence: aiGrading.confidence,
       aiGradedAt: new Date(),
       aiGradingModel: model,
     };

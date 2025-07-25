@@ -622,8 +622,22 @@ export default function BaselineTestingPage() {
                               {result.manualGrade !== null ? `Manual: ${result.manualGrade}/${result.maxScore}` : 'Manual: Not graded'}
                             </div>
                             <div className="text-sm text-blue-600">
-                              {result.aiGrade !== null ? `AI: ${result.aiGrade}/${result.maxScore}` : 'AI: Not graded'}
+                              {result.aiGrade !== null ? (
+                                <div className="space-y-1">
+                                  <span>AI: {result.aiGrade}/{result.maxScore}</span>
+                                  {result.aiGradingConfidence && (
+                                    <div className="text-xs text-gray-500">
+                                      Confidence: {result.aiGradingConfidence}%
+                                    </div>
+                                  )}
+                                </div>
+                              ) : 'AI: Not graded'}
                             </div>
+                            {result.confidence && (
+                              <div className="text-xs text-green-600">
+                                Model Confidence: {result.confidence.toFixed(1)}%
+                              </div>
+                            )}
                           </div>
                         </TableCell>
                         <TableCell>
@@ -663,7 +677,14 @@ export default function BaselineTestingPage() {
                                     <div className="bg-blue-50 p-3 rounded space-y-2">
                                       <div className="flex justify-between items-center">
                                         <span className="text-sm font-medium">AI Grade: {result.aiGrade}/{result.maxScore}</span>
-                                        <Badge variant="outline">{result.aiGradingModel}</Badge>
+                                        <div className="flex gap-2">
+                                          {result.aiGradingConfidence && (
+                                            <Badge variant="secondary" className="text-xs">
+                                              {result.aiGradingConfidence}% confidence
+                                            </Badge>
+                                          )}
+                                          <Badge variant="outline">{result.aiGradingModel}</Badge>
+                                        </div>
                                       </div>
                                       {result.aiFeedback && (
                                         <p className="text-sm text-gray-700">{result.aiFeedback}</p>

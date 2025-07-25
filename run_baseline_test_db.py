@@ -161,7 +161,11 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
     
     # Substitute state placeholders
     question_text = substitute_state_placeholders(question.get('question', ''), state)
+    # Get the correct model ID for API calls
     model_id = model_config.get("model_id", model_config.get("name", "gpt-4o"))
+    # For OpenAI models, use the key as the model ID since that's the API identifier
+    if model_config.get("provider") == "openai":
+        model_id = model_id.lower()  # Ensure lowercase for API calls
     
     try:
         # Prepare the messages
@@ -174,7 +178,9 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
                 "content": "You are a helpful AI assistant specializing in cannabis industry compliance and operations."
             })
         
-        messages.append({"role": "user", "content": question_text})
+        # Add confidence request to the question
+        confidence_prompt = f"{question_text}\n\nPlease provide your answer followed by your confidence level (0-100%) in your response. Format your response as:\n\nAnswer: [your answer]\nConfidence: [percentage]%"
+        messages.append({"role": "user", "content": confidence_prompt})
         
         # Make API call based on provider
         provider = model_config.get("provider", "openai")
@@ -186,18 +192,21 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
                 temperature=0.1,
                 max_tokens=1000
             )
-            agent_response = response.choices[0].message.content.strip()
+            full_response = response.choices[0].message.content.strip()
+            agent_response, response_confidence = extract_confidence_from_response(full_response)
         elif provider == "anthropic":
             # For Anthropic, system prompt is separate
             system_prompt = custom_prompt if custom_prompt else "You are a helpful AI assistant specializing in cannabis industry compliance and operations."
+            confidence_prompt = f"{question_text}\n\nPlease provide your answer followed by your confidence level (0-100%) in your response. Format your response as:\n\nAnswer: [your answer]\nConfidence: [percentage]%"
             response = client.messages.create(
                 model=model_id,
                 max_tokens=1000,
                 temperature=0.1,
                 system=system_prompt,
-                messages=[{"role": "user", "content": question_text}]
+                messages=[{"role": "user", "content": confidence_prompt}]
             )
-            agent_response = response.content[0].text.strip()
+            full_response = response.content[0].text.strip()
+            agent_response, response_confidence = extract_confidence_from_response(full_response)
         else:
             # Fallback to OpenAI format
             response = client.chat.completions.create(
@@ -206,7 +215,8 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
                 temperature=0.1,
                 max_tokens=1000
             )
-            agent_response = response.choices[0].message.content.strip()
+            full_response = response.choices[0].message.content.strip()
+            agent_response, response_confidence = extract_confidence_from_response(full_response)
         
         response_time = time.time() - start_time
         
@@ -219,7 +229,7 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
             'agent_response': agent_response,
             'response_time': response_time,
             'accuracy': accuracy,
-            'confidence': 75.0,  # Default confidence - could be enhanced
+            'confidence': response_confidence,
             'error': None
         }
         
@@ -233,6 +243,32 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
             'confidence': 0.0,
             'error': str(e)
         }
+
+def extract_confidence_from_response(full_response):
+    """Extract confidence percentage from model response."""
+    import re
+    
+    # Look for confidence pattern
+    confidence_pattern = r'confidence:\s*(\d+(?:\.\d+)?)%?'
+    confidence_match = re.search(confidence_pattern, full_response.lower())
+    
+    if confidence_match:
+        confidence = float(confidence_match.group(1))
+        # Remove confidence line from response
+        response_lines = full_response.split('\n')
+        clean_lines = []
+        for line in response_lines:
+            if not re.search(confidence_pattern, line.lower()):
+                clean_lines.append(line)
+        
+        # Also remove "Answer:" prefix if present
+        clean_response = '\n'.join(clean_lines)
+        clean_response = re.sub(r'^answer:\s*', '', clean_response.strip(), flags=re.IGNORECASE)
+        
+        return clean_response.strip(), min(100.0, max(0.0, confidence))
+    else:
+        # No confidence found, return original response with default confidence
+        return full_response, 75.0
 
 def calculate_simple_accuracy(agent_response, expected_answer):
     """Simple accuracy calculation based on keyword matching."""

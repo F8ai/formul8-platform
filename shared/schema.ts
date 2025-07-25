@@ -176,6 +176,7 @@ export const baselineTestResults = pgTable("baseline_test_results", {
   gradedAt: timestamp("graded_at"),
   aiGrade: integer("ai_grade"), // AI grade from 0-10
   aiFeedback: text("ai_feedback"), // AI feedback/evaluation
+  aiGradingConfidence: integer("ai_grading_confidence"), // AI confidence in grade (0-100%)
   aiGradedAt: timestamp("ai_graded_at"),
   aiGradingModel: varchar("ai_grading_model", { length: 100 }),
   metadata: jsonb("metadata"),
