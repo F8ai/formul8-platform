@@ -454,30 +454,33 @@ export default function BaselineTableViewer() {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      testRuns.map((run: BaselineTestRun) => (
-                        <TableRow key={run.id}>
-                          <TableCell className="font-mono">#{run.id}</TableCell>
-                          <TableCell>{run.model}</TableCell>
-                          <TableCell>
-                            {run.state && <Badge variant="outline">{run.state}</Badge>}
-                          </TableCell>
-                          <TableCell>
-                            <Badge className={getStatusBadgeColor(run.status)}>
-                              {run.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>{run.successfulTests}/{run.totalQuestions}</TableCell>
-                          <TableCell>
-                            {run.avgAccuracy ? `${run.avgAccuracy.toFixed(1)}%` : 'N/A'}
-                          </TableCell>
-                          <TableCell>
-                            {run.totalCost ? `$${run.totalCost.toFixed(3)}` : 'N/A'}
-                          </TableCell>
-                          <TableCell>
-                            {new Date(run.createdAt).toLocaleDateString()}
-                          </TableCell>
-                        </TableRow>
-                      ))
+                      testRuns.map((run: BaselineTestRun) => {
+                        const resultUrl = `/agent/compliance/baseline/baseline-${run.state || 'general'}-${run.model.replace(/[^a-zA-Z0-9]/g, '')}`;
+                        return (
+                          <TableRow key={run.id} className="cursor-pointer hover:bg-muted/50" onClick={() => window.location.href = resultUrl}>
+                            <TableCell className="font-mono">#{run.id}</TableCell>
+                            <TableCell>{run.model}</TableCell>
+                            <TableCell>
+                              {run.state && <Badge variant="outline">{run.state}</Badge>}
+                            </TableCell>
+                            <TableCell>
+                              <Badge className={getStatusBadgeColor(run.status)}>
+                                {run.status}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>{run.successfulTests}/{run.totalQuestions}</TableCell>
+                            <TableCell>
+                              {run.avgAccuracy ? `${run.avgAccuracy.toFixed(1)}%` : 'N/A'}
+                            </TableCell>
+                            <TableCell>
+                              {run.totalCost ? `$${run.totalCost.toFixed(3)}` : 'N/A'}
+                            </TableCell>
+                            <TableCell>
+                              {new Date(run.createdAt).toLocaleDateString()}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
                     )}
                   </TableBody>
                 </Table>

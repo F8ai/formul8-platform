@@ -57,6 +57,7 @@ function Router() {
         {params => <AgentRepo agentId={params.id} />}
       </Route>
       <Route path="/agent/compliance" component={ComplianceAgent} />
+      <Route path="/agent/:agentType/baseline/baseline-:resultId" component={BaselineResultPage} />
       <Route path="/agent/:agentType/baseline" component={BaselineTableViewer} />
       <Route path="/agent/:agentType/baseline-:resultId" component={BaselineResultPage} />
       <Route path="/agent/:agentType/baseline-results" component={BaselineResultPage} />

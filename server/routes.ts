@@ -219,7 +219,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       {
         id: 2,
         agentType: agentType || 'compliance',
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'gpt-4o',
         state: 'CO',
         status: 'completed',
         totalQuestions: 30,
