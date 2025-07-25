@@ -56,6 +56,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Play, Eye, Edit, Save, Filter, RefreshCw, Bot } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { CostDisplay, TokenBreakdown } from "@/components/ui/cost-display";
+import { ResultComparison } from "@/components/ui/result-comparison";
 
 interface BaselineTestRun {
   id: number;
@@ -112,6 +113,8 @@ interface BaselineTestResult {
 
 export default function BaselineTestingPage() {
   const [selectedTab, setSelectedTab] = useState("new-test");
+  const [comparisonResultA, setComparisonResultA] = useState<BaselineTestResult | undefined>();
+  const [comparisonResultB, setComparisonResultB] = useState<BaselineTestResult | undefined>();
   const [testConfig, setTestConfig] = useState({
     agentType: "",
     model: "gpt-4o",
@@ -320,10 +323,11 @@ export default function BaselineTestingPage() {
       </div>
 
       <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="new-test">New Test</TabsTrigger>
           <TabsTrigger value="runs">Test Runs</TabsTrigger>
           <TabsTrigger value="results">Results</TabsTrigger>
+          <TabsTrigger value="comparison">Comparison</TabsTrigger>
           <TabsTrigger value="grading">Manual Grading</TabsTrigger>
         </TabsList>
 
@@ -625,6 +629,7 @@ export default function BaselineTestingPage() {
                       <TableHead>Difficulty</TableHead>
                       <TableHead>Accuracy</TableHead>
                       <TableHead>Grades</TableHead>
+                      <TableHead>Cost</TableHead>
                       <TableHead>Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -664,6 +669,22 @@ export default function BaselineTestingPage() {
                               <div className="text-xs text-green-600">
                                 Model Confidence: {result.confidence.toFixed(1)}%
                               </div>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="space-y-1">
+                            <CostDisplay 
+                              cost={result.estimatedCost || 0} 
+                              tokens={result.totalTokens}
+                              variant="outline"
+                            />
+                            {result.aiGradingEstimatedCost && (
+                              <CostDisplay 
+                                cost={result.aiGradingEstimatedCost} 
+                                tokens={result.aiGradingTotalTokens}
+                                variant="secondary"
+                              />
                             )}
                           </div>
                         </TableCell>
@@ -769,6 +790,16 @@ export default function BaselineTestingPage() {
               </CardContent>
             </Card>
           )}
+        </TabsContent>
+
+        <TabsContent value="comparison" className="space-y-6">
+          <ResultComparison
+            results={selectedRunResults}
+            selectedResultA={comparisonResultA}
+            selectedResultB={comparisonResultB}
+            onResultAChange={setComparisonResultA}
+            onResultBChange={setComparisonResultB}
+          />
         </TabsContent>
 
         <TabsContent value="grading" className="space-y-6">
