@@ -37,9 +37,9 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data: testRuns = [], isLoading, refetch } = useQuery({
-    queryKey: ['/api/baseline-testing/demo-runs', agentType],
+    queryKey: ['/api/baseline-testing/runs', agentType],
     queryFn: async () => {
-      const response = await fetch(`/api/baseline-testing/demo-runs?agentType=${agentType}`);
+      const response = await fetch(`/api/baseline-testing/runs?agentType=${agentType}`);
       if (!response.ok) throw new Error('Failed to fetch test runs');
       return response.json();
     }
