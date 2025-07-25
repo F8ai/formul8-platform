@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'wouter';
 
 interface StateMetric {
   state_code: string;
@@ -451,16 +452,21 @@ export default function ComplianceAgent() {
             <Card>
               <CardHeader>
                 <CardTitle>Question Categories</CardTitle>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Click on a category to view filtered baseline results
+                </p>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {data?.question_metrics?.category_breakdown && Object.entries(data.question_metrics.category_breakdown).map(([category, count]) => (
-                    <div key={category} className="text-center">
-                      <div className="text-lg font-semibold">{count}</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
-                        {category.replace('-', ' ')}
+                    <Link key={category} href={`/agent/compliance/baseline-results?category=${encodeURIComponent(category)}`}>
+                      <div className="text-center p-4 border rounded-lg hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+                        <div className="text-lg font-semibold">{count}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                          {category.replace(/[-_]/g, ' ')}
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </CardContent>
@@ -470,16 +476,21 @@ export default function ComplianceAgent() {
             <Card>
               <CardHeader>
                 <CardTitle>Question Difficulty</CardTitle>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Click on a difficulty level to view filtered baseline results
+                </p>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {data?.question_metrics?.difficulty_breakdown && Object.entries(data.question_metrics.difficulty_breakdown).map(([difficulty, count]) => (
-                    <div key={difficulty} className="text-center">
-                      <div className="text-lg font-semibold">{count}</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
-                        {difficulty}
+                    <Link key={difficulty} href={`/agent/compliance/baseline-results?difficulty=${encodeURIComponent(difficulty)}`}>
+                      <div className="text-center p-4 border rounded-lg hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+                        <div className="text-lg font-semibold">{count}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                          {difficulty}
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </CardContent>

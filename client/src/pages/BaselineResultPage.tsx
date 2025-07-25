@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams } from "wouter";
+import { useParams, useSearch } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { CostDisplay } from "@/components/ui/cost-display";
-import { ArrowLeft, Bot, Eye, Edit, FileText, Clock, Target, TrendingUp } from "lucide-react";
+import { ArrowLeft, Bot, Eye, Edit, FileText, Clock, Target, TrendingUp, Filter, X } from "lucide-react";
 import { Link } from "wouter";
 
 interface BaselineTestResult {
@@ -55,14 +57,31 @@ interface BaselineTestRun {
 
 export default function BaselineResultPage() {
   const params = useParams();
+  const search = useSearch();
   const { agentType, resultId } = params;
   
   const [testRun, setTestRun] = useState<BaselineTestRun | null>(null);
   const [testResults, setTestResults] = useState<BaselineTestResult[]>([]);
+  const [filteredResults, setFilteredResults] = useState<BaselineTestResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedResult, setSelectedResult] = useState<BaselineTestResult | null>(null);
   
+  // Filter states
+  const [categoryFilter, setCategoryFilter] = useState<string>('');
+  const [difficultyFilter, setDifficultyFilter] = useState<string>('');
+  const [searchFilter, setSearchFilter] = useState('');
+  
   const { toast } = useToast();
+
+  // Parse URL parameters for initial filters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(search);
+    const category = urlParams.get('category');
+    const difficulty = urlParams.get('difficulty');
+    
+    if (category) setCategoryFilter(category);
+    if (difficulty) setDifficultyFilter(difficulty);
+  }, [search]);
 
   useEffect(() => {
     if (resultId) {
@@ -127,6 +146,7 @@ export default function BaselineResultPage() {
       }
       const resultsData = await resultsResponse.json();
       setTestResults(resultsData);
+      setFilteredResults(resultsData);
 
     } catch (error) {
       console.error('Error loading baseline results:', error);
@@ -139,6 +159,32 @@ export default function BaselineResultPage() {
       setLoading(false);
     }
   };
+
+  // Filter results based on current filters
+  useEffect(() => {
+    let filtered = testResults;
+
+    if (categoryFilter) {
+      filtered = filtered.filter(result => 
+        result.category.toLowerCase().includes(categoryFilter.toLowerCase())
+      );
+    }
+
+    if (difficultyFilter) {
+      filtered = filtered.filter(result => 
+        result.difficulty === difficultyFilter
+      );
+    }
+
+    if (searchFilter) {
+      filtered = filtered.filter(result =>
+        result.question.toLowerCase().includes(searchFilter.toLowerCase()) ||
+        result.questionId.toLowerCase().includes(searchFilter.toLowerCase())
+      );
+    }
+
+    setFilteredResults(filtered);
+  }, [testResults, categoryFilter, difficultyFilter, searchFilter]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -189,7 +235,7 @@ export default function BaselineResultPage() {
     );
   }
 
-  const categoryStats = testResults.reduce((acc, result) => {
+  const categoryStats = filteredResults.reduce((acc, result) => {
     const category = result.category;
     if (!acc[category]) {
       acc[category] = { total: 0, passed: 0, avgAccuracy: 0 };
@@ -292,6 +338,105 @@ export default function BaselineResultPage() {
         </Card>
       </div>
 
+      {/* Filters */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Filter className="h-5 w-5" />
+            Filters
+            {(categoryFilter || difficultyFilter || searchFilter) && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setCategoryFilter('');
+                  setDifficultyFilter('');
+                  setSearchFilter('');
+                }}
+                className="ml-auto"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Clear All
+              </Button>
+            )}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <Label className="text-sm font-medium mb-2 block">Category</Label>
+              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All categories" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All categories</SelectItem>
+                  {Array.from(new Set(testResults.map(r => r.category))).map(category => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label className="text-sm font-medium mb-2 block">Difficulty</Label>
+              <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All difficulties" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All difficulties</SelectItem>
+                  <SelectItem value="basic">Basic</SelectItem>
+                  <SelectItem value="intermediate">Intermediate</SelectItem>
+                  <SelectItem value="advanced">Advanced</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <Label className="text-sm font-medium mb-2 block">Search</Label>
+              <Input
+                placeholder="Search questions..."
+                value={searchFilter}
+                onChange={(e) => setSearchFilter(e.target.value)}
+              />
+            </div>
+          </div>
+          
+          {(categoryFilter || difficultyFilter || searchFilter) && (
+            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-blue-700">
+                  Showing {filteredResults.length} of {testResults.length} results
+                </span>
+                <div className="flex gap-2">
+                  {categoryFilter && (
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      Category: {categoryFilter}
+                      <X 
+                        className="h-3 w-3 cursor-pointer" 
+                        onClick={() => setCategoryFilter('')}
+                      />
+                    </Badge>
+                  )}
+                  {difficultyFilter && (
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      Difficulty: {difficultyFilter}
+                      <X 
+                        className="h-3 w-3 cursor-pointer" 
+                        onClick={() => setDifficultyFilter('')}
+                      />
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* Category Performance */}
       {Object.keys(categoryStats).length > 0 && (
         <Card>
@@ -299,6 +444,7 @@ export default function BaselineResultPage() {
             <CardTitle>Performance by Category</CardTitle>
             <CardDescription>
               Breakdown of results across different question categories
+              {(categoryFilter || difficultyFilter) && ' (filtered view)'}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -354,7 +500,7 @@ export default function BaselineResultPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {testResults.map((result) => (
+              {filteredResults.map((result) => (
                 <TableRow key={result.id}>
                   <TableCell className="font-mono text-xs">{result.questionId}</TableCell>
                   <TableCell>

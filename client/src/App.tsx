@@ -57,6 +57,7 @@ function Router() {
       </Route>
       <Route path="/agent/compliance" component={ComplianceAgent} />
       <Route path="/agent/:agentType/baseline-:resultId" component={BaselineResultPage} />
+      <Route path="/agent/:agentType/baseline-results" component={BaselineResultPage} />
       <Route path="/agent/:agentType" component={AgentDashboard} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">
