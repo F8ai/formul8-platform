@@ -55,6 +55,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Play, Eye, Edit, Save, Filter, RefreshCw, Bot } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
+import { CostDisplay, TokenBreakdown } from "@/components/ui/cost-display";
 
 interface BaselineTestRun {
   id: number;
@@ -97,6 +98,15 @@ interface BaselineTestResult {
   aiFeedback?: string;
   aiGradedAt?: string;
   aiGradingModel?: string;
+  // Token and cost tracking
+  inputTokens?: number;
+  outputTokens?: number;
+  totalTokens?: number;
+  estimatedCost?: number;
+  aiGradingInputTokens?: number;
+  aiGradingOutputTokens?: number;
+  aiGradingTotalTokens?: number;
+  aiGradingEstimatedCost?: number;
   createdAt: string;
 }
 

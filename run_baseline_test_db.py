@@ -155,6 +155,59 @@ def get_model_client(model_config):
         print(f"Unknown provider {provider}, falling back to OpenAI")
         return OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
+def estimate_token_count(text):
+    """Estimate token count (roughly 4 characters per token)"""
+    return max(1, len(text) // 4)
+
+def calculate_tokens_and_cost(input_text, output_text, model_id):
+    """Calculate token usage and cost for a model"""
+    # Model pricing per 1K tokens (input, output)
+    MODEL_PRICING = {
+        # OpenAI models
+        'gpt-4o': (0.0025, 0.01),
+        'gpt-4o-mini': (0.00015, 0.0006),
+        'gpt-4-turbo': (0.01, 0.03),
+        'o1-preview': (0.015, 0.06),
+        'o1-mini': (0.003, 0.012),
+        'o3': (0.02, 0.08),
+        
+        # Anthropic models
+        'claude-3-5-sonnet-20241022': (0.003, 0.015),
+        'claude-3-5-haiku-20241022': (0.0008, 0.004),
+        'claude-3-opus-20240229': (0.015, 0.075),
+        
+        # Google models
+        'gemini-1.5-pro-002': (0.00125, 0.005),
+        'gemini-2.0-flash-experimental': (0.00075, 0.003),
+        
+        # xAI models
+        'grok-2-1212': (0.002, 0.01),
+        'grok-2-vision-1212': (0.002, 0.01),
+        
+        # Local models (free)
+        'llama3.2-1b': (0, 0),
+        'llama3.2-3b': (0, 0),
+        'phi3-mini': (0, 0),
+        'tinyllama': (0, 0),
+    }
+    
+    input_tokens = estimate_token_count(input_text)
+    output_tokens = estimate_token_count(output_text)
+    total_tokens = input_tokens + output_tokens
+    
+    # Get pricing for model
+    pricing = MODEL_PRICING.get(model_id, (0, 0))
+    input_cost = (input_tokens / 1000) * pricing[0]
+    output_cost = (output_tokens / 1000) * pricing[1]
+    estimated_cost = round(input_cost + output_cost, 6)
+    
+    return {
+        'input_tokens': input_tokens,
+        'output_tokens': output_tokens,
+        'total_tokens': total_tokens,
+        'estimated_cost': estimated_cost
+    }
+
 def run_local_llm_question(question, model_config, custom_prompt=None, state=None):
     """Run a question using local LLM via Ollama"""
     import requests
@@ -176,6 +229,7 @@ def run_local_llm_question(question, model_config, custom_prompt=None, state=Non
         # Convert model name to Ollama format
         model_name = model_config.get("name", "llama3.2-1b").lower()
         ollama_model = model_name.replace(" ", "").replace("llama3.2", "llama3.2").replace("phi-3", "phi3")
+        model_id = model_config.get("model_id", ollama_model)
         
         # Prepare system prompt
         system_prompt = custom_prompt if custom_prompt else "You are a helpful AI assistant specializing in cannabis industry compliance and operations."
@@ -216,12 +270,19 @@ Be specific about regulations, compliance requirements, and provide practical gu
         # Extract confidence using the same pattern as cloud models
         agent_response, response_confidence = extract_confidence_from_response(full_response)
         
+        # Calculate token usage and cost (local models are free)
+        token_data = calculate_tokens_and_cost(enhanced_prompt, full_response, model_id)
+        
         response_time = time.time() - start_time
         
         return {
             'response': agent_response,
             'confidence': response_confidence,
             'response_time': response_time,
+            'input_tokens': token_data['input_tokens'],
+            'output_tokens': token_data['output_tokens'],
+            'total_tokens': token_data['total_tokens'],
+            'estimated_cost': token_data['estimated_cost'],
             'error': None
         }
         
@@ -231,6 +292,10 @@ Be specific about regulations, compliance requirements, and provide practical gu
             'response': f"Local LLM Error: {str(e)}",
             'confidence': 0,
             'response_time': response_time,
+            'input_tokens': 0,
+            'output_tokens': 0,
+            'total_tokens': 0,
+            'estimated_cost': 0.0,
             'error': str(e)
         }
 
@@ -278,19 +343,39 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
             )
             full_response = response.choices[0].message.content.strip()
             agent_response, response_confidence = extract_confidence_from_response(full_response)
+            
+            # Calculate tokens and cost
+            input_text = confidence_prompt
+            token_data = calculate_tokens_and_cost(input_text, full_response, model_id)
+            
+            # Extract actual token usage from API response if available
+            if hasattr(response, 'usage') and response.usage:
+                token_data['input_tokens'] = response.usage.prompt_tokens
+                token_data['output_tokens'] = response.usage.completion_tokens
+                token_data['total_tokens'] = response.usage.total_tokens
         elif provider == "anthropic":
             # For Anthropic, system prompt is separate
             system_prompt = custom_prompt if custom_prompt else "You are a helpful AI assistant specializing in cannabis industry compliance and operations."
-            confidence_prompt = f"{question_text}\n\nPlease provide your answer followed by your confidence level (0-100%) in your response. Format your response as:\n\nAnswer: [your answer]\nConfidence: [percentage]%"
+            confidence_prompt_text = f"{question_text}\n\nPlease provide your answer followed by your confidence level (0-100%) in your response. Format your response as:\n\nAnswer: [your answer]\nConfidence: [percentage]%"
             response = client.messages.create(
                 model=model_id,
                 max_tokens=1000,
                 temperature=0.1,
                 system=system_prompt,
-                messages=[{"role": "user", "content": confidence_prompt}]
+                messages=[{"role": "user", "content": confidence_prompt_text}]
             )
             full_response = response.content[0].text.strip()
             agent_response, response_confidence = extract_confidence_from_response(full_response)
+            
+            # Calculate tokens and cost
+            input_text = system_prompt + confidence_prompt_text
+            token_data = calculate_tokens_and_cost(input_text, full_response, model_id)
+            
+            # Extract actual token usage from API response if available
+            if hasattr(response, 'usage') and response.usage:
+                token_data['input_tokens'] = response.usage.input_tokens
+                token_data['output_tokens'] = response.usage.output_tokens
+                token_data['total_tokens'] = response.usage.input_tokens + response.usage.output_tokens
         else:
             # Fallback to OpenAI format
             response = client.chat.completions.create(
@@ -314,6 +399,10 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
             'response_time': response_time,
             'accuracy': accuracy,
             'confidence': response_confidence,
+            'input_tokens': token_data.get('input_tokens', 0),
+            'output_tokens': token_data.get('output_tokens', 0),
+            'total_tokens': token_data.get('total_tokens', 0),
+            'estimated_cost': token_data.get('estimated_cost', 0.0),
             'error': None
         }
         
@@ -325,6 +414,10 @@ def run_single_question(client, question, model_config, custom_prompt=None, stat
             'response_time': response_time,
             'accuracy': 0.0,
             'confidence': 0.0,
+            'input_tokens': 0,
+            'output_tokens': 0,
+            'total_tokens': 0,
+            'estimated_cost': 0.0,
             'error': str(e)
         }
 

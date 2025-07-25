@@ -170,15 +170,27 @@ export const baselineTestResults = pgTable("baseline_test_results", {
   category: varchar("category"),
   difficulty: varchar("difficulty"),
   maxScore: integer("max_score").default(10),
+  // Token and cost tracking for model responses
+  inputTokens: integer("input_tokens"),
+  outputTokens: integer("output_tokens"),
+  totalTokens: integer("total_tokens"),
+  estimatedCost: decimal("estimated_cost", { precision: 10, scale: 6 }),
+  // Manual grading fields
   manualGrade: integer("manual_grade"), // Manual grade from 0-10
   manualFeedback: text("manual_feedback"), // Manual feedback/comments
   gradedBy: varchar("graded_by").references(() => users.id),
   gradedAt: timestamp("graded_at"),
+  // AI grading fields
   aiGrade: integer("ai_grade"), // AI grade from 0-10
   aiFeedback: text("ai_feedback"), // AI feedback/evaluation
   aiGradingConfidence: integer("ai_grading_confidence"), // AI confidence in grade (0-100%)
   aiGradedAt: timestamp("ai_graded_at"),
   aiGradingModel: varchar("ai_grading_model", { length: 100 }),
+  // Token and cost tracking for AI grading
+  aiGradingInputTokens: integer("ai_grading_input_tokens"),
+  aiGradingOutputTokens: integer("ai_grading_output_tokens"),
+  aiGradingTotalTokens: integer("ai_grading_total_tokens"),
+  aiGradingEstimatedCost: decimal("ai_grading_estimated_cost", { precision: 10, scale: 6 }),
   metadata: jsonb("metadata"),
   createdAt: timestamp("created_at").defaultNow(),
 });
