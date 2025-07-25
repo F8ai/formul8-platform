@@ -39,6 +39,16 @@ interface BaselineQuestion {
   lastUpdated?: string;
 }
 
+interface ModelResponse {
+  model: string;
+  answer: string;
+  confidence: number;
+  grade: number;
+  gradingConfidence: number;
+  responseTime?: number;
+  cost?: number;
+}
+
 interface BaselineTestRun {
   id: number;
   agentType: string;
@@ -64,15 +74,20 @@ export default function BaselineTableViewer() {
   const [isAddingNew, setIsAddingNew] = useState(false);
   const { toast } = useToast();
 
-  // Fetch baseline questions
-  const { data: questions = [], isLoading: questionsLoading, refetch: refetchQuestions } = useQuery({
-    queryKey: ['/api/agents/compliance/baseline-questions'],
+  // Fetch baseline questions with model responses
+  const { data: questionsData = [], isLoading: questionsLoading, refetch: refetchQuestions } = useQuery({
+    queryKey: ['/api/agents/compliance/baseline-questions-with-responses'],
     queryFn: async () => {
-      const response = await fetch('/api/agents/compliance/baseline-questions');
-      if (!response.ok) throw new Error('Failed to fetch questions');
+      const response = await fetch('/api/agents/compliance/baseline-questions-with-responses');
+      if (!response.ok) throw new Error('Failed to fetch questions with responses');
       return response.json();
     }
   });
+
+  const questions = questionsData.map((q: any) => ({
+    ...q,
+    modelResponses: q.modelResponses || []
+  }));
 
   // Fetch test runs
   const { data: testRuns = [], isLoading: runsLoading } = useQuery({
@@ -335,75 +350,105 @@ export default function BaselineTableViewer() {
             </CardContent>
           </Card>
 
-          {/* Questions Table */}
+          {/* Comprehensive Questions and Responses Table */}
           <Card>
             <CardHeader>
-              <CardTitle>Baseline Questions</CardTitle>
+              <CardTitle>Baseline Questions with Model Responses</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>ID</TableHead>
-                      <TableHead>Question</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead>Difficulty</TableHead>
-                      <TableHead>State</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead className="w-48">Category</TableHead>
+                      <TableHead className="w-96">Question</TableHead>
+                      <TableHead className="w-64">Correct Answer</TableHead>
+                      <TableHead className="w-48">GPT-4o</TableHead>
+                      <TableHead className="w-48">Claude-3.5</TableHead>
+                      <TableHead className="w-48">Gemini Pro</TableHead>
+                      <TableHead className="w-32">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {questionsLoading ? (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center py-8">
+                        <TableCell colSpan={7} className="text-center py-8">
                           <div className="flex items-center justify-center">
                             <RefreshCw className="h-4 w-4 animate-spin mr-2" />
-                            Loading questions...
+                            Loading questions and responses...
                           </div>
                         </TableCell>
                       </TableRow>
                     ) : filteredQuestions.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center py-8">
+                        <TableCell colSpan={7} className="text-center py-8">
                           No questions found matching the current filters.
                         </TableCell>
                       </TableRow>
                     ) : (
-                      filteredQuestions.map((question: BaselineQuestion) => (
-                        <TableRow key={question.id}>
-                          <TableCell className="font-mono">{question.id}</TableCell>
-                          <TableCell className="max-w-md">
-                            <div className="truncate" title={question.question}>
-                              {question.question}
+                      filteredQuestions.map((question: any) => (
+                        <TableRow key={question.id} className="group">
+                          <TableCell>
+                            <div className="space-y-1">
+                              <Badge variant="outline" className={getDifficultyBadgeColor(question.difficulty)}>
+                                {question.difficulty}
+                              </Badge>
+                              <div className="text-sm font-medium">{question.category}</div>
+                              {question.state && (
+                                <Badge variant="outline" className="text-xs">{question.state}</Badge>
+                              )}
                             </div>
                           </TableCell>
                           <TableCell>
-                            <Badge variant="outline">{question.category}</Badge>
+                            <div className="space-y-2">
+                              <div className="text-sm font-medium leading-5">
+                                {question.question}
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                ID: {question.id}
+                              </div>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <Badge className={getDifficultyBadgeColor(question.difficulty)}>
-                              {question.difficulty}
-                            </Badge>
+                            <div className="text-sm leading-5 max-h-24 overflow-y-auto">
+                              {question.expected_answer}
+                            </div>
                           </TableCell>
+                          
+                          {/* Model Response Columns */}
+                          {['gpt-4o', 'claude-3.5-sonnet', 'gemini-pro'].map(modelName => {
+                            const response = question.modelResponses?.find((r: ModelResponse) => 
+                              r.model.toLowerCase().includes(modelName.split('-')[0])
+                            );
+                            
+                            return (
+                              <TableCell key={modelName}>
+                                {response ? (
+                                  <ModelResponseCell response={response} />
+                                ) : (
+                                  <div className="text-xs text-muted-foreground text-center py-4">
+                                    No response
+                                  </div>
+                                )}
+                              </TableCell>
+                            );
+                          })}
+                          
                           <TableCell>
-                            {question.state && <Badge variant="outline">{question.state}</Badge>}
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex gap-2">
+                            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => setEditingQuestion(question)}
                               >
-                                <Edit className="h-4 w-4" />
+                                <Edit className="h-3 w-3" />
                               </Button>
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => handleDeleteQuestion(question.id)}
                               >
-                                <Trash2 className="h-4 w-4" />
+                                <Trash2 className="h-3 w-3" />
                               </Button>
                             </div>
                           </TableCell>
@@ -623,5 +668,60 @@ function QuestionEditor({ question, onSave, onCancel }: QuestionEditorProps) {
         </Button>
       </div>
     </form>
+  );
+}
+
+interface ModelResponseCellProps {
+  response: ModelResponse;
+}
+
+function ModelResponseCell({ response }: ModelResponseCellProps) {
+  const getGradeColor = (grade: number) => {
+    if (grade >= 8) return 'text-green-600 dark:text-green-400';
+    if (grade >= 6) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
+  };
+
+  const getConfidenceColor = (confidence: number) => {
+    if (confidence >= 80) return 'text-green-600 dark:text-green-400';
+    if (confidence >= 60) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
+  };
+
+  return (
+    <div className="space-y-2 text-xs">
+      {/* Metrics Row */}
+      <div className="flex justify-between items-center">
+        <div className="flex gap-2">
+          <span className={`font-bold ${getGradeColor(response.grade)}`}>
+            {response.grade}/10
+          </span>
+          <span className={`${getConfidenceColor(response.confidence)}`}>
+            {response.confidence}%
+          </span>
+        </div>
+        {response.cost && (
+          <span className="text-muted-foreground">
+            ${response.cost.toFixed(3)}
+          </span>
+        )}
+      </div>
+      
+      {/* Answer Preview */}
+      <div className="text-xs leading-4 max-h-16 overflow-y-auto border-l-2 border-muted pl-2">
+        {response.answer.length > 100 
+          ? `${response.answer.substring(0, 100)}...`
+          : response.answer
+        }
+      </div>
+      
+      {/* Additional Metrics */}
+      <div className="flex justify-between text-xs text-muted-foreground">
+        <span>AI: {response.gradingConfidence}%</span>
+        {response.responseTime && (
+          <span>{response.responseTime}ms</span>
+        )}
+      </div>
+    </div>
   );
 }

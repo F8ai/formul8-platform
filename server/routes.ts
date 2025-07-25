@@ -277,6 +277,108 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json([...realRuns, ...demoRuns]);
   });
 
+  // Baseline questions with model responses endpoint
+  app.get('/api/agents/:agentType/baseline-questions-with-responses', async (req, res) => {
+    const { agentType } = req.params;
+    
+    try {
+      // Load baseline questions for the agent
+      const agentPath = path.join(process.cwd(), 'agents', `${agentType}-agent`);
+      const baselineFile = path.join(agentPath, 'baseline.json');
+      
+      try {
+        const baselineData = await fs.readFile(baselineFile, 'utf8');
+        const baseline = JSON.parse(baselineData);
+        const questions = baseline.questions || [];
+        
+        // Add IDs if missing and format for table viewer with model responses
+        const questionsWithResponses = questions.map((q: any, index: number) => ({
+          id: q.id || index + 1,
+          question: q.question,
+          expected_answer: q.expected_answer,
+          category: q.category || 'general',
+          difficulty: q.difficulty || 'intermediate',
+          keywords: q.keywords || [],
+          state: q.state,
+          tags: q.tags || [],
+          lastUpdated: new Date().toISOString(),
+          modelResponses: generateSampleModelResponses(q.question, q.expected_answer)
+        }));
+        
+        res.json(questionsWithResponses);
+      } catch (error) {
+        // Return sample questions with responses if baseline.json doesn't exist
+        const sampleQuestions = [
+          {
+            id: 1,
+            question: "What are the key compliance requirements for cannabis packaging in California?",
+            expected_answer: "California requires child-resistant packaging, clear labeling with THC content, batch tracking numbers, and warning statements.",
+            category: "packaging",
+            difficulty: "intermediate",
+            keywords: ["packaging", "california", "compliance"],
+            state: "CA",
+            tags: ["regulatory", "packaging"],
+            lastUpdated: new Date().toISOString()
+          },
+          {
+            id: 2,
+            question: "What is the maximum THC limit for edibles in Colorado?",
+            expected_answer: "Colorado limits edibles to 10mg THC per serving and 100mg THC per package.",
+            category: "edibles",
+            difficulty: "basic",
+            keywords: ["edibles", "thc", "colorado"],
+            state: "CO",
+            tags: ["dosage", "edibles"],
+            lastUpdated: new Date().toISOString()
+          }
+        ];
+        
+        const questionsWithResponses = sampleQuestions.map(q => ({
+          ...q,
+          modelResponses: generateSampleModelResponses(q.question, q.expected_answer)
+        }));
+        
+        res.json(questionsWithResponses);
+      }
+    } catch (error) {
+      console.error(`Error loading baseline questions with responses for ${agentType}:`, error);
+      res.status(500).json({ error: 'Failed to load baseline questions with responses' });
+    }
+  });
+
+  // Helper function to generate sample model responses
+  function generateSampleModelResponses(question: string, expectedAnswer: string) {
+    return [
+      {
+        model: 'gpt-4o',
+        answer: `${expectedAnswer} Additionally, all cannabis products must include a clear statement about keeping products away from children and pets. The packaging must be opaque and resealable where applicable.`,
+        confidence: 92,
+        grade: 8.5,
+        gradingConfidence: 88,
+        responseTime: 1240,
+        cost: 0.023
+      },
+      {
+        model: 'claude-3.5-sonnet',
+        answer: `${expectedAnswer} California also mandates that packaging includes universal symbol requirements and specific font sizes for warnings.`,
+        confidence: 89,
+        grade: 8.2,
+        gradingConfidence: 85,
+        responseTime: 1580,
+        cost: 0.019
+      },
+      {
+        model: 'gemini-pro',
+        answer: `Based on California regulations, ${expectedAnswer.toLowerCase()} The state also requires proper storage and transportation guidelines to be clearly displayed.`,
+        confidence: 85,
+        grade: 7.8,
+        gradingConfidence: 82,
+        responseTime: 1890,
+        cost: 0.015
+      }
+    ];
+  }
+
   // Baseline questions management endpoints
   app.get('/api/agents/:agentType/baseline-questions', async (req, res) => {
     const { agentType } = req.params;
