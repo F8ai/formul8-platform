@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import BaselineAssessmentSection from '@/components/BaselineAssessmentSection';
+import { BaselineTestRunner } from '@/components/ui/baseline-test-runner';
+import { BaselineResultsViewer } from '@/components/ui/baseline-results-viewer';
+import { BaselineResultsComparison } from '@/components/ui/baseline-results-comparison';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -289,9 +292,11 @@ export default function ComplianceAgent() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="assessment">Assessment</TabsTrigger>
+            <TabsTrigger value="baseline">Baseline</TabsTrigger>
+            <TabsTrigger value="results">Results</TabsTrigger>
+            <TabsTrigger value="comparison">Compare</TabsTrigger>
             <TabsTrigger value="chat">Chat</TabsTrigger>
             <TabsTrigger value="prompts">Prompts</TabsTrigger>
           </TabsList>
@@ -553,11 +558,16 @@ export default function ComplianceAgent() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="assessment" className="space-y-6">
-            <BaselineAssessmentSection 
-              agentName="compliance"
-              agentDescription="Cannabis compliance and regulatory guidance"
-            />
+          <TabsContent value="baseline" className="space-y-6">
+            <BaselineTestRunner agentType="compliance" />
+          </TabsContent>
+
+          <TabsContent value="results" className="space-y-6">
+            <BaselineResultsViewer agentType="compliance" />
+          </TabsContent>
+
+          <TabsContent value="comparison" className="space-y-6">
+            <BaselineResultsComparison agentType="compliance" />
           </TabsContent>
 
           <TabsContent value="chat" className="space-y-6">
