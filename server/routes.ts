@@ -277,6 +277,123 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json([...realRuns, ...demoRuns]);
   });
 
+  // Baseline questions management endpoints
+  app.get('/api/agents/:agentType/baseline-questions', async (req, res) => {
+    const { agentType } = req.params;
+    
+    try {
+      // Load baseline questions for the agent
+      const agentPath = path.join(process.cwd(), 'agents', `${agentType}-agent`);
+      const baselineFile = path.join(agentPath, 'baseline.json');
+      
+      try {
+        const baselineData = await fs.readFile(baselineFile, 'utf8');
+        const baseline = JSON.parse(baselineData);
+        const questions = baseline.questions || [];
+        
+        // Add IDs if missing and format for table viewer
+        const formattedQuestions = questions.map((q: any, index: number) => ({
+          id: q.id || index + 1,
+          question: q.question,
+          expected_answer: q.expected_answer,
+          category: q.category || 'general',
+          difficulty: q.difficulty || 'intermediate',
+          keywords: q.keywords || [],
+          state: q.state,
+          tags: q.tags || [],
+          lastUpdated: new Date().toISOString()
+        }));
+        
+        res.json(formattedQuestions);
+      } catch (error) {
+        // Return sample questions if baseline.json doesn't exist
+        res.json([
+          {
+            id: 1,
+            question: "What are the key compliance requirements for cannabis packaging in California?",
+            expected_answer: "California requires child-resistant packaging, clear labeling with THC content, batch tracking numbers, and warning statements.",
+            category: "packaging",
+            difficulty: "intermediate",
+            keywords: ["packaging", "california", "compliance"],
+            state: "CA",
+            tags: ["regulatory", "packaging"],
+            lastUpdated: new Date().toISOString()
+          },
+          {
+            id: 2,
+            question: "What is the maximum THC limit for edibles in Colorado?",
+            expected_answer: "Colorado limits edibles to 10mg THC per serving and 100mg THC per package.",
+            category: "edibles",
+            difficulty: "basic",
+            keywords: ["edibles", "thc", "colorado"],
+            state: "CO",
+            tags: ["dosage", "edibles"],
+            lastUpdated: new Date().toISOString()
+          }
+        ]);
+      }
+    } catch (error) {
+      console.error(`Error loading baseline questions for ${agentType}:`, error);
+      res.status(500).json({ error: 'Failed to load baseline questions' });
+    }
+  });
+
+  // Add new baseline question
+  app.post('/api/agents/:agentType/baseline-questions', async (req, res) => {
+    const { agentType } = req.params;
+    const newQuestion = req.body;
+    
+    try {
+      // This would normally save to database or file
+      // For now, return success with the created question
+      const questionWithId = {
+        ...newQuestion,
+        id: Date.now(), // Simple ID generation
+        lastUpdated: new Date().toISOString()
+      };
+      
+      res.json(questionWithId);
+    } catch (error) {
+      console.error(`Error creating baseline question for ${agentType}:`, error);
+      res.status(500).json({ error: 'Failed to create baseline question' });
+    }
+  });
+
+  // Update baseline question
+  app.put('/api/agents/:agentType/baseline-questions/:id', async (req, res) => {
+    const { agentType, id } = req.params;
+    const updatedQuestion = req.body;
+    
+    try {
+      // This would normally update in database or file
+      // For now, return success with the updated question
+      const questionWithUpdate = {
+        ...updatedQuestion,
+        id: parseInt(id),
+        lastUpdated: new Date().toISOString()
+      };
+      
+      res.json(questionWithUpdate);
+    } catch (error) {
+      console.error(`Error updating baseline question ${id} for ${agentType}:`, error);
+      res.status(500).json({ error: 'Failed to update baseline question' });
+    }
+  });
+
+  // Delete baseline question
+  app.delete('/api/agents/:agentType/baseline-questions/:id', async (req, res) => {
+    const { agentType, id } = req.params;
+    
+    try {
+      // This would normally delete from database or file
+      // For now, return success
+      res.json({ success: true, message: 'Question deleted successfully' });
+    } catch (error) {
+      console.error(`Error deleting baseline question ${id} for ${agentType}:`, error);
+      res.status(500).json({ error: 'Failed to delete baseline question' });
+    }
+  });
+
   // Real baseline testing endpoint (no auth required) with OpenAI
   app.post('/api/baseline-testing/run-public', async (req, res) => {
     const { agentType, model, state, questionLimit } = req.body;

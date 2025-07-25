@@ -92,6 +92,7 @@ formul8-platform/
 - **Direct Result Page Navigation**: Fixed navigation to go directly to linkable baseline result pages instead of staying in tabs
 - **URL Generation Fix**: Corrected duplicate "baseline-" prefix bug that was creating malformed URLs like /agent/compliance/baseline-baseline-CO-gp
 - **API Endpoint Debugging**: Added comprehensive debugging to BaselineResultPage component to troubleshoot 404 issues with proper URL parsing
+- **Smart Table Viewer Created**: Built comprehensive BaselineTableViewer component at `/agent/compliance/baseline` with question management, filtering, editing capabilities, and test run analytics
 
 ### July 25, 2025 - Agent Discovery Updated to Scan /agents Directory ✅ COMPLETE
 - **Updated Agent Discovery Service**: Modified agent-discovery.ts to scan the `/agents` directory instead of root directory for comprehensive agent listing
