@@ -202,9 +202,9 @@ router.post("/api/baseline-testing/runs/:id/start", isAuthenticated, async (req:
 });
 
 // Get baseline test runs with filtering
-router.get("/api/baseline-testing/runs", isAuthenticated, async (req: any, res) => {
+router.get("/api/baseline-testing/runs", async (req: any, res) => {
   try {
-    const userId = req.user.claims.sub;
+    const userId = req.user?.claims?.sub; // Optional for unauthenticated access
     const filters = {
       agentType: req.query.agentType as string,
       model: req.query.model as string,
@@ -222,7 +222,7 @@ router.get("/api/baseline-testing/runs", isAuthenticated, async (req: any, res) 
 });
 
 // Get a specific baseline test run
-router.get("/api/baseline-testing/runs/:id", isAuthenticated, async (req: any, res) => {
+router.get("/api/baseline-testing/runs/:id", async (req: any, res) => {
   try {
     const runId = parseInt(req.params.id);
     const run = await storage.getBaselineTestRun(runId);
