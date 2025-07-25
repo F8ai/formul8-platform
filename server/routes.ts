@@ -1704,6 +1704,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }
 }
 
+  // Get baseline data for an agent
+  app.get('/api/baseline-testing/baseline/:agentType', async (req, res) => {
+    try {
+      const { agentType } = req.params;
+      const fs = await import('fs');
+      const path = await import('path');
+      
+      const baselinePath = path.join(process.cwd(), 'agents', agentType, 'baseline.json');
+      
+      if (!fs.existsSync(baselinePath)) {
+        return res.status(404).json({ error: 'Baseline file not found' });
+      }
+      
+      const baselineData = JSON.parse(fs.readFileSync(baselinePath, 'utf-8'));
+      res.json(baselineData);
+    } catch (error) {
+      console.error('Error loading baseline data:', error);
+      res.status(500).json({ error: 'Failed to load baseline data' });
+    }
+  });
+
+  // Update baseline data for an agent
+  app.put('/api/baseline-testing/baseline/:agentType', async (req, res) => {
+    try {
+      const { agentType } = req.params;
+      const baselineData = req.body;
+      const fs = await import('fs');
+      const path = await import('path');
+      
+      const baselinePath = path.join(process.cwd(), 'agents', agentType, 'baseline.json');
+      
+      // Validate the data structure
+      if (!baselineData.agentType || !baselineData.questions || !Array.isArray(baselineData.questions)) {
+        return res.status(400).json({ error: 'Invalid baseline data structure' });
+      }
+      
+      // Create backup of existing file
+      if (fs.existsSync(baselinePath)) {
+        const backupPath = baselinePath.replace('.json', `.backup.${Date.now()}.json`);
+        fs.copyFileSync(baselinePath, backupPath);
+      }
+      
+      // Write updated data
+      fs.writeFileSync(baselinePath, JSON.stringify(baselineData, null, 2));
+      
+      res.json({ success: true, message: 'Baseline data updated successfully' });
+    } catch (error) {
+      console.error('Error updating baseline data:', error);
+      res.status(500).json({ error: 'Failed to update baseline data' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

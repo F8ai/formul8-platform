@@ -57,6 +57,7 @@ import { Play, Eye, Edit, Save, Filter, RefreshCw, Bot } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { CostDisplay, TokenBreakdown } from "@/components/ui/cost-display";
 import { ResultComparison } from "@/components/ui/result-comparison";
+import { BaselineEditor } from "@/components/ui/baseline-editor";
 
 interface BaselineTestRun {
   id: number;
@@ -115,6 +116,8 @@ export default function BaselineTestingPage() {
   const [selectedTab, setSelectedTab] = useState("new-test");
   const [comparisonResultA, setComparisonResultA] = useState<BaselineTestResult | undefined>();
   const [comparisonResultB, setComparisonResultB] = useState<BaselineTestResult | undefined>();
+  const [baselineEditorOpen, setBaselineEditorOpen] = useState(false);
+  const [selectedAgentForEditor, setSelectedAgentForEditor] = useState<string>("");
   const [testConfig, setTestConfig] = useState({
     agentType: "",
     model: "gpt-4o",
@@ -557,7 +560,18 @@ export default function BaselineTestingPage() {
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          {run.totalQuestions ? `${run.successfulTests}/${run.totalQuestions}` : '-'}
+                          {run.totalQuestions ? (
+                            <Button
+                              variant="link"
+                              className="p-0 h-auto font-normal"
+                              onClick={() => {
+                                setSelectedAgentForEditor(run.agentType);
+                                setBaselineEditorOpen(true);
+                              }}
+                            >
+                              {run.successfulTests}/{run.totalQuestions}
+                            </Button>
+                          ) : '-'}
                         </TableCell>
                         <TableCell>
                           {run.avgAccuracy ? `${run.avgAccuracy.toFixed(1)}%` : '-'}
@@ -818,6 +832,16 @@ export default function BaselineTestingPage() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Baseline Editor Modal */}
+      <BaselineEditor
+        agentType={selectedAgentForEditor}
+        isOpen={baselineEditorOpen}
+        onClose={() => {
+          setBaselineEditorOpen(false);
+          setSelectedAgentForEditor("");
+        }}
+      />
     </div>
   );
 }
