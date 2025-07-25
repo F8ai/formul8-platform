@@ -19,7 +19,7 @@ interface BaselineTestRunnerProps {
 export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
   const [testConfig, setTestConfig] = useState({
     model: "gpt-4o",
-    state: "",
+    state: "all",
     ragEnabled: true,
     toolsEnabled: true,
     kbEnabled: true,
@@ -39,6 +39,7 @@ export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
         body: JSON.stringify({
           agentType,
           ...config,
+          state: config.state === "all" ? undefined : config.state,
           questionLimit: config.questionLimit ? parseInt(config.questionLimit) : undefined
         })
       });
@@ -136,7 +137,7 @@ export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
                   <SelectValue placeholder="All states" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All States</SelectItem>
+                  <SelectItem value="all">All States</SelectItem>
                   <SelectItem value="CA">California</SelectItem>
                   <SelectItem value="CO">Colorado</SelectItem>
                   <SelectItem value="WA">Washington</SelectItem>

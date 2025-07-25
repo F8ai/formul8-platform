@@ -31,9 +31,9 @@ interface BaselineResultsViewerProps {
 }
 
 export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps) {
-  const [filterModel, setFilterModel] = useState("");
-  const [filterState, setFilterState] = useState("");
-  const [filterStatus, setFilterStatus] = useState("");
+  const [filterModel, setFilterModel] = useState("all");
+  const [filterState, setFilterState] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data: testRuns = [], isLoading, refetch } = useQuery({
@@ -46,9 +46,9 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
   });
 
   const filteredRuns = testRuns.filter((run: BaselineTestRun) => {
-    if (filterModel && !run.model.toLowerCase().includes(filterModel.toLowerCase())) return false;
-    if (filterState && run.state !== filterState) return false;
-    if (filterStatus && run.status !== filterStatus) return false;
+    if (filterModel !== "all" && !run.model.toLowerCase().includes(filterModel.toLowerCase())) return false;
+    if (filterState !== "all" && run.state !== filterState) return false;
+    if (filterStatus !== "all" && run.status !== filterStatus) return false;
     if (searchQuery && !run.model.toLowerCase().includes(searchQuery.toLowerCase())) return false;
     return true;
   });
@@ -63,13 +63,13 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
   };
 
   const clearFilters = () => {
-    setFilterModel("");
-    setFilterState("");  
-    setFilterStatus("");
+    setFilterModel("all");
+    setFilterState("all");  
+    setFilterStatus("all");
     setSearchQuery("");
   };
 
-  const hasActiveFilters = filterModel || filterState || filterStatus || searchQuery;
+  const hasActiveFilters = filterModel !== "all" || filterState !== "all" || filterStatus !== "all" || searchQuery;
 
   return (
     <div className="space-y-6">
@@ -100,7 +100,7 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
                 <SelectValue placeholder="Filter by model" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Models</SelectItem>
+                <SelectItem value="all">All Models</SelectItem>
                 <SelectItem value="gpt-4o">GPT-4o</SelectItem>
                 <SelectItem value="gpt-4o-mini">GPT-4o Mini</SelectItem>
                 <SelectItem value="claude">Claude</SelectItem>
@@ -113,7 +113,7 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
                 <SelectValue placeholder="Filter by state" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All States</SelectItem>
+                <SelectItem value="all">All States</SelectItem>
                 <SelectItem value="CA">California</SelectItem>
                 <SelectItem value="CO">Colorado</SelectItem>
                 <SelectItem value="WA">Washington</SelectItem>
@@ -127,7 +127,7 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="completed">Completed</SelectItem>
                 <SelectItem value="running">Running</SelectItem>
                 <SelectItem value="failed">Failed</SelectItem>
