@@ -323,9 +323,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           if (realResult) {
             baseQuestion.modelResponses.push({
               model: 'o3',
-              answer: realResult.response || 'Model response available in full results',
+              answer: realResult.agent_response || realResult.response || 'No response available',
               confidence: Math.round((realResult.confidence || 0) * 100),
-              grade: Math.round((realResult.accuracy || 0) * 10), // Convert to percentage
+              grade: Math.round((realResult.accuracy || 0) * 10) / 10, // Keep as percentage
               gradingConfidence: 85,
               responseTime: Math.round((realResult.response_time || 0) * 1000),
               cost: 0.003

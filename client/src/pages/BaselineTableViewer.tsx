@@ -313,7 +313,7 @@ export default function BaselineTableViewer() {
                                     return (
                                       <TableCell key={model} className="text-center">
                                         {response ? (
-                                          <div className="space-y-1">
+                                          <div className="space-y-2">
                                             <Badge 
                                               variant={response.grade >= 80 ? "default" : response.grade >= 60 ? "secondary" : "destructive"}
                                               className="text-xs"
@@ -322,6 +322,22 @@ export default function BaselineTableViewer() {
                                             </Badge>
                                             <div className="text-xs text-muted-foreground">
                                               {response.confidence}% conf
+                                            </div>
+                                            <div className="max-w-xs p-2 bg-muted rounded text-xs text-left">
+                                              <div className="font-semibold mb-1">Response:</div>
+                                              <p className="line-clamp-4 text-muted-foreground">
+                                                {response.answer}
+                                              </p>
+                                              {response.answer && response.answer.length > 150 && (
+                                                <button 
+                                                  className="text-primary hover:underline mt-1"
+                                                  onClick={() => {
+                                                    alert(`Full ${model} Response:\n\n${response.answer}`);
+                                                  }}
+                                                >
+                                                  Show full response
+                                                </button>
+                                              )}
                                             </div>
                                           </div>
                                         ) : (
