@@ -110,6 +110,7 @@ interface ChatMessage {
 }
 
 export default function ComplianceAgent() {
+  const [activeTab, setActiveTab] = useState("overview");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [promptConfig, setPromptConfig] = useState<any>(null);
@@ -291,7 +292,7 @@ export default function ComplianceAgent() {
           </div>
         </div>
 
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="baseline">Baseline</TabsTrigger>
@@ -458,20 +459,22 @@ export default function ComplianceAgent() {
               <CardHeader>
                 <CardTitle>Question Categories</CardTitle>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Click on a category to view filtered baseline results
+                  Click on a category to view baseline test results
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {data?.question_metrics?.category_breakdown && Object.entries(data.question_metrics.category_breakdown).map(([category, count]) => (
-                    <Link key={category} href={`/agent/compliance/baseline-results?category=${encodeURIComponent(category)}`}>
-                      <div className="text-center p-4 border rounded-lg hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
-                        <div className="text-lg font-semibold">{count}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
-                          {category.replace(/[-_]/g, ' ')}
-                        </div>
+                    <div 
+                      key={category} 
+                      onClick={() => setActiveTab("results")}
+                      className="text-center p-4 border rounded-lg hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                    >
+                      <div className="text-lg font-semibold">{count}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                        {category.replace(/[-_]/g, ' ')}
                       </div>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               </CardContent>
@@ -482,20 +485,22 @@ export default function ComplianceAgent() {
               <CardHeader>
                 <CardTitle>Question Difficulty</CardTitle>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Click on a difficulty level to view filtered baseline results
+                  Click on a difficulty level to view baseline test results
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {data?.question_metrics?.difficulty_breakdown && Object.entries(data.question_metrics.difficulty_breakdown).map(([difficulty, count]) => (
-                    <Link key={difficulty} href={`/agent/compliance/baseline-results?difficulty=${encodeURIComponent(difficulty)}`}>
-                      <div className="text-center p-4 border rounded-lg hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
-                        <div className="text-lg font-semibold">{count}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
-                          {difficulty}
-                        </div>
+                    <div 
+                      key={difficulty} 
+                      onClick={() => setActiveTab("results")}
+                      className="text-center p-4 border rounded-lg hover:shadow-md transition-shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                    >
+                      <div className="text-lg font-semibold">{count}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 capitalize">
+                        {difficulty}
                       </div>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               </CardContent>

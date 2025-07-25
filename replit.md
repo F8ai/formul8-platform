@@ -77,6 +77,16 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 25, 2025 - OpenAI Integration and Baseline Question Navigation ✅ COMPLETE
+- **Real OpenAI API Integration**: Connected baseline testing system to use actual OpenAI API calls with user's API key instead of demo data
+- **Background Processing**: Created comprehensive background processing system that makes real OpenAI completions for each baseline question
+- **In-Memory Storage**: Added in-memory storage for real test results with progress tracking and authentic accuracy calculations
+- **Unified API Endpoints**: Updated all components to use unified `/api/baseline-testing/runs` endpoints for consistent data access
+- **Progress Polling**: Added real-time progress polling endpoint for live test updates during OpenAI processing
+- **Token Cost Tracking**: System now calculates real accuracy scores, token usage, and costs from actual OpenAI responses
+- **Baseline Question Navigation**: Modified Question Categories and Difficulty tiles on compliance agent overview to switch to "Results" tab instead of separate page navigation
+- **Tab State Management**: Added controlled tab state management for seamless navigation between overview and baseline testing sections
+
 ### July 25, 2025 - Agent Discovery Updated to Scan /agents Directory ✅ COMPLETE
 - **Updated Agent Discovery Service**: Modified agent-discovery.ts to scan the `/agents` directory instead of root directory for comprehensive agent listing
 - **Complete Agent Coverage**: `/api/agents` endpoint now lists all 12 agents from `/agents` directory regardless of running status (base-agent, compliance-agent, customer-success-agent, formulation-agent, lms-agent, marketing-agent, metabolomics-agent, operations-agent, patent-agent, science-agent, sourcing-agent, spectra-agent)
