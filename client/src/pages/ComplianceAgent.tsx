@@ -419,6 +419,47 @@ export default function ComplianceAgent() {
               </Card>
             </div>
 
+            {/* Baseline Testing Actions */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Baseline Testing & Model Comparison</CardTitle>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  View and manage baseline questions with comprehensive model comparison data
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-3">
+                  <Link href="/agent/compliance/baseline">
+                    <Button className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      View Baseline Table
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="outline"
+                    onClick={() => setActiveTab("baseline")}
+                    className="flex items-center gap-2"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    Run New Test
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => setActiveTab("results")}
+                    className="flex items-center gap-2"
+                  >
+                    <Search className="w-4 h-4" />
+                    View Results
+                  </Button>
+                </div>
+                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                    💡 <strong>Baseline Table:</strong> Dynamic table showing questions with model responses, grades, confidence scores, and cost analysis across all available AI models
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Category Performance Results */}
             {data?.baseline_questions && (
               <Card>
