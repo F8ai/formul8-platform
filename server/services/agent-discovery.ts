@@ -36,15 +36,25 @@ export class AgentDiscoveryService {
     console.log('Discovering agents from local submodules...');
 
     try {
-      // Scan for agent directories in the project root
-      const projectRoot = process.cwd();
-      const entries = await readdir(projectRoot, { withFileTypes: true });
+      // Scan for agent directories in the /agents directory
+      const agentsPath = join(process.cwd(), 'agents');
       
-      // Filter for agent directories
+      // Check if agents directory exists
+      try {
+        await stat(agentsPath);
+      } catch (error) {
+        console.log('No /agents directory found, returning empty array');
+        this.cache = [];
+        this.lastFetch = now;
+        return [];
+      }
+      
+      const entries = await readdir(agentsPath, { withFileTypes: true });
+      
+      // Filter for all directories in /agents (not just ending with -agent)
       const agentDirs = entries.filter(entry => 
         entry.isDirectory() && 
-        entry.name.endsWith('-agent') &&
-        entry.name !== 'formul8-platform'
+        !entry.name.startsWith('.')
       );
 
       console.log(`Found ${agentDirs.length} agent directories:`, agentDirs.map(d => d.name));
@@ -54,7 +64,7 @@ export class AgentDiscoveryService {
       for (const agentDir of agentDirs) {
         try {
           console.log(`Processing agent directory: ${agentDir.name}`);
-          const agentInfo = await this.parseLocalAgentDirectory(agentDir.name);
+          const agentInfo = await this.parseAgentDirectory(agentDir.name);
           if (agentInfo) {
             agents.push(agentInfo);
             console.log(`✅ Successfully processed ${agentDir.name}`);
@@ -62,7 +72,7 @@ export class AgentDiscoveryService {
         } catch (error) {
           console.warn(`Failed to parse agent ${agentDir.name}:`, error);
           
-          // Fallback agent info from local directory
+          // Fallback agent info from /agents directory
           const fallbackAgent = {
             id: agentDir.name.replace('-agent', ''),
             name: agentDir.name,
@@ -94,9 +104,9 @@ export class AgentDiscoveryService {
     }
   }
 
-  private async parseLocalAgentDirectory(agentName: string): Promise<DiscoveredAgent | null> {
+  private async parseAgentDirectory(agentName: string): Promise<DiscoveredAgent | null> {
     try {
-      const agentPath = join(process.cwd(), agentName);
+      const agentPath = join(process.cwd(), 'agents', agentName);
       
       // Try to get README for detailed information
       let readmeContent = '';

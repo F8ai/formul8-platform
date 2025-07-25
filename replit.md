@@ -77,6 +77,15 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 25, 2025 - Agent Discovery Updated to Scan /agents Directory ✅ COMPLETE
+- **Updated Agent Discovery Service**: Modified agent-discovery.ts to scan the `/agents` directory instead of root directory for comprehensive agent listing
+- **Complete Agent Coverage**: `/api/agents` endpoint now lists all 12 agents from `/agents` directory regardless of running status (base-agent, compliance-agent, customer-success-agent, formulation-agent, lms-agent, marketing-agent, metabolomics-agent, operations-agent, patent-agent, science-agent, sourcing-agent, spectra-agent)
+- **Enhanced Directory Scanning**: Updated to scan all subdirectories in `/agents`, not just those ending with `-agent` suffix
+- **Status-Independent Listing**: Shows agents whether they are active, maintenance, or inactive status
+- **Authentic Agent Data**: Provides real agent information including descriptions, categories, capabilities, repository URLs, and last updated timestamps
+- **Proper Path Resolution**: Fixed agent path resolution to use `/agents/{agentName}` instead of root-level directory scanning
+- **Fallback Handling**: Improved error handling with graceful fallback when `/agents` directory doesn't exist
+
 ### July 25, 2025 - Linkable Baseline Result Pages with Agent-Specific URLs ✅ COMPLETE
 - **Linkable Baseline Results**: Created linkable baseline result pages with agent-specific routes like `/agent/compliance/baseline-CO-o3` for direct access to specific test results
 - **BaselineResultPage Component**: Built comprehensive result page displaying detailed test metrics with performance breakdowns, category analysis, and individual question results
