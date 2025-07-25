@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Eye, RefreshCw, Search, Filter, X, ExternalLink } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Eye, RefreshCw, Search, Filter, X, ExternalLink, Clock, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { CostDisplay } from "@/components/ui/cost-display";
 import { Link } from "wouter";
 
@@ -28,13 +29,15 @@ interface BaselineTestRun {
 
 interface BaselineResultsViewerProps {
   agentType: string;
+  activeTestRun?: number | null;
 }
 
-export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps) {
+export function BaselineResultsViewer({ agentType, activeTestRun }: BaselineResultsViewerProps) {
   const [filterModel, setFilterModel] = useState("all");
   const [filterState, setFilterState] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [liveProgress, setLiveProgress] = useState<any>(null);
 
   const { data: testRuns = [], isLoading, refetch } = useQuery({
     queryKey: ['/api/baseline-testing/runs', agentType],
@@ -44,6 +47,34 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
       return response.json();
     }
   });
+
+  // Poll for live progress when there's an active test run
+  useEffect(() => {
+    if (!activeTestRun) return;
+
+    const pollProgress = async () => {
+      try {
+        const response = await fetch(`/api/baseline-testing/progress/${activeTestRun}`);
+        if (response.ok) {
+          const progressData = await response.json();
+          setLiveProgress(progressData);
+          
+          // Continue polling if test is still running
+          if (progressData.status === 'running') {
+            setTimeout(pollProgress, 2000); // Poll every 2 seconds
+          } else {
+            // Test completed, refetch results
+            refetch();
+            setLiveProgress(null);
+          }
+        }
+      } catch (error) {
+        console.error('Error polling progress:', error);
+      }
+    };
+
+    pollProgress();
+  }, [activeTestRun, refetch]);
 
   const filteredRuns = testRuns.filter((run: BaselineTestRun) => {
     if (filterModel !== "all" && !run.model.toLowerCase().includes(filterModel.toLowerCase())) return false;
@@ -73,6 +104,112 @@ export function BaselineResultsViewer({ agentType }: BaselineResultsViewerProps)
 
   return (
     <div className="space-y-6">
+      {/* Live Test Progress */}
+      {liveProgress && (
+        <Card className="border-blue-200 bg-blue-50 dark:bg-blue-900/20">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+              <span>Live Test Progress - Run #{activeTestRun}</span>
+            </CardTitle>
+            <CardDescription>
+              Real-time OpenAI testing with question/answer grading
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Progress Bar */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Progress: {liveProgress.completedQuestions || 0} / {liveProgress.totalQuestions || 0}</span>
+                <span>{Math.round(((liveProgress.completedQuestions || 0) / (liveProgress.totalQuestions || 1)) * 100)}%</span>
+              </div>
+              <Progress value={((liveProgress.completedQuestions || 0) / (liveProgress.totalQuestions || 1)) * 100} />
+            </div>
+
+            {/* Current Question */}
+            {liveProgress.currentQuestion && (
+              <Card className="p-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <Badge variant="outline">Question {liveProgress.currentQuestion.id}</Badge>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-4 h-4" />
+                      <span className="text-sm text-muted-foreground">Processing...</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-medium mb-2">Question:</p>
+                    <p className="text-sm text-muted-foreground">{liveProgress.currentQuestion.question}</p>
+                  </div>
+                  {liveProgress.currentQuestion.answer && (
+                    <div>
+                      <p className="font-medium mb-2">AI Response:</p>
+                      <p className="text-sm bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                        {liveProgress.currentQuestion.answer}
+                      </p>
+                    </div>
+                  )}
+                  {liveProgress.currentQuestion.grade && (
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <span className="text-sm font-medium">
+                        Grade: {liveProgress.currentQuestion.grade.accuracy}% 
+                        (Confidence: {liveProgress.currentQuestion.grade.confidence}%)
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            )}
+
+            {/* Latest Results */}
+            {liveProgress.recentResults && liveProgress.recentResults.length > 0 && (
+              <div className="space-y-2">
+                <p className="font-medium">Recent Results:</p>
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  {liveProgress.recentResults.slice(-5).map((result: any, idx: number) => (
+                    <div key={idx} className="flex items-center justify-between p-2 bg-white dark:bg-gray-800 rounded text-sm">
+                      <span>Q{result.questionId}</span>
+                      <div className="flex items-center space-x-2">
+                        {result.grade?.accuracy >= 80 ? (
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                        ) : result.grade?.accuracy >= 60 ? (
+                          <AlertCircle className="w-4 h-4 text-yellow-600" />
+                        ) : (
+                          <AlertCircle className="w-4 h-4 text-red-600" />
+                        )}
+                        <span>{result.grade?.accuracy}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Live Metrics */}
+            {liveProgress.metrics && (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2 border-t">
+                <div className="text-center">
+                  <div className="text-lg font-semibold">{liveProgress.metrics.avgAccuracy?.toFixed(1) || 0}%</div>
+                  <div className="text-sm text-muted-foreground">Avg Accuracy</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold">{liveProgress.metrics.avgConfidence?.toFixed(1) || 0}%</div>
+                  <div className="text-sm text-muted-foreground">Avg Confidence</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold">{liveProgress.metrics.avgResponseTime?.toFixed(1) || 0}s</div>
+                  <div className="text-sm text-muted-foreground">Avg Time</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold">${liveProgress.metrics.totalCost?.toFixed(4) || 0}</div>
+                  <div className="text-sm text-muted-foreground">Total Cost</div>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">

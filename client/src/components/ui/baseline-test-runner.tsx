@@ -14,9 +14,10 @@ import { apiRequest } from "@/lib/queryClient";
 
 interface BaselineTestRunnerProps {
   agentType: string;
+  onTestStarted?: (runId: number) => void;
 }
 
-export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
+export function BaselineTestRunner({ agentType, onTestStarted }: BaselineTestRunnerProps) {
   const [testConfig, setTestConfig] = useState({
     model: "gpt-4o",
     state: "all",
@@ -55,6 +56,11 @@ export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
         description: `Test run ${data.runId} started successfully. Running ${data.totalQuestions} questions.`,
       });
       setIsRunning(true);
+      
+      // Notify parent to switch to results tab
+      if (onTestStarted) {
+        onTestStarted(data.runId);
+      }
       
       // Poll for progress updates
       const pollInterval = setInterval(async () => {

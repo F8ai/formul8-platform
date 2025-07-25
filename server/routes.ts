@@ -397,21 +397,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Progress polling endpoint for real-time updates
-  app.get('/api/baseline-testing/runs/:runId/progress', (req, res) => {
+  app.get('/api/baseline-testing/progress/:runId', (req, res) => {
     const runId = parseInt(req.params.runId);
     const run = testRuns.get(runId);
     
     if (!run) {
       return res.status(404).json({ message: "Test run not found" });
     }
+
+    // Format current question with more details
+    const currentQuestion = run.currentQuestion ? {
+      id: run.currentQuestion.id,
+      question: run.currentQuestion.question,
+      answer: run.currentQuestion.answer,
+      grade: run.currentQuestion.grade,
+      category: run.currentQuestion.category,
+      difficulty: run.currentQuestion.difficulty
+    } : null;
+
+    // Format recent results for display
+    const recentResults = run.results ? run.results.slice(-5).map((result: any) => ({
+      questionId: result.questionId,
+      grade: {
+        accuracy: result.accuracy,
+        confidence: result.confidence
+      },
+      responseTime: result.responseTime,
+      cost: result.cost
+    })) : [];
     
     res.json({
       runId: run.id,
       status: run.status,
-      current: run.successfulTests || 0,
-      total: run.totalQuestions,
-      accuracy: run.avgAccuracy,
-      confidence: run.avgConfidence
+      completedQuestions: run.successfulTests || 0,
+      totalQuestions: run.totalQuestions,
+      currentQuestion,
+      recentResults,
+      metrics: {
+        avgAccuracy: run.avgAccuracy || 0,
+        avgConfidence: run.avgConfidence || 0,
+        avgResponseTime: run.avgResponseTime || 0,
+        totalCost: run.totalCost || 0
+      }
     });
   });
   

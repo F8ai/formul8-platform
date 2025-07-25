@@ -111,6 +111,7 @@ interface ChatMessage {
 
 export default function ComplianceAgent() {
   const [activeTab, setActiveTab] = useState("overview");
+  const [activeTestRun, setActiveTestRun] = useState<number | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [promptConfig, setPromptConfig] = useState<any>(null);
@@ -210,6 +211,11 @@ export default function ComplianceAgent() {
       return configChanges[section][field];
     }
     return promptConfig?.[section]?.[field] || '';
+  };
+
+  const handleTestStarted = (runId: number) => {
+    setActiveTestRun(runId);
+    setActiveTab("results");
   };
 
   const getStatusColor = (status: string) => {
@@ -564,11 +570,11 @@ export default function ComplianceAgent() {
           </TabsContent>
 
           <TabsContent value="baseline" className="space-y-6">
-            <BaselineTestRunner agentType="compliance" />
+            <BaselineTestRunner agentType="compliance" onTestStarted={handleTestStarted} />
           </TabsContent>
 
           <TabsContent value="results" className="space-y-6">
-            <BaselineResultsViewer agentType="compliance" />
+            <BaselineResultsViewer agentType="compliance" activeTestRun={activeTestRun} />
           </TabsContent>
 
           <TabsContent value="comparison" className="space-y-6">

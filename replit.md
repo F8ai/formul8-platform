@@ -86,6 +86,9 @@ formul8-platform/
 - **Token Cost Tracking**: System now calculates real accuracy scores, token usage, and costs from actual OpenAI responses
 - **Baseline Question Navigation**: Modified Question Categories and Difficulty tiles on compliance agent overview to switch to "Results" tab instead of separate page navigation
 - **Tab State Management**: Added controlled tab state management for seamless navigation between overview and baseline testing sections
+- **Automatic Test Navigation**: When starting a baseline test, system now automatically switches to Results tab and shows live progress
+- **Real-Time Progress Display**: Added comprehensive live progress view with current question, AI responses, grading results, and running metrics
+- **Live Question/Answer/Grading**: Shows real-time question processing, OpenAI responses, AI grading scores, and cost tracking during test execution
 
 ### July 25, 2025 - Agent Discovery Updated to Scan /agents Directory ✅ COMPLETE
 - **Updated Agent Discovery Service**: Modified agent-discovery.ts to scan the `/agents` directory instead of root directory for comprehensive agent listing
