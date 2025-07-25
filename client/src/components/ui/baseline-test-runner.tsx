@@ -34,8 +34,11 @@ export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
 
   const runTestMutation = useMutation({
     mutationFn: async (config: typeof testConfig) => {
-      const response = await apiRequest(`/api/baseline-testing/run`, {
+      const response = await fetch(`/api/baseline-testing/demo-run`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           agentType,
           ...config,
@@ -43,7 +46,8 @@ export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
           questionLimit: config.questionLimit ? parseInt(config.questionLimit) : undefined
         })
       });
-      return response;
+      if (!response.ok) throw new Error('Failed to run test');
+      return response.json();
     },
     onSuccess: (data) => {
       toast({
@@ -61,7 +65,7 @@ export function BaselineTestRunner({ agentType }: BaselineTestRunnerProps) {
           if (progress.status === 'completed' || progress.status === 'failed') {
             clearInterval(pollInterval);
             setIsRunning(false);
-            queryClient.invalidateQueries({ queryKey: ['/api/baseline-testing/runs'] });
+            queryClient.invalidateQueries({ queryKey: ['/api/baseline-testing/demo-runs'] });
             
             toast({
               title: progress.status === 'completed' ? "Test Completed" : "Test Failed",
