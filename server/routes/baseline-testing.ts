@@ -356,7 +356,7 @@ router.get("/api/baseline-testing/models", isAuthenticated, async (req: any, res
     
     for (const [provider, providerModels] of Object.entries(modelsConfig.models || {})) {
       for (const [modelId, config] of Object.entries(providerModels as Record<string, any>)) {
-        models.push({
+        const modelInfo: any = {
           id: modelId,
           name: config.name,
           provider: config.provider,
@@ -365,7 +365,32 @@ router.get("/api/baseline-testing/models", isAuthenticated, async (req: any, res
           cost_per_1k_tokens: config.cost_per_1k_tokens,
           supports_vision: config.supports_vision,
           supports_function_calling: config.supports_function_calling
-        });
+        };
+
+        // Add local model specific fields
+        if (config.provider === "local") {
+          modelInfo.model_size = config.model_size;
+          modelInfo.requires_ollama = config.requires_ollama;
+          
+          // Check if local model is available
+          try {
+            const fetch = (await import('node-fetch')).default;
+            const response = await fetch('http://localhost:11434/api/tags', { timeout: 2000 });
+            if (response.ok) {
+              const data = await response.json() as { models: Array<{ name: string }> };
+              const availableModels = data.models.map(m => m.name);
+              const ollamaModelName = modelId.replace('-', ':');
+              modelInfo.local_available = availableModels.some(m => m.includes(modelId) || m.includes(ollamaModelName));
+            } else {
+              modelInfo.local_available = false;
+            }
+          } catch (error) {
+            modelInfo.local_available = false;
+            modelInfo.local_error = "Ollama not running";
+          }
+        }
+
+        models.push(modelInfo);
       }
     }
     

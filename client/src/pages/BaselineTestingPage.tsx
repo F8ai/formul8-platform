@@ -354,9 +354,26 @@ export default function BaselineTestingPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {models.map((model: string) => (
-                        <SelectItem key={model} value={model}>
-                          {model}
+                      {models.map((model: any) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          <div className="flex items-center gap-2">
+                            <span>{model.name}</span>
+                            {model.provider === "local" && (
+                              <div className="flex items-center gap-1">
+                                <div 
+                                  className={`w-2 h-2 rounded-full ${
+                                    model.local_available ? 'bg-green-500' : 'bg-red-500'
+                                  }`}
+                                />
+                                <span className="text-xs text-gray-500">
+                                  {model.model_size}
+                                </span>
+                              </div>
+                            )}
+                            {model.cost_per_1k_tokens === 0 && (
+                              <Badge variant="secondary" className="text-xs">FREE</Badge>
+                            )}
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>

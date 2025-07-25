@@ -22,3 +22,6 @@ python-dotenv
 pyyaml
 rdkit
 psycopg2-binary
+ollama
+torch
+transformers

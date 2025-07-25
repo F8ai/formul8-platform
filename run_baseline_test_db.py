@@ -155,8 +155,92 @@ def get_model_client(model_config):
         print(f"Unknown provider {provider}, falling back to OpenAI")
         return OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
+def run_local_llm_question(question, model_config, custom_prompt=None, state=None):
+    """Run a question using local LLM via Ollama"""
+    import requests
+    
+    start_time = time.time()
+    
+    try:
+        # Check if Ollama is running
+        try:
+            response = requests.get("http://localhost:11434/api/tags", timeout=5)
+            if not response.ok:
+                raise Exception("Ollama is not running")
+        except requests.exceptions.RequestException:
+            raise Exception("Ollama is not running. Please start Ollama first.")
+        
+        # Substitute state placeholders
+        question_text = substitute_state_placeholders(question.get('question', ''), state)
+        
+        # Convert model name to Ollama format
+        model_name = model_config.get("name", "llama3.2-1b").lower()
+        ollama_model = model_name.replace(" ", "").replace("llama3.2", "llama3.2").replace("phi-3", "phi3")
+        
+        # Prepare system prompt
+        system_prompt = custom_prompt if custom_prompt else "You are a helpful AI assistant specializing in cannabis industry compliance and operations."
+        
+        # Enhanced prompt for confidence scoring
+        enhanced_prompt = f"""{system_prompt}
+
+Question: {question_text}
+
+Please provide your answer followed by your confidence level (0-100%) in your response. Format your response as:
+
+Answer: [your detailed answer]
+Confidence: [percentage]%
+
+Be specific about regulations, compliance requirements, and provide practical guidance for cannabis operators."""
+
+        # Make request to Ollama
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": ollama_model,
+                "prompt": enhanced_prompt,
+                "stream": False,
+                "options": {
+                    "temperature": 0.1,
+                    "num_predict": 1000
+                }
+            },
+            timeout=120  # Longer timeout for local models
+        )
+        
+        if not response.ok:
+            raise Exception(f"Ollama API error: {response.status_code} - {response.text}")
+        
+        data = response.json()
+        full_response = data.get("response", "")
+        
+        # Extract confidence using the same pattern as cloud models
+        agent_response, response_confidence = extract_confidence_from_response(full_response)
+        
+        response_time = time.time() - start_time
+        
+        return {
+            'response': agent_response,
+            'confidence': response_confidence,
+            'response_time': response_time,
+            'error': None
+        }
+        
+    except Exception as e:
+        response_time = time.time() - start_time
+        return {
+            'response': f"Local LLM Error: {str(e)}",
+            'confidence': 0,
+            'response_time': response_time,
+            'error': str(e)
+        }
+
 def run_single_question(client, question, model_config, custom_prompt=None, state=None):
     """Run a single baseline question and return the result."""
+    
+    # Check if this is a local model
+    if model_config.get("provider") == "local":
+        return run_local_llm_question(question, model_config, custom_prompt, state)
+    
     start_time = time.time()
     
     # Substitute state placeholders
