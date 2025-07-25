@@ -555,9 +555,18 @@ export default function BaselineTestingPage() {
                         </TableCell>
                         <TableCell>{run.model}</TableCell>
                         <TableCell>
-                          <Badge className={getStatusColor(run.status)}>
-                            {run.status}
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Badge className={getStatusColor(run.status)}>
+                              {run.status}
+                            </Badge>
+                            {run.status === 'completed' && (
+                              <Link href={`/agent/${run.agentType}/baseline-${run.state ? `${run.state}-` : ''}${run.model?.replace('/', '-') || run.id}`}>
+                                <Button variant="ghost" size="sm" className="h-6 px-2">
+                                  View Results
+                                </Button>
+                              </Link>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell>
                           {run.totalQuestions ? (

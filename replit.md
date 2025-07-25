@@ -77,6 +77,18 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 25, 2025 - Linkable Baseline Result Pages with Agent-Specific URLs ✅ COMPLETE
+- **Linkable Baseline Results**: Created linkable baseline result pages with agent-specific routes like `/agent/compliance/baseline-CO-o3` for direct access to specific test results
+- **BaselineResultPage Component**: Built comprehensive result page displaying detailed test metrics with performance breakdowns, category analysis, and individual question results
+- **Smart URL Generation**: Automatic URL generation using state-model format (e.g., baseline-CO-o3) for easy sharing and bookmarking of specific test runs
+- **Enhanced Navigation**: Added "View Results" buttons in baseline testing table that link directly to detailed result pages for completed tests
+- **Comprehensive Result Display**: Shows test summary cards, category performance breakdown, detailed results table with individual question analysis
+- **Performance Metrics Integration**: Displays accuracy, confidence, response time, token usage, and cost analysis for each test run
+- **Interactive Question Details**: Modal dialogs showing full question content, expected answers, agent responses, and performance metrics
+- **API Endpoints Added**: Created `/api/baseline-testing/runs/:runId` and `/api/baseline-testing/runs/:runId/results` endpoints for fetching detailed test data
+- **Professional UI Design**: Color-coded performance indicators, difficulty badges, and comprehensive metric displays with responsive design
+- **Direct Result Access**: Users can now share direct links to specific baseline test results for collaboration and analysis
+
 ### July 25, 2025 - Comprehensive Side-by-Side Result Comparison System ✅ COMPLETE
 - **ResultComparison Component**: Created comprehensive comparison interface allowing users to select and compare any two baseline test results side-by-side
 - **Complete Metrics Comparison**: Displays AI grades, accuracy, confidence, response time, token usage (input/output/total), and costs with visual performance indicators

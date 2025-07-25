@@ -1756,6 +1756,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get specific test run details
+  app.get('/api/baseline-testing/runs/:runId', async (req, res) => {
+    try {
+      const runId = parseInt(req.params.runId);
+      const testRun = await storage.getBaselineTestRun(runId);
+      
+      if (!testRun) {
+        return res.status(404).json({ error: 'Test run not found' });
+      }
+      
+      res.json(testRun);
+    } catch (error) {
+      console.error('Error fetching test run:', error);
+      res.status(500).json({ error: 'Failed to fetch test run' });
+    }
+  });
+
+  // Get test results for a specific run
+  app.get('/api/baseline-testing/runs/:runId/results', async (req, res) => {
+    try {
+      const runId = parseInt(req.params.runId);
+      const testResults = await storage.getBaselineTestResults(runId);
+      
+      res.json(testResults);
+    } catch (error) {
+      console.error('Error fetching test results:', error);
+      res.status(500).json({ error: 'Failed to fetch test results' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -33,6 +33,7 @@ import Roadmap from "@/pages/roadmap";
 import ComplianceAgent from "@/pages/ComplianceAgent";
 import BaselineAssessment from "@/pages/BaselineAssessment";
 import BaselineTestingPage from "@/pages/BaselineTestingPage";
+import BaselineResultPage from "@/pages/BaselineResultPage";
 import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
 
@@ -55,6 +56,7 @@ function Router() {
         {params => <AgentRepo agentId={params.id} />}
       </Route>
       <Route path="/agent/compliance" component={ComplianceAgent} />
+      <Route path="/agent/:agentType/baseline-:resultId" component={BaselineResultPage} />
       <Route path="/agent/:agentType" component={AgentDashboard} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">
