@@ -77,6 +77,15 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 25, 2025 - Compliance Dashboard Route Clarification ✅ COMPLETE
+- **Dashboard Route Discovery**: Identified `/dashboard/compliance` as a server route that serves a static HTML file from `agents/compliance-agent/dashboard.html`
+- **Route Structure Clarification**: Two separate compliance interfaces exist:
+  - `/agent/compliance` - React-based compliance agent dashboard with baseline testing tabs and modern UI
+  - `/dashboard/compliance` - Static HTML dashboard served directly from compliance agent directory (legacy)
+- **Baseline Testing Access**: Added prominent "View Baseline Table" button to `/agent/compliance` overview that links to `/agent/compliance/baseline`
+- **Dynamic Baseline Table**: The BaselineTableViewer at `/agent/compliance/baseline` automatically scales to display any number of AI models with comprehensive response metrics
+- **Routing Architecture**: App.tsx properly configures `/agent/:agentType/baseline` route for dynamic baseline testing interface
+
 ### July 25, 2025 - OpenAI Integration and Baseline Question Navigation ✅ COMPLETE
 - **Real OpenAI API Integration**: Connected baseline testing system to use actual OpenAI API calls with user's API key instead of demo data
 - **Background Processing**: Created comprehensive background processing system that makes real OpenAI completions for each baseline question
