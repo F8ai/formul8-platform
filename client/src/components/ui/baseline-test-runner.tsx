@@ -61,7 +61,7 @@ export function BaselineTestRunner({ agentType, onTestStarted }: BaselineTestRun
       // Generate result URL based on model and state
       const model = testConfig.model.replace('gpt-4o', 'gpt4o').replace('claude-3-5-sonnet-20241022', 'claude35sonnet');
       const state = testConfig.state !== 'all' ? testConfig.state : '';
-      const resultId = state ? `baseline-${state}-${model}` : `${data.runId}`;
+      const resultId = state ? `${state}-${model}` : `${data.runId}`;
       
       // Navigate directly to the baseline result page
       setLocation(`/agent/${agentType}/baseline-${resultId}`);
