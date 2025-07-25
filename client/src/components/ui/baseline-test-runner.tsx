@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -32,6 +33,7 @@ export function BaselineTestRunner({ agentType, onTestStarted }: BaselineTestRun
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
 
   const runTestMutation = useMutation({
     mutationFn: async (config: typeof testConfig) => {
@@ -53,36 +55,24 @@ export function BaselineTestRunner({ agentType, onTestStarted }: BaselineTestRun
     onSuccess: (data) => {
       toast({
         title: "Baseline Test Started",
-        description: `Test run ${data.runId} started successfully. Running ${data.totalQuestions} questions.`,
+        description: `Test run ${data.runId} started successfully. Navigating to results page...`,
       });
-      setIsRunning(true);
       
-      // Notify parent to switch to results tab
+      // Generate result URL based on model and state
+      const model = testConfig.model.replace('gpt-4o', 'gpt4o').replace('claude-3-5-sonnet-20241022', 'claude35sonnet');
+      const state = testConfig.state !== 'all' ? testConfig.state : '';
+      const resultId = state ? `baseline-${state}-${model}` : `${data.runId}`;
+      
+      // Navigate directly to the baseline result page
+      setLocation(`/agent/${agentType}/baseline-${resultId}`);
+      
+      // Notify parent component if needed
       if (onTestStarted) {
         onTestStarted(data.runId);
       }
       
-      // Poll for progress updates
-      const pollInterval = setInterval(async () => {
-        try {
-          const progress = await apiRequest(`/api/baseline-testing/runs/${data.runId}/progress`);
-          setRunProgress(progress);
-          
-          if (progress.status === 'completed' || progress.status === 'failed') {
-            clearInterval(pollInterval);
-            setIsRunning(false);
-            queryClient.invalidateQueries({ queryKey: ['/api/baseline-testing/runs'] });
-            
-            toast({
-              title: progress.status === 'completed' ? "Test Completed" : "Test Failed",
-              description: `Baseline test ${progress.status}. ${progress.current}/${progress.total} questions processed.`,
-              variant: progress.status === 'completed' ? 'default' : 'destructive'
-            });
-          }
-        } catch (error) {
-          console.error('Error polling progress:', error);
-        }
-      }, 2000);
+      setIsRunning(true);
+      queryClient.invalidateQueries({ queryKey: ['/api/baseline-testing/runs'] });
     },
     onError: (error: any) => {
       toast({
