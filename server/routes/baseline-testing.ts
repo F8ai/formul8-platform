@@ -269,8 +269,8 @@ router.post("/api/baseline-testing/results", isAuthenticated, async (req: any, r
   }
 });
 
-// Get baseline test results for a run
-router.get("/api/baseline-testing/runs/:id/results", isAuthenticated, async (req: any, res) => {
+// Get baseline test results for a run (public endpoint)
+router.get("/api/baseline-testing/runs/:id/results", async (req: any, res) => {
   try {
     const runId = parseInt(req.params.id);
     const results = await storage.getBaselineTestResults(runId);

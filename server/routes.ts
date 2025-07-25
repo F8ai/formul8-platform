@@ -2154,10 +2154,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get specific test run details
+  // Get specific test run details (public endpoint)
   app.get('/api/baseline-testing/runs/:runId', async (req, res) => {
     try {
       const runId = parseInt(req.params.runId);
+      
+      // Check in-memory test runs first
+      const memoryRun = testRuns.get(runId);
+      if (memoryRun) {
+        return res.json(memoryRun);
+      }
+      
+      // Fallback to database
       const testRun = await storage.getBaselineTestRun(runId);
       
       if (!testRun) {
@@ -2171,10 +2179,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get test results for a specific run
+  // Get test results for a specific run (public endpoint)
   app.get('/api/baseline-testing/runs/:runId/results', async (req, res) => {
     try {
       const runId = parseInt(req.params.runId);
+      
+      // Check in-memory test runs first
+      const memoryRun = testRuns.get(runId);
+      if (memoryRun && memoryRun.results) {
+        return res.json(memoryRun.results);
+      }
+      
+      // Fallback to database
       const testResults = await storage.getBaselineTestResults(runId);
       
       res.json(testResults);
