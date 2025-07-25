@@ -77,6 +77,14 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 25, 2025 - Full LLM Response Display with State Column ✅ COMPLETE
+- **Full Response Display**: Baseline table now shows actual LLM responses in preview cards with "Show full response" option for complete model answers
+- **State Column Added**: Added dedicated state column showing CO, MULTI, or other state-specific compliance contexts for each question
+- **Enhanced Response Cards**: Each model column displays response preview with grade percentage (blue numbers), confidence level, and truncated model response
+- **Real Model Answers**: Connected to agent_response field from baseline_results_model_o3.json showing actual o3 model compliance guidance
+- **Blue Numbers Explanation**: Blue numbers represent model grade percentages (performance scores) with color coding: green (80%+), yellow (60-79%), red (<60%)
+- **Interactive Response View**: Users can click "Show full response" to see complete LLM answers in popup dialogs for detailed analysis
+
 ### July 25, 2025 - Real Baseline Data Integration with Authentic Compliance Questions ✅ COMPLETE
 - **Authentic Data Pipeline**: Successfully integrated real baseline questions from compliance agent's baseline.json file (29KB of authentic compliance questions)
 - **Real Model Results**: Connected to baseline_results_model_o3.json with actual performance metrics from model testing runs including o3 model responses

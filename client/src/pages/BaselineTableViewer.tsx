@@ -283,6 +283,7 @@ export default function BaselineTableViewer() {
                               <TableRow>
                                 <TableHead className="w-96">Question</TableHead>
                                 <TableHead className="w-20">Difficulty</TableHead>
+                                <TableHead className="w-16">State</TableHead>
                                 {availableModels.map(model => (
                                   <TableHead key={model} className="w-32 text-center">
                                     {model}
@@ -306,6 +307,11 @@ export default function BaselineTableViewer() {
                                   <TableCell>
                                     <Badge className={`${getDifficultyBadgeColor(question.difficulty)} text-xs`}>
                                       {question.difficulty}
+                                    </Badge>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Badge variant="outline" className="text-xs">
+                                      {question.state || 'MULTI'}
                                     </Badge>
                                   </TableCell>
                                   {availableModels.map(model => {
