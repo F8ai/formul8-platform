@@ -348,35 +348,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Helper function to generate sample model responses
   function generateSampleModelResponses(question: string, expectedAnswer: string) {
-    return [
+    // Generate responses for a dynamic set of models to demonstrate scalability
+    const models = [
       {
-        model: 'gpt-4o',
-        answer: `${expectedAnswer} Additionally, all cannabis products must include a clear statement about keeping products away from children and pets. The packaging must be opaque and resealable where applicable.`,
-        confidence: 92,
-        grade: 8.5,
-        gradingConfidence: 88,
-        responseTime: 1240,
-        cost: 0.023
+        name: 'gpt-4o',
+        baseConfidence: 92,
+        baseGrade: 8.5,
+        responsePrefix: `${expectedAnswer} Additionally, all cannabis products must include a clear statement about keeping products away from children and pets.`,
+        avgResponseTime: 1240,
+        avgCost: 0.023
       },
       {
-        model: 'claude-3.5-sonnet',
-        answer: `${expectedAnswer} California also mandates that packaging includes universal symbol requirements and specific font sizes for warnings.`,
-        confidence: 89,
-        grade: 8.2,
-        gradingConfidence: 85,
-        responseTime: 1580,
-        cost: 0.019
+        name: 'claude-3.5-sonnet',
+        baseConfidence: 89,
+        baseGrade: 8.2,
+        responsePrefix: `${expectedAnswer} California also mandates that packaging includes universal symbol requirements and specific font sizes for warnings.`,
+        avgResponseTime: 1580,
+        avgCost: 0.019
       },
       {
-        model: 'gemini-pro',
-        answer: `Based on California regulations, ${expectedAnswer.toLowerCase()} The state also requires proper storage and transportation guidelines to be clearly displayed.`,
-        confidence: 85,
-        grade: 7.8,
-        gradingConfidence: 82,
-        responseTime: 1890,
-        cost: 0.015
+        name: 'gemini-1.5-pro',
+        baseConfidence: 85,
+        baseGrade: 7.8,
+        responsePrefix: `Based on California regulations, ${expectedAnswer.toLowerCase()} The state also requires proper storage and transportation guidelines.`,
+        avgResponseTime: 1890,
+        avgCost: 0.015
+      },
+      {
+        name: 'gpt-4o-mini',
+        baseConfidence: 78,
+        baseGrade: 7.2,
+        responsePrefix: `${expectedAnswer} Some additional considerations may apply depending on local ordinances.`,
+        avgResponseTime: 890,
+        avgCost: 0.008
+      },
+      {
+        name: 'claude-3-haiku',
+        baseConfidence: 82,
+        baseGrade: 7.5,
+        responsePrefix: `${expectedAnswer} Note that regulations may vary by jurisdiction.`,
+        avgResponseTime: 1120,
+        avgCost: 0.012
       }
     ];
+
+    // Randomly select 3-5 models for each question to demonstrate dynamic behavior
+    const selectedModels = models
+      .sort(() => Math.random() - 0.5)
+      .slice(0, Math.floor(Math.random() * 3) + 3); // 3-5 models
+
+    return selectedModels.map(model => ({
+      model: model.name,
+      answer: model.responsePrefix,
+      confidence: model.baseConfidence + Math.floor(Math.random() * 10 - 5), // ±5% variation
+      grade: Math.max(1, Math.min(10, model.baseGrade + (Math.random() * 2 - 1))), // ±1 point variation
+      gradingConfidence: model.baseConfidence - 5 + Math.floor(Math.random() * 10), // ±5% variation
+      responseTime: model.avgResponseTime + Math.floor(Math.random() * 400 - 200), // ±200ms variation
+      cost: Math.max(0.001, model.avgCost + (Math.random() * 0.01 - 0.005)) // ±$0.005 variation
+    }));
   }
 
   // Baseline questions management endpoints

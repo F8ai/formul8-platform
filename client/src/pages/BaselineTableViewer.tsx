@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -88,6 +88,17 @@ export default function BaselineTableViewer() {
     ...q,
     modelResponses: q.modelResponses || []
   }));
+
+  // Extract all unique models from the data
+  const availableModels = React.useMemo(() => {
+    const modelSet = new Set<string>();
+    questions.forEach((q: any) => {
+      q.modelResponses?.forEach((response: ModelResponse) => {
+        modelSet.add(response.model);
+      });
+    });
+    return Array.from(modelSet).sort();
+  }, [questions]);
 
   // Fetch test runs
   const { data: testRuns = [], isLoading: runsLoading } = useQuery({
@@ -350,29 +361,38 @@ export default function BaselineTableViewer() {
             </CardContent>
           </Card>
 
-          {/* Comprehensive Questions and Responses Table */}
+          {/* Dynamic Questions and Responses Table */}
           <Card>
             <CardHeader>
               <CardTitle>Baseline Questions with Model Responses</CardTitle>
+              <div className="text-sm text-muted-foreground">
+                {availableModels.length > 0 ? (
+                  `Showing results for ${availableModels.length} models: ${availableModels.join(', ')}`
+                ) : (
+                  'No model responses available'
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-48">Category</TableHead>
-                      <TableHead className="w-96">Question</TableHead>
-                      <TableHead className="w-64">Correct Answer</TableHead>
-                      <TableHead className="w-48">GPT-4o</TableHead>
-                      <TableHead className="w-48">Claude-3.5</TableHead>
-                      <TableHead className="w-48">Gemini Pro</TableHead>
+                      <TableHead className="w-48 sticky left-0 bg-background z-10">Category</TableHead>
+                      <TableHead className="w-96 sticky left-48 bg-background z-10">Question</TableHead>
+                      <TableHead className="w-64 sticky left-[26rem] bg-background z-10">Correct Answer</TableHead>
+                      {availableModels.map(model => (
+                        <TableHead key={model} className="w-48 text-center">
+                          {model}
+                        </TableHead>
+                      ))}
                       <TableHead className="w-32">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {questionsLoading ? (
                       <TableRow>
-                        <TableCell colSpan={7} className="text-center py-8">
+                        <TableCell colSpan={4 + availableModels.length} className="text-center py-8">
                           <div className="flex items-center justify-center">
                             <RefreshCw className="h-4 w-4 animate-spin mr-2" />
                             Loading questions and responses...
@@ -381,14 +401,14 @@ export default function BaselineTableViewer() {
                       </TableRow>
                     ) : filteredQuestions.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={7} className="text-center py-8">
+                        <TableCell colSpan={4 + availableModels.length} className="text-center py-8">
                           No questions found matching the current filters.
                         </TableCell>
                       </TableRow>
                     ) : (
                       filteredQuestions.map((question: any) => (
                         <TableRow key={question.id} className="group">
-                          <TableCell>
+                          <TableCell className="sticky left-0 bg-background z-10">
                             <div className="space-y-1">
                               <Badge variant="outline" className={getDifficultyBadgeColor(question.difficulty)}>
                                 {question.difficulty}
@@ -399,7 +419,7 @@ export default function BaselineTableViewer() {
                               )}
                             </div>
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="sticky left-48 bg-background z-10">
                             <div className="space-y-2">
                               <div className="text-sm font-medium leading-5">
                                 {question.question}
@@ -409,16 +429,16 @@ export default function BaselineTableViewer() {
                               </div>
                             </div>
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="sticky left-[26rem] bg-background z-10">
                             <div className="text-sm leading-5 max-h-24 overflow-y-auto">
                               {question.expected_answer}
                             </div>
                           </TableCell>
                           
-                          {/* Model Response Columns */}
-                          {['gpt-4o', 'claude-3.5-sonnet', 'gemini-pro'].map(modelName => {
+                          {/* Dynamic Model Response Columns */}
+                          {availableModels.map(modelName => {
                             const response = question.modelResponses?.find((r: ModelResponse) => 
-                              r.model.toLowerCase().includes(modelName.split('-')[0])
+                              r.model === modelName
                             );
                             
                             return (
