@@ -62,6 +62,8 @@ export default function BaselineResultPage() {
   
   // Debug logging
   console.log('BaselineResultPage params:', { agentType, resultId });
+  console.log('BaselineResultPage search:', search);
+  console.log('BaselineResultPage full params:', params);
   
   const [testRun, setTestRun] = useState<BaselineTestRun | null>(null);
   const [testResults, setTestResults] = useState<BaselineTestResult[]>([]);
@@ -269,6 +271,15 @@ export default function BaselineResultPage() {
 
   return (
     <div className="space-y-6">
+      {/* Debug Information */}
+      <div className="bg-blue-100 dark:bg-blue-900 p-4 rounded mb-4">
+        <h3 className="font-bold">Debug: BaselineResultPage Rendered</h3>
+        <p>AgentType: {agentType}</p>
+        <p>ResultId: {resultId}</p>
+        <p>Loading: {loading.toString()}</p>
+        <p>TestRun: {testRun ? `ID ${testRun.id}` : 'null'}</p>
+      </div>
+      
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
