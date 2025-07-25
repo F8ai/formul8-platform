@@ -60,6 +60,9 @@ export default function BaselineResultPage() {
   const search = useSearch();
   const { agentType, resultId } = params;
   
+  // Debug logging
+  console.log('BaselineResultPage params:', { agentType, resultId });
+  
   const [testRun, setTestRun] = useState<BaselineTestRun | null>(null);
   const [testResults, setTestResults] = useState<BaselineTestResult[]>([]);
   const [filteredResults, setFilteredResults] = useState<BaselineTestResult[]>([]);
@@ -98,28 +101,39 @@ export default function BaselineResultPage() {
       let state: string | undefined;
       let model: string | undefined;
 
-      if (resultId?.startsWith('baseline-')) {
-        // Extract state and model from format: baseline-CO-o3
-        const parts = resultId.split('-');
-        if (parts.length >= 3) {
-          state = parts[1];
-          model = parts.slice(2).join('-');
+      // Handle formats: CO-gpt4o, baseline-CO-gpt4o, or just runId
+      if (resultId?.includes('-') && isNaN(parseInt(resultId))) {
+        const parts = resultId.replace('baseline-', '').split('-');
+        if (parts.length >= 2) {
+          state = parts[0];
+          model = parts.slice(1).join('-');
         }
         
         // Find the most recent run matching these criteria
         const runsResponse = await fetch('/api/baseline-testing/runs');
+        if (!runsResponse.ok) {
+          throw new Error('Failed to fetch test runs');
+        }
         const runs = await runsResponse.json();
         
-        const matchingRun = runs.find((run: BaselineTestRun) => 
-          run.agentType === agentType &&
-          (state ? run.state === state : true) &&
-          (model ? run.model.includes(model) : true)
-        );
+        // Debug logging
+        console.log('Looking for run with:', { agentType, state, model });
+        console.log('Available runs:', runs);
+        
+        const matchingRun = runs.find((run: BaselineTestRun) => {
+          const agentMatch = run.agentType === agentType;
+          const stateMatch = !state || run.state === state;
+          const modelMatch = !model || run.model.toLowerCase().includes(model.toLowerCase());
+          
+          console.log('Checking run:', run.id, { agentMatch, stateMatch, modelMatch });
+          return agentMatch && stateMatch && modelMatch;
+        });
         
         if (!matchingRun) {
+          console.error('No matching run found for:', { agentType, state, model });
           toast({
-            title: "Error",
-            description: "Baseline test run not found",
+            title: "Error", 
+            description: `No baseline test run found for ${agentType} with state: ${state || 'any'}, model: ${model || 'any'}`,
             variant: "destructive",
           });
           return;
