@@ -308,7 +308,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const realResult = modelResults?.results?.find((r: any) => r.question_id === questionId);
           
           const baseQuestion = {
-            id: index + 1,
+            id: questionId, // Keep original string ID like "sop001"
             question: q.question.replace(/\{\{state\}\}/g, 'CO'), // Replace state placeholder
             expected_answer: q.expected_answer.replace(/\{\{state\}\}/g, 'CO'),
             category: q.category || 'general',
