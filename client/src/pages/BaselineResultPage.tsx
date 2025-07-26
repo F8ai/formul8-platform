@@ -78,6 +78,8 @@ export default function BaselineResultPage() {
   
   const { toast } = useToast();
 
+
+
   // Parse URL parameters for initial filters
   useEffect(() => {
     const urlParams = new URLSearchParams(search);
@@ -125,20 +127,49 @@ export default function BaselineResultPage() {
         const matchingRun = runs.find((run: BaselineTestRun) => {
           const agentMatch = run.agentType === agentType;
           const stateMatch = !state || run.state === state;
-          const modelMatch = !model || run.model.toLowerCase().includes(model.toLowerCase());
           
-          console.log('Checking run:', run.id, { agentMatch, stateMatch, modelMatch });
+          // Improved model matching - handle common format variations
+          let modelMatch = false;
+          if (!model) {
+            modelMatch = true;
+          } else {
+            const runModelNormalized = run.model.toLowerCase().replace(/[-_]/g, '');
+            const searchModelNormalized = model.toLowerCase().replace(/[-_]/g, '');
+            modelMatch = runModelNormalized.includes(searchModelNormalized) || 
+                        searchModelNormalized.includes(runModelNormalized);
+          }
+          
+          console.log('Checking run:', run.id, { 
+            agentMatch, 
+            stateMatch, 
+            modelMatch, 
+            runModel: run.model, 
+            searchModel: model 
+          });
           return agentMatch && stateMatch && modelMatch;
         });
         
         if (!matchingRun) {
           console.error('No matching run found for:', { agentType, state, model });
-          toast({
-            title: "Error", 
-            description: `No baseline test run found for ${agentType} with state: ${state || 'any'}, model: ${model || 'any'}`,
-            variant: "destructive",
-          });
-          return;
+          console.log('Trying fallback - looking for any run with agentType:', agentType);
+          
+          // Try fallback - find any run for this agent type
+          const fallbackRun = runs.find((run: BaselineTestRun) => run.agentType === agentType);
+          
+          if (fallbackRun) {
+            console.log('Using fallback run:', fallbackRun.id);
+            runId = fallbackRun.id;
+          } else {
+            toast({
+              title: "No Test Data Found", 
+              description: `No baseline test runs found for ${agentType}. Please run a baseline test first.`,
+              variant: "destructive",
+            });
+            setLoading(false);
+            return;
+          }
+        } else {
+          runId = matchingRun.id;
         }
         
         runId = matchingRun.id;
@@ -271,14 +302,7 @@ export default function BaselineResultPage() {
 
   return (
     <div className="space-y-6">
-      {/* Debug Information */}
-      <div className="bg-blue-100 dark:bg-blue-900 p-4 rounded mb-4">
-        <h3 className="font-bold">Debug: BaselineResultPage Rendered</h3>
-        <p>AgentType: {agentType}</p>
-        <p>ResultId: {resultId}</p>
-        <p>Loading: {loading.toString()}</p>
-        <p>TestRun: {testRun ? `ID ${testRun.id}` : 'null'}</p>
-      </div>
+
       
       {/* Header */}
       <div className="flex items-center justify-between">
