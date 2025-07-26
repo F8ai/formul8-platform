@@ -213,7 +213,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
             {/* Overview Tab */}
             <TabsContent value="overview" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setActiveTab('baseline')}>
+                <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => window.location.href = `/agent/${agentType}/baseline`}>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
                   </CardHeader>
@@ -222,7 +222,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                       {realBaselineData?.questions?.length || 0}
                     </div>
                     <div className="text-xs text-gray-500">
-                      Click to view baseline test questions
+                      Click to view baseline test table
                     </div>
                   </CardContent>
                 </Card>
