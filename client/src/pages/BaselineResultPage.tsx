@@ -99,9 +99,6 @@ export default function BaselineResultPage() {
   const loadBaselineResults = async () => {
     setLoading(true);
     try {
-      // Parse the resultId to extract run info
-      // Format: baseline-{state}-{model} or just {runId}
-      let runId: number;
       let state: string | undefined;
       let model: string | undefined;
 
@@ -113,87 +110,54 @@ export default function BaselineResultPage() {
           model = parts.slice(1).join('-');
         }
         
-        // Find the most recent run matching these criteria
-        const runsResponse = await fetch('/api/baseline-testing/runs');
-        if (!runsResponse.ok) {
-          throw new Error('Failed to fetch test runs');
-        }
-        const runs = await runsResponse.json();
+        // Load from JSON file in agent data/results directory
+        const fileName = `${state}-${model}.json`;
+        const filePath = `/agents/${agentType}-agent/data/results/${fileName}`;
         
-        // Debug logging
-        console.log('Looking for run with:', { agentType, state, model });
-        console.log('Available runs:', runs);
+        console.log('Loading baseline results from file:', filePath);
         
-        const matchingRun = runs.find((run: BaselineTestRun) => {
-          const agentMatch = run.agentType === agentType;
-          const stateMatch = !state || run.state === state;
-          
-          // Improved model matching - handle common format variations
-          let modelMatch = false;
-          if (!model) {
-            modelMatch = true;
-          } else {
-            const runModelNormalized = run.model.toLowerCase().replace(/[-_]/g, '');
-            const searchModelNormalized = model.toLowerCase().replace(/[-_]/g, '');
-            modelMatch = runModelNormalized.includes(searchModelNormalized) || 
-                        searchModelNormalized.includes(runModelNormalized);
+        try {
+          const fileResponse = await fetch(filePath);
+          if (!fileResponse.ok) {
+            throw new Error(`Test results file not found: ${fileName}`);
           }
           
-          console.log('Checking run:', run.id, { 
-            agentMatch, 
-            stateMatch, 
-            modelMatch, 
-            runModel: run.model, 
-            searchModel: model 
-          });
-          return agentMatch && stateMatch && modelMatch;
-        });
-        
-        if (!matchingRun) {
-          console.error('No matching run found for:', { agentType, state, model });
-          console.log('Trying fallback - looking for any run with agentType:', agentType);
+          const fileData = await fileResponse.json();
           
-          // Try fallback - find any run for this agent type
-          const fallbackRun = runs.find((run: BaselineTestRun) => run.agentType === agentType);
+          // Set the test run and results from the JSON file
+          setTestRun(fileData.testRun);
+          setTestResults(fileData.results || []);
+          setFilteredResults(fileData.results || []);
           
-          if (fallbackRun) {
-            console.log('Using fallback run:', fallbackRun.id);
-            runId = fallbackRun.id;
-          } else {
-            toast({
-              title: "No Test Data Found", 
-              description: `No baseline test runs found for ${agentType}. Please run a baseline test first.`,
-              variant: "destructive",
-            });
-            setLoading(false);
-            return;
-          }
-        } else {
-          runId = matchingRun.id;
+          console.log('Loaded test results from file:', fileData);
+          return;
+          
+        } catch (fileError) {
+          console.error('Error loading from file:', fileError);
+          throw new Error(`No test results found for ${state} ${model}. The test may not have been completed yet.`);
         }
         
-        runId = matchingRun.id;
       } else {
-        // Direct run ID
-        runId = parseInt(resultId || '0');
-      }
+        // Direct run ID - fallback to API
+        const runId = parseInt(resultId || '0');
+        
+        // Load run details
+        const runResponse = await fetch(`/api/baseline-testing/runs/${runId}`);
+        if (!runResponse.ok) {
+          throw new Error('Failed to load test run');
+        }
+        const runData = await runResponse.json();
+        setTestRun(runData);
 
-      // Load run details
-      const runResponse = await fetch(`/api/baseline-testing/runs/${runId}`);
-      if (!runResponse.ok) {
-        throw new Error('Failed to load test run');
+        // Load test results
+        const resultsResponse = await fetch(`/api/baseline-testing/runs/${runId}/results`);
+        if (!resultsResponse.ok) {
+          throw new Error('Failed to load test results');
+        }
+        const resultsData = await resultsResponse.json();
+        setTestResults(resultsData);
+        setFilteredResults(resultsData);
       }
-      const runData = await runResponse.json();
-      setTestRun(runData);
-
-      // Load test results
-      const resultsResponse = await fetch(`/api/baseline-testing/runs/${runId}/results`);
-      if (!resultsResponse.ok) {
-        throw new Error('Failed to load test results');
-      }
-      const resultsData = await resultsResponse.json();
-      setTestResults(resultsData);
-      setFilteredResults(resultsData);
 
     } catch (error) {
       console.error('Error loading baseline results:', error);

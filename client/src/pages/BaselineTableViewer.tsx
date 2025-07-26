@@ -47,13 +47,60 @@ export default function BaselineTableViewer() {
   const [testingModels, setTestingModels] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
-  // Fetch baseline questions with model responses
+  // Fetch real baseline test results from JSON files
   const { data: questionsData = [], isLoading: questionsLoading, refetch: refetchQuestions } = useQuery({
-    queryKey: ['/api/agents/compliance/baseline-questions-with-responses'],
+    queryKey: ['/api/baseline-testing/real-results'],
     queryFn: async () => {
-      const response = await fetch('/api/agents/compliance/baseline-questions-with-responses');
-      if (!response.ok) throw new Error('Failed to fetch questions with responses');
-      return response.json();
+      // Load all available result files
+      const resultFiles = ['CO-gpt4o.json', 'CO-gpt4o-mini.json', 'CO-claude-3-5-sonnet.json'];
+      const allResults: any[] = [];
+      const modelData: Record<string, any> = {};
+      
+      for (const fileName of resultFiles) {
+        try {
+          const response = await fetch(`/agents/compliance-agent/data/results/${fileName}`);
+          if (response.ok) {
+            const fileData = await response.json();
+            const model = fileName.replace('CO-', '').replace('.json', '');
+            modelData[model] = fileData;
+            allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
+          }
+        } catch (error) {
+          console.warn(`Could not load ${fileName}:`, error);
+        }
+      }
+      
+      // Group results by questionId and create question objects with model responses
+      const questionMap = new Map();
+      
+      allResults.forEach(result => {
+        const questionId = result.questionId;
+        if (!questionMap.has(questionId)) {
+          questionMap.set(questionId, {
+            id: result.id,
+            questionId: result.questionId,
+            question: result.question,
+            expected_answer: result.expectedAnswer,
+            category: result.category,
+            difficulty: result.difficulty,
+            modelResponses: []
+          });
+        }
+        
+        const question = questionMap.get(questionId);
+        question.modelResponses.push({
+          model: result.model,
+          answer: result.agentResponse,
+          confidence: result.confidence,
+          grade: result.aiGrade || result.accuracy,
+          gradingConfidence: result.aiGradingConfidence || result.confidence,
+          responseTime: result.responseTime,
+          cost: result.estimatedCost,
+          status: 'completed'
+        });
+      });
+      
+      return Array.from(questionMap.values());
     }
   });
 

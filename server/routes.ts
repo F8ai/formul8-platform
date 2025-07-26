@@ -1,4 +1,5 @@
 import type { Express } from "express";
+import express from "express";
 import { createServer, type Server } from "http";
 import path from "path";
 import { storage } from "./storage";
@@ -1116,6 +1117,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     duplicatePreventionService.resetLog();
     res.json({ success: true, message: 'Creation log reset' });
   });
+
+  // Serve agent data files (for JSON result files)
+  app.use('/agents', express.static(path.resolve(import.meta.dirname, '..', 'agents')));
 
   // Agent dashboard route
   app.get('/api/agents/dashboard', isAuthenticated, async (req, res) => {
