@@ -320,9 +320,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         
         // Transform real baseline questions with authentic model responses
-        const questionsWithResponses = questions.map((q: any, index: number) => {
+        const questionsWithResponses = await Promise.all(questions.map(async (q: any, index: number) => {
           const questionId = q.id;
-          const realResult = modelResults?.results?.find((r: any) => r.question_id === questionId);
+          const realResult = modelResults?.results?.[questionId];
           
           const baseQuestion = {
             id: questionId, // Keep original string ID like "sop001"
@@ -337,21 +337,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
             modelResponses: []
           };
           
-          // Add real model response if available
-          if (realResult) {
-            baseQuestion.modelResponses.push({
-              model: 'o3',
-              answer: realResult.agent_response || realResult.response || 'No response available',
-              confidence: Math.round((realResult.confidence || 0) * 100),
-              grade: Math.round((realResult.accuracy || 0) * 10) / 10, // Keep as percentage
-              gradingConfidence: 85,
-              responseTime: Math.round((realResult.response_time || 0) * 1000),
-              cost: 0.003
-            });
+          // Try to load database results for this specific question
+          try {
+            const { db } = await import('./db');
+            const { baselineTestResults } = await import('@shared/schema');
+            const { eq } = await import('drizzle-orm');
+            
+            const dbResults = await db.select().from(baselineTestResults)
+              .where(eq(baselineTestResults.questionId, questionId));
+            
+            // Add database results as model responses
+            for (const dbResult of dbResults) {
+              baseQuestion.modelResponses.push({
+                model: dbResult.model || 'unknown',
+                answer: dbResult.agentResponse || 'No response available',
+                confidence: dbResult.confidence || 0,
+                grade: dbResult.grade || 0,
+                gradingConfidence: dbResult.gradingConfidence || 0,
+                responseTime: dbResult.responseTime || 0,
+                cost: dbResult.cost || 0,
+                status: 'success'
+              });
+            }
+          } catch (dbError) {
+            // Continue without database results
           }
           
-          // Add additional models - will be populated with real responses via API
-          const additionalModels = ['gpt-4o', 'claude-3.5-sonnet', 'gemini-1.5-pro'];
+          // Add real model response from file if available
+          if (realResult) {
+            const existingModel = baseQuestion.modelResponses.find(r => r.model === 'o3');
+            if (!existingModel) {
+              baseQuestion.modelResponses.push({
+                model: 'o3',
+                answer: realResult.agent_response || realResult.response || 'No response available',
+                confidence: Math.round((realResult.confidence || 0) * 100),
+                grade: Math.round((realResult.accuracy || 0) * 10) / 10, // Keep as percentage
+                gradingConfidence: 85,
+                responseTime: Math.round((realResult.response_time || 0) * 1000),
+                cost: 0.003,
+                status: 'success'
+              });
+            }
+          }
+          
+          // Add placeholder models for untested ones
+          const additionalModels = ['gpt-4o', 'claude-sonnet-4-20250514', 'gemini-2.5-flash', 'gpt-4o-mini', 'claude-3.5-sonnet', 'claude-3-haiku', 'gemini-1.5-pro', 'gemini-2.5-pro'];
           for (const model of additionalModels) {
             const existingResponse = baseQuestion.modelResponses.find(r => r.model === model);
             if (!existingResponse) {
@@ -369,42 +399,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
           
           return baseQuestion;
-        });
-        
-        res.json(questionsWithResponses);
-      } catch (error) {
-        // Return sample questions with responses if baseline.json doesn't exist
-        const sampleQuestions = [
-          {
-            id: 1,
-            question: "What are the key compliance requirements for cannabis packaging in California?",
-            expected_answer: "California requires child-resistant packaging, clear labeling with THC content, batch tracking numbers, and warning statements.",
-            category: "packaging",
-            difficulty: "intermediate",
-            keywords: ["packaging", "california", "compliance"],
-            state: "CA",
-            tags: ["regulatory", "packaging"],
-            lastUpdated: new Date().toISOString()
-          },
-          {
-            id: 2,
-            question: "What is the maximum THC limit for edibles in Colorado?",
-            expected_answer: "Colorado limits edibles to 10mg THC per serving and 100mg THC per package.",
-            category: "edibles",
-            difficulty: "basic",
-            keywords: ["edibles", "thc", "colorado"],
-            state: "CO",
-            tags: ["dosage", "edibles"],
-            lastUpdated: new Date().toISOString()
-          }
-        ];
-        
-        const questionsWithResponses = sampleQuestions.map(q => ({
-          ...q,
-          modelResponses: generateSampleModelResponses(q.question, q.expected_answer)
         }));
         
         res.json(questionsWithResponses);
+      } catch (error) {
+        console.error(`Error processing baseline questions for ${agentType}:`, error);
+        // If baseline.json processing fails, return error instead of fake data
+        res.status(500).json({ error: `Failed to process baseline questions: ${error.message}` });
       }
     } catch (error) {
       console.error(`Error loading baseline questions with responses for ${agentType}:`, error);
