@@ -85,10 +85,15 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
     enabled: isAuthenticated && !!agentType,
   });
 
-  // Fetch recent baseline results
-  const { data: baselineResults } = useQuery({
-    queryKey: [`/api/baseline-exam/results/${agentType}`],
-    enabled: isAuthenticated && !!agentType,
+  // Fetch real baseline questions count from baseline.json
+  const { data: realBaselineData } = useQuery({
+    queryKey: [`/agents/${agentType}-agent/baseline.json`],
+    queryFn: async () => {
+      const response = await fetch(`/agents/${agentType}-agent/baseline.json`);
+      if (!response.ok) throw new Error('Failed to fetch baseline data');
+      return response.json();
+    },
+    enabled: !!agentType,
   });
 
   const getStatusColor = (status: string) => {
@@ -208,18 +213,16 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
             {/* Overview Tab */}
             <TabsContent value="overview" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card>
+                <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setActiveTab('baseline')}>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">Baseline Score</CardTitle>
+                    <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className={`text-2xl font-bold ${getPerformanceColor(agentData.performance.baseline)}`}>
-                      {agentData.performance.baseline}%
+                    <div className="text-2xl font-bold text-blue-600">
+                      {realBaselineData?.questions?.length || 0}
                     </div>
                     <div className="text-xs text-gray-500">
-                      {agentData.performance.corpusSize > 0 
-                        ? `${agentData.performance.corpusSize} questions`
-                        : 'No baseline data'}
+                      Click to view baseline test questions
                     </div>
                   </CardContent>
                 </Card>
@@ -295,7 +298,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                 <CardHeader>
                   <CardTitle>Baseline Questions</CardTitle>
                   <p className="text-sm text-gray-600">
-                    View and manage all {agentData.performance.corpusSize || 52} baseline questions for this agent
+                    View and manage all {realBaselineData?.questions?.length || 0} baseline questions for this agent
                   </p>
                 </CardHeader>
                 <CardContent className="p-0">
