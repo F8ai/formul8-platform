@@ -52,9 +52,11 @@ export class AgentDiscoveryService {
       const entries = await readdir(agentsPath, { withFileTypes: true });
       
       // Filter for all directories in /agents (not just ending with -agent)
+      // Exclude base-agent as it's a shared dependency, not an operational agent
       const agentDirs = entries.filter(entry => 
         entry.isDirectory() && 
-        !entry.name.startsWith('.')
+        !entry.name.startsWith('.') &&
+        entry.name !== 'base-agent'
       );
 
       console.log(`Found ${agentDirs.length} agent directories:`, agentDirs.map(d => d.name));

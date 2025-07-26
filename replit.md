@@ -78,6 +78,12 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 26, 2025 - Base Agent Directory Cleanup ✅ COMPLETE
+- **Removed base-agent from agents/ directory**: Cleaned up agents directory structure by removing base-agent as it's a shared dependency, not an operational agent
+- **Updated Agent Discovery Service**: Modified agent-discovery.ts to filter out 'base-agent' from discovered agents to prevent future inclusion
+- **Consistent Agent Navigation**: Updated /agents page so all agent cards properly link to /agent/{agentId} routes consistently  
+- **11 Operational Agents**: System now correctly discovers and displays only the 11 operational cannabis industry agents without base-agent clutter
+
 ### July 26, 2025 - Complete Multi-Model Testing System with Dual Storage ✅ COMPLETE
 - **Comprehensive Multi-Model Testing**: Successfully tested 10 real API calls across 5 models: GPT-4o, GPT-4o-mini, Claude-3.5-Sonnet, Claude-3-Haiku, Gemini-1.5-Pro
 - **Dual Storage Architecture**: Results persist in both PostgreSQL database and baseline_results.json file (4KB) for complete data integrity
