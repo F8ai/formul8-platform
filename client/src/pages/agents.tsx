@@ -334,11 +334,7 @@ export default function AgentsPage() {
                     key={agent.id} 
                     className="relative overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                     onClick={() => {
-                      if (agent.id === 'compliance') {
-                        window.open('/dashboard/compliance', '_blank');
-                      } else {
-                        setLocation(`/agent/${agent.id}`);
-                      }
+                      setLocation(`/agent/${agent.id}`);
                     }}
                   >
                     <CardHeader className="pb-4">
@@ -437,15 +433,11 @@ export default function AgentsPage() {
                           size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
-                            if (agent.id === 'compliance') {
-                              window.open('/dashboard/compliance', '_blank');
-                            } else {
-                              setLocation(`/agent/${agent.id}`);
-                            }
+                            setLocation(`/agent/${agent.id}`);
                           }}
                           className="flex-1"
                         >
-                          {agent.id === 'compliance' ? 'Open Dashboard' : 'Test Agent'}
+                          Open Agent
                         </Button>
                         <Button
                           variant="outline"
