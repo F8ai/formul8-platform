@@ -12,7 +12,7 @@ router.get('/api/agents/compliance/dashboard', async (req, res) => {
   try {
     // Load authentic baseline test results - NO MOCK DATA
     const baselineResultsFile = path.join(process.cwd(), 'baseline_results.json');
-    const baselineQuestionsFile = path.join(process.cwd(), 'compliance-agent/baseline.json');
+    const baselineQuestionsFile = path.join(process.cwd(), 'agents/compliance-agent/baseline.json');
     
     if (!fs.existsSync(baselineResultsFile)) {
       return res.status(404).json({
@@ -27,14 +27,16 @@ router.get('/api/agents/compliance/dashboard', async (req, res) => {
     
     // Load actual questions for display
     let questionsData = [];
+    let realTotalQuestions = 0;
     if (fs.existsSync(baselineQuestionsFile)) {
       const questionsFile = JSON.parse(fs.readFileSync(baselineQuestionsFile, 'utf8'));
       questionsData = questionsFile.questions || [];
+      realTotalQuestions = questionsData.length; // Use real count from baseline.json
     }
     
     // Calculate authentic metrics from real test results
     const categories = Object.keys(complianceResults.baselineQuestions || {});
-    const totalQuestions = complianceResults.tests.total;
+    const totalQuestions = realTotalQuestions || complianceResults.tests.total; // Prefer real count
     const passRate = complianceResults.tests.passRate;
     
     // Count questions by category from actual results
@@ -71,7 +73,7 @@ router.get('/api/agents/compliance/dashboard', async (req, res) => {
         failed_tests: complianceResults.tests.failed
       },
       question_metrics: {
-        total_questions: totalQuestions,
+        total_questions: realTotalQuestions, // Use real count from baseline.json
         categories: categories,
         difficulties: Object.keys(difficultyStats),
         category_breakdown: categoryStats,
