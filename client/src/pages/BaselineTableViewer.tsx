@@ -131,9 +131,9 @@ export default function BaselineTableViewer() {
       );
       
       metrics[model] = {
-        totalCost: responses.reduce((sum, r) => sum + (r.cost || 0), 0),
-        avgResponseTime: responses.length > 0 ? responses.reduce((sum, r) => sum + (r.responseTime || 0), 0) / responses.length : 0,
-        avgGrade: responses.length > 0 ? responses.reduce((sum, r) => sum + r.grade, 0) / responses.length : 0,
+        totalCost: responses.reduce((sum: number, r: ModelResponse) => sum + (r.cost || 0), 0),
+        avgResponseTime: responses.length > 0 ? responses.reduce((sum: number, r: ModelResponse) => sum + (r.responseTime || 0), 0) / responses.length : 0,
+        avgGrade: responses.length > 0 ? responses.reduce((sum: number, r: ModelResponse) => sum + r.grade, 0) / responses.length : 0,
         testCount: responses.length
       };
     });

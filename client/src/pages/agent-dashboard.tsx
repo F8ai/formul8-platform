@@ -196,8 +196,9 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
         {/* Main Content */}
         <main className="flex-1 p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-6">
               <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="baseline">Baseline</TabsTrigger>
               <TabsTrigger value="performance">Performance</TabsTrigger>
               <TabsTrigger value="activity">Activity</TabsTrigger>
               <TabsTrigger value="configuration">Configuration</TabsTrigger>
@@ -283,6 +284,27 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                       <GitBranch className="h-4 w-4 mr-2" />
                       Trigger GitHub Action
                     </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Baseline Tab */}
+            <TabsContent value="baseline" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Baseline Questions</CardTitle>
+                  <p className="text-sm text-gray-600">
+                    View and manage all {agentData.performance.corpusSize || 52} baseline questions for this agent
+                  </p>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="h-[600px] overflow-hidden">
+                    <iframe 
+                      src={`/agent/${agentType}/baseline`}
+                      className="w-full h-full border-0"
+                      title="Baseline Questions Table"
+                    />
                   </div>
                 </CardContent>
               </Card>
