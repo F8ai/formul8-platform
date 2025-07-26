@@ -292,14 +292,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const baseline = JSON.parse(baselineData);
         const questions = baseline.questions || [];
         
-        // Try to load real model results
+        // Try to load real model results from baseline_results.json (preferred) or database
         let modelResults: any = null;
         try {
-          const resultsFile = path.join(agentPath, 'baseline_results_model_o3.json');
+          const resultsFile = path.join(agentPath, 'baseline_results.json');
           const resultsData = await fs.readFile(resultsFile, 'utf8');
           modelResults = JSON.parse(resultsData);
         } catch (error) {
-          console.warn(`No model results file found for ${agentType}, using questions only`);
+          console.warn(`No baseline_results.json found for ${agentType}, checking database...`);
+          
+          // Fallback to database query
+          try {
+            const { db } = await import('./db');
+            const { baselineTestResults } = await import('@shared/schema');
+            const { eq } = await import('drizzle-orm');
+            
+            const dbResults = await db.select().from(baselineTestResults)
+              .where(eq(baselineTestResults.questionId, questions[0]?.id)); // Just check if any exist
+            
+            if (dbResults.length > 0) {
+              console.log(`Found ${dbResults.length} database results for ${agentType}`);
+              // We'll query individual results in the mapping below
+            }
+          } catch (dbError) {
+            console.warn(`Database query failed for ${agentType}:`, dbError);
+          }
         }
         
         // Transform real baseline questions with authentic model responses
@@ -420,6 +437,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
         difficulty: question.difficulty,
         max_score: question.max_score
       }, model);
+      
+      // Store the result in database and baseline_results.json
+      try {
+        const { db } = await import('./db');
+        const { baselineTestResults } = await import('@shared/schema');
+        
+        // Store in database (create a minimal run first if needed)
+        const { baselineTestRuns } = await import('@shared/schema');
+        
+        // Create a minimal test run for individual tests
+        const [testRun] = await db.insert(baselineTestRuns).values({
+          agentType,
+          model,
+          state: 'CO',
+          status: 'completed',
+          totalQuestions: 1,
+          successfulTests: result.status === 'success' ? 1 : 0,
+          failedTests: result.status === 'success' ? 0 : 1,
+          avgAccuracy: result.grade,
+          avgConfidence: result.confidence,
+          avgResponseTime: result.responseTime,
+          completedAt: new Date()
+        }).returning({ id: baselineTestRuns.id });
+        
+        // Store in database
+        await db.insert(baselineTestResults).values({
+          runId: testRun.id,
+          questionId,
+          question: question.question.replace(/\{\{state\}\}/g, 'CO'),
+          expectedAnswer: question.expected_answer.replace(/\{\{state\}\}/g, 'CO'),
+          agentResponse: result.answer,
+          accuracy: result.grade,
+          confidence: result.confidence,
+          responseTime: result.responseTime,
+          category: question.category,
+          difficulty: question.difficulty,
+          maxScore: question.max_score || 10,
+          estimatedCost: result.cost,
+          aiGrade: result.grade,
+          aiFeedback: "Automated AI grading evaluation",
+          aiGradingConfidence: result.gradingConfidence,
+          aiGradedAt: new Date(),
+          aiGradingModel: model,
+          metadata: { model, status: result.status }
+        });
+        
+        // Also store in baseline_results.json for easy access
+        const resultsFile = path.join(agentPath, 'baseline_results.json');
+        let resultsData: any = {};
+        
+        try {
+          const existingData = await fs.readFile(resultsFile, 'utf8');
+          resultsData = JSON.parse(existingData);
+        } catch (error) {
+          // Create new results file structure
+          resultsData = {
+            agent: agentType,
+            timestamp: new Date().toISOString(),
+            results: {}
+          };
+        }
+        
+        // Update or add the result for this question and model
+        if (!resultsData.results[questionId]) {
+          resultsData.results[questionId] = {
+            question_id: questionId,
+            question: question.question.replace(/\{\{state\}\}/g, 'CO'),
+            expected_answer: question.expected_answer.replace(/\{\{state\}\}/g, 'CO'),
+            category: question.category,
+            difficulty: question.difficulty,
+            models: {}
+          };
+        }
+        
+        // Store the model-specific result
+        resultsData.results[questionId].models[model] = {
+          answer: result.answer,
+          confidence: result.confidence,
+          grade: result.grade,
+          gradingConfidence: result.gradingConfidence,
+          responseTime: result.responseTime,
+          cost: result.cost,
+          status: result.status,
+          timestamp: new Date().toISOString()
+        };
+        
+        // Update the timestamp
+        resultsData.timestamp = new Date().toISOString();
+        
+        // Write the updated results back to file
+        await fs.writeFile(resultsFile, JSON.stringify(resultsData, null, 2), 'utf8');
+        
+      } catch (saveError) {
+        console.error('Failed to save test result:', saveError);
+      }
       
       res.json(result);
     } catch (error) {
