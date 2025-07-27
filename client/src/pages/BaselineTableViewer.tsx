@@ -35,6 +35,19 @@ interface BaselineQuestion {
   modelResponses?: ModelResponse[];
 }
 
+interface TestResultRow {
+  questionId: number;
+  question: string;
+  expected_answer: string;
+  category: string;
+  difficulty: 'basic' | 'intermediate' | 'advanced';
+  state: string;
+  model: string;
+  ragEnabled: boolean;
+  knowledgeBase: string;
+  response: ModelResponse;
+}
+
 interface ModelResponse {
   id?: number;
   model: string;
@@ -71,7 +84,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
   const [stateFilter, setStateFilter] = useState('all');
   const [modelFilter, setModelFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
-  const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
+
   const [testingModels, setTestingModels] = useState<Set<string>>(new Set());
   const [editingBaseline, setEditingBaseline] = useState(false);
   const [baselineJson, setBaselineJson] = useState('');
@@ -220,10 +233,62 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
     }
   };
 
-  const questions = questionsData.map((q: any) => ({
-    ...q,
-    modelResponses: q.modelResponses || []
-  }));
+  // Process questions into organized structure
+  const questions = useMemo(() => {
+    if (!questionsData || questionsData.length === 0) return [];
+    
+    return questionsData.map((q: any) => ({
+      ...q,
+      modelResponses: q.modelResponses || []
+    }));
+  }, [questionsData]);
+
+  // Flatten questions into individual test result rows
+  const testResultRows = useMemo(() => {
+    const rows: TestResultRow[] = [];
+    
+    questions.forEach(question => {
+      if (question.modelResponses && question.modelResponses.length > 0) {
+        question.modelResponses.forEach((response: ModelResponse) => {
+          rows.push({
+            questionId: question.id,
+            question: question.question,
+            expected_answer: question.expected_answer,
+            category: question.category,
+            difficulty: question.difficulty,
+            state: question.state || 'MULTI',
+            model: response.model,
+            ragEnabled: response.model.includes('rag') || false, // Detect RAG from model name
+            knowledgeBase: response.model.includes('kb') ? 'Cannabis KB' : 'Standard', // Detect KB from model name
+            response: response
+          });
+        });
+      } else {
+        // Show questions without responses
+        rows.push({
+          questionId: question.id,
+          question: question.question,
+          expected_answer: question.expected_answer,
+          category: question.category,
+          difficulty: question.difficulty,
+          state: question.state || 'MULTI',
+          model: 'No test run',
+          ragEnabled: false,
+          knowledgeBase: 'N/A',
+          response: {
+            model: 'No test run',
+            answer: 'Click "Run Test" to generate response',
+            confidence: 0,
+            grade: 0,
+            gradingConfidence: 0,
+            status: 'pending'
+          } as ModelResponse
+        });
+      }
+    });
+    
+    return rows;
+  }, [questions]);
 
   // Extract all unique models from the data
   const availableModels = useMemo(() => {
@@ -261,65 +326,43 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
     return metrics;
   }, [questions, availableModels]);
 
-  // Group questions by category
-  const questionsByCategory = useMemo(() => {
-    const grouped: Record<string, BaselineQuestion[]> = {};
-    questions.forEach((q: BaselineQuestion) => {
-      const category = q.category || 'Uncategorized';
-      if (!grouped[category]) {
-        grouped[category] = [];
-      }
-      grouped[category].push(q);
-    });
-    return grouped;
-  }, [questions]);
-
-  // Apply filters to each category
-  const filteredQuestionsByCategory = useMemo(() => {
-    const filtered: Record<string, BaselineQuestion[]> = {};
-    Object.entries(questionsByCategory).forEach(([category, categoryQuestions]) => {
-      const filteredCategoryQuestions = categoryQuestions.filter((q: BaselineQuestion) => {
-        const matchesSearch = !searchTerm || 
-          q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          q.expected_answer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (q.keywords && q.keywords.some(k => k.toLowerCase().includes(searchTerm.toLowerCase())));
-        
-        const matchesDifficulty = !difficultyFilter || difficultyFilter === 'all' || q.difficulty === difficultyFilter;
-        const matchesState = !stateFilter || stateFilter === 'all' || q.state === stateFilter;
-        const matchesModel = !modelFilter || modelFilter === 'all' || 
-          (q.modelResponses && q.modelResponses.some((r: ModelResponse) => r.model === modelFilter));
-        
-        return matchesSearch && matchesDifficulty && matchesState && matchesModel;
-      });
+  // Apply filters to test result rows
+  const filteredTestResults = useMemo(() => {
+    return testResultRows.filter((row: TestResultRow) => {
+      const matchesSearch = !searchTerm || 
+        row.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.expected_answer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.response.answer.toLowerCase().includes(searchTerm.toLowerCase());
       
-      if (filteredCategoryQuestions.length > 0) {
-        filtered[category] = filteredCategoryQuestions;
-      }
+      const matchesDifficulty = !difficultyFilter || difficultyFilter === 'all' || row.difficulty === difficultyFilter;
+      const matchesState = !stateFilter || stateFilter === 'all' || row.state === stateFilter;
+      const matchesModel = !modelFilter || modelFilter === 'all' || row.model === modelFilter;
+      const matchesCategory = !categoryFilter || categoryFilter === 'all' || row.category === categoryFilter;
+      
+      return matchesSearch && matchesDifficulty && matchesState && matchesModel && matchesCategory;
     });
-    return filtered;
-  }, [questionsByCategory, searchTerm, difficultyFilter, stateFilter]);
+  }, [testResultRows, searchTerm, difficultyFilter, stateFilter, modelFilter, categoryFilter]);
 
   // Extract all unique states
   const states = useMemo(() => {
     const stateSet = new Set<string>();
-    questions.forEach((q: BaselineQuestion) => {
-      if (q.state) stateSet.add(q.state);
+    testResultRows.forEach((row: TestResultRow) => {
+      if (row.state) stateSet.add(row.state);
     });
     return Array.from(stateSet).sort();
-  }, [questions]);
+  }, [testResultRows]);
 
-  const toggleCategory = (category: string) => {
-    const newCollapsed = new Set(collapsedCategories);
-    if (newCollapsed.has(category)) {
-      newCollapsed.delete(category);
-    } else {
-      newCollapsed.add(category);
-    }
-    setCollapsedCategories(newCollapsed);
-  };
+  const categories = useMemo(() => {
+    const categorySet = new Set<string>();
+    testResultRows.forEach((row: TestResultRow) => {
+      if (row.category) categorySet.add(row.category);
+    });
+    return Array.from(categorySet).sort();
+  }, [testResultRows]);
 
-  // Get unique values for filters
-  const categories = Array.from(new Set(questions.map((q: BaselineQuestion) => q.category))).filter(Boolean);
+
+
+
 
   const getDifficultyBadgeColor = (difficulty: string) => {
     switch (difficulty) {
@@ -330,24 +373,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
     }
   };
 
-  // Get response for a specific model and question
-  const getModelResponse = (question: BaselineQuestion, model: string): ModelResponse | null => {
-    return question.modelResponses?.find((r: ModelResponse) => r.model === model) || null;
-  };
 
-  // Calculate category statistics
-  const getCategoryStats = (categoryQuestions: BaselineQuestion[]) => {
-    const totalQuestions = categoryQuestions.length;
-    const totalResponses = categoryQuestions.reduce((acc, q) => acc + (q.modelResponses?.length || 0), 0);
-    const avgGrade = totalResponses > 0 
-      ? categoryQuestions.reduce((acc, q) => {
-          const grades = q.modelResponses?.map((r: ModelResponse) => r.grade) || [];
-          return acc + grades.reduce((sum, grade) => sum + grade, 0);
-        }, 0) / totalResponses
-      : 0;
-    
-    return { totalQuestions, totalResponses, avgGrade };
-  };
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-6">
@@ -470,266 +496,227 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
           )}
         </div>
 
-        {/* Category-Based Collapsible Sections */}
-        <div className="space-y-4">
-          {questionsLoading ? (
-            <Card>
-              <CardContent className="flex items-center justify-center py-8">
-                <RefreshCw className="h-4 w-4 animate-spin mr-2" />
-                Loading questions and responses...
-              </CardContent>
-            </Card>
-          ) : Object.keys(filteredQuestionsByCategory).length === 0 ? (
-            <Card>
-              <CardContent className="text-center py-8">
-                No questions found matching the current filters.
-              </CardContent>
-            </Card>
-          ) : (
-            Object.entries(filteredQuestionsByCategory).map(([category, categoryQuestions]) => {
-              const stats = getCategoryStats(categoryQuestions);
-              const isCollapsed = collapsedCategories.has(category);
-              
-              return (
-                <Card key={category}>
-                  <Collapsible>
-                    <CollapsibleTrigger 
-                      className="w-full"
-                      onClick={() => toggleCategory(category)}
-                    >
-                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <div className="flex items-center gap-3">
-                          {isCollapsed ? (
-                            <ChevronRight className="h-4 w-4" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4" />
-                          )}
-                          <CardTitle className="text-lg">{category}</CardTitle>
-                          <Badge variant="secondary">
-                            {stats.totalQuestions} questions
-                          </Badge>
-                          {stats.totalResponses > 0 && (
-                            <Badge variant="outline">
-                              {stats.avgGrade.toFixed(1)}% avg grade
-                            </Badge>
-                          )}
-                        </div>
-                      </CardHeader>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <CardContent>
-                        <div className="overflow-x-auto">
-                          <Table>
-                            <TableHeader>
-                              <TableRow>
-                                <TableHead className="w-96">
-                                  <div className="space-y-1">
-                                    <div className="font-medium">Question</div>
-                                  </div>
-                                </TableHead>
-                                <TableHead className="w-20">
-                                  <div className="space-y-1">
-                                    <div className="font-medium">Difficulty</div>
-                                    <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
-                                      <SelectTrigger className="h-7 text-xs">
-                                        <SelectValue placeholder="All" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="all">All</SelectItem>
-                                        <SelectItem value="basic">Basic</SelectItem>
-                                        <SelectItem value="intermediate">Inter.</SelectItem>
-                                        <SelectItem value="advanced">Adv.</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  </div>
-                                </TableHead>
-                                <TableHead className="w-16">
-                                  <div className="space-y-1">
-                                    <div className="font-medium">State</div>
-                                    <Select value={stateFilter} onValueChange={setStateFilter}>
-                                      <SelectTrigger className="h-7 text-xs">
-                                        <SelectValue placeholder="All" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="all">All</SelectItem>
-                                        {states.map((state) => (
-                                          <SelectItem key={state} value={state}>{state}</SelectItem>
-                                        ))}
-                                      </SelectContent>
-                                    </Select>
-                                  </div>
-                                </TableHead>
-                                {availableModels.map(model => (
-                                  <TableHead key={model} className="w-32 text-center">
-                                    <div className="space-y-1">
-                                      <div className="font-medium">{model}</div>
-                                      <div className="text-xs text-muted-foreground">
-                                        {modelMetrics[model]?.testCount || 0} tests
-                                      </div>
-                                    </div>
-                                  </TableHead>
-                                ))}
-                                <TableHead className="w-32 text-center">
-                                  <div className="space-y-1">
-                                    <div className="font-medium">Human Grade</div>
-                                    <div className="text-xs text-muted-foreground">
-                                      Manual Review
-                                    </div>
-                                  </div>
-                                </TableHead>
-                              </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                              {categoryQuestions.map((question) => (
-                                <TableRow key={question.id}>
-                                  <TableCell>
-                                    <div className="space-y-1">
-                                      <p className="font-medium">{question.question}</p>
-                                      {question.state && (
-                                        <Badge variant="outline" className="text-xs">
-                                          {question.state}
-                                        </Badge>
-                                      )}
-                                    </div>
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge className={`${getDifficultyBadgeColor(question.difficulty)} text-xs`}>
-                                      {question.difficulty}
-                                    </Badge>
-                                  </TableCell>
-                                  <TableCell>
-                                    <Badge variant="outline" className="text-xs">
-                                      {question.state || 'MULTI'}
-                                    </Badge>
-                                  </TableCell>
-                                  {availableModels.map(model => {
-                                    const response = getModelResponse(question, model);
-                                    const testKey = `${question.id.toString()}-${model}`;
-                                    const isTesting = testingModels.has(testKey);
-                                    const isUntestedModel = response && response.answer === 'Click "Run Test" to generate real response from this model';
-                                    
-                                    return (
-                                      <TableCell key={model} className="text-center">
-                                        {response && !isUntestedModel ? (
-                                          <div className={`space-y-2 ${response.status === 'success' ? '' : 'opacity-60 grayscale'}`}>
-                                            <div className="flex items-center gap-1">
-                                              <Badge 
-                                                variant={response.grade >= 80 ? "default" : response.grade >= 60 ? "secondary" : "destructive"}
-                                                className="text-xs"
-                                              >
-                                                {response.grade}%
-                                              </Badge>
-                                              {response.status !== 'success' && (
-                                                <Badge variant="outline" className="text-xs bg-yellow-50 text-yellow-700 border-yellow-300">
-                                                  SIMULATED
-                                                </Badge>
-                                              )}
-                                            </div>
-                                            <div className="text-xs text-muted-foreground">
-                                              {response.confidence}% conf
-                                            </div>
-                                            <div className="flex justify-between text-xs">
-                                              {response.cost && response.cost > 0 && (
-                                                <span className="text-green-600 font-medium">
-                                                  ${response.cost.toFixed(4)}
-                                                </span>
-                                              )}
-                                              {response.responseTime && response.responseTime > 0 && (
-                                                <span className="text-blue-600">
-                                                  {(response.responseTime / 1000).toFixed(1)}s
-                                                </span>
-                                              )}
-                                            </div>
-                                            <div className="max-w-xs p-2 bg-muted rounded text-xs text-left">
-                                              <div className="font-semibold mb-1 flex items-center gap-1">
-                                                Response:
-                                                {response.status !== 'success' && (
-                                                  <span className="text-yellow-600 text-xs">(Simulated)</span>
-                                                )}
-                                              </div>
-                                              <p className="line-clamp-4 text-muted-foreground">
-                                                {response.answer}
-                                              </p>
-                                              {response.answer && response.answer.length > 150 && (
-                                                <button 
-                                                  className="text-primary hover:underline mt-1"
-                                                  onClick={() => {
-                                                    const title = response.status === 'success' ? `Full ${model} Response` : `Full ${model} Response (SIMULATED DATA)`;
-                                                    alert(`${title}:\n\n${response.answer}`);
-                                                  }}
-                                                >
-                                                  Show full response
-                                                </button>
-                                              )}
-                                            </div>
-                                          </div>
-                                        ) : (
-                                          <div className="space-y-2">
-                                            <Button
-                                              size="sm"
-                                              variant="outline"
-                                              onClick={() => runModelTest(question.id.toString(), model)}
-                                              disabled={isTesting}
-                                              className="text-xs"
-                                            >
-                                              {isTesting ? (
-                                                <>
-                                                  <RefreshCw className="h-3 w-3 animate-spin mr-1" />
-                                                  Testing...
-                                                </>
-                                              ) : (
-                                                'Run Test'
-                                              )}
-                                            </Button>
-                                            {isUntestedModel && (
-                                              <div className="text-xs text-muted-foreground">
-                                                Real API
-                                              </div>
-                                            )}
-                                          </div>
-                                        )}
-                                      </TableCell>
-                                    );
-                                  })}
-                                  <TableCell className="text-center">
-                                    {/* Human grading interface for each question */}
-                                    <HumanGradingInterface
-                                      result={{
-                                        id: question.id,
-                                        questionId: question.id.toString(),
-                                        question: question.question,
-                                        agentResponse: question.modelResponses?.[0]?.answer || '',
-                                        expectedAnswer: question.expected_answer,
-                                        aiGrade: question.modelResponses?.[0]?.grade,
-                                        aiGradingConfidence: question.modelResponses?.[0]?.gradingConfidence,
-                                        aiGradingReasoning: question.modelResponses?.[0]?.aiGradingReasoning,
-                                        humanGrade: question.modelResponses?.[0]?.humanGrade,
-                                        humanGradedBy: question.modelResponses?.[0]?.humanGradedBy,
-                                        humanGradingNotes: question.modelResponses?.[0]?.humanGradingNotes,
-                                        humanImprovedResponse: question.modelResponses?.[0]?.humanImprovedResponse,
-                                        humanGradedAt: question.modelResponses?.[0]?.humanGradedAt,
-                                        gradingAgreement: question.modelResponses?.[0]?.gradingAgreement,
-                                        requiresReview: question.modelResponses?.[0]?.requiresReview
-                                      }}
-                                      agentType={agentType}
-                                      onGradeSubmitted={() => {
-                                        refetchQuestions();
-                                      }}
-                                    />
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </div>
-                      </CardContent>
-                    </CollapsibleContent>
-                  </Collapsible>
-                </Card>
-              );
-            })
-          )}
+        {/* Filter Controls */}
+        <div className="flex flex-wrap gap-3 items-center">
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map((category) => (
+                <SelectItem key={category} value={category}>{category}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Difficulty" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="basic">Basic</SelectItem>
+              <SelectItem value="intermediate">Intermediate</SelectItem>
+              <SelectItem value="advanced">Advanced</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <Select value={stateFilter} onValueChange={setStateFilter}>
+            <SelectTrigger className="w-24">
+              <SelectValue placeholder="State" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              {states.map((state) => (
+                <SelectItem key={state} value={state}>{state}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          <Select value={modelFilter} onValueChange={setModelFilter}>
+            <SelectTrigger className="w-40">
+              <SelectValue placeholder="Model" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Models</SelectItem>
+              {availableModels.map((model) => (
+                <SelectItem key={model} value={model}>{model}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
+
+        {/* Test Results Table */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Test Results ({filteredTestResults.length} rows)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {questionsLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+                Loading test results...
+              </div>
+            ) : filteredTestResults.length === 0 ? (
+              <div className="text-center py-8">
+                No test results found matching the current filters.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-96">Question</TableHead>
+                      <TableHead className="w-20">Category</TableHead>
+                      <TableHead className="w-20">Difficulty</TableHead>
+                      <TableHead className="w-16">State</TableHead>
+                      <TableHead className="w-32">Model</TableHead>
+                      <TableHead className="w-16">RAG</TableHead>
+                      <TableHead className="w-24">Knowledge Base</TableHead>
+                      <TableHead className="w-16">AI Grade</TableHead>
+                      <TableHead className="w-24">Cost</TableHead>
+                      <TableHead className="w-24">Response Time</TableHead>
+                      <TableHead className="w-32">Human Grade</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredTestResults.map((row, index) => (
+                      <TableRow key={`${row.questionId}-${row.model}`}>
+                        <TableCell className="max-w-96">
+                          <div className="space-y-1">
+                            <p className="font-medium line-clamp-2">
+                              {row.question}
+                            </p>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button variant="ghost" size="sm" className="h-auto p-1 text-xs">
+                                  View details
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="max-w-4xl">
+                                <DialogHeader>
+                                  <DialogTitle>Question #{row.questionId}</DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                  <div>
+                                    <h4 className="font-medium">Question:</h4>
+                                    <p className="text-sm">{row.question}</p>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-medium">Expected Answer:</h4>
+                                    <p className="text-sm">{row.expected_answer}</p>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-medium">AI Response:</h4>
+                                    <p className="text-sm">{row.response.answer}</p>
+                                  </div>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-xs">
+                            {row.category}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge 
+                            variant="secondary" 
+                            className={`text-xs ${getDifficultyBadgeColor(row.difficulty)}`}
+                          >
+                            {row.difficulty}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-xs">
+                            {row.state}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-sm font-medium">
+                            {row.model}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <Badge variant={row.ragEnabled ? "default" : "secondary"} className="text-xs">
+                            {row.ragEnabled ? "Yes" : "No"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="text-xs">
+                            {row.knowledgeBase}
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {row.response.grade !== undefined ? (
+                            <div className="space-y-1">
+                              <div className={`text-sm font-medium ${
+                                row.response.grade >= 80 ? 'text-green-600' : 
+                                row.response.grade >= 60 ? 'text-yellow-600' : 'text-red-600'
+                              }`}>
+                                {row.response.grade.toFixed(1)}%
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                {row.response.gradingConfidence?.toFixed(0)}% confidence
+                              </div>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">No grade</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {row.response.cost ? (
+                            <div className="text-xs">
+                              ${row.response.cost.toFixed(4)}
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          {row.response.responseTime ? (
+                            <div className="text-xs">
+                              {(row.response.responseTime / 1000).toFixed(1)}s
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <HumanGradingInterface
+                            result={{
+                              id: row.response.id || row.questionId,
+                              questionId: row.questionId.toString(),
+                              question: row.question,
+                              agentResponse: row.response.answer,
+                              expectedAnswer: row.expected_answer,
+                              aiGrade: row.response.grade,
+                              aiGradingConfidence: row.response.gradingConfidence,
+                              aiGradingReasoning: row.response.aiGradingReasoning,
+                              humanGrade: row.response.humanGrade,
+                              humanGradedBy: row.response.humanGradedBy,
+                              humanGradingNotes: row.response.humanGradingNotes,
+                              humanImprovedResponse: row.response.humanImprovedResponse,
+                              humanGradedAt: row.response.humanGradedAt,
+                              gradingAgreement: row.response.gradingAgreement,
+                              requiresReview: row.response.requiresReview
+                            }}
+                            agentType={agentType}
+                            onGradeSubmitted={() => {
+                              refetchQuestions();
+                            }}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       {/* Baseline Editor Dialog */}
