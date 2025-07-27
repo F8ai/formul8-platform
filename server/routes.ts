@@ -28,7 +28,7 @@ import { registerBenchmarkRoutes } from "./routes/benchmarks";
 import { registerAgentManagementRoutes } from "./routes/agent-management";
 import federationRouter from "./routes/federation";
 import { z } from "zod";
-import fs from "fs/promises";
+import fs from "fs";
 import OpenAI from "openai";
 import { modelIntegrationService } from "./services/model-integration";
 
