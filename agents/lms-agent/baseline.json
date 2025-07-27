@@ -1,0 +1,203 @@
+{
+  "agent": "lms-agent",
+  "description": "Cannabis Learning Management System Questions covering training programs, certification processes, compliance education, and knowledge management",
+  "categories": {
+    "training_programs": "Cannabis industry training program development and delivery",
+    "certification_processes": "Professional certification and credential management",
+    "compliance_education": "Regulatory compliance training and assessment",
+    "knowledge_management": "Information organization and knowledge base development",
+    "assessment_tools": "Testing and evaluation methodologies",
+    "content_development": "Educational content creation and curation",
+    "learning_analytics": "Training effectiveness measurement and analytics",
+    "platform_management": "LMS administration and technical management",
+    "regulatory_training": "State-specific regulatory training requirements",
+    "professional_development": "Career advancement and skill development programs"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic LMS concepts and standard training procedures",
+    "intermediate": "Advanced training design and assessment methodologies",
+    "advanced": "Complex learning systems and analytics implementation"
+  },
+  "questions": [
+    {
+      "id": "training001",
+      "category": "training_programs",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I design a comprehensive cannabis budtender training program for {{state}}?",
+      "expected_answer": "Include {{state}} regulations, product knowledge, customer service, safety protocols, sales techniques, compliance procedures, hands-on practice, and assessment components with role-specific competencies",
+      "max_score": 15,
+      "tags": ["budtender-training", "product-knowledge", "customer-service", "state-regulations"]
+    },
+    {
+      "id": "training002",
+      "category": "training_programs",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What adaptive learning technologies are most effective for cannabis industry training?",
+      "expected_answer": "Implement personalized learning paths, AI-driven content recommendations, competency-based progression, microlearning modules, gamification elements, and real-time performance analytics",
+      "max_score": 20,
+      "tags": ["adaptive-learning", "ai-driven", "competency-based", "microlearning", "gamification"]
+    },
+    {
+      "id": "cert001",
+      "category": "certification_processes",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I establish a cannabis professional certification program in {{state}}?",
+      "expected_answer": "Define competency standards, create assessment criteria, establish prerequisites, design examination processes, implement continuing education requirements, and ensure {{state}} regulatory alignment",
+      "max_score": 15,
+      "tags": ["certification-program", "competency-standards", "assessment-criteria", "continuing-education"]
+    },
+    {
+      "id": "cert002",
+      "category": "certification_processes",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What credentialing framework should I use for multi-state cannabis certifications?",
+      "expected_answer": "Develop portable credentials, implement blockchain verification, create reciprocity agreements, establish national standards, maintain state-specific modules, and ensure regulatory compliance",
+      "max_score": 20,
+      "tags": ["credentialing-framework", "portable-credentials", "blockchain-verification", "reciprocity"]
+    },
+    {
+      "id": "compliance001",
+      "category": "compliance_education",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What compliance training modules are essential for cannabis employees in {{state}}?",
+      "expected_answer": "Cover {{state}} regulations, safety protocols, inventory tracking, quality control, record keeping, transportation rules, security procedures, and emergency response protocols",
+      "max_score": 12,
+      "tags": ["compliance-training", "safety-protocols", "inventory-tracking", "security-procedures"]
+    },
+    {
+      "id": "compliance002",
+      "category": "compliance_education",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I create an automated compliance training system that updates with regulatory changes?",
+      "expected_answer": "Implement regulatory monitoring, automated content updates, notification systems, version control, compliance tracking, assessment adjustments, and audit trail functionality",
+      "max_score": 18,
+      "tags": ["automated-compliance", "regulatory-monitoring", "content-updates", "audit-trail"]
+    },
+    {
+      "id": "knowledge001",
+      "category": "knowledge_management",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I organize cannabis industry knowledge for effective learning management?",
+      "expected_answer": "Create taxonomies, implement tagging systems, establish content hierarchies, develop search functionality, maintain version control, and ensure content accuracy and currency",
+      "max_score": 12,
+      "tags": ["knowledge-management", "taxonomies", "content-hierarchies", "version-control"]
+    },
+    {
+      "id": "knowledge002",
+      "category": "knowledge_management",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What AI-powered knowledge management features enhance cannabis training effectiveness?",
+      "expected_answer": "Implement semantic search, automated content curation, intelligent recommendations, knowledge graphs, chatbot support, and predictive content needs analysis",
+      "max_score": 20,
+      "tags": ["ai-knowledge", "semantic-search", "content-curation", "knowledge-graphs", "chatbot"]
+    },
+    {
+      "id": "assessment001",
+      "category": "assessment_tools",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What assessment methods are most effective for cannabis industry training?",
+      "expected_answer": "Use scenario-based questions, practical demonstrations, peer assessments, progressive testing, competency checklists, and real-world application evaluations",
+      "max_score": 12,
+      "tags": ["assessment-methods", "scenario-based", "practical-demonstrations", "competency-checklists"]
+    },
+    {
+      "id": "assessment002",
+      "category": "assessment_tools",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I implement adaptive assessment technologies for cannabis training programs?",
+      "expected_answer": "Use item response theory, computerized adaptive testing, performance analytics, difficulty calibration, personalized feedback, and predictive assessment algorithms",
+      "max_score": 18,
+      "tags": ["adaptive-assessment", "item-response-theory", "computerized-adaptive", "predictive-algorithms"]
+    },
+    {
+      "id": "content001",
+      "category": "content_development",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I develop engaging cannabis training content for {{state}} regulations?",
+      "expected_answer": "Use multimedia formats, interactive elements, case studies, real-world scenarios, {{state}}-specific examples, visual aids, and progressive disclosure techniques",
+      "max_score": 12,
+      "tags": ["content-development", "multimedia", "interactive-elements", "case-studies"]
+    },
+    {
+      "id": "content002",
+      "category": "content_development",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What content authoring workflows optimize cannabis training material development?",
+      "expected_answer": "Implement collaborative authoring, version control, content templates, review workflows, multimedia integration, accessibility compliance, and automated quality checks",
+      "max_score": 18,
+      "tags": ["content-authoring", "collaborative-authoring", "review-workflows", "accessibility"]
+    },
+    {
+      "id": "analytics001",
+      "category": "learning_analytics",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What learning analytics should I track for cannabis training programs?",
+      "expected_answer": "Monitor completion rates, assessment scores, time-to-competency, engagement metrics, knowledge retention, performance improvements, and compliance achievement",
+      "max_score": 12,
+      "tags": ["learning-analytics", "completion-rates", "engagement-metrics", "knowledge-retention"]
+    },
+    {
+      "id": "analytics002",
+      "category": "learning_analytics",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I implement predictive analytics for cannabis training effectiveness?",
+      "expected_answer": "Use machine learning models, predictive algorithms, learner behavior analysis, performance forecasting, intervention triggers, and outcome prediction systems",
+      "max_score": 20,
+      "tags": ["predictive-analytics", "machine-learning", "behavior-analysis", "intervention-triggers"]
+    },
+    {
+      "id": "platform001",
+      "category": "platform_management",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What technical requirements are essential for a cannabis industry LMS?",
+      "expected_answer": "Ensure scalability, security compliance, mobile responsiveness, integration capabilities, reporting features, user management, content authoring tools, and backup systems",
+      "max_score": 12,
+      "tags": ["technical-requirements", "scalability", "security-compliance", "mobile-responsive"]
+    },
+    {
+      "id": "platform002",
+      "category": "platform_management",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I architect a cloud-based LMS for multi-state cannabis operations?",
+      "expected_answer": "Implement microservices architecture, cloud-native design, auto-scaling, disaster recovery, data sovereignty, compliance frameworks, and integration APIs",
+      "max_score": 20,
+      "tags": ["cloud-architecture", "microservices", "auto-scaling", "data-sovereignty"]
+    },
+    {
+      "id": "regulatory001",
+      "category": "regulatory_training",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What are the mandatory training requirements for cannabis businesses in {{state}}?",
+      "expected_answer": "Cover {{state}}-specific licensing requirements, employee training mandates, record-keeping obligations, safety training, and continuing education requirements",
+      "max_score": 12,
+      "tags": ["mandatory-training", "licensing-requirements", "employee-training", "safety-training"]
+    },
+    {
+      "id": "regulatory002",
+      "category": "regulatory_training",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I manage multi-jurisdictional training compliance across cannabis operations?",
+      "expected_answer": "Implement jurisdiction mapping, automated compliance tracking, requirement matrices, training scheduling, documentation systems, and audit preparation protocols",
+      "max_score": 18,
+      "tags": ["multi-jurisdictional", "compliance-tracking", "requirement-matrices", "audit-preparation"]
+    }
+  ]
+}

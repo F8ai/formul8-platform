@@ -1158,6 +1158,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`Total results loaded for ${agentType}: ${allResults.length}`);
       
+      // If no results found, load baseline questions from baseline.json
+      if (allResults.length === 0) {
+        try {
+          const baselineFile = path.resolve(process.cwd(), `agents/${agentType}-agent/baseline.json`);
+          if (fs.existsSync(baselineFile)) {
+            const baselineData = JSON.parse(fs.readFileSync(baselineFile, 'utf8'));
+            if (baselineData.questions && Array.isArray(baselineData.questions)) {
+              const baselineQuestions = baselineData.questions.map((q: any) => ({
+                id: q.id,
+                questionId: q.id, 
+                question: q.question,
+                expected_answer: q.expected_answer,
+                category: q.category,
+                difficulty: q.difficulty,
+                state: q.state,
+                tags: q.tags,
+                modelResponses: [] // No model responses yet
+              }));
+              console.log(`Loaded ${baselineQuestions.length} baseline questions from baseline.json`);
+              res.json(baselineQuestions);
+              return;
+            }
+          }
+        } catch (error) {
+          console.warn(`Could not load baseline.json for ${agentType}:`, error);
+        }
+      }
+      
       // Group results by questionId and create question objects with model responses
       const questionMap = new Map();
       
