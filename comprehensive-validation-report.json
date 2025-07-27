@@ -1,8 +1,8 @@
 {
   "summary": {
     "total": 86,
-    "passed": 40,
-    "failed": 45,
+    "passed": 39,
+    "failed": 46,
     "warnings": 1,
     "errors": [
       "/: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
@@ -49,18 +49,19 @@
       "/agent/metabolomics/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
       "/api/agent-status: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
       "/api/agent-management/dashboard: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/api/health: Contains error pattern: 500",
       "/api/baseline-summary: Contains error pattern: 500"
     ],
-    "successRate": 47,
+    "successRate": 45,
     "uniqueUrls": 86,
-    "timestamp": "2025-07-27T19:11:27.841Z"
+    "timestamp": "2025-07-27T19:37:43.855Z"
   },
   "pages": [
     {
       "url": "/",
       "finalUrl": "http://localhost:5000/",
       "httpCode": 200,
-      "responseTime": 0.020257,
+      "responseTime": 0.00463,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -79,7 +80,7 @@
       "url": "/agents",
       "finalUrl": "http://localhost:5000/agents/",
       "httpCode": 200,
-      "responseTime": 0.015931,
+      "responseTime": 0.005066,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -98,7 +99,7 @@
       "url": "/data",
       "finalUrl": "http://localhost:5000/data",
       "httpCode": 200,
-      "responseTime": 0.013786,
+      "responseTime": 0.004791,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -117,7 +118,7 @@
       "url": "/roadmap",
       "finalUrl": "http://localhost:5000/roadmap",
       "httpCode": 200,
-      "responseTime": 0.006763,
+      "responseTime": 0.004335,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -136,7 +137,7 @@
       "url": "/baseline-testing",
       "finalUrl": "http://localhost:5000/baseline-testing",
       "httpCode": 200,
-      "responseTime": 0.007721,
+      "responseTime": 0.004502,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -155,7 +156,7 @@
       "url": "/use",
       "finalUrl": "http://localhost:5000/use",
       "httpCode": 200,
-      "responseTime": 0.008549,
+      "responseTime": 0.007256,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -174,7 +175,7 @@
       "url": "/federated",
       "finalUrl": "http://localhost:5000/federated",
       "httpCode": 200,
-      "responseTime": 0.007784,
+      "responseTime": 0.005266,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -193,7 +194,7 @@
       "url": "/compute",
       "finalUrl": "http://localhost:5000/compute",
       "httpCode": 200,
-      "responseTime": 0.00626,
+      "responseTime": 0.004917,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -212,7 +213,7 @@
       "url": "/validation",
       "finalUrl": "http://localhost:5000/validation",
       "httpCode": 200,
-      "responseTime": 0.006446,
+      "responseTime": 0.005105,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -231,7 +232,7 @@
       "url": "/design",
       "finalUrl": "http://localhost:5000/design",
       "httpCode": 200,
-      "responseTime": 0.011416,
+      "responseTime": 0.017749,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -250,7 +251,7 @@
       "url": "/science",
       "finalUrl": "http://localhost:5000/science",
       "httpCode": 200,
-      "responseTime": 0.012103,
+      "responseTime": 0.00546,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -269,7 +270,7 @@
       "url": "/development-agent",
       "finalUrl": "http://localhost:5000/development-agent",
       "httpCode": 200,
-      "responseTime": 0.008067,
+      "responseTime": 0.005428,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -288,7 +289,7 @@
       "url": "/agents-dashboard",
       "finalUrl": "http://localhost:5000/agents-dashboard",
       "httpCode": 200,
-      "responseTime": 0.005491,
+      "responseTime": 0.006372,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -307,7 +308,7 @@
       "url": "/baselines",
       "finalUrl": "http://localhost:5000/baselines",
       "httpCode": 200,
-      "responseTime": 0.005552,
+      "responseTime": 0.007817,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -326,7 +327,7 @@
       "url": "/baseline-assessment",
       "finalUrl": "http://localhost:5000/baseline-assessment",
       "httpCode": 200,
-      "responseTime": 0.004748,
+      "responseTime": 0.007502,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -345,7 +346,7 @@
       "url": "/langgraph",
       "finalUrl": "http://localhost:5000/langgraph",
       "httpCode": 200,
-      "responseTime": 0.005196,
+      "responseTime": 0.005941,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -364,7 +365,7 @@
       "url": "/corpus-qa",
       "finalUrl": "http://localhost:5000/corpus-qa",
       "httpCode": 200,
-      "responseTime": 0.005667,
+      "responseTime": 0.005832,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -383,7 +384,7 @@
       "url": "/mvp",
       "finalUrl": "http://localhost:5000/mvp",
       "httpCode": 200,
-      "responseTime": 0.005219,
+      "responseTime": 0.006397,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -402,7 +403,7 @@
       "url": "/artifacts",
       "finalUrl": "http://localhost:5000/artifacts",
       "httpCode": 200,
-      "responseTime": 0.007322,
+      "responseTime": 0.006776,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -421,7 +422,7 @@
       "url": "/profile",
       "finalUrl": "http://localhost:5000/profile",
       "httpCode": 200,
-      "responseTime": 0.005032,
+      "responseTime": 0.005579,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -440,7 +441,7 @@
       "url": "/agent/compliance",
       "finalUrl": "http://localhost:5000/agent/compliance",
       "httpCode": 200,
-      "responseTime": 0.004592,
+      "responseTime": 0.004229,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -459,7 +460,7 @@
       "url": "/agent/compliance/baseline",
       "finalUrl": "http://localhost:5000/agent/compliance/baseline",
       "httpCode": 200,
-      "responseTime": 0.006656,
+      "responseTime": 0.004547,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -478,7 +479,7 @@
       "url": "/agent/formulation",
       "finalUrl": "http://localhost:5000/agent/formulation",
       "httpCode": 200,
-      "responseTime": 0.004886,
+      "responseTime": 0.004522,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -497,7 +498,7 @@
       "url": "/agent/formulation/baseline",
       "finalUrl": "http://localhost:5000/agent/formulation/baseline",
       "httpCode": 200,
-      "responseTime": 0.008331,
+      "responseTime": 0.00581,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -516,7 +517,7 @@
       "url": "/agent/marketing",
       "finalUrl": "http://localhost:5000/agent/marketing",
       "httpCode": 200,
-      "responseTime": 0.004149,
+      "responseTime": 0.004416,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -535,7 +536,7 @@
       "url": "/agent/marketing/baseline",
       "finalUrl": "http://localhost:5000/agent/marketing/baseline",
       "httpCode": 200,
-      "responseTime": 0.004945,
+      "responseTime": 0.005914,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -554,7 +555,7 @@
       "url": "/agent/operations",
       "finalUrl": "http://localhost:5000/agent/operations",
       "httpCode": 200,
-      "responseTime": 0.00483,
+      "responseTime": 0.004339,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -573,7 +574,7 @@
       "url": "/agent/operations/baseline",
       "finalUrl": "http://localhost:5000/agent/operations/baseline",
       "httpCode": 200,
-      "responseTime": 0.004673,
+      "responseTime": 0.005944,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -592,7 +593,7 @@
       "url": "/agent/science",
       "finalUrl": "http://localhost:5000/agent/science",
       "httpCode": 200,
-      "responseTime": 0.004887,
+      "responseTime": 0.004317,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -611,7 +612,7 @@
       "url": "/agent/science/baseline",
       "finalUrl": "http://localhost:5000/agent/science/baseline",
       "httpCode": 200,
-      "responseTime": 0.004433,
+      "responseTime": 0.005201,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -630,7 +631,7 @@
       "url": "/agent/sourcing",
       "finalUrl": "http://localhost:5000/agent/sourcing",
       "httpCode": 200,
-      "responseTime": 0.006561,
+      "responseTime": 0.004502,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -649,7 +650,7 @@
       "url": "/agent/sourcing/baseline",
       "finalUrl": "http://localhost:5000/agent/sourcing/baseline",
       "httpCode": 200,
-      "responseTime": 0.006398,
+      "responseTime": 0.010009,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -668,7 +669,7 @@
       "url": "/agent/patent",
       "finalUrl": "http://localhost:5000/agent/patent",
       "httpCode": 200,
-      "responseTime": 0.007878,
+      "responseTime": 0.004835,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -687,7 +688,7 @@
       "url": "/agent/patent/baseline",
       "finalUrl": "http://localhost:5000/agent/patent/baseline",
       "httpCode": 200,
-      "responseTime": 0.008859,
+      "responseTime": 0.004179,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -706,7 +707,7 @@
       "url": "/agent/spectra",
       "finalUrl": "http://localhost:5000/agent/spectra",
       "httpCode": 200,
-      "responseTime": 0.015316,
+      "responseTime": 0.004916,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -725,7 +726,7 @@
       "url": "/agent/spectra/baseline",
       "finalUrl": "http://localhost:5000/agent/spectra/baseline",
       "httpCode": 200,
-      "responseTime": 0.010495,
+      "responseTime": 0.004331,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -744,7 +745,7 @@
       "url": "/agent/customer-success",
       "finalUrl": "http://localhost:5000/agent/customer-success",
       "httpCode": 200,
-      "responseTime": 0.004586,
+      "responseTime": 0.004793,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -763,7 +764,7 @@
       "url": "/agent/customer-success/baseline",
       "finalUrl": "http://localhost:5000/agent/customer-success/baseline",
       "httpCode": 200,
-      "responseTime": 0.004319,
+      "responseTime": 0.004348,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -782,7 +783,7 @@
       "url": "/agent/lms",
       "finalUrl": "http://localhost:5000/agent/lms",
       "httpCode": 200,
-      "responseTime": 0.00461,
+      "responseTime": 0.004082,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -801,7 +802,7 @@
       "url": "/agent/lms/baseline",
       "finalUrl": "http://localhost:5000/agent/lms/baseline",
       "httpCode": 200,
-      "responseTime": 0.01065,
+      "responseTime": 0.00526,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -820,7 +821,7 @@
       "url": "/agent/metabolomics",
       "finalUrl": "http://localhost:5000/agent/metabolomics",
       "httpCode": 200,
-      "responseTime": 0.004693,
+      "responseTime": 0.004174,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -839,7 +840,7 @@
       "url": "/agent/metabolomics/baseline",
       "finalUrl": "http://localhost:5000/agent/metabolomics/baseline",
       "httpCode": 200,
-      "responseTime": 0.004127,
+      "responseTime": 0.004628,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -860,7 +861,7 @@
       "url": "/api/agents",
       "finalUrl": "http://localhost:5000/api/agents",
       "httpCode": 200,
-      "responseTime": 0.023385,
+      "responseTime": 0.015221,
       "sizeBytes": 4567,
       "success": true,
       "issues": [],
@@ -873,7 +874,7 @@
       "url": "/api/agent-status",
       "finalUrl": "http://localhost:5000/api/agent-status",
       "httpCode": 200,
-      "responseTime": 0.004385,
+      "responseTime": 0.004168,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -891,7 +892,7 @@
       "url": "/api/agent-management/dashboard",
       "finalUrl": "http://localhost:5000/api/agent-management/dashboard",
       "httpCode": 200,
-      "responseTime": 0.004241,
+      "responseTime": 0.004262,
       "sizeBytes": 42413,
       "success": false,
       "issues": [
@@ -909,7 +910,7 @@
       "url": "/api/baseline-exam/badges",
       "finalUrl": "http://localhost:5000/api/baseline-exam/badges",
       "httpCode": 200,
-      "responseTime": 0.039974,
+      "responseTime": 0.026529,
       "sizeBytes": 1624,
       "success": true,
       "issues": [],
@@ -922,7 +923,7 @@
       "url": "/api/run-all-tests/progress",
       "finalUrl": "http://localhost:5000/api/run-all-tests/progress",
       "httpCode": 200,
-      "responseTime": 0.003023,
+      "responseTime": 0.003905,
       "sizeBytes": 160,
       "success": true,
       "issues": [],
@@ -935,7 +936,7 @@
       "url": "/api/data/corpora",
       "finalUrl": "http://localhost:5000/api/data/corpora",
       "httpCode": 200,
-      "responseTime": 0.002796,
+      "responseTime": 0.00314,
       "sizeBytes": 627,
       "success": true,
       "issues": [],
@@ -948,7 +949,7 @@
       "url": "/api/data/knowledge-bases",
       "finalUrl": "http://localhost:5000/api/data/knowledge-bases",
       "httpCode": 200,
-      "responseTime": 0.004069,
+      "responseTime": 0.003215,
       "sizeBytes": 225,
       "success": true,
       "issues": [],
@@ -961,7 +962,7 @@
       "url": "/api/roadmap/features",
       "finalUrl": "http://localhost:5000/api/roadmap/features",
       "httpCode": 200,
-      "responseTime": 0.003188,
+      "responseTime": 0.003453,
       "sizeBytes": 843,
       "success": true,
       "issues": [],
@@ -974,10 +975,12 @@
       "url": "/api/health",
       "finalUrl": "http://localhost:5000/api/health",
       "httpCode": 200,
-      "responseTime": 0.4178,
-      "sizeBytes": 483,
-      "success": true,
-      "issues": [],
+      "responseTime": 0.376657,
+      "sizeBytes": 484,
+      "success": false,
+      "issues": [
+        "Contains error pattern: 500"
+      ],
       "warnings": [],
       "error": null,
       "depth": 0,
@@ -1000,7 +1003,7 @@
       "url": "/api/baseline-summary",
       "finalUrl": "http://localhost:5000/api/baseline-summary",
       "httpCode": 200,
-      "responseTime": 6.084061,
+      "responseTime": 6.016222,
       "sizeBytes": 3052,
       "success": false,
       "issues": [
@@ -1015,7 +1018,7 @@
       "url": "/api/agents/compliance/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/compliance/dashboard",
       "httpCode": 200,
-      "responseTime": 0.010741,
+      "responseTime": 0.003958,
       "sizeBytes": 5856,
       "success": true,
       "issues": [],
@@ -1028,7 +1031,7 @@
       "url": "/api/agents/compliance/config",
       "finalUrl": "http://localhost:5000/api/agents/compliance/config",
       "httpCode": 200,
-      "responseTime": 0.022788,
+      "responseTime": 0.005257,
       "sizeBytes": 333,
       "success": true,
       "issues": [],
@@ -1041,7 +1044,7 @@
       "url": "/api/agents/compliance/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/compliance/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.008079,
+      "responseTime": 0.004389,
       "sizeBytes": 6196,
       "success": true,
       "issues": [],
@@ -1054,7 +1057,7 @@
       "url": "/api/agents/formulation/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/formulation/dashboard",
       "httpCode": 200,
-      "responseTime": 0.051891,
+      "responseTime": 0.028109,
       "sizeBytes": 992,
       "success": true,
       "issues": [],
@@ -1067,7 +1070,7 @@
       "url": "/api/agents/formulation/config",
       "finalUrl": "http://localhost:5000/api/agents/formulation/config",
       "httpCode": 200,
-      "responseTime": 0.004659,
+      "responseTime": 0.002623,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1080,7 +1083,7 @@
       "url": "/api/agents/formulation/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/formulation/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.004104,
+      "responseTime": 0.003973,
       "sizeBytes": 3326,
       "success": true,
       "issues": [],
@@ -1093,7 +1096,7 @@
       "url": "/api/agents/marketing/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/marketing/dashboard",
       "httpCode": 200,
-      "responseTime": 0.077728,
+      "responseTime": 0.0261,
       "sizeBytes": 955,
       "success": true,
       "issues": [],
@@ -1106,7 +1109,7 @@
       "url": "/api/agents/marketing/config",
       "finalUrl": "http://localhost:5000/api/agents/marketing/config",
       "httpCode": 200,
-      "responseTime": 0.00612,
+      "responseTime": 0.002611,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1119,7 +1122,7 @@
       "url": "/api/agents/marketing/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/marketing/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.006336,
+      "responseTime": 0.003129,
       "sizeBytes": 8418,
       "success": true,
       "issues": [],
@@ -1132,7 +1135,7 @@
       "url": "/api/agents/operations/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/operations/dashboard",
       "httpCode": 200,
-      "responseTime": 0.077215,
+      "responseTime": 0.024625,
       "sizeBytes": 969,
       "success": true,
       "issues": [],
@@ -1145,7 +1148,7 @@
       "url": "/api/agents/operations/config",
       "finalUrl": "http://localhost:5000/api/agents/operations/config",
       "httpCode": 200,
-      "responseTime": 0.004322,
+      "responseTime": 0.00195,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1158,7 +1161,7 @@
       "url": "/api/agents/operations/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/operations/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.014842,
+      "responseTime": 0.00275,
       "sizeBytes": 8479,
       "success": true,
       "issues": [],
@@ -1171,7 +1174,7 @@
       "url": "/api/agents/science/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/science/dashboard",
       "httpCode": 200,
-      "responseTime": 0.055205,
+      "responseTime": 0.026216,
       "sizeBytes": 959,
       "success": true,
       "issues": [],
@@ -1184,7 +1187,7 @@
       "url": "/api/agents/science/config",
       "finalUrl": "http://localhost:5000/api/agents/science/config",
       "httpCode": 200,
-      "responseTime": 0.002425,
+      "responseTime": 0.002379,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1197,7 +1200,7 @@
       "url": "/api/agents/science/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/science/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.016387,
+      "responseTime": 0.003214,
       "sizeBytes": 2,
       "success": true,
       "issues": [],
@@ -1210,7 +1213,7 @@
       "url": "/api/agents/sourcing/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/sourcing/dashboard",
       "httpCode": 200,
-      "responseTime": 0.109128,
+      "responseTime": 0.03035,
       "sizeBytes": 952,
       "success": true,
       "issues": [],
@@ -1223,7 +1226,7 @@
       "url": "/api/agents/sourcing/config",
       "finalUrl": "http://localhost:5000/api/agents/sourcing/config",
       "httpCode": 200,
-      "responseTime": 0.002616,
+      "responseTime": 0.002791,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1236,7 +1239,7 @@
       "url": "/api/agents/sourcing/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/sourcing/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.00405,
+      "responseTime": 0.003275,
       "sizeBytes": 8376,
       "success": true,
       "issues": [],
@@ -1249,7 +1252,7 @@
       "url": "/api/agents/patent/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/patent/dashboard",
       "httpCode": 200,
-      "responseTime": 0.144767,
+      "responseTime": 0.032427,
       "sizeBytes": 921,
       "success": true,
       "issues": [],
@@ -1262,7 +1265,7 @@
       "url": "/api/agents/patent/config",
       "finalUrl": "http://localhost:5000/api/agents/patent/config",
       "httpCode": 200,
-      "responseTime": 0.00904,
+      "responseTime": 0.002914,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1275,7 +1278,7 @@
       "url": "/api/agents/patent/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/patent/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.028743,
+      "responseTime": 0.002537,
       "sizeBytes": 8653,
       "success": true,
       "issues": [],
@@ -1288,7 +1291,7 @@
       "url": "/api/agents/spectra/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/spectra/dashboard",
       "httpCode": 200,
-      "responseTime": 0.128051,
+      "responseTime": 0.033225,
       "sizeBytes": 933,
       "success": true,
       "issues": [],
@@ -1301,7 +1304,7 @@
       "url": "/api/agents/spectra/config",
       "finalUrl": "http://localhost:5000/api/agents/spectra/config",
       "httpCode": 200,
-      "responseTime": 0.004233,
+      "responseTime": 0.002699,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1314,7 +1317,7 @@
       "url": "/api/agents/spectra/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/spectra/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.004373,
+      "responseTime": 0.004062,
       "sizeBytes": 8434,
       "success": true,
       "issues": [],
@@ -1327,7 +1330,7 @@
       "url": "/api/agents/customer-success/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/customer-success/dashboard",
       "httpCode": 200,
-      "responseTime": 0.048134,
+      "responseTime": 0.031191,
       "sizeBytes": 980,
       "success": true,
       "issues": [],
@@ -1340,7 +1343,7 @@
       "url": "/api/agents/customer-success/config",
       "finalUrl": "http://localhost:5000/api/agents/customer-success/config",
       "httpCode": 200,
-      "responseTime": 0.002928,
+      "responseTime": 0.004564,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1353,7 +1356,7 @@
       "url": "/api/agents/customer-success/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/customer-success/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.009629,
+      "responseTime": 0.004142,
       "sizeBytes": 8811,
       "success": true,
       "issues": [],
@@ -1366,7 +1369,7 @@
       "url": "/api/agents/lms/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/lms/dashboard",
       "httpCode": 200,
-      "responseTime": 0.044084,
+      "responseTime": 0.033271,
       "sizeBytes": 800,
       "success": true,
       "issues": [],
@@ -1379,7 +1382,7 @@
       "url": "/api/agents/lms/config",
       "finalUrl": "http://localhost:5000/api/agents/lms/config",
       "httpCode": 200,
-      "responseTime": 0.003188,
+      "responseTime": 0.003065,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1392,7 +1395,7 @@
       "url": "/api/agents/lms/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/lms/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.005154,
+      "responseTime": 0.003854,
       "sizeBytes": 9390,
       "success": true,
       "issues": [],
@@ -1405,7 +1408,7 @@
       "url": "/api/agents/metabolomics/dashboard",
       "finalUrl": "http://localhost:5000/api/agents/metabolomics/dashboard",
       "httpCode": 200,
-      "responseTime": 0.040208,
+      "responseTime": 0.027388,
       "sizeBytes": 854,
       "success": true,
       "issues": [],
@@ -1418,7 +1421,7 @@
       "url": "/api/agents/metabolomics/config",
       "finalUrl": "http://localhost:5000/api/agents/metabolomics/config",
       "httpCode": 200,
-      "responseTime": 0.002204,
+      "responseTime": 0.002576,
       "sizeBytes": 357,
       "success": true,
       "issues": [],
@@ -1431,7 +1434,7 @@
       "url": "/api/agents/metabolomics/baseline-results",
       "finalUrl": "http://localhost:5000/api/agents/metabolomics/baseline-results",
       "httpCode": 200,
-      "responseTime": 0.005896,
+      "responseTime": 0.002702,
       "sizeBytes": 8438,
       "success": true,
       "issues": [],
@@ -1443,5 +1446,521 @@
   ],
   "assets": [],
   "jsErrors": [],
-  "performance": []
+  "performance": [],
+  "frontend": {
+    "reactQuery": [
+      {
+        "type": "Auth Endpoint",
+        "url": "/api/auth/user",
+        "status": "PASS",
+        "statusCode": 401,
+        "description": "Auth endpoint properly returns 401 without breaking React Query"
+      },
+      {
+        "type": "Agent API Independence",
+        "agent": "customer-success",
+        "url": "/api/agents/customer-success/dashboard",
+        "status": "PASS",
+        "statusCode": 200,
+        "description": "Agent API works independently of auth failures",
+        "responseTime": 0.025081
+      },
+      {
+        "type": "Agent API Independence",
+        "agent": "compliance",
+        "url": "/api/agents/compliance/dashboard",
+        "status": "PASS",
+        "statusCode": 200,
+        "description": "Agent API works independently of auth failures",
+        "responseTime": 0.003502
+      },
+      {
+        "type": "Agent API Independence",
+        "agent": "formulation",
+        "url": "/api/agents/formulation/dashboard",
+        "status": "PASS",
+        "statusCode": 200,
+        "description": "Agent API works independently of auth failures",
+        "responseTime": 0.029635
+      }
+    ],
+    "agentDashboards": [
+      {
+        "type": "API",
+        "agent": "customer-success",
+        "url": "/api/agents/customer-success/dashboard",
+        "status": "PASS",
+        "statusCode": 200,
+        "data": {
+          "name": "Customer Success Agent",
+          "type": "customer-success",
+          "description": "Cannabis customer success and support",
+          "status": "development",
+          "repository": "customer-success-agent",
+          "performance": {
+            "baseline": 75,
+            "confidence": 75,
+            "accuracy": 75,
+            "speed": 85,
+            "corpusSize": 100,
+            "lastExamDate": "2025-07-27T19:37:43.029Z"
+          },
+          "configuration": {
+            "prompt": "You are a cannabis customer success expert. Provide guidance on customer support and success strategies.",
+            "tools": [
+              "crm-integration",
+              "support-tickets"
+            ],
+            "ragEnabled": false,
+            "llmProvider": "openai",
+            "model": "gpt-4o"
+          },
+          "lastUpdated": "2025-07-27T19:37:43.030Z",
+          "recentActivity": [
+            {
+              "timestamp": "2025-07-27T17:37:43.030Z",
+              "action": "baseline_exam",
+              "status": "completed",
+              "details": "Baseline exam completed for customer-success with 0% accuracy"
+            },
+            {
+              "timestamp": "2025-07-26T19:37:43.030Z",
+              "action": "configuration",
+              "status": "updated",
+              "details": "Agent configuration updated"
+            }
+          ],
+          "repositoryStats": {
+            "stars": 8,
+            "forks": 5,
+            "issues": 3,
+            "lastCommit": "2025-07-27T13:37:43.030Z"
+          }
+        },
+        "responseTime": 0.030369
+      },
+      {
+        "type": "Baseline API",
+        "agent": "customer-success",
+        "url": "/api/agents/customer-success/baseline-results",
+        "status": "PASS",
+        "statusCode": 200,
+        "questionCount": 16,
+        "responseTime": 0.003061
+      },
+      {
+        "type": "Frontend Page",
+        "agent": "customer-success",
+        "url": "/agent/customer-success",
+        "status": "FAIL",
+        "statusCode": 200,
+        "hasReactDiv": true,
+        "hasMainScript": true,
+        "hasErrors": true,
+        "contentSize": 42413,
+        "responseTime": 0.004426
+      },
+      {
+        "type": "API",
+        "agent": "compliance",
+        "url": "/api/agents/compliance/dashboard",
+        "status": "PASS",
+        "statusCode": 200,
+        "data": {
+          "generated_at": "2025-07-27T19:37:43.227Z",
+          "data_source": "baseline_results.json",
+          "authentic_data": true,
+          "baseline_info": {
+            "agent_type": "compliance",
+            "description": "Cannabis compliance and regulatory guidance with authentic test results",
+            "version": "1.0",
+            "last_updated": "2025-07-14T12:33:00Z"
+          },
+          "test_results": {
+            "accuracy": 65,
+            "confidence": 72,
+            "response_time": 2100,
+            "pass_rate": 64,
+            "total_tests": 52,
+            "passed_tests": 32,
+            "failed_tests": 18
+          },
+          "question_metrics": {
+            "total_questions": 52,
+            "categories": [
+              "regulatory_compliance",
+              "license_requirements",
+              "state_regulations",
+              "compliance_documentation"
+            ],
+            "difficulties": [
+              "intermediate",
+              "advanced",
+              "beginner"
+            ],
+            "category_breakdown": {
+              "regulatory_compliance": 12,
+              "license_requirements": 10,
+              "state_regulations": 15,
+              "compliance_documentation": 13
+            },
+            "difficulty_breakdown": {
+              "intermediate": 28,
+              "advanced": 10,
+              "beginner": 14
+            }
+          },
+          "baseline_questions": {
+            "regulatory_compliance": {
+              "passed": 8,
+              "total": 12,
+              "accuracy": 67
+            },
+            "license_requirements": {
+              "passed": 7,
+              "total": 10,
+              "accuracy": 70
+            },
+            "state_regulations": {
+              "passed": 9,
+              "total": 15,
+              "accuracy": 60
+            },
+            "compliance_documentation": {
+              "passed": 8,
+              "total": 13,
+              "accuracy": 62
+            }
+          },
+          "real_questions": [
+            {
+              "id": "sop001",
+              "category": "sop_documentation",
+              "difficulty": "intermediate",
+              "state": "{{state}}",
+              "question": "Can you make me a compliant SOP for Cannabis Transport in {{state}}?",
+              "expected_answer": "SOP must include vehicle requirements, driver qualifications, manifests, route documentation, security protocols, emergency procedures, and compliance with {{state}} cannabis regulatory authority transport regulations",
+              "max_score": 15,
+              "tags": [
+                "sop",
+                "transport",
+                "state-specific",
+                "documentation"
+              ]
+            },
+            {
+              "id": "sop002",
+              "category": "sop_documentation",
+              "difficulty": "intermediate",
+              "state": "{{state}}",
+              "question": "Can you make me a compliant SOP for pre-roll production in {{state}}?",
+              "expected_answer": "SOP must cover facility requirements, material handling, quality control, packaging, labeling, batch tracking, testing protocols, and compliance with {{state}} cannabis management manufacturing regulations",
+              "max_score": 15,
+              "tags": [
+                "sop",
+                "pre-rolls",
+                "manufacturing",
+                "state-specific"
+              ]
+            },
+            {
+              "id": "sop003",
+              "category": "sop_documentation",
+              "difficulty": "advanced",
+              "state": "MULTI",
+              "question": "Can you make me a product recall SOP?",
+              "expected_answer": "SOP must include recall triggers, notification procedures, inventory tracking, customer communication, regulatory reporting, product retrieval, disposal methods, and documentation requirements per state regulations",
+              "max_score": 20,
+              "tags": [
+                "sop",
+                "recall",
+                "safety",
+                "multi-state"
+              ]
+            },
+            {
+              "id": "test001",
+              "category": "testing_infusion",
+              "difficulty": "intermediate",
+              "state": "MULTI",
+              "question": "What are the requirements for testing regular pre-rolls when I bought the raw material from a cultivator that already tested it?",
+              "expected_answer": "Most states require additional testing for manufactured products even with tested inputs, including potency verification, moisture content, and foreign matter. Check specific state requirements for pre-roll testing exemptions",
+              "max_score": 10,
+              "tags": [
+                "testing",
+                "pre-rolls",
+                "raw-materials"
+              ]
+            },
+            {
+              "id": "test002",
+              "category": "testing_infusion",
+              "difficulty": "advanced",
+              "state": "MULTI",
+              "question": "Can I make an infused pre-roll without retesting it if I am using already tested flower and concentrate?",
+              "expected_answer": "No, infused products typically require comprehensive testing as a new manufactured product, including potency, homogeneity, pesticides, and other contaminants regardless of input testing status",
+              "max_score": 15,
+              "tags": [
+                "testing",
+                "infused-products",
+                "pre-rolls",
+                "concentrate"
+              ]
+            },
+            {
+              "id": "test003",
+              "category": "testing_infusion",
+              "difficulty": "beginner",
+              "state": "MULTI",
+              "question": "Do I have to show harvest date or production date on infused products?",
+              "expected_answer": "Most states require production/manufacture date for infused products, not harvest date. Some states also require expiration dates. Check specific state labeling requirements",
+              "max_score": 10,
+              "tags": [
+                "labeling",
+                "dates",
+                "infused-products"
+              ]
+            },
+            {
+              "id": "test004",
+              "category": "testing_infusion",
+              "difficulty": "intermediate",
+              "state": "MULTI",
+              "question": "Are there different rules for various types of infused products related to this same question?",
+              "expected_answer": "Yes, edibles, topicals, beverages, and other infused products may have different dating, testing, and labeling requirements. Edibles often have stricter expiration requirements than topicals",
+              "max_score": 10,
+              "tags": [
+                "infused-products",
+                "product-types",
+                "regulations"
+              ]
+            },
+            {
+              "id": "test005",
+              "category": "testing_infusion",
+              "difficulty": "advanced",
+              "state": "MULTI",
+              "question": "What are the requirements in my state for me to be able to introduce or infuse cannabis or botanical-derived terpenes into my products?",
+              "expected_answer": "Requirements vary by state but typically include approved ingredient lists, testing for contaminants, potency limits, labeling of added terpenes, and compliance with manufacturing license restrictions",
+              "max_score": 15,
+              "tags": [
+                "terpenes",
+                "infusion",
+                "ingredients",
+                "state-specific"
+              ]
+            },
+            {
+              "id": "test006",
+              "category": "testing_infusion",
+              "difficulty": "intermediate",
+              "state": "MULTI",
+              "question": "Does this vary for different products?",
+              "expected_answer": "Yes, terpene addition rules vary significantly between smokable products, edibles, topicals, and concentrates. Each product category has different safety and labeling requirements",
+              "max_score": 10,
+              "tags": [
+                "terpenes",
+                "product-categories",
+                "variations"
+              ]
+            },
+            {
+              "id": "label001",
+              "category": "labeling_packaging",
+              "difficulty": "intermediate",
+              "state": "MULTI",
+              "question": "What are the labeling requirements for packaged concentrates?",
+              "expected_answer": "Requirements typically include potency information, batch numbers, test results, warning statements, universal cannabis symbol, child-resistant packaging, and extraction method disclosure",
+              "max_score": 10,
+              "tags": [
+                "labeling",
+                "concentrates",
+                "packaging"
+              ]
+            }
+          ]
+        },
+        "responseTime": 0.003256
+      },
+      {
+        "type": "Baseline API",
+        "agent": "compliance",
+        "url": "/api/agents/compliance/baseline-results",
+        "status": "PASS",
+        "statusCode": 200,
+        "questionCount": 3,
+        "responseTime": 0.004806
+      },
+      {
+        "type": "Frontend Page",
+        "agent": "compliance",
+        "url": "/agent/compliance",
+        "status": "FAIL",
+        "statusCode": 200,
+        "hasReactDiv": true,
+        "hasMainScript": true,
+        "hasErrors": true,
+        "contentSize": 42413,
+        "responseTime": 0.007117
+      },
+      {
+        "type": "API",
+        "agent": "formulation",
+        "url": "/api/agents/formulation/dashboard",
+        "status": "PASS",
+        "statusCode": 200,
+        "data": {
+          "name": "Formulation Agent",
+          "type": "formulation",
+          "description": "Cannabis product formulation and chemical analysis",
+          "status": "active",
+          "repository": "formulation-agent",
+          "performance": {
+            "baseline": 75,
+            "confidence": 75,
+            "accuracy": 75,
+            "speed": 85,
+            "corpusSize": 100,
+            "lastExamDate": "2025-07-27T19:37:43.430Z"
+          },
+          "configuration": {
+            "prompt": "You are a cannabis formulation specialist. Provide expert guidance on product development and chemical analysis.",
+            "tools": [
+              "rdkit",
+              "molecular-analysis",
+              "extraction-calculator"
+            ],
+            "ragEnabled": true,
+            "llmProvider": "openai",
+            "model": "gpt-4o"
+          },
+          "lastUpdated": "2025-07-27T19:37:43.448Z",
+          "recentActivity": [
+            {
+              "timestamp": "2025-07-27T17:37:43.448Z",
+              "action": "baseline_exam",
+              "status": "completed",
+              "details": "Baseline exam completed for formulation with 0% accuracy"
+            },
+            {
+              "timestamp": "2025-07-26T19:37:43.448Z",
+              "action": "configuration",
+              "status": "updated",
+              "details": "Agent configuration updated"
+            }
+          ],
+          "repositoryStats": {
+            "stars": 8,
+            "forks": 5,
+            "issues": 3,
+            "lastCommit": "2025-07-27T13:37:43.448Z"
+          }
+        },
+        "responseTime": 0.025858
+      },
+      {
+        "type": "Baseline API",
+        "agent": "formulation",
+        "url": "/api/agents/formulation/baseline-results",
+        "status": "PASS",
+        "statusCode": 200,
+        "questionCount": 2,
+        "responseTime": 0.004127
+      },
+      {
+        "type": "Frontend Page",
+        "agent": "formulation",
+        "url": "/agent/formulation",
+        "status": "FAIL",
+        "statusCode": 200,
+        "hasReactDiv": true,
+        "hasMainScript": true,
+        "hasErrors": true,
+        "contentSize": 42413,
+        "responseTime": 0.004629
+      },
+      {
+        "type": "API",
+        "agent": "marketing",
+        "url": "/api/agents/marketing/dashboard",
+        "status": "PASS",
+        "statusCode": 200,
+        "data": {
+          "name": "Marketing Agent",
+          "type": "marketing",
+          "description": "Cannabis marketing and brand strategy",
+          "status": "active",
+          "repository": "marketing-agent",
+          "performance": {
+            "baseline": 75,
+            "confidence": 75,
+            "accuracy": 75,
+            "speed": 85,
+            "corpusSize": 100,
+            "lastExamDate": "2025-07-27T19:37:43.688Z"
+          },
+          "configuration": {
+            "prompt": "You are a cannabis marketing expert. Provide compliant marketing strategies and brand guidance.",
+            "tools": [
+              "n8n-workflows",
+              "social-media-api",
+              "market-research"
+            ],
+            "ragEnabled": false,
+            "llmProvider": "openai",
+            "model": "gpt-4o"
+          },
+          "lastUpdated": "2025-07-27T19:37:43.702Z",
+          "recentActivity": [
+            {
+              "timestamp": "2025-07-27T17:37:43.702Z",
+              "action": "baseline_exam",
+              "status": "completed",
+              "details": "Baseline exam completed for marketing with 0% accuracy"
+            },
+            {
+              "timestamp": "2025-07-26T19:37:43.702Z",
+              "action": "configuration",
+              "status": "updated",
+              "details": "Agent configuration updated"
+            }
+          ],
+          "repositoryStats": {
+            "stars": 8,
+            "forks": 5,
+            "issues": 3,
+            "lastCommit": "2025-07-27T13:37:43.702Z"
+          }
+        },
+        "responseTime": 0.028514
+      },
+      {
+        "type": "Baseline API",
+        "agent": "marketing",
+        "url": "/api/agents/marketing/baseline-results",
+        "status": "PASS",
+        "statusCode": 200,
+        "questionCount": 16,
+        "responseTime": 0.004592
+      },
+      {
+        "type": "Frontend Page",
+        "agent": "marketing",
+        "url": "/agent/marketing",
+        "status": "FAIL",
+        "statusCode": 200,
+        "hasReactDiv": true,
+        "hasMainScript": true,
+        "hasErrors": true,
+        "contentSize": 42413,
+        "responseTime": 0.005269
+      }
+    ],
+    "apiIntegration": [],
+    "summary": {
+      "total": 16,
+      "passed": 12,
+      "failed": 4
+    }
+  }
 }

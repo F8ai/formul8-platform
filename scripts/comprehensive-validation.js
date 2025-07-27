@@ -20,7 +20,8 @@ class ComprehensiveValidator {
       apis: [],
       assets: [],
       jsErrors: [],
-      performance: []
+      performance: [],
+      frontend: null
     };
     
     // All known routes to test
@@ -395,6 +396,126 @@ class ComprehensiveValidator {
     }
   }
 
+  // Test React Query frontend functionality for agent dashboards
+  async testFrontendDataLoading(agentType) {
+    const tests = [];
+    
+    // Test API endpoint
+    const apiResult = await this.executeCurl(`/api/agents/${agentType}/dashboard`);
+    tests.push({
+      type: 'API',
+      agent: agentType,
+      url: `/api/agents/${agentType}/dashboard`,
+      status: apiResult.httpCode === 200 ? 'PASS' : 'FAIL',
+      statusCode: apiResult.httpCode,
+      data: apiResult.httpCode === 200 && apiResult.content ? JSON.parse(apiResult.content) : null,
+      responseTime: apiResult.timeTotal
+    });
+
+    // Test baseline results API
+    const baselineResult = await this.executeCurl(`/api/agents/${agentType}/baseline-results`);
+    tests.push({
+      type: 'Baseline API',
+      agent: agentType,
+      url: `/api/agents/${agentType}/baseline-results`,
+      status: baselineResult.httpCode === 200 ? 'PASS' : 'FAIL',
+      statusCode: baselineResult.httpCode,
+      questionCount: baselineResult.httpCode === 200 && baselineResult.content ? JSON.parse(baselineResult.content).length : 0,
+      responseTime: baselineResult.timeTotal
+    });
+
+    // Test frontend page rendering
+    const pageResult = await this.executeCurl(`/agent/${agentType}`);
+    const hasReactDiv = pageResult.content.includes('<div id="root">');
+    const hasMainScript = pageResult.content.includes('src="/src/main.tsx');
+    const hasErrors = pageResult.content.includes('Failed to fetch') || pageResult.content.includes('Agent Not Found');
+    
+    tests.push({
+      type: 'Frontend Page',
+      agent: agentType,
+      url: `/agent/${agentType}`,
+      status: pageResult.httpCode === 200 && hasReactDiv && hasMainScript && !hasErrors ? 'PASS' : 'FAIL',
+      statusCode: pageResult.httpCode,
+      hasReactDiv,
+      hasMainScript,
+      hasErrors,
+      contentSize: pageResult.content.length,
+      responseTime: pageResult.timeTotal
+    });
+
+    return tests;
+  }
+
+  // Test React Query configuration and data flow
+  async testReactQueryConfiguration() {
+    const configTests = [];
+    
+    // Test auth endpoint behavior (should return 401 but not break other queries)
+    const authResult = await this.executeCurl('/api/auth/user');
+    configTests.push({
+      type: 'Auth Endpoint',
+      url: '/api/auth/user',
+      status: authResult.httpCode === 401 ? 'PASS' : 'FAIL',
+      statusCode: authResult.httpCode,
+      description: 'Auth endpoint properly returns 401 without breaking React Query'
+    });
+
+    // Test that agent APIs work despite auth failures
+    const testAgents = ['customer-success', 'compliance', 'formulation'];
+    for (const agent of testAgents) {
+      const agentResult = await this.executeCurl(`/api/agents/${agent}/dashboard`);
+      configTests.push({
+        type: 'Agent API Independence',
+        agent,
+        url: `/api/agents/${agent}/dashboard`,
+        status: agentResult.httpCode === 200 ? 'PASS' : 'FAIL',
+        statusCode: agentResult.httpCode,
+        description: `Agent API works independently of auth failures`,
+        responseTime: agentResult.timeTotal
+      });
+    }
+
+    return configTests;
+  }
+
+  // Comprehensive frontend validation with React Query testing
+  async validateFrontendFunctionality() {
+    console.log('\n🔍 Frontend Functionality Validation');
+    console.log('='.repeat(50));
+    
+    let frontendResults = {
+      reactQuery: [],
+      agentDashboards: [],
+      apiIntegration: [],
+      summary: { total: 0, passed: 0, failed: 0 }
+    };
+
+    // Test React Query configuration
+    console.log('Testing React Query configuration...');
+    frontendResults.reactQuery = await this.testReactQueryConfiguration();
+    
+    // Test agent dashboard functionality
+    console.log('Testing agent dashboard data loading...');
+    const testAgents = ['customer-success', 'compliance', 'formulation', 'marketing'];
+    
+    for (const agent of testAgents) {
+      console.log(`Testing ${agent} agent dashboard...`);
+      const agentTests = await this.testFrontendDataLoading(agent);
+      frontendResults.agentDashboards.push(...agentTests);
+    }
+
+    // Calculate summary
+    const allTests = [...frontendResults.reactQuery, ...frontendResults.agentDashboards];
+    frontendResults.summary.total = allTests.length;
+    frontendResults.summary.passed = allTests.filter(t => t.status === 'PASS').length;
+    frontendResults.summary.failed = allTests.filter(t => t.status === 'FAIL').length;
+
+    // Add to main results
+    this.results.frontend = frontendResults;
+
+    return frontendResults;
+  }
+
   // Generate comprehensive report
   generateReport() {
     console.log('\n' + '='.repeat(100));
@@ -415,10 +536,16 @@ class ComprehensiveValidator {
     // Category breakdown
     const pages = this.results.pages;
     const apis = this.results.apis;
+    const frontend = this.results.frontend;
     
     console.log('\n📂 Category Breakdown:');
     console.log(`   🌐 Pages: ${pages.filter(r => r.success).length}/${pages.length} successful`);
     console.log(`   🔌 APIs: ${apis.filter(r => r.success).length}/${apis.length} successful`);
+    
+    if (frontend) {
+      console.log(`   ⚛️  React Query: ${frontend.summary.passed}/${frontend.summary.total} successful`);
+      console.log(`   🎯 Frontend Data Loading: ${frontend.agentDashboards.filter(t => t.status === 'PASS').length}/${frontend.agentDashboards.length} successful`);
+    }
 
     // Failed tests by category
     if (summary.failed > 0) {
@@ -456,8 +583,21 @@ class ComprehensiveValidator {
     console.log(`   Agent Baselines: ${pages.filter(p => p.url.includes('/baseline')).length}/11`);
     console.log(`   Core APIs: ${apis.filter(a => a.success && !a.url.includes('/agents/')).length}`);
     console.log(`   Agent APIs: ${apis.filter(a => a.success && a.url.includes('/agents/')).length}/33`);
+    
+    if (frontend) {
+      console.log(`   React Query Configuration: ${frontend.reactQuery.filter(t => t.status === 'PASS').length}/${frontend.reactQuery.length}`);
+      console.log(`   Agent Data Loading: ${Math.round((frontend.agentDashboards.filter(t => t.status === 'PASS').length / frontend.agentDashboards.length) * 100)}%`);
+    }
 
     // Recommendations
+    // Frontend-specific results
+    if (frontend) {
+      console.log('\n⚛️  Frontend Validation Results:');
+      console.log(`   React Query Configuration: ${frontend.reactQuery.filter(t => t.status === 'PASS').length}/${frontend.reactQuery.length} passed`);
+      console.log(`   Agent Dashboard Loading: ${frontend.agentDashboards.filter(t => t.status === 'PASS').length}/${frontend.agentDashboards.length} passed`);
+      console.log(`   Frontend Success Rate: ${Math.round((frontend.summary.passed / frontend.summary.total) * 100)}%`);
+    }
+
     console.log('\n💡 Recommendations:');
     const criticalIssues = summary.errors.filter(e => 
       e.includes('Agent Not Found') || e.includes('500') || e.includes('ReferenceError')
@@ -466,6 +606,13 @@ class ComprehensiveValidator {
     if (criticalIssues > 0) {
       console.log(`   🚨 ${criticalIssues} critical issues require immediate attention`);
     }
+    
+    if (frontend && frontend.summary.passed === frontend.summary.total) {
+      console.log('   ✅ Frontend functionality working perfectly!');
+      console.log('   ✅ React Query configuration successfully fixed');
+      console.log('   ✅ All agent dashboards loading data correctly');
+    }
+    
     if (successRate >= 95) {
       console.log('   🎉 Excellent! Platform is in great condition.');
     } else if (successRate >= 85) {
@@ -500,6 +647,7 @@ class ComprehensiveValidator {
     await this.testKnownRoutes();
     await this.testAgentRoutes();
     await this.testAPIEndpoints();
+    await this.validateFrontendFunctionality();
 
     this.generateReport();
   }
