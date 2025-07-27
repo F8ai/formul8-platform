@@ -21,7 +21,8 @@ import {
   Calendar,
   FileText,
   Beaker,
-  FlaskConical
+  FlaskConical,
+  CheckCircle
 } from "lucide-react";
 
 interface SidebarProps {

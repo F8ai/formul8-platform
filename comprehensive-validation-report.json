@@ -1,0 +1,1447 @@
+{
+  "summary": {
+    "total": 86,
+    "passed": 40,
+    "failed": 45,
+    "warnings": 1,
+    "errors": [
+      "/: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agents: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/data: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/roadmap: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/baseline-testing: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/use: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/federated: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/compute: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/validation: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/design: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/science: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/development-agent: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agents-dashboard: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/baselines: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/baseline-assessment: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/langgraph: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/corpus-qa: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/mvp: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/artifacts: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/profile: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/compliance: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/compliance/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/formulation: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/formulation/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/marketing: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/marketing/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/operations: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/operations/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/science: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/science/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/sourcing: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/sourcing/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/patent: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/patent/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/spectra: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/spectra/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/customer-success: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/customer-success/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/lms: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/lms/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/metabolomics: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/agent/metabolomics/baseline: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/api/agent-status: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/api/agent-management/dashboard: Contains error pattern: Error:, Contains error pattern: Failed to fetch",
+      "/api/baseline-summary: Contains error pattern: 500"
+    ],
+    "successRate": 47,
+    "uniqueUrls": 86,
+    "timestamp": "2025-07-27T19:11:27.841Z"
+  },
+  "pages": [
+    {
+      "url": "/",
+      "finalUrl": "http://localhost:5000/",
+      "httpCode": 200,
+      "responseTime": 0.020257,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agents",
+      "finalUrl": "http://localhost:5000/agents/",
+      "httpCode": 200,
+      "responseTime": 0.015931,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/data",
+      "finalUrl": "http://localhost:5000/data",
+      "httpCode": 200,
+      "responseTime": 0.013786,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/roadmap",
+      "finalUrl": "http://localhost:5000/roadmap",
+      "httpCode": 200,
+      "responseTime": 0.006763,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/baseline-testing",
+      "finalUrl": "http://localhost:5000/baseline-testing",
+      "httpCode": 200,
+      "responseTime": 0.007721,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/use",
+      "finalUrl": "http://localhost:5000/use",
+      "httpCode": 200,
+      "responseTime": 0.008549,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/federated",
+      "finalUrl": "http://localhost:5000/federated",
+      "httpCode": 200,
+      "responseTime": 0.007784,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/compute",
+      "finalUrl": "http://localhost:5000/compute",
+      "httpCode": 200,
+      "responseTime": 0.00626,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/validation",
+      "finalUrl": "http://localhost:5000/validation",
+      "httpCode": 200,
+      "responseTime": 0.006446,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/design",
+      "finalUrl": "http://localhost:5000/design",
+      "httpCode": 200,
+      "responseTime": 0.011416,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/science",
+      "finalUrl": "http://localhost:5000/science",
+      "httpCode": 200,
+      "responseTime": 0.012103,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/development-agent",
+      "finalUrl": "http://localhost:5000/development-agent",
+      "httpCode": 200,
+      "responseTime": 0.008067,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agents-dashboard",
+      "finalUrl": "http://localhost:5000/agents-dashboard",
+      "httpCode": 200,
+      "responseTime": 0.005491,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/baselines",
+      "finalUrl": "http://localhost:5000/baselines",
+      "httpCode": 200,
+      "responseTime": 0.005552,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/baseline-assessment",
+      "finalUrl": "http://localhost:5000/baseline-assessment",
+      "httpCode": 200,
+      "responseTime": 0.004748,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/langgraph",
+      "finalUrl": "http://localhost:5000/langgraph",
+      "httpCode": 200,
+      "responseTime": 0.005196,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/corpus-qa",
+      "finalUrl": "http://localhost:5000/corpus-qa",
+      "httpCode": 200,
+      "responseTime": 0.005667,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/mvp",
+      "finalUrl": "http://localhost:5000/mvp",
+      "httpCode": 200,
+      "responseTime": 0.005219,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/artifacts",
+      "finalUrl": "http://localhost:5000/artifacts",
+      "httpCode": 200,
+      "responseTime": 0.007322,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/profile",
+      "finalUrl": "http://localhost:5000/profile",
+      "httpCode": 200,
+      "responseTime": 0.005032,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/compliance",
+      "finalUrl": "http://localhost:5000/agent/compliance",
+      "httpCode": 200,
+      "responseTime": 0.004592,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/compliance/baseline",
+      "finalUrl": "http://localhost:5000/agent/compliance/baseline",
+      "httpCode": 200,
+      "responseTime": 0.006656,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/formulation",
+      "finalUrl": "http://localhost:5000/agent/formulation",
+      "httpCode": 200,
+      "responseTime": 0.004886,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/formulation/baseline",
+      "finalUrl": "http://localhost:5000/agent/formulation/baseline",
+      "httpCode": 200,
+      "responseTime": 0.008331,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/marketing",
+      "finalUrl": "http://localhost:5000/agent/marketing",
+      "httpCode": 200,
+      "responseTime": 0.004149,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/marketing/baseline",
+      "finalUrl": "http://localhost:5000/agent/marketing/baseline",
+      "httpCode": 200,
+      "responseTime": 0.004945,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/operations",
+      "finalUrl": "http://localhost:5000/agent/operations",
+      "httpCode": 200,
+      "responseTime": 0.00483,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/operations/baseline",
+      "finalUrl": "http://localhost:5000/agent/operations/baseline",
+      "httpCode": 200,
+      "responseTime": 0.004673,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/science",
+      "finalUrl": "http://localhost:5000/agent/science",
+      "httpCode": 200,
+      "responseTime": 0.004887,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/science/baseline",
+      "finalUrl": "http://localhost:5000/agent/science/baseline",
+      "httpCode": 200,
+      "responseTime": 0.004433,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/sourcing",
+      "finalUrl": "http://localhost:5000/agent/sourcing",
+      "httpCode": 200,
+      "responseTime": 0.006561,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/sourcing/baseline",
+      "finalUrl": "http://localhost:5000/agent/sourcing/baseline",
+      "httpCode": 200,
+      "responseTime": 0.006398,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/patent",
+      "finalUrl": "http://localhost:5000/agent/patent",
+      "httpCode": 200,
+      "responseTime": 0.007878,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/patent/baseline",
+      "finalUrl": "http://localhost:5000/agent/patent/baseline",
+      "httpCode": 200,
+      "responseTime": 0.008859,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/spectra",
+      "finalUrl": "http://localhost:5000/agent/spectra",
+      "httpCode": 200,
+      "responseTime": 0.015316,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/spectra/baseline",
+      "finalUrl": "http://localhost:5000/agent/spectra/baseline",
+      "httpCode": 200,
+      "responseTime": 0.010495,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/customer-success",
+      "finalUrl": "http://localhost:5000/agent/customer-success",
+      "httpCode": 200,
+      "responseTime": 0.004586,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/customer-success/baseline",
+      "finalUrl": "http://localhost:5000/agent/customer-success/baseline",
+      "httpCode": 200,
+      "responseTime": 0.004319,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/lms",
+      "finalUrl": "http://localhost:5000/agent/lms",
+      "httpCode": 200,
+      "responseTime": 0.00461,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/lms/baseline",
+      "finalUrl": "http://localhost:5000/agent/lms/baseline",
+      "httpCode": 200,
+      "responseTime": 0.01065,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/metabolomics",
+      "finalUrl": "http://localhost:5000/agent/metabolomics",
+      "httpCode": 200,
+      "responseTime": 0.004693,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    },
+    {
+      "url": "/agent/metabolomics/baseline",
+      "finalUrl": "http://localhost:5000/agent/metabolomics/baseline",
+      "httpCode": 200,
+      "responseTime": 0.004127,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true,
+      "foundLinks": 0
+    }
+  ],
+  "apis": [
+    {
+      "url": "/api/agents",
+      "finalUrl": "http://localhost:5000/api/agents",
+      "httpCode": 200,
+      "responseTime": 0.023385,
+      "sizeBytes": 4567,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agent-status",
+      "finalUrl": "http://localhost:5000/api/agent-status",
+      "httpCode": 200,
+      "responseTime": 0.004385,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agent-management/dashboard",
+      "finalUrl": "http://localhost:5000/api/agent-management/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.004241,
+      "sizeBytes": 42413,
+      "success": false,
+      "issues": [
+        "Contains error pattern: Error:",
+        "Contains error pattern: Failed to fetch"
+      ],
+      "warnings": [
+        "Contains warning pattern: null"
+      ],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/baseline-exam/badges",
+      "finalUrl": "http://localhost:5000/api/baseline-exam/badges",
+      "httpCode": 200,
+      "responseTime": 0.039974,
+      "sizeBytes": 1624,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/run-all-tests/progress",
+      "finalUrl": "http://localhost:5000/api/run-all-tests/progress",
+      "httpCode": 200,
+      "responseTime": 0.003023,
+      "sizeBytes": 160,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/data/corpora",
+      "finalUrl": "http://localhost:5000/api/data/corpora",
+      "httpCode": 200,
+      "responseTime": 0.002796,
+      "sizeBytes": 627,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/data/knowledge-bases",
+      "finalUrl": "http://localhost:5000/api/data/knowledge-bases",
+      "httpCode": 200,
+      "responseTime": 0.004069,
+      "sizeBytes": 225,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/roadmap/features",
+      "finalUrl": "http://localhost:5000/api/roadmap/features",
+      "httpCode": 200,
+      "responseTime": 0.003188,
+      "sizeBytes": 843,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/health",
+      "finalUrl": "http://localhost:5000/api/health",
+      "httpCode": 200,
+      "responseTime": 0.4178,
+      "sizeBytes": 483,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/baseline-coverage",
+      "finalUrl": "/api/baseline-coverage",
+      "httpCode": 0,
+      "responseTime": 0,
+      "sizeBytes": 0,
+      "success": false,
+      "issues": [],
+      "warnings": [],
+      "error": "Exit code: 28",
+      "depth": 0,
+      "redirected": false
+    },
+    {
+      "url": "/api/baseline-summary",
+      "finalUrl": "http://localhost:5000/api/baseline-summary",
+      "httpCode": 200,
+      "responseTime": 6.084061,
+      "sizeBytes": 3052,
+      "success": false,
+      "issues": [
+        "Contains error pattern: 500"
+      ],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/compliance/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/compliance/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.010741,
+      "sizeBytes": 5856,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/compliance/config",
+      "finalUrl": "http://localhost:5000/api/agents/compliance/config",
+      "httpCode": 200,
+      "responseTime": 0.022788,
+      "sizeBytes": 333,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/compliance/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/compliance/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.008079,
+      "sizeBytes": 6196,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/formulation/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/formulation/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.051891,
+      "sizeBytes": 992,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/formulation/config",
+      "finalUrl": "http://localhost:5000/api/agents/formulation/config",
+      "httpCode": 200,
+      "responseTime": 0.004659,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/formulation/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/formulation/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.004104,
+      "sizeBytes": 3326,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/marketing/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/marketing/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.077728,
+      "sizeBytes": 955,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/marketing/config",
+      "finalUrl": "http://localhost:5000/api/agents/marketing/config",
+      "httpCode": 200,
+      "responseTime": 0.00612,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/marketing/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/marketing/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.006336,
+      "sizeBytes": 8418,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/operations/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/operations/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.077215,
+      "sizeBytes": 969,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/operations/config",
+      "finalUrl": "http://localhost:5000/api/agents/operations/config",
+      "httpCode": 200,
+      "responseTime": 0.004322,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/operations/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/operations/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.014842,
+      "sizeBytes": 8479,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/science/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/science/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.055205,
+      "sizeBytes": 959,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/science/config",
+      "finalUrl": "http://localhost:5000/api/agents/science/config",
+      "httpCode": 200,
+      "responseTime": 0.002425,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/science/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/science/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.016387,
+      "sizeBytes": 2,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/sourcing/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/sourcing/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.109128,
+      "sizeBytes": 952,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/sourcing/config",
+      "finalUrl": "http://localhost:5000/api/agents/sourcing/config",
+      "httpCode": 200,
+      "responseTime": 0.002616,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/sourcing/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/sourcing/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.00405,
+      "sizeBytes": 8376,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/patent/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/patent/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.144767,
+      "sizeBytes": 921,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/patent/config",
+      "finalUrl": "http://localhost:5000/api/agents/patent/config",
+      "httpCode": 200,
+      "responseTime": 0.00904,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/patent/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/patent/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.028743,
+      "sizeBytes": 8653,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/spectra/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/spectra/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.128051,
+      "sizeBytes": 933,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/spectra/config",
+      "finalUrl": "http://localhost:5000/api/agents/spectra/config",
+      "httpCode": 200,
+      "responseTime": 0.004233,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/spectra/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/spectra/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.004373,
+      "sizeBytes": 8434,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/customer-success/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/customer-success/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.048134,
+      "sizeBytes": 980,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/customer-success/config",
+      "finalUrl": "http://localhost:5000/api/agents/customer-success/config",
+      "httpCode": 200,
+      "responseTime": 0.002928,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/customer-success/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/customer-success/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.009629,
+      "sizeBytes": 8811,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/lms/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/lms/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.044084,
+      "sizeBytes": 800,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/lms/config",
+      "finalUrl": "http://localhost:5000/api/agents/lms/config",
+      "httpCode": 200,
+      "responseTime": 0.003188,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/lms/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/lms/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.005154,
+      "sizeBytes": 9390,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/metabolomics/dashboard",
+      "finalUrl": "http://localhost:5000/api/agents/metabolomics/dashboard",
+      "httpCode": 200,
+      "responseTime": 0.040208,
+      "sizeBytes": 854,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/metabolomics/config",
+      "finalUrl": "http://localhost:5000/api/agents/metabolomics/config",
+      "httpCode": 200,
+      "responseTime": 0.002204,
+      "sizeBytes": 357,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    },
+    {
+      "url": "/api/agents/metabolomics/baseline-results",
+      "finalUrl": "http://localhost:5000/api/agents/metabolomics/baseline-results",
+      "httpCode": 200,
+      "responseTime": 0.005896,
+      "sizeBytes": 8438,
+      "success": true,
+      "issues": [],
+      "warnings": [],
+      "error": null,
+      "depth": 0,
+      "redirected": true
+    }
+  ],
+  "assets": [],
+  "jsErrors": [],
+  "performance": []
+}
