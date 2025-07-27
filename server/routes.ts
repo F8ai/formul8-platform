@@ -1118,26 +1118,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: 'Creation log reset' });
   });
 
-  // API endpoint for real baseline test results
-  app.get('/api/baseline-testing/real-results', async (req, res) => {
+  // Universal API endpoint for any agent's baseline test results
+  app.get('/api/agents/:agentType/baseline-results', async (req, res) => {
     try {
-      const resultFiles = ['CO-gpt4o.json', 'CO-gpt4o-mini.json', 'CO-claude-3-5-sonnet.json'];
-      const allResults: any[] = [];
-      const agentPath = path.resolve(process.cwd(), 'agents/compliance-agent/data/results');
+      const { agentType } = req.params;
+      const { state = 'CO' } = req.query;
       
-      console.log(`Loading real baseline results from: ${agentPath}`);
+      // Common result file patterns
+      const resultFiles = [
+        `${state}-gpt4o.json`,
+        `${state}-gpt4o-mini.json`, 
+        `${state}-claude-3-5-sonnet.json`,
+        `${state}-claude-3-haiku.json`,
+        `${state}-gemini-1.5-pro.json`
+      ];
+      
+      const allResults: any[] = [];
+      const agentPath = path.resolve(process.cwd(), `agents/${agentType}-agent/data/results`);
+      
+      console.log(`Loading baseline results for ${agentType} from: ${agentPath}`);
       
       for (const fileName of resultFiles) {
         try {
           const filePath = path.join(agentPath, fileName);
-          console.log(`Checking file: ${filePath}, exists: ${existsSync(filePath)}`);
           
-          if (existsSync(filePath)) {
+          if (fs.existsSync(filePath)) {
             const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             console.log(`Loaded ${fileName}: ${fileData.results ? fileData.results.length : 0} results`);
             
             if (fileData.results && Array.isArray(fileData.results)) {
-              const model = fileName.replace('CO-', '').replace('.json', '');
+              const model = fileName.replace(`${state}-`, '').replace('.json', '');
               allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
             }
           }
@@ -1146,7 +1156,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
       
-      console.log(`Total results loaded: ${allResults.length}`);
+      console.log(`Total results loaded for ${agentType}: ${allResults.length}`);
       
       // Group results by questionId and create question objects with model responses
       const questionMap = new Map();
@@ -1180,8 +1190,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(Array.from(questionMap.values()));
     } catch (error) {
-      console.error('Error loading real baseline results:', error);
-      res.status(500).json({ error: 'Failed to load real baseline results', message: error.message });
+      console.error(`Error loading baseline results for ${req.params.agentType}:`, error);
+      res.status(500).json({ error: 'Failed to load baseline results', message: error.message });
+    }
+  });
+
+  // Legacy endpoint for compliance agent (backwards compatibility)
+  app.get('/api/baseline-testing/real-results', async (req, res) => {
+    // Redirect to universal agent endpoint
+    return res.redirect('/api/agents/compliance/baseline-results');
+  });
+
+  // Universal baseline result endpoint for specific model and state
+  app.get('/api/agents/:agentType/baseline/:state/:model', async (req, res) => {
+    try {
+      const { agentType, state, model } = req.params;
+      const fileName = `${state}-${model}.json`;
+      const filePath = path.resolve(process.cwd(), `agents/${agentType}-agent/data/results/${fileName}`);
+      
+      console.log(`Loading specific result: ${filePath}`);
+      
+      if (fs.existsSync(filePath)) {
+        const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        res.json(fileData);
+      } else {
+        res.status(404).json({ 
+          error: 'Result file not found', 
+          agent: agentType,
+          state: state,
+          model: model,
+          expectedPath: filePath
+        });
+      }
+    } catch (error) {
+      console.error(`Error loading specific baseline result:`, error);
+      res.status(500).json({ error: 'Failed to load baseline result', message: error.message });
     }
   });
 

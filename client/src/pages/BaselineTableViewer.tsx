@@ -39,70 +39,41 @@ interface ModelResponse {
   status?: string;
 }
 
-export default function BaselineTableViewer() {
+interface BaselineTableViewerProps {
+  agentType?: string;
+}
+
+export default function BaselineTableViewer({ agentType: propAgentType }: BaselineTableViewerProps) {
+  const params = new URLSearchParams(window.location.search);
+  const pathParts = window.location.pathname.split('/');
+  const agentType = propAgentType || pathParts[2] || 'compliance'; // Extract from /agent/{agentType}/baseline
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('all');
-  const [stateFilter, setStateFilter] = useState('all');
+  const [stateFilter, setStateFilter] = useState('all');  
   const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
   const [testingModels, setTestingModels] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
-  // Fetch real baseline test results from JSON files
+  // Fetch real baseline test results from JSON files using universal endpoint
   const { data: questionsData = [], isLoading: questionsLoading, refetch: refetchQuestions } = useQuery({
-    queryKey: ['/api/baseline-testing/real-results'],
+    queryKey: ['/api/agents', agentType, 'baseline-results'],
     queryFn: async () => {
-      // Load all available result files
-      const resultFiles = ['CO-gpt4o.json', 'CO-gpt4o-mini.json', 'CO-claude-3-5-sonnet.json'];
-      const allResults: any[] = [];
-      const modelData: Record<string, any> = {};
-      
-      for (const fileName of resultFiles) {
-        try {
-          const response = await fetch(`/agents/compliance-agent/data/results/${fileName}`);
-          if (response.ok) {
-            const fileData = await response.json();
-            const model = fileName.replace('CO-', '').replace('.json', '');
-            modelData[model] = fileData;
-            allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
-          }
-        } catch (error) {
-          console.warn(`Could not load ${fileName}:`, error);
-        }
+      console.log(`Loading baseline results for agent: ${agentType}`);
+      const response = await fetch(`/api/agents/${agentType}/baseline-results`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(`Loaded ${data.length} questions for ${agentType} agent`);
+        return data;
+      } else {
+        console.error(`Failed to load baseline results for ${agentType}:`, response.status);
+        return [];
       }
-      
-      // Group results by questionId and create question objects with model responses
-      const questionMap = new Map();
-      
-      allResults.forEach(result => {
-        const questionId = result.questionId;
-        if (!questionMap.has(questionId)) {
-          questionMap.set(questionId, {
-            id: result.id,
-            questionId: result.questionId,
-            question: result.question,
-            expected_answer: result.expectedAnswer,
-            category: result.category,
-            difficulty: result.difficulty,
-            modelResponses: []
-          });
-        }
-        
-        const question = questionMap.get(questionId);
-        question.modelResponses.push({
-          model: result.model,
-          answer: result.agentResponse,
-          confidence: result.confidence,
-          grade: result.aiGrade || result.accuracy,
-          gradingConfidence: result.aiGradingConfidence || result.confidence,
-          responseTime: result.responseTime,
-          cost: result.estimatedCost,
-          status: 'completed'
-        });
-      });
-      
-      return Array.from(questionMap.values());
-    }
+    },
+    enabled: !!agentType
   });
+
+  console.log(`BaselineTableViewer loaded for ${agentType} agent with ${questionsData.length} questions`);
 
   // Function to run a real model test
   const runModelTest = async (questionId: string, model: string) => {
@@ -110,7 +81,7 @@ export default function BaselineTableViewer() {
     setTestingModels(prev => new Set(prev).add(testKey));
     
     try {
-      const response = await fetch(`/api/agents/compliance/baseline-questions/${questionId}/test/${model}`, {
+      const response = await fetch(`/api/agents/${agentType}/baseline-questions/${questionId}/test/${model}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
