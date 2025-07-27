@@ -11,12 +11,13 @@ const humanGradingSchema = z.object({
   resultId: z.number(),
   humanGrade: z.number().min(0).max(100),
   humanGradingNotes: z.string().optional(),
+  humanImprovedResponse: z.string().optional(),
 });
 
 // Submit human grade for a baseline test result
 router.post('/grade', async (req, res) => {
   try {
-    const { resultId, humanGrade, humanGradingNotes } = humanGradingSchema.parse(req.body);
+    const { resultId, humanGrade, humanGradingNotes, humanImprovedResponse } = humanGradingSchema.parse(req.body);
     
     // For now, use a default user ID since we don't have authentication in the context
     const humanGradedBy = 'human-grader'; // This would come from req.user in a real auth system
@@ -28,6 +29,7 @@ router.post('/grade', async (req, res) => {
         humanGrade: humanGrade.toString(),
         humanGradedBy,
         humanGradingNotes,
+        humanImprovedResponse,
         humanGradedAt: new Date(),
         // Calculate agreement between AI and human grades
         gradingAgreement: sql`CASE 

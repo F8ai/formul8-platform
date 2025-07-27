@@ -49,6 +49,7 @@ interface ModelResponse {
   humanGrade?: number;
   humanGradedBy?: string;
   humanGradingNotes?: string;
+  humanImprovedResponse?: string;
   humanGradedAt?: string;
   gradingAgreement?: number;
   requiresReview?: boolean;
@@ -705,6 +706,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                                         humanGrade: question.modelResponses?.[0]?.humanGrade,
                                         humanGradedBy: question.modelResponses?.[0]?.humanGradedBy,
                                         humanGradingNotes: question.modelResponses?.[0]?.humanGradingNotes,
+                                        humanImprovedResponse: question.modelResponses?.[0]?.humanImprovedResponse,
                                         humanGradedAt: question.modelResponses?.[0]?.humanGradedAt,
                                         gradingAgreement: question.modelResponses?.[0]?.gradingAgreement,
                                         requiresReview: question.modelResponses?.[0]?.requiresReview

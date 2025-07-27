@@ -185,6 +185,7 @@ export const baselineTestResults = pgTable("baseline_test_results", {
   humanGrade: decimal("human_grade", { precision: 5, scale: 2 }),
   humanGradedBy: varchar("human_graded_by").references(() => users.id),
   humanGradingNotes: text("human_grading_notes"),
+  humanImprovedResponse: text("human_improved_response"), // Human-suggested improved response
   humanGradedAt: timestamp("human_graded_at"),
   // Agreement between AI and human grading
   gradingAgreement: decimal("grading_agreement", { precision: 5, scale: 2 }), // Percentage agreement

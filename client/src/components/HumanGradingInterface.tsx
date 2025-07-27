@@ -16,7 +16,8 @@ import {
   ThumbsDown, 
   AlertTriangle,
   Save,
-  Eye
+  Eye,
+  Edit
 } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 
@@ -31,6 +32,7 @@ interface TestResult {
   aiGradingConfidence?: number;
   aiGradingReasoning?: string;
   humanGradingNotes?: string;
+  humanImprovedResponse?: string;
   gradingAgreement?: number;
   requiresReview?: boolean;
   humanGradedBy?: string;
@@ -51,6 +53,7 @@ export default function HumanGradingInterface({
   const [isOpen, setIsOpen] = useState(false);
   const [humanGrade, setHumanGrade] = useState(result.humanGrade || 75);
   const [gradingNotes, setGradingNotes] = useState(result.humanGradingNotes || '');
+  const [improvedResponse, setImprovedResponse] = useState(result.humanImprovedResponse || '');
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -58,7 +61,8 @@ export default function HumanGradingInterface({
     mutationFn: async (gradeData: { 
       resultId: number; 
       humanGrade: number; 
-      humanGradingNotes: string 
+      humanGradingNotes: string;
+      humanImprovedResponse: string;
     }) => {
       return apiRequest('/api/human-grading/grade', {
         method: 'POST',
@@ -92,7 +96,8 @@ export default function HumanGradingInterface({
     submitGradeMutation.mutate({
       resultId: result.id,
       humanGrade,
-      humanGradingNotes: gradingNotes
+      humanGradingNotes: gradingNotes,
+      humanImprovedResponse: improvedResponse
     });
   };
 
@@ -238,6 +243,24 @@ export default function HumanGradingInterface({
                     rows={3}
                   />
                 </div>
+                
+                <div className="border rounded-lg p-3 bg-blue-50">
+                  <Label className="text-sm font-medium flex items-center gap-2">
+                    <Edit className="h-4 w-4" />
+                    Improved Response (Optional):
+                  </Label>
+                  <Textarea
+                    value={improvedResponse}
+                    onChange={(e) => setImprovedResponse(e.target.value)}
+                    placeholder="Provide an improved version of the AI response that better answers the question..."
+                    className="mt-2 text-sm bg-white"
+                    rows={5}
+                  />
+                  <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                    <AlertTriangle className="h-3 w-3" />
+                    Your improved response will be used for model fine-tuning and creating better training data.
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -317,6 +340,21 @@ export default function HumanGradingInterface({
                     <Label className="text-sm">Previous Notes:</Label>
                     <p className="text-sm text-gray-600 mt-1 p-2 bg-gray-50 rounded">
                       {result.humanGradingNotes}
+                    </p>
+                  </div>
+                )}
+                
+                {result.humanImprovedResponse && (
+                  <div>
+                    <Label className="text-sm font-medium flex items-center gap-2">
+                      <ThumbsUp className="h-4 w-4 text-blue-600" />
+                      Previous Improved Response:
+                    </Label>
+                    <div className="text-sm text-gray-600 mt-1 p-3 bg-blue-50 rounded border-l-4 border-blue-400">
+                      {result.humanImprovedResponse}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      This improved response can be used to enhance training data quality.
                     </p>
                   </div>
                 )}
