@@ -1118,6 +1118,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: 'Creation log reset' });
   });
 
+  // API endpoint for real baseline test results
+  app.get('/api/baseline-testing/real-results', async (req, res) => {
+    try {
+      const resultFiles = ['CO-gpt4o.json', 'CO-gpt4o-mini.json', 'CO-claude-3-5-sonnet.json'];
+      const allResults: any[] = [];
+      const agentPath = path.resolve(import.meta.dirname, '..', 'agents/compliance-agent/data/results');
+      
+      for (const fileName of resultFiles) {
+        try {
+          const filePath = path.join(agentPath, fileName);
+          if (fs.existsSync(filePath)) {
+            const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            const model = fileName.replace('CO-', '').replace('.json', '');
+            allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
+          }
+        } catch (error) {
+          console.warn(`Could not load ${fileName}:`, error);
+        }
+      }
+      
+      // Group results by questionId and create question objects with model responses
+      const questionMap = new Map();
+      
+      allResults.forEach(result => {
+        const questionId = result.questionId;
+        if (!questionMap.has(questionId)) {
+          questionMap.set(questionId, {
+            id: result.id,
+            questionId: result.questionId,
+            question: result.question,
+            expected_answer: result.expectedAnswer,
+            category: result.category,
+            difficulty: result.difficulty,
+            modelResponses: []
+          });
+        }
+        
+        const question = questionMap.get(questionId);
+        question.modelResponses.push({
+          model: result.model,
+          answer: result.agentResponse,
+          confidence: result.confidence,
+          grade: result.aiGrade || result.accuracy,
+          gradingConfidence: result.aiGradingConfidence || result.confidence,
+          responseTime: result.responseTime,
+          cost: result.estimatedCost,
+          status: 'completed'
+        });
+      });
+      
+      res.json(Array.from(questionMap.values()));
+    } catch (error) {
+      console.error('Error loading real baseline results:', error);
+      res.status(500).json({ error: 'Failed to load real baseline results', message: error.message });
+    }
+  });
+
   // Serve agent data files (for JSON result files)
   app.use('/agents', express.static(path.resolve(import.meta.dirname, '..', 'agents')));
 
