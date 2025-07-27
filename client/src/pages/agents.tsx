@@ -15,7 +15,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { MetricBadge } from "@/components/ui/metric-badge";
 import { TrendChart } from "@/components/ui/trend-chart";
 import { MarkdownEditor } from "@/components/ui/markdown-editor";
-import { AlertCircle, Bot, CheckCircle, Clock, Users, Zap, BarChart3, Settings, Play, Eye, Activity } from "lucide-react";
+import { AlertCircle, Bot, CheckCircle, Clock, Users, Zap, BarChart3, Settings, Play, Eye, Activity, PlayCircle } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
