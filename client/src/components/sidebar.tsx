@@ -101,6 +101,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
         { href: "/baselines", icon: Database, label: "Baseline Management", active: location === "/baselines" },
         { href: "/baseline-testing", icon: FlaskConical, label: "🧪 Baseline Testing", badge: "New", active: location === "/baseline-testing" },
         { href: "/data", icon: Database, label: "📊 Data Management", badge: "New", active: location === "/data" },
+        { href: "/validation", icon: CheckCircle, label: "🔍 Validation Suite", badge: "New", active: location === "/validation" },
       ]
     }
   ];

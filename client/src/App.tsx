@@ -38,6 +38,7 @@ import BaselineTableViewer from "@/pages/BaselineTableViewer";
 import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
 import DataManagementPage from "@/pages/data-management";
+import ValidationPage from "@/pages/validation";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -52,6 +53,7 @@ function Router() {
       <Route path="/federated" component={Federated} />
       <Route path="/compute" component={ComputePage} />
       <Route path="/data" component={DataManagementPage} />
+      <Route path="/validation" component={ValidationPage} />
       <Route path="/agent-detail/:id">
         {params => <AgentDetail agentId={params.id} />}
       </Route>
