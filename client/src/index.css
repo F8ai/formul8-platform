@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile-friendly zoom and scaling */
+@media (max-width: 768px) {
+  html {
+    zoom: 0.85;
+    -webkit-text-size-adjust: 85%;
+    -moz-text-size-adjust: 85%;
+    -ms-text-size-adjust: 85%;
+  }
+  
+  body {
+    min-width: 320px;
+    overflow-x: auto;
+  }
+}
+
 /* Hide scrollbar for mobile tabs but keep functionality */
 .scrollbar-hide {
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
