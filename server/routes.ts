@@ -1118,6 +1118,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ success: true, message: 'Creation log reset' });
   });
 
+  // API endpoint to get raw baseline.json for editing
+  app.get('/api/agents/:agentType/baseline-json', async (req, res) => {
+    try {
+      const { agentType } = req.params;
+      const baselineFile = path.resolve(process.cwd(), `agents/${agentType}-agent/baseline.json`);
+      
+      if (fs.existsSync(baselineFile)) {
+        const baselineData = JSON.parse(fs.readFileSync(baselineFile, 'utf8'));
+        res.json(baselineData);
+      } else {
+        res.status(404).json({ error: 'Baseline file not found' });
+      }
+    } catch (error) {
+      console.error('Error loading baseline.json:', error);
+      res.status(500).json({ error: 'Failed to load baseline file' });
+    }
+  });
+
+  // API endpoint to save edited baseline.json
+  app.put('/api/agents/:agentType/baseline-json', async (req, res) => {
+    try {
+      const { agentType } = req.params;
+      const baselineFile = path.resolve(process.cwd(), `agents/${agentType}-agent/baseline.json`);
+      
+      // Validate the JSON structure
+      const baselineData = req.body;
+      if (!baselineData.agent || !baselineData.questions || !Array.isArray(baselineData.questions)) {
+        return res.status(400).json({ error: 'Invalid baseline structure' });
+      }
+      
+      // Create backup of existing file
+      if (fs.existsSync(baselineFile)) {
+        const backupFile = `${baselineFile}.backup.${Date.now()}`;
+        fs.copyFileSync(baselineFile, backupFile);
+        console.log(`Created backup: ${backupFile}`);
+      }
+      
+      // Write the updated baseline file
+      fs.writeFileSync(baselineFile, JSON.stringify(baselineData, null, 2));
+      console.log(`Updated baseline.json for ${agentType}: ${baselineData.questions.length} questions`);
+      
+      res.json({ 
+        success: true, 
+        message: `Updated ${baselineData.questions.length} questions for ${agentType} agent`,
+        questionsCount: baselineData.questions.length
+      });
+    } catch (error) {
+      console.error('Error saving baseline.json:', error);
+      res.status(500).json({ error: 'Failed to save baseline file' });
+    }
+  });
+
   // Universal API endpoint for any agent's baseline test results
   app.get('/api/agents/:agentType/baseline-results', async (req, res) => {
     try {

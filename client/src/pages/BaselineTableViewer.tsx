@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,11 +7,17 @@ import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { 
   Search, 
   RefreshCw,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  Edit,
+  Save,
+  X,
+  FileText
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -53,7 +59,10 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
   const [stateFilter, setStateFilter] = useState('all');  
   const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
   const [testingModels, setTestingModels] = useState<Set<string>>(new Set());
+  const [editingBaseline, setEditingBaseline] = useState(false);
+  const [baselineJson, setBaselineJson] = useState('');
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   // Fetch real baseline test results from JSON files using universal endpoint
   const { data: questionsData = [], isLoading: questionsLoading, refetch: refetchQuestions } = useQuery({
@@ -74,6 +83,85 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
   });
 
   console.log(`BaselineTableViewer loaded for ${agentType} agent with ${questionsData.length} questions`);
+
+  // Fetch raw baseline.json for editing
+  const { data: rawBaselineData, refetch: refetchBaseline } = useQuery({
+    queryKey: ['/api/agents', agentType, 'baseline-json'],
+    queryFn: async () => {
+      const response = await fetch(`/api/agents/${agentType}/baseline-json`);
+      if (response.ok) {
+        return await response.json();
+      }
+      throw new Error('Failed to load baseline.json');
+    },
+    enabled: false // Only fetch when editing
+  });
+
+  // Mutation to save baseline.json
+  const saveBaselineMutation = useMutation({
+    mutationFn: async (baselineData: any) => {
+      const response = await fetch(`/api/agents/${agentType}/baseline-json`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(baselineData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to save baseline');
+      }
+      
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Baseline saved successfully",
+        description: data.message,
+      });
+      setEditingBaseline(false);
+      queryClient.invalidateQueries(['/api/agents', agentType, 'baseline-results']);
+      refetchQuestions();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Failed to save baseline",
+        description: error.message || 'Unknown error occurred',
+        variant: "destructive"
+      });
+    }
+  });
+
+  // Handle opening baseline editor
+  const handleEditBaseline = async () => {
+    try {
+      await refetchBaseline();
+      if (rawBaselineData) {
+        setBaselineJson(JSON.stringify(rawBaselineData, null, 2));
+        setEditingBaseline(true);
+      }
+    } catch (error) {
+      toast({
+        title: "Failed to load baseline",
+        description: "Could not load baseline.json for editing",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Handle saving baseline
+  const handleSaveBaseline = () => {
+    try {
+      const parsedData = JSON.parse(baselineJson);
+      saveBaselineMutation.mutate(parsedData);
+    } catch (error) {
+      toast({
+        title: "Invalid JSON",
+        description: "Please check your JSON syntax",
+        variant: "destructive"
+      });
+    }
+  };
 
   // Function to run a real model test
   const runModelTest = async (questionId: string, model: string) => {
@@ -256,10 +344,16 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
               Showing results for {availableModels.length} models: {availableModels.join(', ')}
             </p>
           </div>
-          <Button onClick={() => refetchQuestions()} variant="outline" size="sm">
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={handleEditBaseline} variant="outline" size="sm">
+              <Edit className="h-4 w-4 mr-2" />
+              Edit Baseline
+            </Button>
+            <Button onClick={() => refetchQuestions()} variant="outline" size="sm">
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
+          </div>
         </div>
 
         {/* Model Performance Metrics */}
@@ -573,6 +667,62 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
           )}
         </div>
       </div>
+
+      {/* Baseline Editor Dialog */}
+      <Dialog open={editingBaseline} onOpenChange={setEditingBaseline}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Edit {agentType} baseline.json
+            </DialogTitle>
+            <p className="text-sm text-muted-foreground">
+              Edit the baseline questions directly. Changes will be saved to the agent's baseline.json file.
+            </p>
+          </DialogHeader>
+          
+          <div className="flex-1 overflow-hidden">
+            <Textarea
+              value={baselineJson}
+              onChange={(e) => setBaselineJson(e.target.value)}
+              className="w-full h-[60vh] font-mono text-sm resize-none"
+              placeholder="Loading baseline.json..."
+            />
+          </div>
+          
+          <div className="flex justify-between items-center pt-4 border-t">
+            <div className="text-sm text-muted-foreground">
+              Make sure your JSON is valid before saving
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setEditingBaseline(false)}
+                disabled={saveBaselineMutation.isPending}
+              >
+                <X className="h-4 w-4 mr-2" />
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSaveBaseline}
+                disabled={saveBaselineMutation.isPending}
+              >
+                {saveBaselineMutation.isPending ? (
+                  <>
+                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Save Changes
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
