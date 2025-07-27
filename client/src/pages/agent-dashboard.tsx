@@ -20,7 +20,8 @@ import {
   Clock,
   Database,
   Settings,
-  Terminal
+  Terminal,
+  Menu
 } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 
@@ -72,6 +73,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Fetch agent-specific data with custom query function
   const { data: agentData, isLoading, error } = useQuery<AgentDashboardData>({
@@ -200,30 +202,60 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
 
   return (
     <div className="min-h-screen flex bg-gray-50">
-      <Sidebar />
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 z-50 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+          <div className="relative z-10 w-64">
+            <Sidebar />
+          </div>
+        </div>
+      )}
+      
+      {/* Desktop sidebar */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
       
       <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="bg-white border-b border-gray-200 px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+        {/* Header - Mobile responsive */}
+        <header className="bg-white border-b border-gray-200 px-3 sm:px-6 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+            {/* Top row: Menu, back button and title */}
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              {/* Mobile menu button */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden flex-shrink-0"
+              >
+                <Menu className="h-4 w-4" />
+              </Button>
+              
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => window.history.back()}
+                className="flex-shrink-0"
               >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
+                <ArrowLeft className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Back</span>
               </Button>
-              <div>
-                <h1 className="text-2xl font-bold text-formul8-dark">{agentData.name}</h1>
-                <p className="text-formul8-gray">{agentData.description}</p>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-lg sm:text-2xl font-bold text-formul8-dark truncate">{agentData.name}</h1>
+                <p className="text-sm sm:text-base text-formul8-gray truncate">{agentData.description}</p>
               </div>
+            </div>
+            
+            {/* Bottom row: Badge and external link */}
+            <div className="flex items-center justify-between sm:justify-end space-x-2">
               <Badge className={getStatusColor(agentData.status)}>
                 {agentData.status}
               </Badge>
-            </div>
-            <div className="flex items-center space-x-2">
               <a
                 href={`https://github.com/F8ai/${agentData.repository}`}
                 target="_blank"
@@ -236,27 +268,99 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
           </div>
         </header>
 
-        {/* Main Content */}
-        <main className="flex-1 p-6">
+        {/* Main Content - Mobile responsive padding */}
+        <main className="flex-1 p-3 sm:p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-6">
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="baseline">Baseline</TabsTrigger>
-              <TabsTrigger value="performance">Performance</TabsTrigger>
-              <TabsTrigger value="activity">Activity</TabsTrigger>
-              <TabsTrigger value="configuration">Configuration</TabsTrigger>
-              <TabsTrigger value="repository">Repository</TabsTrigger>
-            </TabsList>
+            {/* Mobile-responsive tab navigation */}
+            <div className="mb-6">
+              {/* Mobile: Horizontal scrollable tabs */}
+              <div className="block sm:hidden">
+                <div className="flex space-x-1 overflow-x-auto pb-2">
+                  <button
+                    onClick={() => setActiveTab("overview")}
+                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                      activeTab === "overview" 
+                        ? "bg-blue-100 text-blue-700" 
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Overview
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("baseline")}
+                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                      activeTab === "baseline" 
+                        ? "bg-blue-100 text-blue-700" 
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Baseline
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("performance")}
+                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                      activeTab === "performance" 
+                        ? "bg-blue-100 text-blue-700" 
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Performance
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("activity")}
+                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                      activeTab === "activity" 
+                        ? "bg-blue-100 text-blue-700" 
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Activity
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("configuration")}
+                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                      activeTab === "configuration" 
+                        ? "bg-blue-100 text-blue-700" 
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Config
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("repository")}
+                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                      activeTab === "repository" 
+                        ? "bg-blue-100 text-blue-700" 
+                        : "text-gray-500 hover:text-gray-700"
+                    }`}
+                  >
+                    Repository
+                  </button>
+                </div>
+              </div>
+              
+              {/* Desktop: Standard tab list */}
+              <div className="hidden sm:block">
+                <TabsList className="grid w-full grid-cols-6">
+                  <TabsTrigger value="overview">Overview</TabsTrigger>
+                  <TabsTrigger value="baseline">Baseline</TabsTrigger>
+                  <TabsTrigger value="performance">Performance</TabsTrigger>
+                  <TabsTrigger value="activity">Activity</TabsTrigger>
+                  <TabsTrigger value="configuration">Configuration</TabsTrigger>
+                  <TabsTrigger value="repository">Repository</TabsTrigger>
+                </TabsList>
+              </div>
+            </div>
 
             {/* Overview Tab */}
-            <TabsContent value="overview" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => window.location.href = `/agent/${agentType}/baseline`}>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium">Total Questions</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold text-blue-600">
+                    <div className="text-xl sm:text-2xl font-bold text-blue-600">
                       {baselineResults?.length || 0}
                     </div>
                     <div className="text-xs text-gray-500">
@@ -270,7 +374,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                     <CardTitle className="text-sm font-medium">Confidence</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className={`text-2xl font-bold ${getPerformanceColor(agentData.performance.confidence)}`}>
+                    <div className={`text-xl sm:text-2xl font-bold ${getPerformanceColor(agentData.performance.confidence)}`}>
                       {agentData.performance.confidence}%
                     </div>
                     <div className="text-xs text-gray-500">
@@ -286,7 +390,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                     <CardTitle className="text-sm font-medium">Accuracy</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className={`text-2xl font-bold ${getPerformanceColor(agentData.performance.accuracy)}`}>
+                    <div className={`text-xl sm:text-2xl font-bold ${getPerformanceColor(agentData.performance.accuracy)}`}>
                       {agentData.performance.accuracy}%
                     </div>
                     <div className="text-xs text-gray-500">Last assessment</div>
@@ -298,7 +402,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                     <CardTitle className="text-sm font-medium">Response Speed</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className={`text-2xl font-bold ${getPerformanceColor(agentData.performance.speed)}`}>
+                    <div className={`text-xl sm:text-2xl font-bold ${getPerformanceColor(agentData.performance.speed)}`}>
                       {agentData.performance.speed}%
                     </div>
                     <div className="text-xs text-gray-500">Performance score</div>
@@ -306,32 +410,35 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                 </Card>
               </div>
 
-              {/* Quick Actions */}
+              {/* Quick Actions - Mobile responsive */}
               <Card>
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center gap-2">
-                    <Button size="sm" variant="outline">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    <Button size="sm" variant="outline" className="w-full sm:w-auto">
                       <Play className="h-4 w-4 mr-2" />
-                      Run Baseline Exam
+                      <span className="hidden sm:inline">Run Baseline Exam</span>
+                      <span className="sm:hidden">Baseline</span>
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" className="w-full sm:w-auto">
                       <AlertTriangle className="h-4 w-4 mr-2" />
-                      Self-Assessment
+                      <span className="hidden sm:inline">Self-Assessment</span>
+                      <span className="sm:hidden">Assessment</span>
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" className="w-full sm:w-auto">
                       <GitBranch className="h-4 w-4 mr-2" />
-                      Trigger GitHub Action
+                      <span className="hidden sm:inline">Trigger GitHub Action</span>
+                      <span className="sm:hidden">GitHub</span>
                     </Button>
                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
 
-            {/* Baseline Tab */}
-            <TabsContent value="baseline" className="space-y-6">
+            {/* Baseline Tab - Mobile responsive */}
+            <TabsContent value="baseline" className="space-y-4 sm:space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Baseline Questions</CardTitle>
@@ -340,7 +447,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                   </p>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="h-[600px] overflow-hidden">
+                  <div className="h-[400px] sm:h-[600px] overflow-hidden">
                     <iframe 
                       src={`/agent/${agentType}/baseline`}
                       className="w-full h-full border-0"
