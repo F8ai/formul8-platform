@@ -21,7 +21,11 @@ import {
   Database,
   Settings,
   Terminal,
-  Menu
+  Menu,
+  Edit,
+  Save,
+  Eye,
+  FileText
 } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 
@@ -74,6 +78,9 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [readmeContent, setReadmeContent] = useState("");
+  const [isEditingReadme, setIsEditingReadme] = useState(false);
+  const [isSavingReadme, setIsSavingReadme] = useState(false);
 
   // Fetch agent-specific data with custom query function
   const { data: agentData, isLoading, error } = useQuery<AgentDashboardData>({
@@ -129,6 +136,24 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
     retry: false,
   });
 
+  // Fetch README content for the agent
+  const { data: readmeData } = useQuery({
+    queryKey: [`/api/agents/${agentType}/readme`],
+    enabled: !!agentType,
+    queryFn: async () => {
+      const response = await fetch(`/api/agents/${agentType}/readme`);
+      if (!response.ok) {
+        console.warn(`README not available for ${agentType}`);
+        return { content: `# ${agentType} Agent\n\nThis agent specializes in cannabis industry operations.\n\n## Overview\n\nAdd your agent description here.\n\n## Key Features\n\n- Feature 1\n- Feature 2\n- Feature 3` };
+      }
+      return response.json();
+    },
+    retry: false,
+    onSuccess: (data) => {
+      setReadmeContent(data.content || "");
+    }
+  });
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'active': return 'bg-green-100 text-green-800';
@@ -161,6 +186,39 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
       case 'failure': return <XCircle className="h-4 w-4 text-red-500" />;
       case 'running': return <Clock className="h-4 w-4 text-yellow-500" />;
       default: return <Activity className="h-4 w-4 text-gray-500" />;
+    }
+  };
+
+  const handleSaveReadme = async () => {
+    if (!agentType || !readmeContent.trim()) return;
+
+    setIsSavingReadme(true);
+    try {
+      const response = await fetch(`/api/agents/${agentType}/readme`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: readmeContent }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save README');
+      }
+
+      setIsEditingReadme(false);
+      toast({
+        title: "README saved",
+        description: "Agent documentation has been updated successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Save failed",
+        description: "Failed to save README. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSavingReadme(false);
     }
   };
 
@@ -270,6 +328,76 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
 
         {/* Main Content - Mobile responsive padding */}
         <main className="flex-1 p-3 sm:p-6">
+          {/* README Editor Section */}
+          <Card className="mb-4 sm:mb-6">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <FileText className="h-5 w-5 text-blue-600" />
+                  <CardTitle>Agent Documentation</CardTitle>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {isEditingReadme ? (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setIsEditingReadme(false);
+                          setReadmeContent(readmeData?.content || "");
+                        }}
+                        disabled={isSavingReadme}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={handleSaveReadme}
+                        disabled={isSavingReadme}
+                      >
+                        <Save className="h-4 w-4 mr-2" />
+                        {isSavingReadme ? "Saving..." : "Save"}
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setIsEditingReadme(true)}
+                    >
+                      <Edit className="h-4 w-4 mr-2" />
+                      Edit
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {isEditingReadme ? (
+                <div className="space-y-3">
+                  <div className="text-sm text-gray-600">
+                    Edit the README documentation for this agent. Supports Markdown formatting.
+                  </div>
+                  <textarea
+                    value={readmeContent}
+                    onChange={(e) => setReadmeContent(e.target.value)}
+                    className="w-full h-40 sm:h-48 p-3 border border-gray-300 rounded-md font-mono text-sm resize-y"
+                    placeholder="Enter README content in Markdown format..."
+                  />
+                  <div className="text-xs text-gray-500">
+                    Lines: {readmeContent.split('\n').length} | Characters: {readmeContent.length}
+                  </div>
+                </div>
+              ) : (
+                <div className="prose prose-sm max-w-none">
+                  <div className="whitespace-pre-wrap text-sm text-gray-700 bg-gray-50 p-3 rounded border max-h-32 overflow-y-auto">
+                    {readmeContent || readmeData?.content || "No documentation available. Click Edit to add content."}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             {/* Mobile-responsive tab navigation */}
             <div className="mb-6">
