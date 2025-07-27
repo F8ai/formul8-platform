@@ -88,6 +88,8 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
   const [testingModels, setTestingModels] = useState<Set<string>>(new Set());
   const [editingBaseline, setEditingBaseline] = useState(false);
   const [baselineJson, setBaselineJson] = useState('');
+  const [editingQuestions, setEditingQuestions] = useState<Set<number>>(new Set());
+  const [editingData, setEditingData] = useState<Record<number, Partial<BaselineQuestion>>>({});
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -147,7 +149,9 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
         description: data.message,
       });
       setEditingBaseline(false);
-      queryClient.invalidateQueries(['/api/agents', agentType, 'baseline-results']);
+      queryClient.invalidateQueries({
+        queryKey: ['/api/agents', agentType, 'baseline-results']
+      });
       refetchQuestions();
     },
     onError: (error: any) => {
@@ -247,7 +251,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
   const testResultRows = useMemo(() => {
     const rows: TestResultRow[] = [];
     
-    questions.forEach(question => {
+    questions.forEach((question: any) => {
       if (question.modelResponses && question.modelResponses.length > 0) {
         question.modelResponses.forEach((response: ModelResponse) => {
           rows.push({
@@ -371,6 +375,79 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
       case 'advanced': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
       default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
+  };
+
+  const startEditingQuestion = (questionId: number, question: BaselineQuestion) => {
+    setEditingQuestions(prev => new Set(prev).add(questionId));
+    setEditingData(prev => ({
+      ...prev,
+      [questionId]: {
+        question: question.question,
+        expected_answer: question.expected_answer,
+        category: question.category,
+        difficulty: question.difficulty,
+        state: question.state
+      }
+    }));
+  };
+
+  const cancelEditingQuestion = (questionId: number) => {
+    setEditingQuestions(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(questionId);
+      return newSet;
+    });
+    setEditingData(prev => {
+      const newData = { ...prev };
+      delete newData[questionId];
+      return newData;
+    });
+  };
+
+  const saveQuestionEdit = async (questionId: number) => {
+    const editData = editingData[questionId];
+    if (!editData) return;
+
+    try {
+      const response = await fetch(`/api/agents/${agentType}/baseline-questions/${questionId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update question');
+      }
+
+      toast({
+        title: "Question updated",
+        description: "The baseline question has been saved successfully.",
+      });
+
+      // Remove from editing state
+      cancelEditingQuestion(questionId);
+      
+      // Refresh data
+      refetchQuestions();
+    } catch (error) {
+      toast({
+        title: "Failed to update question",
+        description: error instanceof Error ? error.message : 'Unknown error occurred',
+        variant: "destructive"
+      });
+    }
+  };
+
+  const updateEditingData = (questionId: number, field: string, value: string) => {
+    setEditingData(prev => ({
+      ...prev,
+      [questionId]: {
+        ...prev[questionId],
+        [field]: value
+      }
+    }));
   };
 
 
@@ -578,62 +655,119 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                       <TableHead className="w-24">Cost</TableHead>
                       <TableHead className="w-24">Response Time</TableHead>
                       <TableHead className="w-32">Human Grade</TableHead>
+                      <TableHead className="w-24">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredTestResults.map((row, index) => (
-                      <TableRow key={`${row.questionId}-${row.model}`}>
-                        <TableCell className="max-w-96">
-                          <div className="space-y-1">
-                            <p className="font-medium line-clamp-2">
-                              {row.question}
-                            </p>
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button variant="ghost" size="sm" className="h-auto p-1 text-xs">
-                                  View details
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent className="max-w-4xl">
-                                <DialogHeader>
-                                  <DialogTitle>Question #{row.questionId}</DialogTitle>
-                                </DialogHeader>
-                                <div className="space-y-4">
-                                  <div>
-                                    <h4 className="font-medium">Question:</h4>
-                                    <p className="text-sm">{row.question}</p>
-                                  </div>
-                                  <div>
-                                    <h4 className="font-medium">Expected Answer:</h4>
-                                    <p className="text-sm">{row.expected_answer}</p>
-                                  </div>
-                                  <div>
-                                    <h4 className="font-medium">AI Response:</h4>
-                                    <p className="text-sm">{row.response.answer}</p>
-                                  </div>
+                    {filteredTestResults.map((row, index) => {
+                      const isEditing = editingQuestions.has(row.questionId);
+                      const editData = editingData[row.questionId];
+                      
+                      return (
+                        <TableRow key={`${row.questionId}-${row.model}`}>
+                          <TableCell className="max-w-96">
+                            {isEditing ? (
+                              <div className="space-y-2">
+                                <Textarea
+                                  value={editData?.question || row.question}
+                                  onChange={(e) => updateEditingData(row.questionId, 'question', e.target.value)}
+                                  className="text-sm"
+                                  rows={3}
+                                />
+                                <div>
+                                  <label className="text-xs font-medium">Expected Answer:</label>
+                                  <Textarea
+                                    value={editData?.expected_answer || row.expected_answer}
+                                    onChange={(e) => updateEditingData(row.questionId, 'expected_answer', e.target.value)}
+                                    className="text-xs mt-1"
+                                    rows={4}
+                                  />
                                 </div>
-                              </DialogContent>
-                            </Dialog>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="text-xs">
-                            {row.category}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge 
-                            variant="secondary" 
-                            className={`text-xs ${getDifficultyBadgeColor(row.difficulty)}`}
-                          >
-                            {row.difficulty}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="text-xs">
-                            {row.state}
-                          </Badge>
-                        </TableCell>
+                              </div>
+                            ) : (
+                              <div className="space-y-1">
+                                <p className="font-medium line-clamp-2">
+                                  {row.question}
+                                </p>
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <Button variant="ghost" size="sm" className="h-auto p-1 text-xs">
+                                      View details
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="max-w-4xl">
+                                    <DialogHeader>
+                                      <DialogTitle>Question #{row.questionId}</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="space-y-4">
+                                      <div>
+                                        <h4 className="font-medium">Question:</h4>
+                                        <p className="text-sm">{row.question}</p>
+                                      </div>
+                                      <div>
+                                        <h4 className="font-medium">Expected Answer:</h4>
+                                        <p className="text-sm">{row.expected_answer}</p>
+                                      </div>
+                                      <div>
+                                        <h4 className="font-medium">AI Response:</h4>
+                                        <p className="text-sm">{row.response.answer}</p>
+                                      </div>
+                                    </div>
+                                  </DialogContent>
+                                </Dialog>
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {isEditing ? (
+                              <Input
+                                value={editData?.category || row.category}
+                                onChange={(e) => updateEditingData(row.questionId, 'category', e.target.value)}
+                                className="text-xs h-8"
+                              />
+                            ) : (
+                              <Badge variant="outline" className="text-xs">
+                                {row.category}
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {isEditing ? (
+                              <Select 
+                                value={editData?.difficulty || row.difficulty}
+                                onValueChange={(value) => updateEditingData(row.questionId, 'difficulty', value)}
+                              >
+                                <SelectTrigger className="h-8 text-xs">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="basic">Basic</SelectItem>
+                                  <SelectItem value="intermediate">Intermediate</SelectItem>
+                                  <SelectItem value="advanced">Advanced</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            ) : (
+                              <Badge 
+                                variant="secondary" 
+                                className={`text-xs ${getDifficultyBadgeColor(row.difficulty)}`}
+                              >
+                                {row.difficulty}
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {isEditing ? (
+                              <Input
+                                value={editData?.state || row.state}
+                                onChange={(e) => updateEditingData(row.questionId, 'state', e.target.value)}
+                                className="text-xs h-8 w-16"
+                              />
+                            ) : (
+                              <Badge variant="outline" className="text-xs">
+                                {row.state}
+                              </Badge>
+                            )}
+                          </TableCell>
                         <TableCell>
                           <div className="text-sm font-medium">
                             {row.model}
@@ -709,8 +843,46 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                             }}
                           />
                         </TableCell>
+                        <TableCell>
+                          {isEditing ? (
+                            <div className="flex gap-1">
+                              <Button
+                                size="sm"
+                                onClick={() => saveQuestionEdit(row.questionId)}
+                                className="h-8 px-2 text-xs"
+                              >
+                                <Save className="h-3 w-3" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => cancelEditingQuestion(row.questionId)}
+                                className="h-8 px-2 text-xs"
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ) : (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => startEditingQuestion(row.questionId, {
+                                id: row.questionId,
+                                question: row.question,
+                                expected_answer: row.expected_answer,
+                                category: row.category,
+                                difficulty: row.difficulty,
+                                state: row.state
+                              } as BaselineQuestion)}
+                              className="h-8 px-2 text-xs"
+                            >
+                              <Edit className="h-3 w-3" />
+                            </Button>
+                          )}
+                        </TableCell>
                       </TableRow>
-                    ))}
+                    )
+                    })}
                   </TableBody>
                 </Table>
               </div>
