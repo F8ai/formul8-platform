@@ -37,6 +37,7 @@ import BaselineResultPage from "@/pages/BaselineResultPage";
 import BaselineTableViewer from "@/pages/BaselineTableViewer";
 import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
+import DataManagementPage from "@/pages/data-management";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -50,8 +51,12 @@ function Router() {
       <Route path="/roadmap" component={Roadmap} />
       <Route path="/federated" component={Federated} />
       <Route path="/compute" component={ComputePage} />
+      <Route path="/data" component={DataManagementPage} />
       <Route path="/agent-detail/:id">
         {params => <AgentDetail agentId={params.id} />}
+      </Route>
+      <Route path="/agent-detail/:id">
+        {params => <AgentDetailPage agentId={params.id} />}
       </Route>
       <Route path="/repo/:id">
         {params => <AgentRepo agentId={params.id} />}

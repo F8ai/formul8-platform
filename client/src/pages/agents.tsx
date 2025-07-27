@@ -365,7 +365,8 @@ export default function AgentsPage() {
                 <div className="space-y-2">
                   <div className="text-sm font-medium">Agent Coverage Summary:</div>
                   {Object.entries(coverageAnalysis).map(([agentName, analysis]: [string, any]) => (
-                    <div key={agentName} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                    <div key={agentName} className="flex items-center justify-between p-2 bg-gray-50 rounded hover:bg-gray-100 cursor-pointer"
+                         onClick={() => window.open(`/agent-detail/${agentName}`, '_blank')}>
                       <span className="font-medium">{agentName}</span>
                       <div className="flex items-center gap-2">
                         <Badge variant={analysis.confidence >= 80 ? "default" : analysis.confidence >= 60 ? "secondary" : "destructive"}>
