@@ -43,7 +43,7 @@ class CurlValidator {
       const curlArgs = [
         '-s', // Silent mode
         '-w', '%{http_code}|%{time_total}|%{size_download}', // Write out format
-        '-o', '/dev/null', // Discard body for speed
+        ...(options.checkContent ? [] : ['-o', '/dev/null']), // Keep body if checking content
         '--max-time', '10', // 10 second timeout
         ...options.args || [],
         url
@@ -62,13 +62,39 @@ class CurlValidator {
       });
 
       curl.on('close', (code) => {
-        if (code === 0 && output.includes('|')) {
-          const [httpCode, timeTotal, sizeDownload] = output.trim().split('|');
+        if (code === 0) {
+          let httpCode, timeTotal, sizeDownload, content = '';
+          
+          if (options.checkContent) {
+            // Extract metrics from end of output when content is included
+            const lines = output.split('\n');
+            const metricsLine = lines[lines.length - 1];
+            if (metricsLine.includes('|')) {
+              [httpCode, timeTotal, sizeDownload] = metricsLine.split('|');
+              content = lines.slice(0, -1).join('\n');
+            } else {
+              // Fallback if metrics format is different
+              httpCode = '200';
+              timeTotal = '0';
+              sizeDownload = output.length.toString();
+              content = output;
+            }
+          } else {
+            if (output.includes('|')) {
+              [httpCode, timeTotal, sizeDownload] = output.trim().split('|');
+            } else {
+              httpCode = '0';
+              timeTotal = '0';
+              sizeDownload = '0';
+            }
+          }
+          
           resolve({
             success: true,
             httpCode: parseInt(httpCode),
             timeTotal: parseFloat(timeTotal),
             sizeDownload: parseInt(sizeDownload),
+            content: content,
             error: null
           });
         } else {
@@ -77,6 +103,7 @@ class CurlValidator {
             httpCode: 0,
             timeTotal: 0,
             sizeDownload: 0,
+            content: '',
             error: error.trim() || `Exit code: ${code}`
           });
         }
@@ -138,16 +165,81 @@ class CurlValidator {
     }
   }
 
-  // Test agent dashboard pages
+  // Test agent dashboard pages with content validation
   async testAgentDashboards() {
     console.log('\n🎯 Testing Agent Dashboard Pages...');
     
     for (const agent of this.agentTypes) {
-      const result = await this.testEndpoint(
+      const result = await this.testEndpointWithContent(
         `${agent.charAt(0).toUpperCase() + agent.slice(1)} Dashboard`,
         `/agent/${agent}`
       );
       this.results.agentDashboards.push(result);
+    }
+  }
+
+  // Test endpoint with content validation for error messages
+  async testEndpointWithContent(name, path, expectedStatus = 200) {
+    const url = `${this.baseUrl}${path}`;
+    console.log(`Testing: ${name} -> ${path}`);
+    
+    this.results.summary.total++;
+    
+    try {
+      const result = await this.executeCurl(url, { checkContent: true });
+      
+      // Check for error messages in content
+      const hasErrorContent = result.content && (
+        result.content.includes('Agent Not Found') ||
+        result.content.includes('Error:') ||
+        result.content.includes('404') ||
+        result.content.includes('Internal Server Error')
+      );
+      
+      const testResult = {
+        name,
+        path,
+        url,
+        expectedStatus,
+        actualStatus: result.httpCode,
+        responseTime: result.timeTotal,
+        sizeBytes: result.sizeDownload,
+        success: result.success && (result.httpCode === expectedStatus) && !hasErrorContent,
+        error: result.error || (hasErrorContent ? 'Error content detected in response' : null),
+        contentError: hasErrorContent
+      };
+
+      if (testResult.success) {
+        this.results.summary.passed++;
+        console.log(`✅ ${name}: HTTP ${result.httpCode} (${result.timeTotal}s, ${result.sizeDownload} bytes)`);
+      } else {
+        this.results.summary.failed++;
+        const reason = result.error || 
+          (hasErrorContent ? 'Error content detected' : `Expected ${expectedStatus}, got ${result.httpCode}`);
+        console.log(`❌ ${name}: ${reason}`);
+        this.results.summary.errors.push(`${name}: ${reason}`);
+      }
+
+      return testResult;
+      
+    } catch (error) {
+      this.results.summary.failed++;
+      const errorMsg = `Curl failed: ${error.message}`;
+      console.log(`❌ ${name}: ${errorMsg}`);
+      this.results.summary.errors.push(`${name}: ${errorMsg}`);
+      
+      return {
+        name,
+        path,
+        url,
+        expectedStatus,
+        actualStatus: 0,
+        responseTime: 0,
+        sizeBytes: 0,
+        success: false,
+        error: errorMsg,
+        contentError: false
+      };
     }
   }
 

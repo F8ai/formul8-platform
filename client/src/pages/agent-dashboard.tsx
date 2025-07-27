@@ -73,16 +73,34 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Fetch agent-specific data
-  const { data: agentData, isLoading } = useQuery<AgentDashboardData>({
+  // Fetch agent-specific data with custom query function
+  const { data: agentData, isLoading, error } = useQuery<AgentDashboardData>({
     queryKey: [`/api/agents/${agentType}/dashboard`],
-    enabled: isAuthenticated && !!agentType,
+    enabled: !!agentType,
+    queryFn: async () => {
+      const response = await fetch(`/api/agents/${agentType}/dashboard`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch agent data: ${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    },
+    retry: false,
+  });
+
+  // Debug logging
+  console.log('AgentDashboard Debug:', {
+    agentType,
+    isAuthenticated,
+    isLoading,
+    hasData: !!agentData,
+    error,
+    apiUrl: `/api/agents/${agentType}/dashboard`
   });
 
   // Fetch repository data from GitHub
   const { data: repoData } = useQuery({
     queryKey: [`/api/agents/${agentType}/repository-stats`],
-    enabled: isAuthenticated && !!agentType,
+    enabled: !!agentType, // Remove authentication requirement
   });
 
   // Fetch real baseline questions count from baseline.json
@@ -144,13 +162,28 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
     );
   }
 
-  if (!agentData) {
+  if (!agentData && !isLoading) {
+    console.log('Showing Agent Not Found - Debug Info:', {
+      agentType,
+      isAuthenticated,
+      isLoading,
+      hasData: !!agentData,
+      error,
+      queryEnabled: isAuthenticated && !!agentType
+    });
+    
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Agent Not Found</h2>
-          <p className="text-gray-600 mb-4">The requested agent dashboard could not be loaded.</p>
+          <p className="text-gray-600 mb-4">
+            The requested agent dashboard could not be loaded.
+            {error && <span className="block text-sm mt-2 text-red-600">Error: {error.message}</span>}
+          </p>
+          <div className="text-xs text-gray-500 mt-2 p-2 bg-gray-100 rounded">
+            Debug: agentType={agentType}, authenticated={isAuthenticated ? 'yes' : 'no'}, loading={isLoading ? 'yes' : 'no'}
+          </div>
           <Button onClick={() => window.history.back()}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Go Back
