@@ -26,6 +26,7 @@ import baselineCoverageRoutes from "./routes/baseline-coverage";
 import agentConfigRoutes from "./routes/agent-config";
 import dataManagementRoutes from "./routes/data-management";
 import healthCheckRoutes from "./routes/health-check";
+import { humanGradingRouter } from "./routes/human-grading";
 import { createFeatureIssues, createAllFeatureIssues, getFeatureIssues, getRoadmapFeatures, addCommentsToAllIssues } from "./routes/roadmap";
 import { duplicatePreventionService } from "./services/duplicate-prevention";
 import { insertProjectSchema, insertQuerySchema } from "@shared/schema";
@@ -1095,6 +1096,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(agentConfigRoutes);
   app.use(dataManagementRoutes);
   app.use(healthCheckRoutes);
+  app.use('/api/human-grading', humanGradingRouter);
 
   // Roadmap routes
   app.get('/api/roadmap/features', getRoadmapFeatures);

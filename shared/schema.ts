@@ -174,23 +174,21 @@ export const baselineTestResults = pgTable("baseline_test_results", {
   inputTokens: integer("input_tokens"),
   outputTokens: integer("output_tokens"),
   totalTokens: integer("total_tokens"),
-  estimatedCost: decimal("estimated_cost", { precision: 10, scale: 6 }),
-  // Manual grading fields
-  manualGrade: integer("manual_grade"), // Manual grade from 0-10
-  manualFeedback: text("manual_feedback"), // Manual feedback/comments
-  gradedBy: varchar("graded_by").references(() => users.id),
-  gradedAt: timestamp("graded_at"),
-  // AI grading fields
-  aiGrade: integer("ai_grade"), // AI grade from 0-10
-  aiFeedback: text("ai_feedback"), // AI feedback/evaluation
-  aiGradingConfidence: integer("ai_grading_confidence"), // AI confidence in grade (0-100%)
-  aiGradedAt: timestamp("ai_graded_at"),
-  aiGradingModel: varchar("ai_grading_model", { length: 100 }),
-  // Token and cost tracking for AI grading
-  aiGradingInputTokens: integer("ai_grading_input_tokens"),
-  aiGradingOutputTokens: integer("ai_grading_output_tokens"),
-  aiGradingTotalTokens: integer("ai_grading_total_tokens"),
-  aiGradingEstimatedCost: decimal("ai_grading_estimated_cost", { precision: 10, scale: 6 }),
+  estimatedCost: decimal("estimated_cost", { precision: 8, scale: 6 }),
+  // AI grading information
+  aiGrade: decimal("ai_grade", { precision: 5, scale: 2 }),
+  aiGradingTokens: integer("ai_grading_tokens"),
+  aiGradingCost: decimal("ai_grading_cost", { precision: 8, scale: 6 }),
+  aiGradingConfidence: decimal("ai_grading_confidence", { precision: 5, scale: 2 }),
+  aiGradingReasoning: text("ai_grading_reasoning"),
+  // Human grading information
+  humanGrade: decimal("human_grade", { precision: 5, scale: 2 }),
+  humanGradedBy: varchar("human_graded_by").references(() => users.id),
+  humanGradingNotes: text("human_grading_notes"),
+  humanGradedAt: timestamp("human_graded_at"),
+  // Agreement between AI and human grading
+  gradingAgreement: decimal("grading_agreement", { precision: 5, scale: 2 }), // Percentage agreement
+  requiresReview: boolean("requires_review").default(false), // Flag for significant disagreements
   metadata: jsonb("metadata"),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -406,8 +404,8 @@ export const baselineTestResultsRelations = relations(baselineTestResults, ({ on
     fields: [baselineTestResults.runId],
     references: [baselineTestRuns.id],
   }),
-  grader: one(users, {
-    fields: [baselineTestResults.gradedBy],
+  humanGrader: one(users, {
+    fields: [baselineTestResults.humanGradedBy],
     references: [users.id],
   }),
 }));

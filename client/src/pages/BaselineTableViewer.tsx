@@ -20,6 +20,7 @@ import {
   FileText
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import HumanGradingInterface from '@/components/HumanGradingInterface';
 
 interface BaselineQuestion {
   id: number;
@@ -35,6 +36,7 @@ interface BaselineQuestion {
 }
 
 interface ModelResponse {
+  id?: number;
   model: string;
   answer: string;
   confidence: number;
@@ -43,6 +45,15 @@ interface ModelResponse {
   responseTime?: number;
   cost?: number;
   status?: string;
+  // Human grading fields
+  humanGrade?: number;
+  humanGradedBy?: string;
+  humanGradingNotes?: string;
+  humanGradedAt?: string;
+  gradingAgreement?: number;
+  requiresReview?: boolean;
+  // AI grading details
+  aiGradingReasoning?: string;
 }
 
 interface BaselineTableViewerProps {
@@ -557,6 +568,14 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                                     </div>
                                   </TableHead>
                                 ))}
+                                <TableHead className="w-32 text-center">
+                                  <div className="space-y-1">
+                                    <div className="font-medium">Human Grade</div>
+                                    <div className="text-xs text-muted-foreground">
+                                      Manual Review
+                                    </div>
+                                  </div>
+                                </TableHead>
                               </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -671,6 +690,31 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                                       </TableCell>
                                     );
                                   })}
+                                  <TableCell className="text-center">
+                                    {/* Human grading interface for each question */}
+                                    <HumanGradingInterface
+                                      result={{
+                                        id: question.id,
+                                        questionId: question.id.toString(),
+                                        question: question.question,
+                                        agentResponse: question.modelResponses?.[0]?.answer || '',
+                                        expectedAnswer: question.expected_answer,
+                                        aiGrade: question.modelResponses?.[0]?.grade,
+                                        aiGradingConfidence: question.modelResponses?.[0]?.gradingConfidence,
+                                        aiGradingReasoning: question.modelResponses?.[0]?.aiGradingReasoning,
+                                        humanGrade: question.modelResponses?.[0]?.humanGrade,
+                                        humanGradedBy: question.modelResponses?.[0]?.humanGradedBy,
+                                        humanGradingNotes: question.modelResponses?.[0]?.humanGradingNotes,
+                                        humanGradedAt: question.modelResponses?.[0]?.humanGradedAt,
+                                        gradingAgreement: question.modelResponses?.[0]?.gradingAgreement,
+                                        requiresReview: question.modelResponses?.[0]?.requiresReview
+                                      }}
+                                      agentType={agentType}
+                                      onGradeSubmitted={() => {
+                                        refetchQuestions();
+                                      }}
+                                    />
+                                  </TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
