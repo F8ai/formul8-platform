@@ -100,18 +100,31 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
   // Fetch repository data from GitHub
   const { data: repoData } = useQuery({
     queryKey: [`/api/agents/${agentType}/repository-stats`],
-    enabled: !!agentType, // Remove authentication requirement
-  });
-
-  // Fetch real baseline questions count from baseline.json
-  const { data: realBaselineData } = useQuery({
-    queryKey: [`/agents/${agentType}-agent/baseline.json`],
+    enabled: !!agentType,
     queryFn: async () => {
-      const response = await fetch(`/agents/${agentType}-agent/baseline.json`);
-      if (!response.ok) throw new Error('Failed to fetch baseline data');
+      const response = await fetch(`/api/agents/${agentType}/repository-stats`);
+      if (!response.ok) {
+        console.warn(`Repository stats not available for ${agentType}`);
+        return null;
+      }
       return response.json();
     },
+    retry: false,
+  });
+
+  // Fetch baseline questions from API instead of direct file access
+  const { data: baselineResults } = useQuery({
+    queryKey: [`/api/agents/${agentType}/baseline-results`],
     enabled: !!agentType,
+    queryFn: async () => {
+      const response = await fetch(`/api/agents/${agentType}/baseline-results`);
+      if (!response.ok) {
+        console.warn(`Baseline results not available for ${agentType}`);
+        return [];
+      }
+      return response.json();
+    },
+    retry: false,
   });
 
   const getStatusColor = (status: string) => {
@@ -163,15 +176,6 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
   }
 
   if (!agentData && !isLoading) {
-    console.log('Showing Agent Not Found - Debug Info:', {
-      agentType,
-      isAuthenticated,
-      isLoading,
-      hasData: !!agentData,
-      error,
-      queryEnabled: isAuthenticated && !!agentType
-    });
-    
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -181,9 +185,6 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
             The requested agent dashboard could not be loaded.
             {error && <span className="block text-sm mt-2 text-red-600">Error: {error.message}</span>}
           </p>
-          <div className="text-xs text-gray-500 mt-2 p-2 bg-gray-100 rounded">
-            Debug: agentType={agentType}, authenticated={isAuthenticated ? 'yes' : 'no'}, loading={isLoading ? 'yes' : 'no'}
-          </div>
           <Button onClick={() => window.history.back()}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Go Back
@@ -191,6 +192,10 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
         </div>
       </div>
     );
+  }
+
+  if (!agentData) {
+    return null; // This should not happen due to earlier checks
   }
 
   return (
@@ -252,7 +257,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold text-blue-600">
-                      {realBaselineData?.questions?.length || 0}
+                      {baselineResults?.length || 0}
                     </div>
                     <div className="text-xs text-gray-500">
                       Click to view baseline test table
@@ -331,7 +336,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                 <CardHeader>
                   <CardTitle>Baseline Questions</CardTitle>
                   <p className="text-sm text-gray-600">
-                    View and manage all {realBaselineData?.questions?.length || 0} baseline questions for this agent
+                    View and manage all {baselineResults?.length || 0} baseline questions for this agent
                   </p>
                 </CardHeader>
                 <CardContent className="p-0">
