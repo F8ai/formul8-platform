@@ -1,0 +1,823 @@
+{
+  "summary": {
+    "total": 73,
+    "passed": 72,
+    "failed": 1,
+    "errors": [
+      "Agents Overview: Expected 200, got 301"
+    ]
+  },
+  "agentDashboards": [
+    {
+      "name": "Compliance Dashboard",
+      "path": "/agent/compliance",
+      "url": "http://localhost:5000/agent/compliance",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.006332,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Formulation Dashboard",
+      "path": "/agent/formulation",
+      "url": "http://localhost:5000/agent/formulation",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.007278,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Marketing Dashboard",
+      "path": "/agent/marketing",
+      "url": "http://localhost:5000/agent/marketing",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.010589,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Operations Dashboard",
+      "path": "/agent/operations",
+      "url": "http://localhost:5000/agent/operations",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005343,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Science Dashboard",
+      "path": "/agent/science",
+      "url": "http://localhost:5000/agent/science",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.007935,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Sourcing Dashboard",
+      "path": "/agent/sourcing",
+      "url": "http://localhost:5000/agent/sourcing",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.009784,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Patent Dashboard",
+      "path": "/agent/patent",
+      "url": "http://localhost:5000/agent/patent",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004264,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Spectra Dashboard",
+      "path": "/agent/spectra",
+      "url": "http://localhost:5000/agent/spectra",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005799,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Customer-success Dashboard",
+      "path": "/agent/customer-success",
+      "url": "http://localhost:5000/agent/customer-success",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004374,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Lms Dashboard",
+      "path": "/agent/lms",
+      "url": "http://localhost:5000/agent/lms",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005066,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Metabolomics Dashboard",
+      "path": "/agent/metabolomics",
+      "url": "http://localhost:5000/agent/metabolomics",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.007685,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    }
+  ],
+  "agentBaselines": [
+    {
+      "name": "Compliance Baseline",
+      "path": "/agent/compliance/baseline",
+      "url": "http://localhost:5000/agent/compliance/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005043,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Formulation Baseline",
+      "path": "/agent/formulation/baseline",
+      "url": "http://localhost:5000/agent/formulation/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005272,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Marketing Baseline",
+      "path": "/agent/marketing/baseline",
+      "url": "http://localhost:5000/agent/marketing/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.011806,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Operations Baseline",
+      "path": "/agent/operations/baseline",
+      "url": "http://localhost:5000/agent/operations/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.012572,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Science Baseline",
+      "path": "/agent/science/baseline",
+      "url": "http://localhost:5000/agent/science/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004823,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Sourcing Baseline",
+      "path": "/agent/sourcing/baseline",
+      "url": "http://localhost:5000/agent/sourcing/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004822,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Patent Baseline",
+      "path": "/agent/patent/baseline",
+      "url": "http://localhost:5000/agent/patent/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004041,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Spectra Baseline",
+      "path": "/agent/spectra/baseline",
+      "url": "http://localhost:5000/agent/spectra/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004646,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Customer-success Baseline",
+      "path": "/agent/customer-success/baseline",
+      "url": "http://localhost:5000/agent/customer-success/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.006505,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Lms Baseline",
+      "path": "/agent/lms/baseline",
+      "url": "http://localhost:5000/agent/lms/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005187,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Metabolomics Baseline",
+      "path": "/agent/metabolomics/baseline",
+      "url": "http://localhost:5000/agent/metabolomics/baseline",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005788,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    }
+  ],
+  "agentAPIs": [
+    {
+      "name": "Compliance Dashboard API",
+      "path": "/api/agents/compliance/dashboard",
+      "url": "http://localhost:5000/api/agents/compliance/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.003641,
+      "sizeBytes": 5856,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Formulation Dashboard API",
+      "path": "/api/agents/formulation/dashboard",
+      "url": "http://localhost:5000/api/agents/formulation/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.026088,
+      "sizeBytes": 992,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Marketing Dashboard API",
+      "path": "/api/agents/marketing/dashboard",
+      "url": "http://localhost:5000/api/agents/marketing/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.026281,
+      "sizeBytes": 955,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Operations Dashboard API",
+      "path": "/api/agents/operations/dashboard",
+      "url": "http://localhost:5000/api/agents/operations/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.025741,
+      "sizeBytes": 969,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Science Dashboard API",
+      "path": "/api/agents/science/dashboard",
+      "url": "http://localhost:5000/api/agents/science/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.022996,
+      "sizeBytes": 959,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Sourcing Dashboard API",
+      "path": "/api/agents/sourcing/dashboard",
+      "url": "http://localhost:5000/api/agents/sourcing/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.021863,
+      "sizeBytes": 952,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Patent Dashboard API",
+      "path": "/api/agents/patent/dashboard",
+      "url": "http://localhost:5000/api/agents/patent/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.021549,
+      "sizeBytes": 921,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Spectra Dashboard API",
+      "path": "/api/agents/spectra/dashboard",
+      "url": "http://localhost:5000/api/agents/spectra/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.027937,
+      "sizeBytes": 933,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Customer-success Dashboard API",
+      "path": "/api/agents/customer-success/dashboard",
+      "url": "http://localhost:5000/api/agents/customer-success/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.021722,
+      "sizeBytes": 980,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Lms Dashboard API",
+      "path": "/api/agents/lms/dashboard",
+      "url": "http://localhost:5000/api/agents/lms/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.023403,
+      "sizeBytes": 800,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Metabolomics Dashboard API",
+      "path": "/api/agents/metabolomics/dashboard",
+      "url": "http://localhost:5000/api/agents/metabolomics/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.022837,
+      "sizeBytes": 854,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Compliance Config API",
+      "path": "/api/agents/compliance/config",
+      "url": "http://localhost:5000/api/agents/compliance/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.010962,
+      "sizeBytes": 333,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Formulation Config API",
+      "path": "/api/agents/formulation/config",
+      "url": "http://localhost:5000/api/agents/formulation/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002507,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Marketing Config API",
+      "path": "/api/agents/marketing/config",
+      "url": "http://localhost:5000/api/agents/marketing/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002491,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Operations Config API",
+      "path": "/api/agents/operations/config",
+      "url": "http://localhost:5000/api/agents/operations/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002225,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Science Config API",
+      "path": "/api/agents/science/config",
+      "url": "http://localhost:5000/api/agents/science/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002186,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Sourcing Config API",
+      "path": "/api/agents/sourcing/config",
+      "url": "http://localhost:5000/api/agents/sourcing/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.00229,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Patent Config API",
+      "path": "/api/agents/patent/config",
+      "url": "http://localhost:5000/api/agents/patent/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.00236,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Spectra Config API",
+      "path": "/api/agents/spectra/config",
+      "url": "http://localhost:5000/api/agents/spectra/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002513,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Customer-success Config API",
+      "path": "/api/agents/customer-success/config",
+      "url": "http://localhost:5000/api/agents/customer-success/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002146,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Lms Config API",
+      "path": "/api/agents/lms/config",
+      "url": "http://localhost:5000/api/agents/lms/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002188,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Metabolomics Config API",
+      "path": "/api/agents/metabolomics/config",
+      "url": "http://localhost:5000/api/agents/metabolomics/config",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.00264,
+      "sizeBytes": 357,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Compliance Baseline API",
+      "path": "/api/agents/compliance/baseline-results",
+      "url": "http://localhost:5000/api/agents/compliance/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.003309,
+      "sizeBytes": 6196,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Formulation Baseline API",
+      "path": "/api/agents/formulation/baseline-results",
+      "url": "http://localhost:5000/api/agents/formulation/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002328,
+      "sizeBytes": 3326,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Marketing Baseline API",
+      "path": "/api/agents/marketing/baseline-results",
+      "url": "http://localhost:5000/api/agents/marketing/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.012458,
+      "sizeBytes": 8418,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Operations Baseline API",
+      "path": "/api/agents/operations/baseline-results",
+      "url": "http://localhost:5000/api/agents/operations/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002974,
+      "sizeBytes": 8479,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Science Baseline API",
+      "path": "/api/agents/science/baseline-results",
+      "url": "http://localhost:5000/api/agents/science/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002624,
+      "sizeBytes": 2,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Sourcing Baseline API",
+      "path": "/api/agents/sourcing/baseline-results",
+      "url": "http://localhost:5000/api/agents/sourcing/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002609,
+      "sizeBytes": 8376,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Patent Baseline API",
+      "path": "/api/agents/patent/baseline-results",
+      "url": "http://localhost:5000/api/agents/patent/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002456,
+      "sizeBytes": 8653,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Spectra Baseline API",
+      "path": "/api/agents/spectra/baseline-results",
+      "url": "http://localhost:5000/api/agents/spectra/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002902,
+      "sizeBytes": 8434,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Customer-success Baseline API",
+      "path": "/api/agents/customer-success/baseline-results",
+      "url": "http://localhost:5000/api/agents/customer-success/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.002683,
+      "sizeBytes": 8811,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Lms Baseline API",
+      "path": "/api/agents/lms/baseline-results",
+      "url": "http://localhost:5000/api/agents/lms/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004499,
+      "sizeBytes": 9390,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Metabolomics Baseline API",
+      "path": "/api/agents/metabolomics/baseline-results",
+      "url": "http://localhost:5000/api/agents/metabolomics/baseline-results",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004847,
+      "sizeBytes": 8438,
+      "success": true,
+      "error": null
+    }
+  ],
+  "generalPages": [
+    {
+      "name": "Home Page",
+      "path": "/",
+      "url": "http://localhost:5000/",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005683,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Agents Overview",
+      "path": "/agents",
+      "url": "http://localhost:5000/agents",
+      "expectedStatus": 200,
+      "actualStatus": 301,
+      "responseTime": 0.004314,
+      "sizeBytes": 156,
+      "success": false,
+      "error": null
+    },
+    {
+      "name": "Data Management",
+      "path": "/data",
+      "url": "http://localhost:5000/data",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005876,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Roadmap",
+      "path": "/roadmap",
+      "url": "http://localhost:5000/roadmap",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.019288,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Baseline Testing",
+      "path": "/baseline-testing",
+      "url": "http://localhost:5000/baseline-testing",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.008523,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Use Cases",
+      "path": "/use",
+      "url": "http://localhost:5000/use",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004989,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Federated Network",
+      "path": "/federated",
+      "url": "http://localhost:5000/federated",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005055,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Compute Page",
+      "path": "/compute",
+      "url": "http://localhost:5000/compute",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005048,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Validation Page",
+      "path": "/validation",
+      "url": "http://localhost:5000/validation",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.004298,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    }
+  ],
+  "apiEndpoints": [
+    {
+      "name": "Agent List",
+      "path": "/api/agents",
+      "url": "http://localhost:5000/api/agents",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.018637,
+      "sizeBytes": 4567,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Agent Status",
+      "path": "/api/agent-status",
+      "url": "http://localhost:5000/api/agent-status",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.008401,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Agent Management Dashboard",
+      "path": "/api/agent-management/dashboard",
+      "url": "http://localhost:5000/api/agent-management/dashboard",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005002,
+      "sizeBytes": 42413,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Baseline Badges",
+      "path": "/api/baseline-exam/badges",
+      "url": "http://localhost:5000/api/baseline-exam/badges",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.033784,
+      "sizeBytes": 1624,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Run All Tests Progress",
+      "path": "/api/run-all-tests/progress",
+      "url": "http://localhost:5000/api/run-all-tests/progress",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.003191,
+      "sizeBytes": 160,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Data Corpora",
+      "path": "/api/data/corpora",
+      "url": "http://localhost:5000/api/data/corpora",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.003757,
+      "sizeBytes": 627,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Knowledge Bases",
+      "path": "/api/data/knowledge-bases",
+      "url": "http://localhost:5000/api/data/knowledge-bases",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.005478,
+      "sizeBytes": 225,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Roadmap Features",
+      "path": "/api/roadmap/features",
+      "url": "http://localhost:5000/api/roadmap/features",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.007192,
+      "sizeBytes": 843,
+      "success": true,
+      "error": null
+    },
+    {
+      "name": "Health Check",
+      "path": "/api/health",
+      "url": "http://localhost:5000/api/health",
+      "expectedStatus": 200,
+      "actualStatus": 200,
+      "responseTime": 0.395272,
+      "sizeBytes": 483,
+      "success": true,
+      "error": null
+    }
+  ]
+}
