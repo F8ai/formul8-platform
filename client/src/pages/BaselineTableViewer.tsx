@@ -56,7 +56,9 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
   
   const [searchTerm, setSearchTerm] = useState('');
   const [difficultyFilter, setDifficultyFilter] = useState('all');
-  const [stateFilter, setStateFilter] = useState('all');  
+  const [stateFilter, setStateFilter] = useState('all');
+  const [modelFilter, setModelFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
   const [testingModels, setTestingModels] = useState<Set<string>>(new Set());
   const [editingBaseline, setEditingBaseline] = useState(false);
@@ -272,8 +274,10 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
         
         const matchesDifficulty = !difficultyFilter || difficultyFilter === 'all' || q.difficulty === difficultyFilter;
         const matchesState = !stateFilter || stateFilter === 'all' || q.state === stateFilter;
+        const matchesModel = !modelFilter || modelFilter === 'all' || 
+          (q.modelResponses && q.modelResponses.some((r: ModelResponse) => r.model === modelFilter));
         
-        return matchesSearch && matchesDifficulty && matchesState;
+        return matchesSearch && matchesDifficulty && matchesState && matchesModel;
       });
       
       if (filteredCategoryQuestions.length > 0) {
@@ -424,60 +428,35 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
           </Card>
         )}
 
-        {/* Filters */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Filters</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search questions..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              
-              <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All Difficulties" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Difficulties</SelectItem>
-                  <SelectItem value="basic">Basic</SelectItem>
-                  <SelectItem value="intermediate">Intermediate</SelectItem>
-                  <SelectItem value="advanced">Advanced</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={stateFilter} onValueChange={setStateFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="All States" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All States</SelectItem>
-                  {states.map((state) => (
-                    <SelectItem key={state} value={state}>{state}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchTerm('');
-                  setDifficultyFilter('all');
-                  setStateFilter('all');
-                }}
-              >
-                Clear Filters
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Compact Search Bar */}
+        <div className="flex items-center gap-3">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search questions..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          
+          {(searchTerm || difficultyFilter !== 'all' || stateFilter !== 'all' || modelFilter !== 'all' || categoryFilter !== 'all') && (
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => {
+                setSearchTerm('');
+                setDifficultyFilter('all');
+                setStateFilter('all');
+                setModelFilter('all');
+                setCategoryFilter('all');
+              }}
+            >
+              <X className="h-4 w-4 mr-1" />
+              Clear
+            </Button>
+          )}
+        </div>
 
         {/* Category-Based Collapsible Sections */}
         <div className="space-y-4">
@@ -531,12 +510,51 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                           <Table>
                             <TableHeader>
                               <TableRow>
-                                <TableHead className="w-96">Question</TableHead>
-                                <TableHead className="w-20">Difficulty</TableHead>
-                                <TableHead className="w-16">State</TableHead>
+                                <TableHead className="w-96">
+                                  <div className="space-y-1">
+                                    <div className="font-medium">Question</div>
+                                  </div>
+                                </TableHead>
+                                <TableHead className="w-20">
+                                  <div className="space-y-1">
+                                    <div className="font-medium">Difficulty</div>
+                                    <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+                                      <SelectTrigger className="h-7 text-xs">
+                                        <SelectValue placeholder="All" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="all">All</SelectItem>
+                                        <SelectItem value="basic">Basic</SelectItem>
+                                        <SelectItem value="intermediate">Inter.</SelectItem>
+                                        <SelectItem value="advanced">Adv.</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                </TableHead>
+                                <TableHead className="w-16">
+                                  <div className="space-y-1">
+                                    <div className="font-medium">State</div>
+                                    <Select value={stateFilter} onValueChange={setStateFilter}>
+                                      <SelectTrigger className="h-7 text-xs">
+                                        <SelectValue placeholder="All" />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="all">All</SelectItem>
+                                        {states.map((state) => (
+                                          <SelectItem key={state} value={state}>{state}</SelectItem>
+                                        ))}
+                                      </SelectContent>
+                                    </Select>
+                                  </div>
+                                </TableHead>
                                 {availableModels.map(model => (
                                   <TableHead key={model} className="w-32 text-center">
-                                    {model}
+                                    <div className="space-y-1">
+                                      <div className="font-medium">{model}</div>
+                                      <div className="text-xs text-muted-foreground">
+                                        {modelMetrics[model]?.testCount || 0} tests
+                                      </div>
+                                    </div>
                                   </TableHead>
                                 ))}
                               </TableRow>
