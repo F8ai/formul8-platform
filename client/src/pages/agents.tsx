@@ -49,6 +49,12 @@ export default function AgentsPage() {
     refetchInterval: 60000, // Refresh every minute
   });
 
+  // Fetch baseline summary status
+  const { data: baselineSummary } = useQuery({
+    queryKey: ["/api/baseline-summary"],
+    refetchInterval: 30000, // Refresh every 30 seconds
+  });
+
   // Test query mutation
   const testQueryMutation = useMutation({
     mutationFn: async ({ query, agent }: { query: string; agent?: string }) => {
@@ -141,6 +147,67 @@ export default function AgentsPage() {
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
+          {/* System Summary */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                System Summary Status
+              </CardTitle>
+              <CardDescription>
+                Real-time overview of agent performance and baseline testing results
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">{agents.length}</div>
+                  <div className="text-sm text-muted-foreground">Total Agents</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">
+                    {baselineSummary?.modelsWithResults || 0}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Models Tested</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-purple-600">
+                    {baselineSummary?.totalTestResults || 0}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Test Results</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-orange-600">
+                    {baselineSummary?.avgGrade ? `${baselineSummary.avgGrade}%` : 'N/A'}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Avg Performance</div>
+                </div>
+              </div>
+              
+              {baselineSummary?.recentTests && baselineSummary.recentTests.length > 0 && (
+                <div className="mt-6">
+                  <h4 className="font-semibold mb-3">Recent Test Results</h4>
+                  <div className="space-y-2">
+                    {baselineSummary.recentTests.slice(0, 5).map((test: any, index: number) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Badge variant="outline">{test.agent}</Badge>
+                          <span className="text-sm">{test.model}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge variant={test.grade >= 80 ? "default" : test.grade >= 60 ? "secondary" : "destructive"}>
+                            {test.grade}%
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">${test.cost?.toFixed(4)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

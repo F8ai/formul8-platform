@@ -20,6 +20,7 @@ import baselineTestingRoutes from "./routes/baseline-testing";
 import corpusQARoutes from "./routes/corpus-qa";
 import artifactsRouter from "./routes/artifacts";
 import astradbRouter from "./routes/astradb";
+import baselineSummaryRouter from "./routes/baseline-summary";
 import { createFeatureIssues, createAllFeatureIssues, getFeatureIssues, getRoadmapFeatures, addCommentsToAllIssues } from "./routes/roadmap";
 import { duplicatePreventionService } from "./services/duplicate-prevention";
 import { insertProjectSchema, insertQuerySchema } from "@shared/schema";
@@ -1083,6 +1084,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Federation routes
   app.use('/api/federation', federationRouter);
+  app.use(baselineSummaryRouter);
 
   // Roadmap routes
   app.get('/api/roadmap/features', getRoadmapFeatures);
