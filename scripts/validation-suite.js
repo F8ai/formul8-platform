@@ -193,20 +193,44 @@ class ValidationSuite {
       this.testFile('Replit Config', 'replit.md'),
     ];
 
+    // All agent types from the agents directory  
+    const agentTypes = [
+      'compliance',
+      'formulation', 
+      'marketing',
+      'operations',
+      'science',
+      'sourcing',
+      'patent',
+      'spectra',
+      'customer-success',
+      'lms',
+      'metabolomics'
+    ];
+
     // Test frontend pages
     console.log('\n🌐 Testing Frontend Pages...');
     const pages = [
       { name: 'Home Page', path: '/' },
       { name: 'Dashboard', path: '/dashboard', expectedStatus: 401 }, // Requires auth
       { name: 'Agents Overview', path: '/agents' },
-      { name: 'Agent Detail (Compliance)', path: '/agent/compliance' },
-      { name: 'Agent Detail (Formulation)', path: '/agent/formulation' },
       { name: 'Data Management', path: '/data' },
       { name: 'Roadmap', path: '/roadmap' },
       { name: 'Baseline Testing', path: '/baseline-testing' },
       { name: 'Use Cases', path: '/use' },
       { name: 'Federated Network', path: '/federated' },
       { name: 'Compute Page', path: '/compute' },
+      { name: 'Validation Page', path: '/validation' },
+      // Add all agent dashboard routes
+      ...agentTypes.map(agent => ({ 
+        name: `Agent Dashboard (${agent})`, 
+        path: `/agent/${agent}` 
+      })),
+      // Add baseline viewer routes  
+      ...agentTypes.map(agent => ({ 
+        name: `Baseline Viewer (${agent})`, 
+        path: `/agent/${agent}/baseline` 
+      }))
     ];
 
     for (const page of pages) {
@@ -224,13 +248,29 @@ class ValidationSuite {
       { name: 'Agent List', path: '/api/agents' },
       { name: 'Agent Status', path: '/api/agent-status' },
       { name: 'Agent Management Dashboard', path: '/api/agent-management/dashboard' },
-      { name: 'Compliance Agent Config', path: '/api/agents/compliance/config' },
-      { name: 'Formulation Agent Config', path: '/api/agents/formulation/config' },
+      
+      // Individual agent dashboard APIs
+      ...agentTypes.map(agent => ({ 
+        name: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Agent Dashboard`, 
+        path: `/api/agents/${agent}/dashboard` 
+      })),
+      
+      // Agent configuration APIs
+      ...agentTypes.map(agent => ({ 
+        name: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Agent Config`, 
+        path: `/api/agents/${agent}/config` 
+      })),
       
       // Baseline Testing APIs
       { name: 'Baseline Badges', path: '/api/baseline-exam/badges' },
       { name: 'Baseline Coverage', path: '/api/baseline-coverage' },
       { name: 'Run All Tests Progress', path: '/api/run-all-tests/progress' },
+      
+      // Agent baseline question APIs
+      ...agentTypes.map(agent => ({ 
+        name: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Baseline Questions`, 
+        path: `/api/agents/${agent}/baseline-results` 
+      })),
       
       // Data Management APIs
       { name: 'Data Corpora', path: '/api/data/corpora' },
@@ -270,7 +310,89 @@ class ValidationSuite {
       this.results.apis.push(result);
     }
 
+    // Test agent baseline files
+    console.log('\n📊 Testing Agent Baseline Files...');
+    this.results.baselines = [];
+    
+    for (const agent of agentTypes) {
+      const baselineResult = this.testFile(
+        `${agent.charAt(0).toUpperCase() + agent.slice(1)} Baseline`,
+        `agents/${agent}-agent/baseline.json`
+      );
+      this.results.baselines.push(baselineResult);
+      
+      // Test baseline file structure if it exists
+      if (baselineResult.status === 'pass') {
+        try {
+          const baselineContent = require(path.join(process.cwd(), `agents/${agent}-agent/baseline.json`));
+          const structureResult = this.validateBaselineStructure(agent, baselineContent);
+          this.results.baselines.push(structureResult);
+        } catch (error) {
+          this.results.baselines.push({
+            test: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Baseline Structure`,
+            status: 'fail',
+            message: `Failed to parse baseline.json: ${error.message}`,
+            details: `Agent: ${agent}, Error: ${error.message}`
+          });
+          this.results.summary.totalTests++;
+          this.results.summary.failed++;
+        }
+      }
+    }
+
     this.generateReport();
+  }
+
+  // Validate baseline.json structure
+  validateBaselineStructure(agent, baseline) {
+    this.results.summary.totalTests++;
+    
+    const requiredFields = ['agent', 'description', 'categories', 'difficulty_levels', 'questions'];
+    const missingFields = requiredFields.filter(field => !baseline.hasOwnProperty(field));
+    
+    if (missingFields.length > 0) {
+      this.results.summary.failed++;
+      return {
+        test: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Baseline Structure`,
+        status: 'fail',
+        message: `Missing required fields: ${missingFields.join(', ')}`,
+        details: `Agent: ${agent}, Structure validation failed`
+      };
+    }
+    
+    // Validate questions array
+    if (!Array.isArray(baseline.questions) || baseline.questions.length === 0) {
+      this.results.summary.failed++;
+      return {
+        test: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Baseline Questions`,
+        status: 'fail',
+        message: 'No questions found in baseline.json',
+        details: `Agent: ${agent}, Questions: ${baseline.questions?.length || 0}`
+      };
+    }
+    
+    // Validate individual questions
+    const questionValidation = baseline.questions.every(q => 
+      q.id && q.category && q.difficulty && q.question && q.expected_answer
+    );
+    
+    if (!questionValidation) {
+      this.results.summary.failed++;
+      return {
+        test: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Question Validation`,
+        status: 'fail',
+        message: 'Some questions missing required fields (id, category, difficulty, question, expected_answer)',
+        details: `Agent: ${agent}, Questions: ${baseline.questions.length}`
+      };
+    }
+    
+    this.results.summary.passed++;
+    return {
+      test: `${agent.charAt(0).toUpperCase() + agent.slice(1)} Baseline Structure`,
+      status: 'pass',
+      message: `Valid structure with ${baseline.questions.length} questions`,
+      details: `Agent: ${agent}, Questions: ${baseline.questions.length}, Categories: ${Object.keys(baseline.categories).length}`
+    };
   }
 
   // Generate comprehensive report
@@ -322,11 +444,27 @@ class ValidationSuite {
       if (api.error) console.log(`      Error: ${api.error}`);
     });
 
+    // Baseline validation results
+    if (this.results.baselines && this.results.baselines.length > 0) {
+      console.log('\n📊 Baseline Validation:');
+      this.results.baselines.forEach(baseline => {
+        const status = baseline.status === 'pass' ? '✅' : '❌';
+        console.log(`   ${status} ${baseline.test}: ${baseline.message}`);
+        if (baseline.details && baseline.status === 'pass') {
+          console.log(`      Details: ${baseline.details}`);
+        }
+        if (baseline.status === 'fail') {
+          console.log(`      Error: ${baseline.details || baseline.message}`);
+        }
+      });
+    }
+
     // Critical issues
     const criticalIssues = [
       ...this.results.files.filter(f => f.status === 'FAIL'),
       ...this.results.pages.filter(p => p.status === 'FAIL' && !p.warnings?.includes('Authentication required')),
-      ...this.results.apis.filter(a => a.status === 'FAIL' && a.expectedStatus === 200)
+      ...this.results.apis.filter(a => a.status === 'FAIL' && a.expectedStatus === 200),
+      ...(this.results.baselines || []).filter(b => b.status === 'fail')
     ];
 
     if (criticalIssues.length > 0) {
