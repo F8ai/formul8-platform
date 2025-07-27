@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MetricBadge } from "@/components/ui/metric-badge";
 import { TrendChart } from "@/components/ui/trend-chart";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
 import { AlertCircle, Bot, CheckCircle, Clock, Users, Zap, BarChart3, Settings, Play, Eye, Activity } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -54,6 +55,68 @@ export default function AgentsPage() {
     queryKey: ["/api/baseline-summary"],
     refetchInterval: 30000, // Refresh every 30 seconds
   });
+
+  // Fetch baseline coverage analysis
+  const { data: coverageAnalysis } = useQuery({
+    queryKey: ["/api/baseline-coverage"],
+    refetchInterval: 300000, // Refresh every 5 minutes
+  });
+
+  // Get executive summary from baseline summary response
+  const executiveSummary = baselineSummary?.executiveSummary;
+  const summaryLoading = !baselineSummary;
+
+  // State for run all tests
+  const [selectedModels, setSelectedModels] = useState(['gpt-4o-mini']);
+  const [maxQuestions, setMaxQuestions] = useState(3);
+
+  // Fetch test progress
+  const { data: testProgress } = useQuery({
+    queryKey: ["/api/run-all-tests/progress"],
+    refetchInterval: 2000, // Check every 2 seconds when tests are running
+    enabled: true
+  });
+
+  // Run all tests mutation
+  const runAllTestsMutation = useMutation({
+    mutationFn: async ({ models, maxQuestions }: { models: string[], maxQuestions: number }) => {
+      return apiRequest('/api/run-all-tests', {
+        method: 'POST',
+        body: { models, maxQuestions }
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Tests Started",
+        description: "Baseline testing started for all agents"
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to start tests",
+        variant: "destructive"
+      });
+    }
+  });
+
+  // Stop tests mutation
+  const stopTestsMutation = useMutation({
+    mutationFn: async () => {
+      return apiRequest('/api/run-all-tests/stop', { method: 'POST' });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Tests Stopped",
+        description: "Testing has been stopped"
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/baseline-summary"] });
+    }
+  });
+
+  const handleRunAllTests = () => {
+    runAllTestsMutation.mutate({ models: selectedModels, maxQuestions });
+  };
 
   // Test query mutation
   const testQueryMutation = useMutation({
@@ -147,6 +210,296 @@ export default function AgentsPage() {
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
+          {/* AI Executive Summary */}
+          {summaryLoading ? (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="h-5 w-5 animate-pulse" />
+                  Generating AI Executive Summary...
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="animate-pulse space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                </div>
+              </CardContent>
+            </Card>
+          ) : executiveSummary && (
+            <Card className="border-l-4 border-l-blue-500">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="h-5 w-5 text-blue-600" />
+                  AI Executive Summary
+                  <Badge variant="outline" className="text-xs">
+                    Updated {new Date(executiveSummary.timestamp).toLocaleTimeString()}
+                  </Badge>
+                </CardTitle>
+                <CardDescription>
+                  Intelligent analysis of system performance and recommendations
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Performance Assessment */}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4" />
+                    {executiveSummary.performance.title}
+                  </h4>
+                  <p className="text-green-700 text-sm">{executiveSummary.performance.assessment}</p>
+                  {executiveSummary.performance.highlights && (
+                    <ul className="mt-2 text-sm text-green-600 list-disc list-inside">
+                      {executiveSummary.performance.highlights.map((highlight: string, index: number) => (
+                        <li key={index}>{highlight}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Areas Needing Work */}
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-yellow-800 mb-2 flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4" />
+                    {executiveSummary.concerns.title}
+                  </h4>
+                  <p className="text-yellow-700 text-sm">{executiveSummary.concerns.assessment}</p>
+                  {executiveSummary.concerns.recommendations && (
+                    <ul className="mt-2 text-sm text-yellow-600 list-disc list-inside">
+                      {executiveSummary.concerns.recommendations.map((rec: string, index: number) => (
+                        <li key={index}>{rec}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Strategic Recommendations */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                    <Zap className="h-4 w-4" />
+                    Strategic Recommendations
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {executiveSummary.recommendations.map((rec: any, index: number) => (
+                      <div key={index} className="text-sm">
+                        <div className="font-medium text-blue-800">{rec.priority} Priority:</div>
+                        <div className="text-blue-700">{rec.action}</div>
+                        {rec.impact && <div className="text-xs text-blue-600 mt-1">Impact: {rec.impact}</div>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Key Metrics Summary */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      {executiveSummary.metrics.readiness}%
+                    </div>
+                    <div className="text-xs text-gray-600">System Readiness</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      {executiveSummary.metrics.testCoverage}%
+                    </div>
+                    <div className="text-xs text-gray-600">Test Coverage</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      {executiveSummary.metrics.modelDiversity}
+                    </div>
+                    <div className="text-xs text-gray-600">AI Model Diversity</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      ${executiveSummary.metrics.costEfficiency}
+                    </div>
+                    <div className="text-xs text-gray-600">Avg Cost/Test</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Baseline Coverage Analysis */}
+          {coverageAnalysis && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5" />
+                  Baseline Coverage Analysis
+                </CardTitle>
+                <CardDescription>
+                  AI evaluation of how well baseline questions cover desired functionality
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {Math.round(Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.confidence || 0), 0) / Object.keys(coverageAnalysis).length)}%
+                    </div>
+                    <div className="text-xs text-gray-600">Avg Confidence</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-600">
+                      {Math.round(Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.coverage || 0), 0) / Object.keys(coverageAnalysis).length)}%
+                    </div>
+                    <div className="text-xs text-gray-600">Avg Coverage</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-red-600">
+                      {Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.gaps?.length || 0), 0)}
+                    </div>
+                    <div className="text-xs text-gray-600">Total Gaps</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-purple-600">
+                      {Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.strengths?.length || 0), 0)}
+                    </div>
+                    <div className="text-xs text-gray-600">Strengths</div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="text-sm font-medium">Agent Coverage Summary:</div>
+                  {Object.entries(coverageAnalysis).map(([agentName, analysis]: [string, any]) => (
+                    <div key={agentName} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                      <span className="font-medium">{agentName}</span>
+                      <div className="flex items-center gap-2">
+                        <Badge variant={analysis.confidence >= 80 ? "default" : analysis.confidence >= 60 ? "secondary" : "destructive"}>
+                          {analysis.confidence}% confident
+                        </Badge>
+                        <Badge variant={analysis.coverage >= 80 ? "default" : analysis.coverage >= 60 ? "secondary" : "outline"}>
+                          {analysis.coverage}% coverage
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Run All Tests Control Panel */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Comprehensive Testing
+              </CardTitle>
+              <CardDescription>
+                Run baseline tests across all agents with multiple AI models
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {testProgress?.isRunning ? (
+                <div className="space-y-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium text-blue-800">Testing in Progress</span>
+                      <Button 
+                        onClick={() => stopTestsMutation.mutate()}
+                        variant="outline" 
+                        size="sm"
+                        disabled={stopTestsMutation.isPending}
+                      >
+                        <StopCircle className="h-4 w-4 mr-2" />
+                        Stop Tests
+                      </Button>
+                    </div>
+                    <div className="text-sm text-blue-700 mb-3">
+                      Agent: {testProgress.progress.agent} | Model: {testProgress.progress.model}
+                    </div>
+                    <div className="text-sm text-blue-600 mb-2">
+                      Question {testProgress.progress.questionIndex} of {testProgress.progress.totalQuestions} | 
+                      Completed Agents: {testProgress.progress.completedAgents} / {testProgress.progress.totalAgents}
+                    </div>
+                    <Progress value={testProgress.percentComplete} className="w-full" />
+                    <div className="text-xs text-blue-600 mt-1">
+                      {testProgress.percentComplete}% Complete
+                    </div>
+                  </div>
+                  {testProgress.progress.results.length > 0 && (
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <div className="text-sm font-medium mb-2">Recent Results:</div>
+                      <div className="space-y-1">
+                        {testProgress.progress.results.slice(-3).map((result: any, index: number) => (
+                          <div key={index} className="text-xs flex justify-between">
+                            <span>{result.agent}/{result.model}</span>
+                            <span className="font-medium">{result.avgGrade}% avg ({result.results} tests)</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="model-select">AI Models to Test</Label>
+                      <Select 
+                        value={selectedModels[0]} 
+                        onValueChange={(value) => setSelectedModels([value])}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select model" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="gpt-4o-mini">GPT-4o Mini (Fast & Cheap)</SelectItem>
+                          <SelectItem value="gpt-4o">GPT-4o (High Quality)</SelectItem>
+                          <SelectItem value="claude-3-5-sonnet-20241022">Claude-3.5-Sonnet</SelectItem>
+                          <SelectItem value="claude-3-haiku-20240307">Claude-3-Haiku</SelectItem>
+                          <SelectItem value="gemini-1.5-pro">Gemini-1.5-Pro</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label htmlFor="max-questions">Questions per Agent</Label>
+                      <Select 
+                        value={maxQuestions.toString()} 
+                        onValueChange={(value) => setMaxQuestions(parseInt(value))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">1 Question (Quick Test)</SelectItem>
+                          <SelectItem value="3">3 Questions (Standard)</SelectItem>
+                          <SelectItem value="5">5 Questions (Comprehensive)</SelectItem>
+                          <SelectItem value="10">10 Questions (Full Test)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-sm font-medium mb-2">Test Estimate:</div>
+                    <div className="text-xs text-gray-600 space-y-1">
+                      <div>• Total Tests: {11 * maxQuestions} questions across 11 agents</div>
+                      <div>• Estimated Time: {Math.ceil(11 * maxQuestions * 2 / 60)} minutes</div>
+                      <div>• Est. Cost: ${(11 * maxQuestions * 0.003).toFixed(3)} (for {selectedModels[0]})</div>
+                    </div>
+                  </div>
+
+                  <Button 
+                    onClick={handleRunAllTests}
+                    disabled={runAllTestsMutation.isPending}
+                    className="w-full"
+                  >
+                    {runAllTestsMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <PlayCircle className="h-4 w-4 mr-2" />
+                    )}
+                    Run All Tests ({selectedModels[0]})
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
           {/* System Summary */}
           <Card>
             <CardHeader>

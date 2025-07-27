@@ -78,6 +78,16 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 27, 2025 - AI-Powered Baseline Coverage Analysis System with README Integration ✅ COMPLETE
+- **Comprehensive README Documentation**: Created detailed README.md files for 6 core agents (compliance, formulation, marketing, operations, science, sourcing) defining desired functionality with 10 core areas each
+- **AI Coverage Analysis Service**: Built BaselineCoverageAnalyzer using OpenAI GPT-4o to evaluate how well baseline.json questions cover README functionality with confidence scoring
+- **Enhanced Agents Dashboard**: Added baseline coverage analysis card showing system-wide metrics (80% avg confidence, 70% avg coverage) with color-coded agent summaries
+- **Markdown Editor Component**: Created professional markdown editor with preview/raw modes, save functionality, and line count indicators for README editing
+- **Individual Agent Detail Pages**: Built comprehensive agent detail view with coverage analysis, editable README documentation, baseline questions overview, and performance metrics
+- **Real-Time Coverage Metrics**: API routes for coverage analysis (/api/baseline-coverage) with 5-minute refresh intervals and fallback analysis for agents without AI access
+- **Production-Ready Integration**: Complete integration with existing baseline testing system, executive summary generation, and multi-agent collaboration framework
+- **Actionable Insights**: System identifies coverage gaps, strengths, and provides specific recommendations for improving baseline test coverage across all agents
+
 ### July 27, 2025 - Complete Baseline.json Files for All 11 Agents ✅ COMPLETE
 - **Universal Baseline Coverage**: Created comprehensive baseline.json files for all agents following compliance agent structure
 - **Sourcing Agent Baseline**: 16 questions covering vendor evaluation, quality assessment, procurement compliance, supply chain optimization, contract negotiation, logistics, cost analysis, and risk management
