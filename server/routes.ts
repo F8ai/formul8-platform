@@ -1128,7 +1128,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       for (const fileName of resultFiles) {
         try {
           const filePath = path.join(agentPath, fileName);
-          if (fs.existsSync(filePath)) {
+          if (existsSync(filePath)) {
             const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             const model = fileName.replace('CO-', '').replace('.json', '');
             allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
