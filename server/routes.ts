@@ -1123,20 +1123,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const resultFiles = ['CO-gpt4o.json', 'CO-gpt4o-mini.json', 'CO-claude-3-5-sonnet.json'];
       const allResults: any[] = [];
-      const agentPath = path.resolve(import.meta.dirname, '..', 'agents/compliance-agent/data/results');
+      const agentPath = path.resolve(process.cwd(), 'agents/compliance-agent/data/results');
+      
+      console.log(`Loading real baseline results from: ${agentPath}`);
       
       for (const fileName of resultFiles) {
         try {
           const filePath = path.join(agentPath, fileName);
+          console.log(`Checking file: ${filePath}, exists: ${existsSync(filePath)}`);
+          
           if (existsSync(filePath)) {
             const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-            const model = fileName.replace('CO-', '').replace('.json', '');
-            allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
+            console.log(`Loaded ${fileName}: ${fileData.results ? fileData.results.length : 0} results`);
+            
+            if (fileData.results && Array.isArray(fileData.results)) {
+              const model = fileName.replace('CO-', '').replace('.json', '');
+              allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
+            }
           }
         } catch (error) {
           console.warn(`Could not load ${fileName}:`, error);
         }
       }
+      
+      console.log(`Total results loaded: ${allResults.length}`);
       
       // Group results by questionId and create question objects with model responses
       const questionMap = new Map();
