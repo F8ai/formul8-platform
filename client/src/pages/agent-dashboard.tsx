@@ -403,10 +403,10 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
             <div className="mb-6">
               {/* Mobile: Horizontal scrollable tabs */}
               <div className="block sm:hidden">
-                <div className="flex space-x-1 overflow-x-auto pb-2">
+                <div className="flex space-x-1 overflow-x-auto pb-2 scrollbar-hide">
                   <button
                     onClick={() => setActiveTab("overview")}
-                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                    className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap ${
                       activeTab === "overview" 
                         ? "bg-blue-100 text-blue-700" 
                         : "text-gray-500 hover:text-gray-700"
@@ -416,7 +416,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                   </button>
                   <button
                     onClick={() => setActiveTab("baseline")}
-                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                    className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap ${
                       activeTab === "baseline" 
                         ? "bg-blue-100 text-blue-700" 
                         : "text-gray-500 hover:text-gray-700"
@@ -426,7 +426,7 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                   </button>
                   <button
                     onClick={() => setActiveTab("performance")}
-                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                    className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap ${
                       activeTab === "performance" 
                         ? "bg-blue-100 text-blue-700" 
                         : "text-gray-500 hover:text-gray-700"
@@ -435,18 +435,8 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                     Performance
                   </button>
                   <button
-                    onClick={() => setActiveTab("activity")}
-                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
-                      activeTab === "activity" 
-                        ? "bg-blue-100 text-blue-700" 
-                        : "text-gray-500 hover:text-gray-700"
-                    }`}
-                  >
-                    Activity
-                  </button>
-                  <button
                     onClick={() => setActiveTab("configuration")}
-                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
+                    className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap ${
                       activeTab === "configuration" 
                         ? "bg-blue-100 text-blue-700" 
                         : "text-gray-500 hover:text-gray-700"
@@ -455,27 +445,26 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
                     Config
                   </button>
                   <button
-                    onClick={() => setActiveTab("repository")}
-                    className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md ${
-                      activeTab === "repository" 
+                    onClick={() => setActiveTab("activity")}
+                    className={`flex-shrink-0 px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap ${
+                      activeTab === "activity" 
                         ? "bg-blue-100 text-blue-700" 
                         : "text-gray-500 hover:text-gray-700"
                     }`}
                   >
-                    Repository
+                    Activity
                   </button>
                 </div>
               </div>
               
               {/* Desktop: Standard tab list */}
               <div className="hidden sm:block">
-                <TabsList className="grid w-full grid-cols-6">
+                <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="baseline">Baseline</TabsTrigger>
                   <TabsTrigger value="performance">Performance</TabsTrigger>
+                  <TabsTrigger value="configuration">Config</TabsTrigger>
                   <TabsTrigger value="activity">Activity</TabsTrigger>
-                  <TabsTrigger value="configuration">Configuration</TabsTrigger>
-                  <TabsTrigger value="repository">Repository</TabsTrigger>
                 </TabsList>
               </div>
             </div>
@@ -627,30 +616,30 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
               </Card>
             </TabsContent>
 
-            {/* Activity Tab */}
-            <TabsContent value="activity" className="space-y-6">
+            {/* Activity Tab - Mobile responsive */}
+            <TabsContent value="activity" className="space-y-4 sm:space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Recent Activity</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {agentData.recentActivity?.map((activity, index) => (
-                      <div key={index} className="flex items-center space-x-4 p-4 border rounded-lg">
-                        <div className="flex-shrink-0">
+                      <div key={index} className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 p-3 sm:p-4 border rounded-lg">
+                        <div className="flex items-center space-x-3 sm:flex-shrink-0">
                           {getActivityIcon(activity.action)}
+                          <span className="font-medium text-sm sm:text-base">{activity.action.replace('_', ' ')}</span>
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{activity.action.replace('_', ' ')}</span>
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-1 sm:space-y-0">
+                            <p className="text-xs sm:text-sm text-gray-600">{activity.details}</p>
                             <div className="flex items-center space-x-2">
                               {getStatusIcon(activity.status)}
-                              <span className="text-sm text-gray-500">
+                              <span className="text-xs sm:text-sm text-gray-500">
                                 {new Date(activity.timestamp).toLocaleString()}
                               </span>
                             </div>
                           </div>
-                          <p className="text-sm text-gray-600 mt-1">{activity.details}</p>
                         </div>
                       </div>
                     )) || (
@@ -661,35 +650,39 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
               </Card>
             </TabsContent>
 
-            {/* Configuration Tab */}
-            <TabsContent value="configuration" className="space-y-6">
+            {/* Configuration Tab - Mobile responsive */}
+            <TabsContent value="configuration" className="space-y-4 sm:space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Agent Configuration</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div>
-                      <label className="text-sm font-medium">LLM Provider</label>
-                      <p className="text-sm text-gray-600">{agentData.configuration.llmProvider}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">Model</label>
-                      <p className="text-sm text-gray-600">{agentData.configuration.model}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">Tools</label>
-                      <div className="flex flex-wrap gap-2 mt-1">
-                        {agentData.configuration.tools.map((tool, index) => (
-                          <Badge key={index} variant="secondary">{tool}</Badge>
-                        ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div>
+                        <label className="text-sm font-medium block mb-1">LLM Provider</label>
+                        <div className="p-2 bg-gray-50 rounded text-sm">{agentData.configuration.llmProvider}</div>
                       </div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium">RAG Enabled</label>
-                      <p className="text-sm text-gray-600">
-                        {agentData.configuration.ragEnabled ? 'Yes' : 'No'}
-                      </p>
+                      <div>
+                        <label className="text-sm font-medium block mb-1">Model</label>
+                        <div className="p-2 bg-gray-50 rounded text-sm">{agentData.configuration.model}</div>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium block mb-1">RAG Enabled</label>
+                        <div className="p-2 bg-gray-50 rounded text-sm">
+                          {agentData.configuration.ragEnabled ? 'Yes' : 'No'}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium block mb-1">Tools</label>
+                        <div className="p-2 bg-gray-50 rounded">
+                          <div className="flex flex-wrap gap-1">
+                            {agentData.configuration.tools.map((tool, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs">{tool}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
