@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useCallback } from "react";
-import ReactFlow, { 
-  Background, 
-  Controls, 
-  MiniMap, 
-  Node, 
+import {
+  ReactFlow,
+  Background,
+  Controls,
+  MiniMap,
+  Node,
   Edge,
   Handle,
   Position,
   NodeProps
-} from "reactflow";
-import "reactflow/dist/style.css";
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
 import flowData from "./voiceflow-flow.json";
 
 // Voiceflow-style icons (using Unicode symbols)
@@ -29,14 +30,23 @@ const getBlockIcon = (blockType: string) => {
   return icons[blockType as keyof typeof icons] || icons.default;
 };
 
+// Define the data structure for nodes
+interface VoiceflowNodeData extends Record<string, unknown> {
+  label: string;
+  content?: string;
+  blockType: string;
+  isNote?: boolean;
+}
+
 // Custom Voiceflow-style node component
 const VoiceflowNode = ({ data }: NodeProps) => {
-  const blockType = data.blockType;
-  const isNote = data.isNote;
+  const nodeData = data as VoiceflowNodeData;
+  const blockType = nodeData.blockType as string;
+  const isNote = nodeData.isNote as boolean || false;
   
   // Voiceflow-style colors with exact styling
-  const getNodeStyle = () => {
-    const baseStyle = {
+  const getNodeStyle = (): React.CSSProperties => {
+    const baseStyle: React.CSSProperties = {
       borderRadius: "8px",
       padding: "12px 16px",
       minWidth: "200px",
@@ -46,7 +56,7 @@ const VoiceflowNode = ({ data }: NodeProps) => {
       boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
       border: "2px solid #e0e0e0",
       color: "#333333",
-      textAlign: "left" as const,
+      textAlign: "left",
       position: "relative",
       overflow: "hidden"
     };
@@ -78,7 +88,7 @@ const VoiceflowNode = ({ data }: NodeProps) => {
         minWidth: "120px",
         maxWidth: "150px",
         padding: "12px 16px",
-        textAlign: "center"
+        textAlign: "center" as const
       };
     }
 
@@ -181,12 +191,12 @@ const VoiceflowNode = ({ data }: NodeProps) => {
           fontSize: blockType === 'start' ? "13px" : (isNote ? "11px" : "13px"),
           lineHeight: "1.2"
         }}>
-          {data.label}
+          {nodeData.label}
         </div>
       </div>
       
       {/* Content */}
-      {data.content && blockType !== 'start' && (
+      {nodeData.content && blockType !== 'start' && (
         <div style={{ 
           fontSize: isNote ? "10px" : "12px", 
           opacity: 0.9,
@@ -199,9 +209,9 @@ const VoiceflowNode = ({ data }: NodeProps) => {
           borderRadius: "4px",
           border: "1px solid rgba(255,255,255,0.2)"
         }}>
-          {data.content.length > (isNote ? 80 : 100)
-            ? data.content.substring(0, isNote ? 80 : 100) + "..." 
-            : data.content}
+          {nodeData.content && nodeData.content.length > (isNote ? 80 : 100)
+            ? nodeData.content.substring(0, isNote ? 80 : 100) + "..." 
+            : nodeData.content}
         </div>
       )}
       
@@ -231,8 +241,15 @@ export default function VoiceflowDashboard() {
   useEffect(() => {
     const nodesWithTypes = flowData.nodes.map(node => ({
       ...node,
-      type: "voiceflow"
-    }));
+      type: "voiceflow",
+      data: {
+        ...node.data,
+        label: node.data.label || "",
+        content: node.data.content || "",
+        blockType: node.data.blockType || "default",
+        isNote: node.data.isNote || false
+      }
+    })) as Node<VoiceflowNodeData>[];
     setNodes(nodesWithTypes);
     setEdges(flowData.edges);
   }, []);
@@ -397,12 +414,12 @@ export default function VoiceflowDashboard() {
               Block Details
             </h3>
             <div style={{ marginBottom: "12px" }}>
-              <strong>Type:</strong> {selectedNode.data.blockType}
+              <strong>Type:</strong> {(selectedNode.data as VoiceflowNodeData).blockType}
             </div>
             <div style={{ marginBottom: "12px" }}>
-              <strong>Label:</strong> {selectedNode.data.label}
+              <strong>Label:</strong> {(selectedNode.data as VoiceflowNodeData).label}
             </div>
-            {selectedNode.data.content && (
+            {(selectedNode.data as VoiceflowNodeData).content && (
               <div>
                 <strong>Content:</strong>
                 <div style={{ 
@@ -415,7 +432,7 @@ export default function VoiceflowDashboard() {
                   maxHeight: "200px",
                   overflow: "auto"
                 }}>
-                  {selectedNode.data.content}
+                  {(selectedNode.data as VoiceflowNodeData).content}
                 </div>
               </div>
             )}

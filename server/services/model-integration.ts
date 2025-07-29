@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import Anthropic from '@anthropic-ai/sdk';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 const DEFAULT_OPENAI_MODEL = "gpt-4o";
@@ -41,7 +41,7 @@ interface BaselineQuestion {
 export class ModelIntegrationService {
   private openai: OpenAI;
   private anthropic: Anthropic;
-  private googleAI: GoogleGenAI;
+  private googleAI: GoogleGenerativeAI;
 
   constructor() {
     this.openai = new OpenAI({
@@ -55,7 +55,7 @@ export class ModelIntegrationService {
     }
 
     if (process.env.GEMINI_API_KEY) {
-      this.googleAI = new GoogleGenAI({
+      this.googleAI = new GoogleGenerativeAI({
         apiKey: process.env.GEMINI_API_KEY
       });
     }
