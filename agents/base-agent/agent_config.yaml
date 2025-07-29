@@ -1,0 +1,100 @@
+# Agent Runtime Configuration
+# This file contains runtime settings for the cannabis compliance agent
+
+api:
+  base_url: "http://localhost:5000"
+  timeout: 30
+  retry_attempts: 3
+  rate_limit: 100  # requests per minute
+  authentication:
+    enabled: false
+    method: "api_key"
+    header_name: "X-API-Key"
+
+database:
+  host: "localhost"
+  port: 5432
+  name: "compliance_db"
+  user: "agent_user"
+  password: "${DB_PASSWORD}"  # Use environment variable
+  pool_size: 10
+  max_overflow: 20
+  ssl_mode: "prefer"
+
+# AstraDB Configuration for RAG
+astra_db:
+  token: "${ASTRA_DB_TOKEN}"  # Use environment variable
+  api_endpoint: "${ASTRA_DB_API_ENDPOINT}"  # Use environment variable
+  keyspace: "compliance_regulations"
+  collection_name: "regulations"
+  embedding_model: "text-embedding-3-small"
+  chunk_size: 1000
+  chunk_overlap: 200
+
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "logs/agent.log"
+  max_size: "10MB"
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  console_output: true
+
+features:
+  regulation_monitoring: true
+  compliance_alerts: true
+  document_analysis: true
+  change_detection: true
+  web_scraping: true
+  api_integration: false
+
+monitoring:
+  frequency: "daily"  # hourly, daily, weekly
+  jurisdictions:
+    - "federal"
+    - "state"
+    - "local"
+  document_types:
+    - "regulations"
+    - "guidance"
+    - "notices"
+    - "legislation"
+  change_detection:
+    enabled: true
+    sensitivity: "medium"  # low, medium, high
+    notification_channels:
+      - "dashboard"
+      - "email"
+      - "api"
+
+notifications:
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    username: "${EMAIL_USERNAME}"
+    password: "${EMAIL_PASSWORD}"
+    recipients: []
+  webhook:
+    enabled: false
+    url: "${WEBHOOK_URL}"
+    secret: "${WEBHOOK_SECRET}"
+
+security:
+  api_key_required: false
+  cors_enabled: true
+  allowed_origins: ["http://localhost:3000", "http://localhost:5000"]
+  rate_limiting: true
+  max_requests_per_minute: 100
+
+performance:
+  max_concurrent_downloads: 5
+  download_timeout: 300  # seconds
+  cache_enabled: true
+  cache_ttl: 3600  # seconds
+  memory_limit: "1GB"
+
+development:
+  debug_mode: false
+  hot_reload: true
+  auto_restart: true
+  verbose_logging: false 

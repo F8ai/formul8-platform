@@ -1,0 +1,183 @@
+{
+  "agent": "operations-agent", 
+  "description": "Cannabis Business Operations and Management Questions covering facility management, supply chain optimization, production planning, and operational efficiency",
+  "categories": {
+    "facility_management": "Cultivation, manufacturing, and retail facility optimization",
+    "supply_chain": "Vendor management and inventory optimization",
+    "production_planning": "Manufacturing schedules and capacity planning",
+    "quality_management": "Quality control systems and process improvement",
+    "staff_management": "Employee training and performance optimization",
+    "technology_integration": "Operational technology and system integration",
+    "financial_operations": "Cost analysis and profitability optimization",
+    "compliance_operations": "Operational compliance and audit preparation",
+    "inventory_management": "Seed-to-sale tracking and inventory control",
+    "process_optimization": "Workflow improvement and efficiency maximization"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic operational procedures and standard practices",
+    "intermediate": "Advanced operations management and optimization",
+    "advanced": "Complex multi-site operations and strategic planning"
+  },
+  "questions": [
+    {
+      "id": "facility001",
+      "category": "facility_management",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I optimize my cannabis cultivation facility layout for maximum efficiency in {{state}}?",
+      "expected_answer": "Design workflow-optimized floor plans, implement proper HVAC zoning, ensure {{state}} security compliance, optimize lighting placement, create efficient harvesting paths, and plan for expansion capabilities",
+      "max_score": 15,
+      "tags": ["facility-layout", "cultivation", "workflow-optimization", "hvac-design"]
+    },
+    {
+      "id": "facility002",
+      "category": "facility_management",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What key performance indicators should I track for multi-site cannabis operations?",
+      "expected_answer": "Track production efficiency, cost per gram, yield per square foot, labor productivity, energy consumption, compliance scores, inventory turns, and quality metrics across all locations",
+      "max_score": 18,
+      "tags": ["multi-site-operations", "kpi-tracking", "performance-metrics", "operational-efficiency"]
+    },
+    {
+      "id": "supply001",
+      "category": "supply_chain",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I develop an effective vendor qualification process for cannabis operations in {{state}}?",
+      "expected_answer": "Verify {{state}} licensing requirements, assess quality standards, evaluate financial stability, conduct facility inspections, review compliance history, and establish performance metrics",
+      "max_score": 14,
+      "tags": ["vendor-qualification", "supplier-management", "quality-standards", "compliance-verification"]
+    },
+    {
+      "id": "supply002",
+      "category": "supply_chain",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What supply chain risk management strategies should I implement for cannabis operations?",
+      "expected_answer": "Diversify supplier base, maintain safety stock levels, implement backup suppliers, monitor regulatory changes, create contingency plans, and establish supplier performance monitoring",
+      "max_score": 16,
+      "tags": ["risk-management", "supply-chain-resilience", "contingency-planning", "supplier-diversification"]
+    },
+    {
+      "id": "product001",
+      "category": "production_planning",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I optimize cultivation cycle planning for consistent product availability?",
+      "expected_answer": "Implement staggered planting schedules, forecast demand patterns, plan for seasonal variations, coordinate with processing capacity, maintain buffer inventory, and track growth cycles",
+      "max_score": 15,
+      "tags": ["cultivation-planning", "production-scheduling", "demand-forecasting", "inventory-planning"]
+    },
+    {
+      "id": "product002",
+      "category": "production_planning",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What production capacity planning strategies maximize facility utilization?",
+      "expected_answer": "Analyze bottlenecks, implement lean manufacturing principles, optimize equipment utilization, plan maintenance schedules, balance product mix, and implement flexible capacity allocation",
+      "max_score": 18,
+      "tags": ["capacity-planning", "lean-manufacturing", "bottleneck-analysis", "utilization-optimization"]
+    },
+    {
+      "id": "quality001",
+      "category": "quality_management",
+      "difficulty": "beginner",
+      "state": "MULTI",
+      "question": "What basic quality control procedures should every cannabis operation implement?",
+      "expected_answer": "Visual inspections, moisture testing, batch documentation, cleanliness protocols, equipment calibration, staff training, and corrective action procedures",
+      "max_score": 10,
+      "tags": ["quality-control", "basic-procedures", "batch-documentation", "staff-training"]
+    },
+    {
+      "id": "quality002",
+      "category": "quality_management",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I implement a comprehensive quality management system for cannabis operations?",
+      "expected_answer": "Develop SOPs, implement statistical process control, create quality metrics dashboard, establish CAPA procedures, conduct regular audits, and integrate with compliance systems",
+      "max_score": 20,
+      "tags": ["quality-management-system", "statistical-process-control", "sop-development", "audit-procedures"]
+    },
+    {
+      "id": "staff001",
+      "category": "staff_management",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I develop effective training programs for cannabis facility workers in {{state}}?",
+      "expected_answer": "Create role-specific training modules, include {{state}} compliance requirements, implement hands-on practice sessions, establish competency assessments, and provide ongoing education",
+      "max_score": 14,
+      "tags": ["employee-training", "competency-assessment", "compliance-training", "role-specific-training"]
+    },
+    {
+      "id": "staff002",
+      "category": "staff_management",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What strategies optimize labor productivity in cannabis manufacturing operations?",
+      "expected_answer": "Implement cross-training programs, optimize work scheduling, create performance incentives, analyze workflow efficiency, reduce non-value-added activities, and implement automation where appropriate",
+      "max_score": 16,
+      "tags": ["labor-productivity", "cross-training", "workflow-efficiency", "performance-optimization"]
+    },
+    {
+      "id": "tech001",
+      "category": "technology_integration",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I select and implement a seed-to-sale tracking system for {{state}}?",
+      "expected_answer": "Research {{state}}-approved systems, evaluate integration capabilities, assess scalability, plan data migration, train staff, and ensure compliance reporting functionality",
+      "max_score": 15,
+      "tags": ["seed-to-sale", "system-selection", "data-migration", "compliance-reporting"]
+    },
+    {
+      "id": "tech002",
+      "category": "technology_integration",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What technology stack optimizes cannabis business operations end-to-end?",
+      "expected_answer": "Integrate ERP systems, seed-to-sale tracking, environmental controls, security systems, point-of-sale, inventory management, and business intelligence platforms",
+      "max_score": 18,
+      "tags": ["technology-stack", "system-integration", "erp-systems", "business-intelligence"]
+    },
+    {
+      "id": "finance001",
+      "category": "financial_operations",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What cost accounting methods work best for cannabis operations?",
+      "expected_answer": "Implement activity-based costing, track direct and indirect costs, allocate overhead properly, monitor cost per gram, analyze profitability by product line, and benchmark against industry standards",
+      "max_score": 14,
+      "tags": ["cost-accounting", "activity-based-costing", "profitability-analysis", "cost-tracking"]
+    },
+    {
+      "id": "finance002",
+      "category": "financial_operations",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I optimize pricing strategies for maximum profitability across product categories?",
+      "expected_answer": "Analyze market positioning, implement value-based pricing, consider price elasticity, optimize product mix, monitor competitor pricing, and balance volume versus margin objectives",
+      "max_score": 16,
+      "tags": ["pricing-strategy", "value-based-pricing", "price-elasticity", "profit-optimization"]
+    },
+    {
+      "id": "comply001",
+      "category": "compliance_operations",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I prepare for a compliance audit from {{state}} cannabis regulators?",
+      "expected_answer": "Review all {{state}} regulations, organize documentation, conduct internal audits, train staff on procedures, verify system compliance, and prepare corrective action plans",
+      "max_score": 15,
+      "tags": ["compliance-audit", "audit-preparation", "documentation", "internal-audits"]
+    },
+    {
+      "id": "comply002",
+      "category": "compliance_operations",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What compliance monitoring systems ensure ongoing regulatory adherence?",
+      "expected_answer": "Implement automated compliance dashboards, create real-time alert systems, establish regular compliance reviews, maintain audit trails, and develop continuous improvement processes",
+      "max_score": 18,
+      "tags": ["compliance-monitoring", "automated-systems", "real-time-alerts", "continuous-improvement"]
+    }
+  ]
+}

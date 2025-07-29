@@ -1,0 +1,164 @@
+# Science Agent Configuration
+agent:
+  name: "science-agent"
+  type: "science"
+  version: "1.0.0"
+  description: "Cannabis science expert with PubMed integration and evidence analysis"
+  
+llm:
+  provider: "openai"
+  model: "gpt-4o"
+  temperature: 0.1
+  max_tokens: 2000
+  
+rag:
+  enabled: true
+  vectorstore_type: "faiss"
+  embedding_model: "text-embedding-ada-002"
+  chunk_size: 1000
+  chunk_overlap: 200
+  retrieval_k: 5
+  
+rdf_knowledge:
+  enabled: true
+  knowledge_base_path: "rag/knowledge_base.ttl"
+  sparql_endpoint: null
+  phi2_model_path: "microsoft/phi-2"
+  
+memory:
+  type: "conversation_buffer_window"
+  window_size: 10
+  return_messages: true
+  
+tools:
+  - name: "pubmed_literature_search"
+    enabled: true
+    description: "Search PubMed for cannabis-related literature"
+    
+  - name: "evidence_quality_assessment"
+    enabled: true
+    description: "Assess quality and strength of scientific evidence"
+    
+  - name: "research_trend_analysis"
+    enabled: true
+    description: "Analyze research trends and publication patterns"
+    
+  - name: "scientific_claim_validation"
+    enabled: true
+    description: "Validate claims against peer-reviewed evidence"
+    
+  - name: "meta_analysis_synthesis"
+    enabled: true
+    description: "Synthesize findings from multiple studies"
+    
+  - name: "scientific_knowledge_search"
+    enabled: true
+    requires: ["vectorstore"]
+    description: "RAG search of scientific knowledge"
+    
+  - name: "structured_science_query"
+    enabled: true
+    requires: ["rdf_knowledge"]
+    description: "SPARQL queries on structured knowledge"
+
+specialization:
+  domain: "cannabis_science"
+  expertise_areas:
+    - "pubmed_integration"
+    - "evidence_analysis"
+    - "research_methodology"
+    - "clinical_trials"
+    - "meta_analysis"
+    - "systematic_reviews"
+    - "pharmacology"
+    - "biochemistry"
+  
+  research_types:
+    high_evidence:
+      - "systematic_reviews"
+      - "meta_analyses"
+      - "randomized_controlled_trials"
+    moderate_evidence:
+      - "cohort_studies"
+      - "case_control_studies"
+      - "cross_sectional_studies"
+    low_evidence:
+      - "case_reports"
+      - "expert_opinions"
+      - "preclinical_studies"
+  
+  pubmed_integration:
+    search_fields:
+      - "title"
+      - "abstract"
+      - "mesh_terms"
+      - "keywords"
+    filters:
+      - "publication_date"
+      - "study_type"
+      - "language"
+      - "species"
+    quality_indicators:
+      - "journal_impact_factor"
+      - "citation_count"
+      - "peer_review_status"
+      - "conflict_of_interest"
+  
+  evidence_assessment:
+    quality_criteria:
+      - "study_design"
+      - "sample_size"
+      - "randomization"
+      - "blinding"
+      - "outcome_measures"
+      - "statistical_analysis"
+    bias_types:
+      - "selection_bias"
+      - "information_bias"
+      - "confounding"
+      - "publication_bias"
+    
+  therapeutic_areas:
+    established:
+      - "epilepsy_cbd"
+      - "chemotherapy_nausea"
+      - "chronic_pain"
+    promising:
+      - "anxiety_disorders"
+      - "sleep_disorders"
+      - "inflammatory_conditions"
+    investigational:
+      - "cancer_treatment"
+      - "neurodegenerative_diseases"
+      - "psychiatric_disorders"
+
+performance:
+  response_time_target: 20  # seconds
+  accuracy_target: 0.90
+  confidence_threshold: 0.75
+  
+baseline_testing:
+  enabled: true
+  test_file: "baseline.json"
+  auto_evaluate: true
+  
+logging:
+  level: "INFO"
+  file: "logs/science_agent.log"
+  
+pubmed_api:
+  base_url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+  search_endpoint: "esearch.fcgi"
+  fetch_endpoint: "efetch.fcgi"
+  rate_limit: 3  # requests per second
+  
+dependencies:
+  required:
+    - "langchain"
+    - "openai"
+    - "faiss-cpu"
+  optional:
+    - "biopython"
+    - "pubmed-parser"
+    - "rdflib"
+    - "transformers"

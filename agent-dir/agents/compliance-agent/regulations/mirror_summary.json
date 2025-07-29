@@ -1,0 +1,14 @@
+{
+  "mirror_date": "2025-07-15T20:49:36.501195",
+  "total_states": 5,
+  "successful_mirrors": 3,
+  "failed_mirrors": 2,
+  "results": {
+    "CA": true,
+    "CO": false,
+    "WA": false,
+    "NY": true,
+    "OR": true
+  },
+  "method": "simple_http"
+}

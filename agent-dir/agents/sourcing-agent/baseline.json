@@ -1,0 +1,183 @@
+{
+  "agent": "sourcing-agent",
+  "description": "Cannabis Sourcing and Supply Chain Management Questions for procurement, vendor evaluation, quality assessment, and supply chain optimization",
+  "categories": {
+    "vendor_evaluation": "Supplier assessment and vendor qualification procedures",
+    "quality_assessment": "Raw material quality control and testing standards",
+    "procurement_compliance": "Legal sourcing requirements and compliance verification",
+    "supply_chain_optimization": "Inventory management and supply chain efficiency",
+    "contract_negotiation": "Terms, pricing, and contractual agreements",
+    "logistics_transportation": "Shipping, storage, and handling procedures",
+    "cost_analysis": "Pricing strategies and cost optimization methods",
+    "risk_management": "Supply chain risk assessment and mitigation",
+    "regulatory_tracking": "Compliance documentation and chain of custody",
+    "market_intelligence": "Market trends and competitive sourcing analysis"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic sourcing procedures and vendor identification",
+    "intermediate": "Advanced procurement strategies and compliance verification",
+    "advanced": "Complex supply chain optimization and multi-state sourcing"
+  },
+  "questions": [
+    {
+      "id": "vendor001",
+      "category": "vendor_evaluation",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What criteria should I use to evaluate cannabis cultivation vendors in {{state}}?",
+      "expected_answer": "Evaluate cultivation vendors based on licensing status, quality certifications, testing compliance, production capacity, consistency, pricing, delivery reliability, and regulatory compliance history in {{state}}",
+      "max_score": 12,
+      "tags": ["vendor", "cultivation", "evaluation", "compliance"]
+    },
+    {
+      "id": "vendor002",
+      "category": "vendor_evaluation",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I assess the financial stability of cannabis suppliers across multiple states?",
+      "expected_answer": "Assess financial stability through credit checks, financial statements, bank references, industry reputation, payment history, insurance coverage, and state-specific licensing status verification",
+      "max_score": 15,
+      "tags": ["vendor", "financial", "multi-state", "risk-assessment"]
+    },
+    {
+      "id": "quality001",
+      "category": "quality_assessment",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What quality standards should I establish for sourcing cannabis flower in {{state}}?",
+      "expected_answer": "Establish standards for cannabinoid potency, terpene profiles, moisture content, microbial limits, pesticide residues, heavy metals, visual appearance, and compliance with {{state}} testing requirements",
+      "max_score": 12,
+      "tags": ["quality", "flower", "standards", "testing"]
+    },
+    {
+      "id": "quality002",
+      "category": "quality_assessment",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I create a quality assurance program for multi-vendor cannabis concentrate sourcing?",
+      "expected_answer": "Develop standardized testing protocols, batch sampling procedures, COA verification systems, sensory evaluation criteria, consistency tracking, and vendor performance scorecards",
+      "max_score": 18,
+      "tags": ["quality", "concentrates", "multi-vendor", "qa-program"]
+    },
+    {
+      "id": "compliance001",
+      "category": "procurement_compliance",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What compliance documentation is required when sourcing cannabis products in {{state}}?",
+      "expected_answer": "Required documentation includes vendor licenses, product manifests, lab test results, chain of custody records, transportation logs, and compliance with {{state}} seed-to-sale tracking systems",
+      "max_score": 12,
+      "tags": ["compliance", "documentation", "seed-to-sale", "tracking"]
+    },
+    {
+      "id": "compliance002",
+      "category": "procurement_compliance",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I ensure cross-state compliance when sourcing from multiple cannabis suppliers?",
+      "expected_answer": "Implement state-specific compliance matrices, standardized vendor qualification processes, automated documentation tracking, regular audit procedures, and legal review protocols for each jurisdiction",
+      "max_score": 20,
+      "tags": ["compliance", "multi-state", "cross-jurisdictional", "auditing"]
+    },
+    {
+      "id": "supply001",
+      "category": "supply_chain_optimization",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I optimize inventory levels for cannabis raw materials in {{state}}?",
+      "expected_answer": "Optimize through demand forecasting, lead time analysis, shelf life considerations, regulatory storage requirements, seasonal demand patterns, and supplier reliability metrics",
+      "max_score": 12,
+      "tags": ["inventory", "optimization", "forecasting", "storage"]
+    },
+    {
+      "id": "supply002",
+      "category": "supply_chain_optimization",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What strategies can reduce supply chain costs while maintaining quality across multiple cannabis markets?",
+      "expected_answer": "Implement volume consolidation, strategic partnerships, shared transportation, bulk purchasing agreements, quality standardization, supplier development programs, and technology integration",
+      "max_score": 18,
+      "tags": ["cost-reduction", "multi-market", "strategic-partnerships", "efficiency"]
+    },
+    {
+      "id": "contract001",
+      "category": "contract_negotiation",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What key terms should be included in cannabis supplier contracts in {{state}}?",
+      "expected_answer": "Include pricing structures, quality specifications, delivery terms, payment conditions, compliance requirements, force majeure clauses, and {{state}}-specific regulatory compliance terms",
+      "max_score": 12,
+      "tags": ["contracts", "terms", "pricing", "compliance"]
+    },
+    {
+      "id": "contract002",
+      "category": "contract_negotiation",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I structure exclusive supplier agreements for premium cannabis genetics?",
+      "expected_answer": "Structure with exclusivity periods, minimum volume commitments, quality guarantees, intellectual property protections, performance milestones, termination clauses, and multi-state licensing considerations",
+      "max_score": 20,
+      "tags": ["exclusive-agreements", "genetics", "intellectual-property", "premium"]
+    },
+    {
+      "id": "logistics001",
+      "category": "logistics_transportation",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What are the best practices for cannabis transportation and logistics in {{state}}?",
+      "expected_answer": "Follow {{state}} transportation requirements including licensed transporters, manifest systems, secure vehicles, GPS tracking, insurance coverage, and proper storage conditions during transit",
+      "max_score": 12,
+      "tags": ["transportation", "logistics", "manifests", "security"]
+    },
+    {
+      "id": "logistics002",
+      "category": "logistics_transportation",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I design an efficient multi-state cannabis distribution network?",
+      "expected_answer": "Design with hub-and-spoke models, regional distribution centers, cross-docking facilities, state-specific compliance integration, route optimization, and technology platforms for real-time tracking",
+      "max_score": 20,
+      "tags": ["distribution-network", "multi-state", "hub-spoke", "route-optimization"]
+    },
+    {
+      "id": "cost001",
+      "category": "cost_analysis",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I analyze the total cost of ownership for cannabis sourcing in {{state}}?",
+      "expected_answer": "Calculate purchase price, transportation costs, testing fees, storage expenses, compliance costs, quality risks, supplier management overhead, and {{state}} tax implications",
+      "max_score": 12,
+      "tags": ["cost-analysis", "total-ownership", "taxes", "overhead"]
+    },
+    {
+      "id": "cost002",
+      "category": "cost_analysis",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What pricing strategies should I use for bulk cannabis procurement across multiple markets?",
+      "expected_answer": "Implement tiered volume pricing, seasonal contracts, market-based adjustments, quality premiums, long-term partnerships, currency hedging, and competitive benchmarking strategies",
+      "max_score": 18,
+      "tags": ["pricing-strategies", "bulk-procurement", "market-adjustments", "hedging"]
+    },
+    {
+      "id": "risk001",
+      "category": "risk_management",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What are the main supply chain risks in cannabis sourcing and how do I mitigate them in {{state}}?",
+      "expected_answer": "Key risks include regulatory changes, crop failures, quality issues, transportation delays, and supplier reliability. Mitigate through diversification, contracts, insurance, backup suppliers, and {{state}} compliance monitoring",
+      "max_score": 15,
+      "tags": ["risk-management", "mitigation", "diversification", "compliance"]
+    },
+    {
+      "id": "risk002",
+      "category": "risk_management",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I create a comprehensive supply chain risk assessment framework for cannabis operations?",
+      "expected_answer": "Develop risk matrices, probability assessments, impact analyses, monitoring systems, contingency plans, supplier audits, financial evaluations, and regulatory tracking across all operational states",
+      "max_score": 20,
+      "tags": ["risk-framework", "assessment-matrix", "contingency-planning", "monitoring"]
+    }
+  ]
+}

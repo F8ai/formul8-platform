@@ -1,0 +1,183 @@
+{
+  "agent": "spectra-agent",
+  "description": "Cannabis Spectral Analysis and Analytical Chemistry Questions covering chromatography, mass spectrometry, potency testing, and contaminate detection",
+  "categories": {
+    "chromatography": "HPLC, GC, and chromatographic method development",
+    "mass_spectrometry": "MS/MS techniques and metabolomics analysis",
+    "potency_testing": "Cannabinoid quantification and profiling methods",
+    "contaminate_detection": "Pesticides, heavy metals, and microbial testing",
+    "terpene_analysis": "Terpene profiling and quantitative analysis",
+    "method_validation": "Analytical method development and validation protocols",
+    "quality_control": "Laboratory QC procedures and standard protocols",
+    "sample_preparation": "Extraction and sample prep techniques",
+    "instrumentation": "Analytical instrument operation and maintenance",
+    "regulatory_testing": "Compliance testing and regulatory method requirements"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic analytical concepts and standard testing procedures",
+    "intermediate": "Method development and advanced analytical techniques",
+    "advanced": "Complex analytical problems and method validation"
+  },
+  "questions": [
+    {
+      "id": "chrom001",
+      "category": "chromatography",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What HPLC conditions are optimal for cannabinoid separation and quantification?",
+      "expected_answer": "Use C18 column, acetonitrile/water mobile phase with formic acid, gradient elution, UV detection at 220nm and 280nm, 30-40°C column temperature, and 1.0 mL/min flow rate for optimal cannabinoid separation",
+      "max_score": 15,
+      "tags": ["hplc", "cannabinoids", "separation", "quantification"]
+    },
+    {
+      "id": "chrom002",
+      "category": "chromatography",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I develop a method for separating acidic and neutral cannabinoids simultaneously?",
+      "expected_answer": "Use pH-optimized mobile phases, consider derivatization for improved detection, employ gradient programming, select appropriate stationary phases, and validate peak identification using retention time and spectral data",
+      "max_score": 20,
+      "tags": ["method-development", "acidic-cannabinoids", "neutral-cannabinoids", "simultaneous-analysis"]
+    },
+    {
+      "id": "ms001",
+      "category": "mass_spectrometry",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What MS/MS parameters should I use for cannabinoid identification and quantification?",
+      "expected_answer": "Use positive ESI mode, select appropriate precursor ions, optimize collision energies, choose specific product ions for SRM transitions, and validate with reference standards for accurate identification",
+      "max_score": 15,
+      "tags": ["ms-ms", "cannabinoids", "esi", "srm-transitions"]
+    },
+    {
+      "id": "ms002",
+      "category": "mass_spectrometry",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I perform untargeted metabolomics analysis of cannabis extracts?",
+      "expected_answer": "Use high-resolution MS, employ both positive and negative ionization, implement data-dependent acquisition, utilize metabolomics databases, perform statistical analysis, and validate identified compounds",
+      "max_score": 20,
+      "tags": ["metabolomics", "untargeted-analysis", "high-resolution-ms", "statistical-analysis"]
+    },
+    {
+      "id": "potency001",
+      "category": "potency_testing",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What are the requirements for potency testing in {{state}} cannabis laboratories?",
+      "expected_answer": "Requirements include analysis of major cannabinoids (THC, CBD, CBG, CBN), reporting limits, method validation, proficiency testing, and compliance with {{state}} regulatory testing protocols",
+      "max_score": 12,
+      "tags": ["potency-testing", "regulatory-requirements", "cannabinoids"]
+    },
+    {
+      "id": "potency002",
+      "category": "potency_testing",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I validate a potency testing method for cannabis-infused products?",
+      "expected_answer": "Perform accuracy studies, precision testing, linearity assessment, limit of detection/quantification, specificity evaluation, robustness testing, and matrix effect studies for various product matrices",
+      "max_score": 18,
+      "tags": ["method-validation", "infused-products", "accuracy", "precision", "matrix-effects"]
+    },
+    {
+      "id": "contaminate001",
+      "category": "contaminate_detection",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What pesticides are commonly tested in cannabis and what analytical methods are used?",
+      "expected_answer": "Common pesticides include organophosphates, carbamates, pyrethroids, and neonicotinoids. Use LC-MS/MS and GC-MS/MS methods with QuEChERS extraction and appropriate internal standards for quantification",
+      "max_score": 15,
+      "tags": ["pesticides", "lc-ms-ms", "gc-ms-ms", "quechers"]
+    },
+    {
+      "id": "contaminate002",
+      "category": "contaminate_detection",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I develop a comprehensive screening method for mycotoxins in cannabis?",
+      "expected_answer": "Develop multi-mycotoxin LC-MS/MS method, optimize extraction procedures, validate for different matrices, include matrix-matched calibration, implement confirmatory testing, and establish appropriate limits",
+      "max_score": 20,
+      "tags": ["mycotoxins", "multi-residue", "matrix-matched", "confirmatory-testing"]
+    },
+    {
+      "id": "terpene001",
+      "category": "terpene_analysis",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What GC-MS conditions are best for terpene profiling in cannabis?",
+      "expected_answer": "Use capillary column (DB-5 or equivalent), splitless injection, temperature programming from 40-250°C, helium carrier gas, EI ionization, and authentic standards for identification and quantification",
+      "max_score": 12,
+      "tags": ["terpenes", "gc-ms", "temperature-programming", "authentic-standards"]
+    },
+    {
+      "id": "terpene002",
+      "category": "terpene_analysis",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I quantify volatile and semi-volatile terpenes simultaneously?",
+      "expected_answer": "Use dual-column GC system or comprehensive GCxGC, optimize sample preparation to minimize losses, employ multiple internal standards, validate retention time windows, and account for thermal degradation",
+      "max_score": 18,
+      "tags": ["volatile-terpenes", "semi-volatile", "gcxgc", "thermal-degradation"]
+    },
+    {
+      "id": "validation001",
+      "category": "method_validation",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What parameters must be validated for a new cannabis testing method?",
+      "expected_answer": "Validate accuracy, precision, linearity, range, specificity, limit of detection, limit of quantification, robustness, and stability according to ICH guidelines and regulatory requirements",
+      "max_score": 12,
+      "tags": ["method-validation", "ich-guidelines", "accuracy", "precision", "specificity"]
+    },
+    {
+      "id": "validation002",
+      "category": "method_validation",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I perform method validation for cannabis testing across different product matrices?",
+      "expected_answer": "Conduct matrix-specific validation studies, assess matrix effects, perform recovery studies, establish matrix-matched calibrations, validate for each product type, and document method applicability",
+      "max_score": 20,
+      "tags": ["matrix-validation", "recovery-studies", "matrix-effects", "product-matrices"]
+    },
+    {
+      "id": "qc001",
+      "category": "quality_control",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What quality control procedures are required for cannabis testing laboratories in {{state}}?",
+      "expected_answer": "Implement control charts, reference standards, proficiency testing, duplicate analysis, blank samples, spike recoveries, and compliance with {{state}} laboratory certification requirements",
+      "max_score": 12,
+      "tags": ["quality-control", "control-charts", "proficiency-testing", "laboratory-certification"]
+    },
+    {
+      "id": "qc002",
+      "category": "quality_control",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I establish a comprehensive LIMS system for cannabis testing laboratory?",
+      "expected_answer": "Implement sample tracking, chain of custody, automated calculations, trending analysis, instrument integration, data integrity controls, regulatory reporting, and audit trail functionality",
+      "max_score": 18,
+      "tags": ["lims", "sample-tracking", "data-integrity", "regulatory-reporting", "audit-trail"]
+    },
+    {
+      "id": "sample001",
+      "category": "sample_preparation",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What extraction methods are most effective for cannabinoid analysis?",
+      "expected_answer": "Use sonication with ethanol or methanol, liquid-liquid extraction, solid-phase extraction for cleanup, consider matrix-specific approaches, and optimize for different product types and analytes",
+      "max_score": 12,
+      "tags": ["extraction", "sonication", "spe", "matrix-specific"]
+    },
+    {
+      "id": "sample002",
+      "category": "sample_preparation",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I optimize sample preparation for multi-residue pesticide analysis in cannabis?",
+      "expected_answer": "Implement QuEChERS methodology, optimize extraction solvents, use dispersive SPE cleanup, consider matrix-matched standards, validate recovery across pesticide classes, and minimize matrix interferences",
+      "max_score": 18,
+      "tags": ["multi-residue", "quechers", "dispersive-spe", "matrix-interferences"]
+    }
+  ]
+}

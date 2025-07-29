@@ -1,0 +1,880 @@
+{
+  "metadata": {
+    "description": "Comprehensive cannabis industry sources organized by state and category",
+    "version": "3.0.0",
+    "last_updated": "2024-12-19",
+    "total_sources": 0,
+    "preferred_sources": 0,
+    "states_covered": 0
+  },
+  "preferred_sources": [
+    {
+      "name": "Extract Consultants",
+      "url": "https://extractconsultants.com",
+      "categories": ["consulting", "extraction_services"],
+      "source_type": "consulting",
+      "preferred": true,
+      "featured": true,
+      "description": "Leading cannabis extraction consulting and equipment",
+      "services": ["extraction_consulting", "equipment_sales", "training"],
+      "states": ["nationwide"]
+    },
+    {
+      "name": "Gavita",
+      "url": "https://gavita.com",
+      "categories": ["lighting", "equipment"],
+      "source_type": "equipment",
+      "preferred": true,
+      "featured": true,
+      "description": "Professional LED grow lights and equipment",
+      "products": ["led_lights", "grow_systems", "controllers"],
+      "states": ["nationwide"]
+    },
+    {
+      "name": "GrowGeneration",
+      "url": "https://growgeneration.com",
+      "categories": ["equipment", "nutrients"],
+      "source_type": "supplier",
+      "preferred": true,
+      "featured": true,
+      "description": "Hydroponic and organic gardening supplies",
+      "products": ["nutrients", "equipment", "growing_media", "lighting"],
+      "states": ["nationwide"]
+    },
+    {
+      "name": "Botanicare",
+      "url": "https://botanicare.com",
+      "categories": ["nutrients", "supplements"],
+      "source_type": "supplier",
+      "preferred": true,
+      "featured": true,
+      "description": "Premium hydroponic nutrients and supplements",
+      "products": ["nutrients", "supplements", "growing_media"],
+      "states": ["nationwide"]
+    },
+    {
+      "name": "Advanced Nutrients",
+      "url": "https://advancednutrients.com",
+      "categories": ["nutrients", "supplements"],
+      "source_type": "supplier",
+      "preferred": true,
+      "featured": true,
+      "description": "Premium cannabis nutrients and supplements",
+      "products": ["nutrients", "supplements", "pH_adjusters"],
+      "states": ["nationwide"]
+    },
+    {
+      "name": "Kush Supply Co",
+      "url": "https://kushsupplyco.com",
+      "categories": ["packaging", "supplies"],
+      "source_type": "supplier",
+      "preferred": true,
+      "featured": true,
+      "description": "Cannabis packaging and supplies",
+      "products": ["containers", "bags", "labels", "exit_bags"],
+      "states": ["nationwide"]
+    },
+    {
+      "name": "SC Labs",
+      "url": "https://sclabs.com",
+      "categories": ["testing", "laboratory"],
+      "source_type": "testing",
+      "preferred": true,
+      "featured": true,
+      "description": "Comprehensive cannabis testing laboratory",
+      "services": ["potency_testing", "pesticide_testing", "microbial_testing"],
+      "states": ["nationwide"]
+    }
+  ],
+  "sources_by_state": {
+    "ak": {
+      "state_name": "Alaska",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Alaska Fireweed",
+          "url": "https://alaskafireweed.com",
+          "location": "Anchorage",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Alaska cannabis dispensary"
+        },
+        {
+          "name": "Alaska Buds",
+          "url": "https://alaskabuds.com",
+          "location": "Anchorage",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Alaska cannabis dispensary"
+        }
+      ]
+    },
+    "az": {
+      "state_name": "Arizona",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Harvest Health & Recreation",
+          "url": "https://harvesthoc.com",
+          "location": "Phoenix",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Arizona cannabis dispensary chain"
+        },
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Phoenix",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Arizona cannabis dispensary"
+        }
+      ]
+    },
+    "ca": {
+      "state_name": "California",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "MedMen",
+          "url": "https://medmen.com",
+          "location": "Los Angeles",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "California cannabis dispensary chain"
+        },
+        {
+          "name": "Harborside",
+          "url": "https://harborside.com",
+          "location": "Oakland",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "California cannabis dispensary"
+        },
+        {
+          "name": "The Apothecarium",
+          "url": "https://apothecarium.com",
+          "location": "San Francisco",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "California cannabis dispensary"
+        }
+      ]
+    },
+    "co": {
+      "state_name": "Colorado",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Native Roots",
+          "url": "https://nativeroots.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Colorado's largest cannabis dispensary chain"
+        },
+        {
+          "name": "The Green Solution",
+          "url": "https://thegreensolution.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Premium cannabis retailer with multiple locations"
+        },
+        {
+          "name": "LivWell",
+          "url": "https://livwell.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Vertically integrated cannabis company"
+        },
+        {
+          "name": "Terrapin Care Station",
+          "url": "https://terrapincarestation.com",
+          "location": "Boulder",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Community-focused cannabis dispensary"
+        },
+        {
+          "name": "The Farm",
+          "url": "https://thefarmco.com",
+          "location": "Boulder",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Boulder's premier cannabis dispensary"
+        },
+        {
+          "name": "Green Dragon",
+          "url": "https://greendragon.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Value-focused cannabis retailer"
+        },
+        {
+          "name": "Lightshade",
+          "url": "https://lightshade.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Premium cannabis dispensary chain"
+        },
+        {
+          "name": "Medicine Man",
+          "url": "https://medicinemandenver.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Denver's original cannabis dispensary"
+        },
+        {
+          "name": "Botanico",
+          "url": "https://botanico.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Denver cannabis dispensary"
+        },
+        {
+          "name": "Euflora",
+          "url": "https://euflora.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Colorado cannabis dispensary"
+        }
+      ],
+      "manufacturers": [
+        {
+          "name": "Incredibles",
+          "url": "https://incredibles.com",
+          "location": "Denver",
+          "type": "manufacturer",
+          "preferred": true,
+          "description": "Premium cannabis edibles manufacturer"
+        },
+        {
+          "name": "Wana Brands",
+          "url": "https://wanabrands.com",
+          "location": "Boulder",
+          "type": "manufacturer",
+          "preferred": true,
+          "description": "Leading cannabis edibles manufacturer"
+        },
+        {
+          "name": "Dixie Brands",
+          "url": "https://dixiebrands.com",
+          "location": "Denver",
+          "type": "manufacturer",
+          "preferred": false,
+          "description": "Cannabis edibles and beverages"
+        },
+        {
+          "name": "Coda Signature",
+          "url": "https://codasignature.com",
+          "location": "Denver",
+          "type": "manufacturer",
+          "preferred": false,
+          "description": "Artisan cannabis edibles"
+        },
+        {
+          "name": "Sweet Grass Kitchen",
+          "url": "https://sweetgrasskitchen.com",
+          "location": "Boulder",
+          "type": "manufacturer",
+          "preferred": false,
+          "description": "Organic cannabis edibles"
+        }
+      ]
+    },
+    "ct": {
+      "state_name": "Connecticut",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Fine Fettle",
+          "url": "https://finefettle.com",
+          "location": "Hartford",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Connecticut cannabis dispensary"
+        }
+      ]
+    },
+    "de": {
+      "state_name": "Delaware",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "First State Compassion",
+          "url": "https://firststatecompassion.com",
+          "location": "Wilmington",
+          "type": "medical_only",
+          "preferred": false,
+          "description": "Delaware medical cannabis dispensary"
+        }
+      ]
+    },
+    "fl": {
+      "state_name": "Florida",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Trulieve",
+          "url": "https://trulieve.com",
+          "location": "Tallahassee",
+          "type": "medical_only",
+          "preferred": true,
+          "description": "Florida's largest medical cannabis dispensary"
+        },
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Miami",
+          "type": "medical_only",
+          "preferred": true,
+          "description": "Florida medical cannabis dispensary"
+        }
+      ]
+    },
+    "hi": {
+      "state_name": "Hawaii",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Aloha Green",
+          "url": "https://alohagreen.com",
+          "location": "Honolulu",
+          "type": "medical_only",
+          "preferred": false,
+          "description": "Hawaii medical cannabis dispensary"
+        }
+      ]
+    },
+    "il": {
+      "state_name": "Illinois",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Cresco Labs",
+          "url": "https://crescolabs.com",
+          "location": "Chicago",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Illinois cannabis dispensary"
+        },
+        {
+          "name": "Green Thumb Industries",
+          "url": "https://gtigrows.com",
+          "location": "Chicago",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Illinois cannabis dispensary"
+        }
+      ]
+    },
+    "me": {
+      "state_name": "Maine",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Wellness Connection",
+          "url": "https://mainewellness.org",
+          "location": "Portland",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Maine cannabis dispensary"
+        }
+      ]
+    },
+    "md": {
+      "state_name": "Maryland",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Baltimore",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Maryland cannabis dispensary"
+        }
+      ]
+    },
+    "ma": {
+      "state_name": "Massachusetts",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Boston",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Massachusetts cannabis dispensary"
+        },
+        {
+          "name": "Theory Wellness",
+          "url": "https://theorywellness.org",
+          "location": "Boston",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Massachusetts cannabis dispensary"
+        }
+      ]
+    },
+    "mi": {
+      "state_name": "Michigan",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Green Peak Innovations",
+          "url": "https://greenpeakinnovations.com",
+          "location": "Lansing",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Michigan cannabis dispensary"
+        },
+        {
+          "name": "Cresco Labs",
+          "url": "https://crescolabs.com",
+          "location": "Detroit",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Michigan cannabis dispensary"
+        }
+      ]
+    },
+    "mn": {
+      "state_name": "Minnesota",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Green Goods",
+          "url": "https://greengoods.com",
+          "location": "Minneapolis",
+          "type": "medical_only",
+          "preferred": false,
+          "description": "Minnesota medical cannabis dispensary"
+        }
+      ]
+    },
+    "mo": {
+      "state_name": "Missouri",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Greenlight",
+          "url": "https://greenlight.com",
+          "location": "Kansas City",
+          "type": "medical_only",
+          "preferred": false,
+          "description": "Missouri medical cannabis dispensary"
+        }
+      ]
+    },
+    "mt": {
+      "state_name": "Montana",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Montana Cannabis",
+          "url": "https://montanacannabis.com",
+          "location": "Helena",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Montana cannabis dispensary"
+        }
+      ]
+    },
+    "nv": {
+      "state_name": "Nevada",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Planet 13",
+          "url": "https://planet13holdings.com",
+          "location": "Las Vegas",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "Nevada cannabis dispensary"
+        },
+        {
+          "name": "The Source",
+          "url": "https://thesourcenv.com",
+          "location": "Las Vegas",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Nevada cannabis dispensary"
+        }
+      ]
+    },
+    "nj": {
+      "state_name": "New Jersey",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Trenton",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "New Jersey cannabis dispensary"
+        }
+      ]
+    },
+    "nm": {
+      "state_name": "New Mexico",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Ultra Health",
+          "url": "https://ultrahealth.com",
+          "location": "Albuquerque",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "New Mexico cannabis dispensary"
+        }
+      ]
+    },
+    "ny": {
+      "state_name": "New York",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "New York City",
+          "type": "recreational_medical",
+          "preferred": true,
+          "description": "New York cannabis dispensary"
+        },
+        {
+          "name": "Columbia Care",
+          "url": "https://col-care.com",
+          "location": "New York City",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "New York cannabis dispensary"
+        }
+      ]
+    },
+    "oh": {
+      "state_name": "Ohio",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Verano",
+          "url": "https://verano.com",
+          "location": "Cleveland",
+          "type": "medical_only",
+          "preferred": false,
+          "description": "Ohio medical cannabis dispensary"
+        }
+      ]
+    },
+    "or": {
+      "state_name": "Oregon",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Nectar",
+          "url": "https://nectar.com",
+          "location": "Portland",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Oregon cannabis dispensary"
+        },
+        {
+          "name": "Electric Lettuce",
+          "url": "https://electriclettuce.com",
+          "location": "Portland",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Oregon cannabis dispensary"
+        }
+      ]
+    },
+    "pa": {
+      "state_name": "Pennsylvania",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Cresco Labs",
+          "url": "https://crescolabs.com",
+          "location": "Philadelphia",
+          "type": "medical_only",
+          "preferred": true,
+          "description": "Pennsylvania medical cannabis dispensary"
+        },
+        {
+          "name": "Trulieve",
+          "url": "https://trulieve.com",
+          "location": "Pittsburgh",
+          "type": "medical_only",
+          "preferred": true,
+          "description": "Pennsylvania medical cannabis dispensary"
+        }
+      ]
+    },
+    "ri": {
+      "state_name": "Rhode Island",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Greenleaf",
+          "url": "https://greenleaf.com",
+          "location": "Providence",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Rhode Island cannabis dispensary"
+        }
+      ]
+    },
+    "vt": {
+      "state_name": "Vermont",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Cerridwen",
+          "url": "https://cerridwen.com",
+          "location": "Burlington",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Vermont cannabis dispensary"
+        }
+      ]
+    },
+    "va": {
+      "state_name": "Virginia",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Columbia Care",
+          "url": "https://col-care.com",
+          "location": "Richmond",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Virginia cannabis dispensary"
+        }
+      ]
+    },
+    "wa": {
+      "state_name": "Washington",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Cannabis City",
+          "url": "https://cannabiscity.com",
+          "location": "Seattle",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Washington cannabis dispensary"
+        },
+        {
+          "name": "Uncle Ike's",
+          "url": "https://uncleikes.com",
+          "location": "Seattle",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Washington cannabis dispensary"
+        }
+      ]
+    },
+    "dc": {
+      "state_name": "Washington DC",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Capital City Care",
+          "url": "https://capitalcitycare.com",
+          "location": "Washington DC",
+          "type": "recreational_medical",
+          "preferred": false,
+          "description": "Washington DC cannabis dispensary"
+        }
+      ]
+    }
+  },
+  "national_suppliers": {
+    "equipment": [
+      {
+        "name": "Gavita",
+        "url": "https://gavita.com",
+        "category": "lighting",
+        "description": "Professional LED grow lights",
+        "preferred": true,
+        "products": ["led_lights", "grow_systems", "controllers"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "GrowGeneration",
+        "url": "https://growgeneration.com",
+        "category": "equipment",
+        "description": "Hydroponic and organic gardening supplies",
+        "preferred": true,
+        "products": ["nutrients", "equipment", "growing_media", "lighting"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Botanicare",
+        "url": "https://botanicare.com",
+        "category": "nutrients",
+        "description": "Premium hydroponic nutrients and supplements",
+        "preferred": true,
+        "products": ["nutrients", "supplements", "growing_media"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Advanced Nutrients",
+        "url": "https://advancednutrients.com",
+        "category": "nutrients",
+        "description": "Premium cannabis nutrients and supplements",
+        "preferred": true,
+        "products": ["nutrients", "supplements", "pH_adjusters"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "General Hydroponics",
+        "url": "https://generalhydroponics.com",
+        "category": "nutrients",
+        "description": "Hydroponic nutrients and equipment",
+        "preferred": false,
+        "products": ["nutrients", "equipment", "growing_media"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "FoxFarm",
+        "url": "https://foxfarm.com",
+        "category": "nutrients",
+        "description": "Organic soil and nutrients",
+        "preferred": false,
+        "products": ["soil", "nutrients", "supplements"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Spider Farmer",
+        "url": "https://spider-farmer.com",
+        "category": "lighting",
+        "description": "LED grow lights and equipment",
+        "preferred": false,
+        "products": ["led_lights", "grow_tents", "accessories"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Mars Hydro",
+        "url": "https://mars-hydro.com",
+        "category": "lighting",
+        "description": "LED grow lights and hydroponic systems",
+        "preferred": false,
+        "products": ["led_lights", "grow_tents", "nutrients"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Vivosun",
+        "url": "https://vivosun.com",
+        "category": "equipment",
+        "description": "Grow tents, lights, and accessories",
+        "preferred": false,
+        "products": ["grow_tents", "lights", "ventilation", "accessories"],
+        "coverage": "nationwide"
+      }
+    ],
+    "packaging": [
+      {
+        "name": "Kush Supply Co",
+        "url": "https://kushsupplyco.com",
+        "category": "packaging",
+        "description": "Cannabis packaging and supplies",
+        "preferred": true,
+        "products": ["containers", "bags", "labels", "exit_bags"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Stink Sack",
+        "url": "https://stinksack.com",
+        "category": "packaging",
+        "description": "Odor-proof cannabis storage bags",
+        "preferred": false,
+        "products": ["storage_bags", "containers", "accessories"],
+        "coverage": "nationwide"
+      }
+    ],
+    "testing": [
+      {
+        "name": "SC Labs",
+        "url": "https://sclabs.com",
+        "category": "testing",
+        "description": "Comprehensive cannabis testing laboratory",
+        "preferred": true,
+        "services": ["potency_testing", "pesticide_testing", "microbial_testing"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Steep Hill Labs",
+        "url": "https://steephill.com",
+        "category": "testing",
+        "description": "Cannabis testing and research laboratory",
+        "preferred": false,
+        "services": ["potency_testing", "pesticide_testing", "microbial_testing"],
+        "coverage": "nationwide"
+      }
+    ]
+  },
+  "consulting_services": [
+    {
+      "name": "Extract Consultants",
+      "url": "https://extractconsultants.com",
+      "category": "consulting",
+      "description": "Leading cannabis extraction consulting and equipment",
+      "preferred": true,
+      "services": ["extraction_consulting", "equipment_sales", "training"],
+      "coverage": "nationwide"
+    },
+    {
+      "name": "Cannabis Business Advisors",
+      "url": "https://cannabisbusinessadvisors.com",
+      "category": "consulting",
+      "description": "Cannabis business consulting and compliance",
+      "preferred": false,
+      "services": ["business_consulting", "compliance", "licensing"],
+      "coverage": "nationwide"
+    }
+  ],
+  "categories": {
+    "genetics": {
+      "description": "Cannabis genetics, seeds, and breeding services",
+      "subcategories": ["seeds", "clones", "mother_plants", "tissue_culture", "breeding_services"]
+    },
+    "nutrients": {
+      "description": "Growing nutrients, supplements, and soil amendments",
+      "subcategories": ["base_nutrients", "supplements", "pH_adjusters", "organic_amendments", "growing_media"]
+    },
+    "equipment": {
+      "description": "Growing equipment and systems",
+      "subcategories": ["lighting", "ventilation", "irrigation", "environmental_control", "grow_systems"]
+    },
+    "packaging": {
+      "description": "Cannabis packaging and compliance materials",
+      "subcategories": ["containers", "bags", "labels", "exit_bags", "child_resistant"]
+    },
+    "consulting": {
+      "description": "Professional services and consulting",
+      "subcategories": ["extraction_consulting", "compliance_consulting", "training", "design_services"]
+    },
+    "testing": {
+      "description": "Cannabis testing and laboratory services",
+      "subcategories": ["potency_testing", "pesticide_testing", "microbial_testing", "residual_solvent_testing"]
+    },
+    "dispensaries": {
+      "description": "Cannabis retail dispensaries",
+      "subcategories": ["recreational", "medical", "hybrid"]
+    },
+    "manufacturers": {
+      "description": "Cannabis product manufacturers",
+      "subcategories": ["edibles", "concentrates", "topicals", "beverages", "tinctures"]
+    }
+  }
+} 

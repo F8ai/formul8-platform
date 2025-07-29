@@ -1,0 +1,15 @@
+{
+  "state": "XX",
+  "last_updated": "2024-12-19",
+  "sources": [
+    {
+      "name": "Example Supplier",
+      "url": "https://example.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "City Name",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    }
+  ]
+} 

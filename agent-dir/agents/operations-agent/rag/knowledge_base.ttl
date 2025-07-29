@@ -1,0 +1,257 @@
+@prefix ops: <http://formul8.ai/ontology/operations#> .
+@prefix facility: <http://formul8.ai/ontology/facility#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix supply: <http://formul8.ai/ontology/supply#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Cultivation Operations
+ops:IndoorCultivation a ops:CultivationMethod ;
+    rdfs:label "Indoor Cannabis Cultivation" ;
+    ops:lightingType "LED, HPS, CMH" ;
+    ops:environmentalControl "HVAC, humidity, CO2" ;
+    ops:spaceRequirements "10-20 sq ft per plant" ;
+    ops:energyConsumption "300-600W per sq ft" ;
+    ops:advantages (
+        "Year-round production"
+        "Complete environmental control"
+        "Higher potency potential"
+        "Pest/weather protection"
+    ) ;
+    ops:disadvantages (
+        "High energy costs"
+        "Significant startup investment"
+        "Ongoing utility expenses"
+    ) .
+
+ops:OutdoorCultivation a ops:CultivationMethod ;
+    rdfs:label "Outdoor Cannabis Cultivation" ;
+    ops:season "Spring to Fall" ;
+    ops:spaceRequirements "25-100 sq ft per plant" ;
+    ops:advantages (
+        "Lower operational costs"
+        "Natural sunlight"
+        "Larger plant yields"
+        "Environmentally sustainable"
+    ) ;
+    ops:disadvantages (
+        "Weather dependent"
+        "Single harvest season"
+        "Pest/mold risks"
+        "Security challenges"
+    ) .
+
+ops:GreenhouseCultivation a ops:CultivationMethod ;
+    rdfs:label "Greenhouse Cannabis Cultivation" ;
+    ops:lightingType "Natural + supplemental LED" ;
+    ops:environmentalControl "Partial climate control" ;
+    ops:advantages (
+        "Extended growing season"
+        "Better than outdoor control"
+        "Lower energy than indoor"
+        "Weather protection"
+    ) .
+
+# Processing Operations
+ops:DryingProcess a ops:PostHarvestProcess ;
+    rdfs:label "Cannabis Drying" ;
+    ops:temperature "60-70°F" ;
+    ops:humidity "45-55%" ;
+    ops:duration "7-14 days" ;
+    ops:airflow "Gentle circulation" ;
+    ops:lightExposure "Dark environment" ;
+    ops:qualityIndicators (
+        "Stem snap test"
+        "Moisture content 10-15%"
+        "Terpene preservation"
+    ) .
+
+ops:CuringProcess a ops:PostHarvestProcess ;
+    rdfs:label "Cannabis Curing" ;
+    ops:temperature "60-65°F" ;
+    ops:humidity "58-62%" ;
+    ops:duration "2-8 weeks" ;
+    ops:container "Glass jars, airtight" ;
+    ops:burping "Daily for first week" ;
+    ops:benefits (
+        "Enhanced flavor"
+        "Improved potency"
+        "Smoother smoke"
+        "Extended shelf life"
+    ) .
+
+ops:TrimmingProcess a ops:PostHarvestProcess ;
+    rdfs:label "Cannabis Trimming" ;
+    ops:methods (
+        "Hand trimming"
+        "Machine trimming"
+        "Hybrid approach"
+    ) ;
+    ops:handTrimming (
+        "Higher quality"
+        "Trichome preservation"
+        "Labor intensive"
+        "Higher cost"
+    ) ;
+    ops:machineTrimming (
+        "Faster processing"
+        "Lower labor cost"
+        "Consistent results"
+        "Some trichome loss"
+    ) .
+
+# Facility Management
+facility:SecuritySystem a facility:Infrastructure ;
+    rdfs:label "Cannabis Facility Security" ;
+    facility:requirements (
+        "24/7 video surveillance"
+        "Access control systems"
+        "Intrusion detection"
+        "Panic buttons"
+        "Secure storage areas"
+        "Limited access zones"
+    ) ;
+    facility:recordingRetention "90 days minimum" ;
+    facility:monitoringRequired "Real-time surveillance" .
+
+facility:VentilationSystem a facility:Infrastructure ;
+    rdfs:label "HVAC and Ventilation" ;
+    facility:airChanges "12-20 per hour" ;
+    facility:filtration "HEPA and carbon filters" ;
+    facility:temperatureControl "68-78°F optimal" ;
+    facility:humidityControl "40-60% RH" ;
+    facility:odorControl "Carbon filtration required" .
+
+facility:WasteManagement a facility:Process ;
+    rdfs:label "Cannabis Waste Management" ;
+    facility:wasteTypes (
+        "Plant waste"
+        "Trim waste"
+        "Unusable product"
+        "Contaminated materials"
+    ) ;
+    facility:disposalMethods (
+        "Rendering unusable"
+        "Composting (where allowed)"
+        "Grinding and mixing"
+        "Incineration"
+    ) ;
+    facility:trackingRequired true .
+
+# Supply Chain
+supply:InventoryManagement a supply:Process ;
+    rdfs:label "Cannabis Inventory Management" ;
+    supply:trackingSystem "Seed-to-sale tracking" ;
+    supply:barcoding "RFID or QR codes" ;
+    supply:auditFrequency "Daily reconciliation" ;
+    supply:storageConditions (
+        "Temperature controlled"
+        "Light protected"
+        "Humidity controlled"
+        "Secure access"
+    ) .
+
+supply:TransportationProtocol a supply:Process ;
+    rdfs:label "Cannabis Transportation" ;
+    supply:vehicleRequirements (
+        "Locked storage compartments"
+        "GPS tracking"
+        "Security cameras"
+        "Commercial insurance"
+    ) ;
+    supply:manifestRequirements (
+        "Origin and destination"
+        "Product details"
+        "Quantities"
+        "Driver information"
+        "Route planning"
+    ) ;
+    supply:timeRestrictions "Daylight hours only" .
+
+# Quality Control
+ops:QualityAssurance a ops:Process ;
+    rdfs:label "Cannabis Quality Assurance" ;
+    ops:inspectionPoints (
+        "Incoming materials"
+        "In-process monitoring"
+        "Pre-harvest testing"
+        "Post-harvest inspection"
+        "Final product testing"
+    ) ;
+    ops:testingRequirements (
+        "Potency analysis"
+        "Contaminant screening"
+        "Microbiological testing"
+        "Pesticide residue"
+        "Heavy metals"
+        "Moisture content"
+    ) .
+
+# Standard Operating Procedures
+ops:CultivationSOP a ops:StandardProcedure ;
+    rdfs:label "Cultivation Standard Operating Procedures" ;
+    ops:procedures (
+        "Seed germination"
+        "Transplanting"
+        "Vegetative care"
+        "Flowering management"
+        "Harvest timing"
+        "Post-harvest handling"
+    ) ;
+    ops:documentationRequired (
+        "Growth logs"
+        "Nutrient schedules"
+        "Environmental data"
+        "Pest monitoring"
+        "Harvest records"
+    ) .
+
+ops:ManufacturingSOP a ops:StandardProcedure ;
+    rdfs:label "Manufacturing Standard Operating Procedures" ;
+    ops:procedures (
+        "Extraction protocols"
+        "Formulation procedures"
+        "Packaging standards"
+        "Labeling requirements"
+        "Quality testing"
+        "Batch documentation"
+    ) .
+
+# Compliance Operations
+ops:ComplianceMonitoring a ops:Process ;
+    rdfs:label "Operational Compliance Monitoring" ;
+    ops:auditSchedule "Monthly internal audits" ;
+    ops:regulatoryReporting (
+        "Monthly inventory reports"
+        "Sales data submission"
+        "Security incident reports"
+        "Waste disposal records"
+    ) ;
+    ops:employeeTraining (
+        "Compliance protocols"
+        "Security procedures"
+        "Safety training"
+        "Record keeping"
+    ) .
+
+# Production Metrics
+ops:ProductionKPI a ops:PerformanceIndicator ;
+    rdfs:label "Production Key Performance Indicators" ;
+    ops:yieldMetrics (
+        "Grams per square foot"
+        "Grams per plant"
+        "Grams per kilowatt hour"
+    ) ;
+    ops:qualityMetrics (
+        "Average potency"
+        "Terpene retention"
+        "Grade A percentage"
+        "Customer satisfaction"
+    ) ;
+    ops:efficiencyMetrics (
+        "Labor hours per pound"
+        "Energy cost per gram"
+        "Water usage efficiency"
+        "Waste reduction percentage"
+    ) .

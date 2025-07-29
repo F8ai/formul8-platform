@@ -1,0 +1,146 @@
+# Marketing Agent Configuration
+agent:
+  name: "marketing-agent"
+  type: "marketing"
+  version: "1.0.0"
+  description: "Cannabis marketing expert with platform compliance and N8N automation"
+  
+llm:
+  provider: "openai"
+  model: "gpt-4o"
+  temperature: 0.2
+  max_tokens: 2000
+  
+rag:
+  enabled: true
+  vectorstore_type: "faiss"
+  embedding_model: "text-embedding-ada-002"
+  chunk_size: 1000
+  chunk_overlap: 200
+  retrieval_k: 5
+  
+rdf_knowledge:
+  enabled: true
+  knowledge_base_path: "rag/knowledge_base.ttl"
+  sparql_endpoint: null
+  phi2_model_path: "microsoft/phi-2"
+  
+memory:
+  type: "conversation_buffer_window"
+  window_size: 10
+  return_messages: true
+  
+tools:
+  - name: "platform_compliance_check"
+    enabled: true
+    description: "Check marketing content compliance for platforms"
+    
+  - name: "creative_strategy_generator"
+    enabled: true
+    description: "Generate compliant creative strategies"
+    
+  - name: "market_intelligence"
+    enabled: true
+    description: "Analyze market data and CPC estimates"
+    
+  - name: "n8n_workflow_simulator"
+    enabled: true
+    description: "Simulate N8N marketing automation workflows"
+    
+  - name: "marketing_knowledge_search"
+    enabled: true
+    requires: ["vectorstore"]
+    description: "RAG search of marketing knowledge"
+    
+  - name: "structured_marketing_query"
+    enabled: true
+    requires: ["rdf_knowledge"]
+    description: "SPARQL queries on structured knowledge"
+
+specialization:
+  domain: "cannabis_marketing"
+  expertise_areas:
+    - "platform_compliance"
+    - "creative_strategy"
+    - "market_intelligence"
+    - "n8n_automation"
+    - "digital_advertising"
+    - "brand_strategy"
+    - "compliance_workarounds"
+    - "audience_targeting"
+  
+  platforms:
+    restricted:
+      - platform: "facebook"
+        allowed: false
+        workarounds: ["wellness_angle", "lifestyle_focus", "educational_content"]
+      - platform: "instagram"
+        allowed: false
+        workarounds: ["brand_awareness", "educational_posts", "community_building"]
+      - platform: "google_ads"
+        allowed: false
+        workarounds: ["wellness_keywords", "educational_content", "brand_terms"]
+    
+    cannabis_friendly:
+      - platform: "weedmaps"
+        allowed: true
+        best_practices: ["high_quality_photos", "detailed_descriptions", "customer_reviews"]
+      - platform: "leafly"
+        allowed: true
+        best_practices: ["educational_content", "strain_reviews", "dispensary_profiles"]
+      - platform: "cannabis_publications"
+        allowed: true
+        best_practices: ["expert_content", "thought_leadership", "industry_insights"]
+  
+  automation_workflows:
+    - name: "content_approval_workflow"
+      trigger: "webhook_content_upload"
+      nodes: ["ocr_extraction", "compliance_check", "approval_routing", "publishing"]
+      
+    - name: "campaign_optimization_workflow"
+      trigger: "daily_schedule"
+      nodes: ["metrics_fetch", "performance_analysis", "budget_adjustment", "reporting"]
+      
+    - name: "lead_nurturing_workflow"
+      trigger: "form_submission"
+      nodes: ["lead_scoring", "segmentation", "email_sequence", "crm_update"]
+  
+  creative_strategies:
+    wellness_approach:
+      messaging: ["plant_based_wellness", "natural_health", "lifestyle_enhancement"]
+      visuals: ["nature_imagery", "wellness_lifestyle", "clean_design"]
+      content: ["educational_tips", "wellness_wednesday", "mindfulness_content"]
+    
+    direct_cannabis:
+      messaging: ["product_quality", "strain_benefits", "cultivation_expertise"]
+      visuals: ["product_photography", "cultivation_process", "cannabis_culture"]
+      content: ["strain_spotlights", "education", "customer_testimonials"]
+
+performance:
+  response_time_target: 12  # seconds
+  accuracy_target: 0.88
+  confidence_threshold: 0.75
+  
+baseline_testing:
+  enabled: true
+  test_file: "baseline.json"
+  auto_evaluate: true
+  
+logging:
+  level: "INFO"
+  file: "logs/marketing_agent.log"
+  
+n8n_integration:
+  enabled: true
+  webhook_endpoint: "https://n8n.formul8.ai/webhook"
+  api_key_env: "N8N_API_KEY"
+  
+dependencies:
+  required:
+    - "langchain"
+    - "openai"
+    - "faiss-cpu"
+  optional:
+    - "rdflib"
+    - "transformers"
+    - "requests"

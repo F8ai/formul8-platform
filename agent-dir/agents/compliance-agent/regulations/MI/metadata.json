@@ -1,0 +1,22 @@
+{
+  "state": "MI",
+  "name": "Michigan",
+  "agency": "Cannabis Regulatory Agency",
+  "main_url": "https://www.michigan.gov/cra",
+  "mirrored_domains": [
+    "michigan.gov/cra"
+  ],
+  "domain_results": {
+    "michigan.gov/cra": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    }
+  },
+  "last_updated": "2025-07-15T20:11:53.817511",
+  "mirror_success": false,
+  "total_files": 0,
+  "total_size_mb": 0.0
+}

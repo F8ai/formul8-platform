@@ -1,0 +1,284 @@
+@prefix patent: <http://formul8.ai/ontology/patent#> .
+@prefix trademark: <http://formul8.ai/ontology/trademark#> .
+@prefix ip: <http://formul8.ai/ontology/intellectual_property#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix legal: <http://formul8.ai/ontology/legal#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Patent Categories
+patent:PlantPatent a patent:PatentType ;
+    rdfs:label "Plant Patent" ;
+    patent:duration "20 years" ;
+    patent:protection "Asexually reproduced plants" ;
+    patent:requirements (
+        "Novel variety"
+        "Distinct characteristics"
+        "Asexual reproduction"
+        "Detailed description"
+        "Color drawings/photographs"
+    ) ;
+    patent:cannabis_applicability "Limited due to federal scheduling" .
+
+patent:UtilityPatent a patent:PatentType ;
+    rdfs:label "Utility Patent" ;
+    patent:duration "20 years from filing" ;
+    patent:protection "Processes, machines, compositions" ;
+    patent:cannabis_examples (
+        "Extraction methods"
+        "Formulation processes"
+        "Cultivation techniques"
+        "Testing apparatus"
+        "Delivery systems"
+    ) ;
+    patent:patentability_requirements (
+        "Novel"
+        "Non-obvious"
+        "Useful"
+        "Adequately described"
+    ) .
+
+patent:DesignPatent a patent:PatentType ;
+    rdfs:label "Design Patent" ;
+    patent:duration "15 years" ;
+    patent:protection "Ornamental design of functional items" ;
+    patent:cannabis_examples (
+        "Vaporizer designs"
+        "Packaging configurations"
+        "Grinder shapes"
+        "Container designs"
+    ) .
+
+# Cannabis-Specific Patent Areas
+patent:CultivationMethod a patent:InventionCategory ;
+    rdfs:label "Cannabis Cultivation Methods" ;
+    patent:patentable_aspects (
+        "Hydroponic systems"
+        "Light spectrum optimization"
+        "Nutrient delivery methods"
+        "Environmental control systems"
+        "Automated harvesting"
+    ) ;
+    patent:considerations (
+        "Federal vs state legality"
+        "Obviousness challenges"
+        "Prior art in agriculture"
+    ) .
+
+patent:ExtractionProcess a patent:InventionCategory ;
+    rdfs:label "Cannabis Extraction Processes" ;
+    patent:patentable_aspects (
+        "Novel extraction solvents"
+        "Temperature/pressure methods"
+        "Purification techniques"
+        "Isolation procedures"
+        "Equipment configurations"
+    ) ;
+    patent:notable_patents (
+        "CO2 extraction improvements"
+        "Solventless methods"
+        "Winterization processes"
+    ) .
+
+patent:FormulationTechnology a patent:InventionCategory ;
+    rdfs:label "Cannabis Formulation Technology" ;
+    patent:patentable_aspects (
+        "Delivery mechanisms"
+        "Dosage forms"
+        "Stability improvements"
+        "Bioavailability enhancement"
+        "Flavor masking"
+    ) ;
+    patent:examples (
+        "Nano-emulsions"
+        "Time-release capsules"
+        "Transdermal patches"
+    ) .
+
+# Patent Strategy
+ip:PatentStrategy a ip:Strategy ;
+    rdfs:label "Cannabis IP Strategy" ;
+    ip:considerations (
+        "Federal scheduling issues"
+        "International filing challenges"
+        "Enforcement limitations"
+        "Trade secret alternatives"
+    ) ;
+    ip:recommendations (
+        "File continuation applications"
+        "Consider international markets"
+        "Develop trade secret protocols"
+        "Monitor competitor filings"
+    ) .
+
+# Trademark Protection
+trademark:CannabisTrademarks a trademark:Category ;
+    rdfs:label "Cannabis Trademark Considerations" ;
+    trademark:challenges (
+        "Federal registration limitations"
+        "Lawful use requirements"
+        "Interstate commerce restrictions"
+    ) ;
+    trademark:strategies (
+        "State-level registration"
+        "Common law rights"
+        "International registration"
+        "Ancillary product trademarks"
+    ) .
+
+trademark:BrandProtection a trademark:Strategy ;
+    rdfs:label "Cannabis Brand Protection" ;
+    trademark:elements (
+        "Brand names"
+        "Logos and designs"
+        "Product names"
+        "Taglines"
+        "Trade dress"
+    ) ;
+    trademark:enforcement (
+        "Opposition proceedings"
+        "Cancellation actions"
+        "Infringement litigation"
+        "Domain name disputes"
+    ) .
+
+# Trade Secrets
+ip:TradeSecret a ip:ProtectionType ;
+    rdfs:label "Trade Secret Protection" ;
+    ip:requirements (
+        "Economic value from secrecy"
+        "Not generally known"
+        "Reasonable secrecy measures"
+    ) ;
+    ip:cannabis_applications (
+        "Proprietary cultivation methods"
+        "Extraction formulas"
+        "Customer lists"
+        "Supplier relationships"
+        "Processing techniques"
+    ) ;
+    ip:protection_measures (
+        "Non-disclosure agreements"
+        "Employee training"
+        "Access controls"
+        "Document marking"
+    ) .
+
+# Freedom to Operate
+patent:FTO_Analysis a patent:Process ;
+    rdfs:label "Freedom to Operate Analysis" ;
+    patent:scope (
+        "Existing patent landscape"
+        "Pending applications"
+        "Expired patents"
+        "Geographic considerations"
+    ) ;
+    patent:methodology (
+        "Patent database searches"
+        "Claim construction"
+        "Infringement analysis"
+        "Invalidity assessment"
+    ) .
+
+# Patent Enforcement
+patent:EnforcementChallenges a patent:Issue ;
+    rdfs:label "Cannabis Patent Enforcement Challenges" ;
+    patent:challenges (
+        "Federal court jurisdiction"
+        "Unclean hands doctrine"
+        "Inequitable conduct"
+        "Venue limitations"
+    ) ;
+    patent:alternatives (
+        "State court actions"
+        "Trade secret claims"
+        "Unfair competition"
+        "Contract enforcement"
+    ) .
+
+# Prior Art Considerations
+patent:PriorArt a patent:Consideration ;
+    rdfs:label "Cannabis Prior Art" ;
+    patent:sources (
+        "Academic research"
+        "Traditional knowledge"
+        "Industrial hemp patents"
+        "Pharmaceutical research"
+        "Agricultural methods"
+    ) ;
+    patent:search_strategies (
+        "Keyword combinations"
+        "Classification searches"
+        "Inventor searches"
+        "Assignee searches"
+        "Citation analysis"
+    ) .
+
+# International Considerations
+patent:InternationalFiling a patent:Strategy ;
+    rdfs:label "International Cannabis Patent Filing" ;
+    patent:friendly_jurisdictions (
+        "Canada"
+        "Netherlands"
+        "Germany"
+        "Israel"
+        "Australia"
+    ) ;
+    patent:considerations (
+        "Local legality requirements"
+        "Patentability standards"
+        "Enforcement mechanisms"
+        "Market potential"
+    ) .
+
+# IP Valuation
+ip:Valuation a ip:Process ;
+    rdfs:label "Cannabis IP Valuation" ;
+    ip:methods (
+        "Cost approach"
+        "Market approach"
+        "Income approach"
+        "Relief from royalty"
+    ) ;
+    ip:factors (
+        "Market exclusivity"
+        "Competitive advantage"
+        "Revenue generation"
+        "Risk factors"
+        "Legal strength"
+    ) .
+
+# Licensing Strategies
+ip:LicensingStrategy a ip:Strategy ;
+    rdfs:label "Cannabis IP Licensing" ;
+    ip:models (
+        "Exclusive licensing"
+        "Non-exclusive licensing"
+        "Field-of-use licensing"
+        "Geographic licensing"
+        "Cross-licensing"
+    ) ;
+    ip:considerations (
+        "Royalty structures"
+        "Minimum guarantees"
+        "Quality control"
+        "Termination rights"
+        "Improvement rights"
+    ) .
+
+# Regulatory Impact
+legal:RegulatoryImpact a legal:Consideration ;
+    rdfs:label "Regulatory Impact on Cannabis IP" ;
+    legal:federal_issues (
+        "Schedule I classification"
+        "Interstate commerce restrictions"
+        "Banking limitations"
+        "Tax implications"
+    ) ;
+    legal:state_variations (
+        "Medical vs recreational"
+        "Licensing requirements"
+        "Product restrictions"
+        "Advertising limitations"
+    ) .

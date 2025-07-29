@@ -1,0 +1,22 @@
+{
+  "state": "NM",
+  "name": "New Mexico",
+  "agency": "Regulation and Licensing Department",
+  "main_url": "https://www.rld.nm.gov/cannabis-control-division",
+  "mirrored_domains": [
+    "rld.nm.gov/cannabis-control-division"
+  ],
+  "domain_results": {
+    "rld.nm.gov/cannabis-control-division": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    }
+  },
+  "last_updated": "2025-07-15T20:11:56.410970",
+  "mirror_success": false,
+  "total_files": 0,
+  "total_size_mb": 0.0
+}

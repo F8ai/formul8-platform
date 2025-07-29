@@ -1,0 +1,183 @@
+{
+  "agent": "patent-agent",
+  "description": "Cannabis Patent and Intellectual Property Questions covering patent searching, freedom to operate analysis, IP strategy, and trademark protection",
+  "categories": {
+    "patent_searching": "Patent database searching and prior art analysis",
+    "freedom_to_operate": "FTO analysis and infringement risk assessment",
+    "patent_prosecution": "Patent application drafting and prosecution strategies",
+    "ip_strategy": "Intellectual property portfolio development and management",
+    "trademark_protection": "Cannabis brand and trademark strategies",
+    "licensing_agreements": "IP licensing and technology transfer",
+    "infringement_analysis": "Patent infringement detection and litigation support",
+    "regulatory_ip": "Cannabis-specific IP regulatory considerations",
+    "trade_secrets": "Trade secret protection and confidentiality strategies",
+    "competitive_intelligence": "Patent landscape analysis and competitor monitoring"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic patent concepts and searching techniques",
+    "intermediate": "Patent analysis and IP strategy development",
+    "advanced": "Complex FTO analysis and patent portfolio optimization"
+  },
+  "questions": [
+    {
+      "id": "search001",
+      "category": "patent_searching",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I conduct a comprehensive patent search for cannabis extraction methods?",
+      "expected_answer": "Search multiple databases (USPTO, Google Patents, WIPO), use classification codes (A61K, C07C, B01D), include cannabis-specific keywords, analyze extraction techniques, solvents, equipment, and review continuation applications",
+      "max_score": 15,
+      "tags": ["patent-search", "extraction", "databases", "classification"]
+    },
+    {
+      "id": "search002",
+      "category": "patent_searching",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What are the challenges in searching cannabis-related patents due to legal restrictions?",
+      "expected_answer": "Challenges include euphemistic language, alternative terminology, international filing strategies, delayed publications, classification inconsistencies, and the need to search medical, pharmaceutical, and industrial hemp patents",
+      "max_score": 18,
+      "tags": ["search-challenges", "legal-restrictions", "terminology", "international"]
+    },
+    {
+      "id": "fto001",
+      "category": "freedom_to_operate",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I assess freedom to operate for a new cannabis vaporizer design?",
+      "expected_answer": "Analyze existing vaporizer patents, heating element designs, airflow systems, temperature control methods, identify blocking patents, assess design-around opportunities, and evaluate enforcement likelihood",
+      "max_score": 15,
+      "tags": ["fto", "vaporizer", "design-patents", "blocking-patents"]
+    },
+    {
+      "id": "fto002",
+      "category": "freedom_to_operate",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What factors should I consider when evaluating FTO for cannabis-infused beverage formulations?",
+      "expected_answer": "Evaluate formulation patents, delivery methods, stability techniques, bioavailability enhancement, flavoring systems, packaging innovations, consider food/beverage crossover patents, and assess nanoemulsion technologies",
+      "max_score": 20,
+      "tags": ["fto", "beverages", "formulations", "nanoemulsion", "bioavailability"]
+    },
+    {
+      "id": "prosecution001",
+      "category": "patent_prosecution",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What are the key considerations when drafting cannabis-related patent applications?",
+      "expected_answer": "Address legal uncertainty, use precise scientific terminology, include comprehensive claims, consider international filing, address regulatory compliance, provide detailed examples, and anticipate examiner rejections",
+      "max_score": 15,
+      "tags": ["patent-drafting", "claims", "scientific-terminology", "regulatory"]
+    },
+    {
+      "id": "prosecution002",
+      "category": "patent_prosecution",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I overcome USPTO rejections for cannabis cultivation method patents?",
+      "expected_answer": "Address abstract idea rejections with technical improvements, provide experimental data, demonstrate unexpected results, narrow claims to specific techniques, cite allowable precedents, and emphasize technological advantages",
+      "max_score": 20,
+      "tags": ["uspto-rejections", "cultivation-methods", "abstract-ideas", "experimental-data"]
+    },
+    {
+      "id": "strategy001",
+      "category": "ip_strategy",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What IP strategy should I develop for a cannabis startup?",
+      "expected_answer": "Focus on core innovations, file provisional applications early, develop trade secret protocols, secure trademarks, monitor competitor patents, plan international filing strategy, and budget for patent prosecution",
+      "max_score": 12,
+      "tags": ["ip-strategy", "startup", "provisional-applications", "trade-secrets"]
+    },
+    {
+      "id": "strategy002",
+      "category": "ip_strategy",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I build a defensive patent portfolio for cannabis processing equipment?",
+      "expected_answer": "Identify key technical areas, file continuation applications, develop patent families, create blocking positions, monitor competitor activities, establish cross-licensing opportunities, and build enforcement capabilities",
+      "max_score": 18,
+      "tags": ["defensive-portfolio", "processing-equipment", "patent-families", "cross-licensing"]
+    },
+    {
+      "id": "trademark001",
+      "category": "trademark_protection",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What are the challenges in obtaining cannabis-related trademarks?",
+      "expected_answer": "Challenges include federal illegality issues, USPTO refusal based on lawful use, state-level protections, international considerations, and the need for careful classification and marketing strategies",
+      "max_score": 12,
+      "tags": ["trademarks", "federal-illegality", "uspto-refusal", "state-protection"]
+    },
+    {
+      "id": "trademark002",
+      "category": "trademark_protection",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I develop a comprehensive cannabis brand protection strategy?",
+      "expected_answer": "Register state trademarks, secure domain names, implement brand monitoring, develop enforcement protocols, consider international protection, use common law rights, and prepare for federal legalization",
+      "max_score": 18,
+      "tags": ["brand-protection", "state-trademarks", "domain-names", "enforcement"]
+    },
+    {
+      "id": "licensing001",
+      "category": "licensing_agreements",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What key terms should be included in cannabis patent licensing agreements?",
+      "expected_answer": "Include scope of license, field of use restrictions, royalty structures, milestone payments, quality control provisions, regulatory compliance terms, termination clauses, and dispute resolution mechanisms",
+      "max_score": 12,
+      "tags": ["licensing", "royalty-structures", "field-of-use", "quality-control"]
+    },
+    {
+      "id": "licensing002",
+      "category": "licensing_agreements",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I structure a cannabis genetics licensing program with multiple cultivators?",
+      "expected_answer": "Develop exclusive/non-exclusive tiers, implement quality standards, establish royalty tracking systems, include breed-back rights, address regulatory compliance, create territory restrictions, and monitor cultivation practices",
+      "max_score": 20,
+      "tags": ["genetics-licensing", "cultivation", "breed-back-rights", "territory-restrictions"]
+    },
+    {
+      "id": "infringement001",
+      "category": "infringement_analysis",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I analyze potential patent infringement in cannabis product development?",
+      "expected_answer": "Compare product features to patent claims, perform claim chart analysis, assess literal infringement and doctrine of equivalents, evaluate validity challenges, and consider design-around options",
+      "max_score": 15,
+      "tags": ["infringement-analysis", "claim-charts", "design-around", "validity"]
+    },
+    {
+      "id": "infringement002",
+      "category": "infringement_analysis",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What evidence should I collect for cannabis patent infringement litigation?",
+      "expected_answer": "Collect product samples, manufacturing processes, technical documentation, sales data, marketing materials, expert testimony preparation, prior art evidence, and damages calculation support",
+      "max_score": 20,
+      "tags": ["litigation-evidence", "expert-testimony", "damages-calculation", "prior-art"]
+    },
+    {
+      "id": "regulatory001",
+      "category": "regulatory_ip",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do cannabis regulations affect patent enforcement strategies?",
+      "expected_answer": "Consider state-by-state enforcement, federal illegality complications, regulatory compliance requirements, limited venue options, and the impact of changing legal landscape on patent value",
+      "max_score": 12,
+      "tags": ["regulatory-impact", "enforcement", "venue-options", "legal-landscape"]
+    },
+    {
+      "id": "regulatory002",
+      "category": "regulatory_ip",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How should I prepare my cannabis IP portfolio for federal legalization?",
+      "expected_answer": "Strengthen patent positions, prepare for increased competition, develop federal trademark strategy, assess international opportunities, update licensing agreements, and plan enforcement protocols",
+      "max_score": 18,
+      "tags": ["federal-legalization", "portfolio-preparation", "international-opportunities", "competition"]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "science_001",
+    "question": "What does the peer-reviewed research say about CBD for treating epilepsy?",
+    "expected_answer": "Strong evidence from multiple RCTs shows CBD significantly reduces seizure frequency in treatment-resistant epilepsy. FDA approved Epidiolex for specific epilepsy syndromes based on high-quality clinical trials.",
+    "keywords": ["RCTs", "seizure frequency", "treatment-resistant", "FDA approved", "Epidiolex", "clinical trials"],
+    "category": "clinical_evidence",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "science_002",
+    "question": "Assess the evidence quality for THC in cancer treatment research.",
+    "expected_answer": "Limited clinical evidence. Most research is preclinical with promising results, but insufficient human trials for therapeutic recommendations. More high-quality clinical studies needed.",
+    "keywords": ["limited clinical", "preclinical", "insufficient trials", "more studies needed", "evidence quality"],
+    "category": "evidence_assessment",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "science_003",
+    "question": "What are the current research trends in cannabis science publications?",
+    "expected_answer": "Increasing publications focus on clinical applications (45%), with growing interest in minor cannabinoids, safety studies, and standardized dosing protocols. Research gaps remain in long-term safety.",
+    "keywords": ["clinical applications", "minor cannabinoids", "safety studies", "standardized dosing", "research gaps"],
+    "category": "research_trends",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "science_004",
+    "question": "Validate the claim that cannabis cures cancer based on scientific evidence.",
+    "expected_answer": "No evidence supports this claim. While preclinical studies show anti-tumor effects, clinical evidence is insufficient. Cannabis may help with cancer symptoms but is not a cure.",
+    "keywords": ["no evidence", "preclinical studies", "insufficient clinical", "not a cure", "symptoms only"],
+    "category": "claim_validation",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "science_005",
+    "question": "What does meta-analysis show about cannabis for chronic pain?",
+    "expected_answer": "Meta-analyses show modest efficacy for neuropathic pain with moderate effect sizes. Benefits must be weighed against side effects and addiction potential. Quality of evidence varies.",
+    "keywords": ["modest efficacy", "neuropathic pain", "moderate effect", "side effects", "addiction potential", "quality varies"],
+    "category": "meta_analysis",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "science_006",
+    "question": "How do you assess bias risk in cannabis clinical trials?",
+    "expected_answer": "Evaluate blinding quality, randomization methods, outcome measures, and funding sources. Cannabis trials often face challenges with blinding due to psychoactive effects.",
+    "keywords": ["blinding quality", "randomization", "outcome measures", "funding sources", "psychoactive effects"],
+    "category": "methodology",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "science_007",
+    "question": "What is the entourage effect and what does research show?",
+    "expected_answer": "Hypothesized synergistic interaction between cannabis compounds. Limited high-quality clinical evidence. Most support comes from preclinical studies. More research needed to confirm clinical relevance.",
+    "keywords": ["synergistic interaction", "limited clinical evidence", "preclinical studies", "more research needed"],
+    "category": "pharmacology",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "science_008",
+    "question": "Compare evidence levels between different study types in cannabis research.",
+    "expected_answer": "Systematic reviews and RCTs provide highest evidence, followed by cohort studies. Case reports and animal studies provide lowest clinical evidence. Most cannabis research still at lower evidence levels.",
+    "keywords": ["systematic reviews", "RCTs", "highest evidence", "cohort studies", "case reports", "lower evidence"],
+    "category": "evidence_hierarchy",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "science_009",
+    "question": "What are the main research gaps in current cannabis science?",
+    "expected_answer": "Long-term safety studies, standardized dosing protocols, optimal delivery methods, personalized medicine approaches, and drug interaction studies are major research gaps.",
+    "keywords": ["long-term safety", "standardized dosing", "delivery methods", "personalized medicine", "drug interactions"],
+    "category": "research_gaps",
+    "difficulty": "basic"
+  },
+  {
+    "id": "science_010",
+    "question": "How should clinicians interpret contradictory cannabis research findings?",
+    "expected_answer": "Consider study quality, methodology differences, population variations, and outcome measures. Focus on high-quality systematic reviews. Acknowledge limitations and avoid overgeneralization.",
+    "keywords": ["study quality", "methodology differences", "population variations", "systematic reviews", "limitations"],
+    "category": "clinical_interpretation",
+    "difficulty": "advanced"
+  }
+]

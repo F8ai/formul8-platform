@@ -1,0 +1,21 @@
+# compliance-agent Configuration
+agent:
+  name: "compliance-agent"
+  description: "Cannabis regulatory compliance and legal guidance"
+  domain: "Cannabis Regulatory Compliance"
+
+llm:
+  provider: "openai"
+  model: "gpt-4o"
+  temperature: 0.1
+  max_tokens: 2000
+
+rag:
+  enabled: true
+  vectorstore_type: "faiss"
+  embedding_model: "text-embedding-ada-002"
+
+tools:
+  - name: "regulatory_search"
+  - name: "compliance_check"
+  - name: "state_requirements"

@@ -1,0 +1,20 @@
+{
+  "state": "NY",
+  "name": "New York",
+  "agency": "Office of Cannabis Management",
+  "main_url": "https://cannabis.ny.gov",
+  "downloaded_urls": [
+    "https://cannabis.ny.gov",
+    "https://cannabis.ny.gov/",
+    "https://cannabis.ny.gov/about-0",
+    "https://cannabis.ny.gov/cannabis-control-board-meetings",
+    "https://cannabis.ny.gov/cannabis-advisory-board-meetings",
+    "https://cannabis.ny.gov/licensing",
+    "https://cannabis.ny.gov/regulations",
+    "https://cannabis.ny.gov/adult-use"
+  ],
+  "last_updated": "2025-07-15T20:49:27.053594",
+  "total_files": 8,
+  "total_size_mb": 1.01,
+  "mirror_success": true
+}

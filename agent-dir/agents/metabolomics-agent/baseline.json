@@ -1,0 +1,183 @@
+{
+  "agent": "metabolomics-agent",
+  "description": "Cannabis Metabolomics and Systems Biology Questions covering metabolic profiling, biomarker discovery, pathway analysis, and precision cannabis medicine",
+  "categories": {
+    "metabolic_profiling": "Comprehensive metabolite identification and quantification",
+    "biomarker_discovery": "Biomarker identification for efficacy and safety",
+    "pathway_analysis": "Metabolic pathway mapping and systems analysis",
+    "precision_medicine": "Personalized cannabis medicine and dosing strategies",
+    "pharmacokinetics": "Cannabis metabolite absorption, distribution, and elimination",
+    "bioanalytical_methods": "Advanced analytical techniques for metabolomics",
+    "data_analysis": "Metabolomics data processing and statistical analysis",
+    "quality_control": "Metabolomics study design and quality assurance",
+    "clinical_applications": "Clinical metabolomics for cannabis research",
+    "regulatory_science": "Regulatory applications of metabolomics data"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic metabolomics concepts and standard analytical procedures",
+    "intermediate": "Advanced metabolomics techniques and pathway analysis",
+    "advanced": "Complex systems biology and precision medicine approaches"
+  },
+  "questions": [
+    {
+      "id": "profile001",
+      "category": "metabolic_profiling",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What analytical platforms are best for comprehensive cannabis metabolomics profiling?",
+      "expected_answer": "Use LC-MS/MS for polar metabolites, GC-MS for volatile compounds, NMR for structural identification, combine targeted and untargeted approaches, implement quality controls, and use appropriate databases",
+      "max_score": 15,
+      "tags": ["metabolomics", "lc-ms-ms", "gc-ms", "nmr", "untargeted-analysis"]
+    },
+    {
+      "id": "profile002",
+      "category": "metabolic_profiling",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I develop a standardized metabolomics protocol for cannabis strain characterization?",
+      "expected_answer": "Establish sample collection protocols, standardize extraction procedures, implement analytical workflows, create reference databases, validate identification criteria, and ensure reproducibility across laboratories",
+      "max_score": 20,
+      "tags": ["standardization", "strain-characterization", "protocol-development", "reproducibility"]
+    },
+    {
+      "id": "biomarker001",
+      "category": "biomarker_discovery",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What approaches should I use to identify biomarkers for cannabis efficacy?",
+      "expected_answer": "Use multivariate statistics, implement fold-change analysis, perform pathway enrichment, validate with independent cohorts, consider pharmacokinetic factors, and correlate with clinical outcomes",
+      "max_score": 15,
+      "tags": ["biomarker-discovery", "multivariate-statistics", "pathway-enrichment", "clinical-correlation"]
+    },
+    {
+      "id": "biomarker002",
+      "category": "biomarker_discovery",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I validate metabolic biomarkers for cannabis adverse effects?",
+      "expected_answer": "Implement biomarker qualification framework, conduct dose-response studies, assess temporal relationships, validate across populations, establish cut-off values, and evaluate clinical utility",
+      "max_score": 20,
+      "tags": ["biomarker-validation", "adverse-effects", "dose-response", "qualification-framework"]
+    },
+    {
+      "id": "pathway001",
+      "category": "pathway_analysis",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I perform metabolic pathway analysis for cannabis metabolomics data?",
+      "expected_answer": "Use pathway databases (KEGG, BioCyc), implement enrichment analysis, perform topology analysis, integrate with gene expression data, visualize networks, and interpret biological significance",
+      "max_score": 15,
+      "tags": ["pathway-analysis", "kegg", "enrichment-analysis", "network-visualization"]
+    },
+    {
+      "id": "pathway002",
+      "category": "pathway_analysis",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What systems biology approaches can model cannabis-endocannabinoid system interactions?",
+      "expected_answer": "Implement network modeling, use flux balance analysis, integrate multi-omics data, apply machine learning algorithms, model receptor interactions, and predict system-level responses",
+      "max_score": 20,
+      "tags": ["systems-biology", "network-modeling", "flux-analysis", "multi-omics", "receptor-interactions"]
+    },
+    {
+      "id": "precision001",
+      "category": "precision_medicine",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How can metabolomics support personalized cannabis dosing strategies?",
+      "expected_answer": "Identify metabolic phenotypes, correlate with drug response, develop dosing algorithms, consider genetic factors, validate in clinical studies, and implement decision support tools",
+      "max_score": 15,
+      "tags": ["precision-medicine", "personalized-dosing", "metabolic-phenotypes", "decision-support"]
+    },
+    {
+      "id": "precision002",
+      "category": "precision_medicine",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What metabolomics approaches can predict individual cannabis treatment responses?",
+      "expected_answer": "Use machine learning models, implement metabolic signatures, integrate clinical data, develop predictive algorithms, validate with prospective studies, and create clinical decision tools",
+      "max_score": 20,
+      "tags": ["treatment-prediction", "machine-learning", "metabolic-signatures", "predictive-algorithms"]
+    },
+    {
+      "id": "pk001",
+      "category": "pharmacokinetics",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I study cannabis metabolite pharmacokinetics using metabolomics?",
+      "expected_answer": "Design time-course studies, measure parent compounds and metabolites, model absorption and elimination, assess bioavailability, consider route-specific factors, and validate with clinical data",
+      "max_score": 15,
+      "tags": ["pharmacokinetics", "time-course", "bioavailability", "absorption-elimination"]
+    },
+    {
+      "id": "pk002",
+      "category": "pharmacokinetics",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What population pharmacokinetic models are appropriate for cannabis metabolomics?",
+      "expected_answer": "Implement mixed-effects models, consider inter-individual variability, assess covariates, use Bayesian approaches, validate model performance, and integrate with pharmacodynamic data",
+      "max_score": 20,
+      "tags": ["population-pk", "mixed-effects", "bayesian-modeling", "pharmacodynamics"]
+    },
+    {
+      "id": "methods001",
+      "category": "bioanalytical_methods",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What sample preparation methods are optimal for cannabis metabolomics studies?",
+      "expected_answer": "Use protein precipitation, liquid-liquid extraction, or solid-phase extraction based on analytes, optimize recovery, minimize matrix effects, standardize procedures, and implement quality controls",
+      "max_score": 12,
+      "tags": ["sample-preparation", "extraction-methods", "matrix-effects", "quality-controls"]
+    },
+    {
+      "id": "methods002",
+      "category": "bioanalytical_methods",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I develop and validate bioanalytical methods for cannabis metabolomics?",
+      "expected_answer": "Follow regulatory guidelines, assess selectivity and specificity, validate accuracy and precision, determine stability, evaluate matrix effects, and ensure method robustness across sample types",
+      "max_score": 18,
+      "tags": ["method-validation", "regulatory-guidelines", "selectivity", "robustness"]
+    },
+    {
+      "id": "data001",
+      "category": "data_analysis",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What statistical methods are appropriate for cannabis metabolomics data analysis?",
+      "expected_answer": "Use multivariate analysis (PCA, PLS-DA), implement univariate statistics, apply multiple testing corrections, perform clustering analysis, and validate results with cross-validation",
+      "max_score": 12,
+      "tags": ["statistical-analysis", "multivariate", "pca", "cross-validation"]
+    },
+    {
+      "id": "data002",
+      "category": "data_analysis",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I integrate metabolomics with other omics data for cannabis research?",
+      "expected_answer": "Use multi-omics integration platforms, implement network analysis, apply machine learning approaches, perform pathway integration, validate findings, and interpret biological significance",
+      "max_score": 20,
+      "tags": ["multi-omics", "integration-platforms", "network-analysis", "pathway-integration"]
+    },
+    {
+      "id": "qc001",
+      "category": "quality_control",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What quality control measures are essential for cannabis metabolomics studies?",
+      "expected_answer": "Implement biological and technical replicates, use quality control samples, monitor instrument performance, apply data filtering criteria, and validate metabolite identification",
+      "max_score": 12,
+      "tags": ["quality-control", "biological-replicates", "technical-replicates", "data-filtering"]
+    },
+    {
+      "id": "qc002",
+      "category": "quality_control",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I establish inter-laboratory harmonization for cannabis metabolomics?",
+      "expected_answer": "Develop standard operating procedures, implement reference materials, conduct inter-laboratory studies, establish acceptance criteria, provide training programs, and maintain quality assurance",
+      "max_score": 18,
+      "tags": ["inter-laboratory", "harmonization", "reference-materials", "quality-assurance"]
+    }
+  ]
+}

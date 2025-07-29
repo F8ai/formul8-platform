@@ -1,0 +1,183 @@
+{
+  "agent": "marketing-agent",
+  "description": "Cannabis Marketing and Brand Strategy Questions covering compliance-first marketing, digital strategies, customer acquisition, and brand development",
+  "categories": {
+    "brand_strategy": "Cannabis brand positioning and differentiation",
+    "compliance_marketing": "Advertising regulation compliance and legal marketing",
+    "digital_marketing": "Online marketing strategies within platform restrictions",
+    "content_marketing": "Educational content and thought leadership",
+    "customer_acquisition": "Customer acquisition funnels and conversion optimization",
+    "customer_retention": "Loyalty programs and retention strategies",
+    "product_launch": "New product marketing and market entry",
+    "event_marketing": "Trade shows, educational events, and community engagement",
+    "social_media": "Social media strategy within cannabis advertising restrictions",
+    "market_research": "Cannabis market analysis and competitive intelligence"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic marketing concepts and compliance awareness",
+    "intermediate": "Advanced marketing strategies and campaign development",
+    "advanced": "Complex multi-channel campaigns and regulatory navigation"
+  },
+  "questions": [
+    {
+      "id": "brand001",
+      "category": "brand_strategy",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I develop a compliant brand strategy for a cannabis dispensary in {{state}}?",
+      "expected_answer": "Research {{state}} advertising restrictions, develop educational brand positioning, create compliance-first messaging, focus on health and wellness angles, build community trust, and emphasize quality and safety",
+      "max_score": 15,
+      "tags": ["brand-strategy", "compliance", "dispensary", "positioning"]
+    },
+    {
+      "id": "brand002", 
+      "category": "brand_strategy",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What brand differentiation strategies work best in competitive cannabis markets?",
+      "expected_answer": "Focus on unique product formulations, superior quality testing, specialized customer education, targeted demographic positioning, sustainability messaging, and exceptional customer experience",
+      "max_score": 18,
+      "tags": ["differentiation", "competitive-advantage", "market-positioning", "customer-experience"]
+    },
+    {
+      "id": "comply001",
+      "category": "compliance_marketing",
+      "difficulty": "intermediate", 
+      "state": "{{state}}",
+      "question": "What are the key advertising restrictions I need to follow for cannabis marketing in {{state}}?",
+      "expected_answer": "Review {{state}} cannabis control board advertising rules, avoid targeting minors, include required disclaimers, restrict location-based advertising near schools, limit claims about medical benefits, and follow platform-specific guidelines",
+      "max_score": 12,
+      "tags": ["advertising-restrictions", "compliance", "disclaimers", "minor-restrictions"]
+    },
+    {
+      "id": "comply002",
+      "category": "compliance_marketing",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I create compliant marketing materials that still engage customers effectively?",
+      "expected_answer": "Use educational approaches, focus on lifestyle and wellness, implement storytelling techniques, leverage user-generated content, emphasize quality and craftsmanship, and build authentic community connections",
+      "max_score": 16,
+      "tags": ["compliant-content", "engagement", "education", "storytelling"]
+    },
+    {
+      "id": "digital001",
+      "category": "digital_marketing",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What digital marketing strategies are most effective for cannabis businesses in {{state}}?",
+      "expected_answer": "SEO-optimized websites, email marketing, compliant social media presence, educational content marketing, influencer partnerships within guidelines, and geotargeted advertising where permitted",
+      "max_score": 14,
+      "tags": ["digital-marketing", "seo", "email-marketing", "social-media"]
+    },
+    {
+      "id": "digital002",
+      "category": "digital_marketing", 
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I build an effective omnichannel digital presence for a cannabis brand?",
+      "expected_answer": "Integrate website, social media, email, SMS, mobile apps, create consistent messaging across channels, implement marketing automation, track customer journey, and optimize conversion funnels",
+      "max_score": 20,
+      "tags": ["omnichannel", "marketing-automation", "customer-journey", "conversion-optimization"]
+    },
+    {
+      "id": "content001",
+      "category": "content_marketing",
+      "difficulty": "beginner",
+      "state": "MULTI", 
+      "question": "What types of educational content should I create for cannabis customers?",
+      "expected_answer": "Cannabis basics guides, consumption method explanations, dosing guidelines, strain information, safety protocols, legal compliance education, product comparisons, and industry news updates",
+      "max_score": 10,
+      "tags": ["educational-content", "cannabis-education", "customer-education", "content-strategy"]
+    },
+    {
+      "id": "content002",
+      "category": "content_marketing",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I develop a content calendar that drives engagement and compliance?",
+      "expected_answer": "Plan educational series, seasonal product features, compliance updates, community events, customer spotlights, industry trends, behind-the-scenes content, and interactive educational posts",
+      "max_score": 15,
+      "tags": ["content-calendar", "engagement", "educational-series", "community-building"]
+    },
+    {
+      "id": "acquire001",
+      "category": "customer_acquisition",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What customer acquisition strategies work best for new cannabis dispensaries in {{state}}?",
+      "expected_answer": "Grand opening events, new customer discounts, referral programs, community partnerships, educational workshops, loyalty program enrollment, and targeted local advertising within {{state}} regulations",
+      "max_score": 14,
+      "tags": ["customer-acquisition", "dispensary", "grand-opening", "referral-programs"]
+    },
+    {
+      "id": "acquire002",
+      "category": "customer_acquisition",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I optimize my customer acquisition funnel for maximum ROI?",
+      "expected_answer": "Implement lead scoring, A/B test landing pages, optimize conversion paths, track attribution across channels, calculate customer lifetime value, segment audiences, and automate nurture campaigns",
+      "max_score": 18,
+      "tags": ["acquisition-funnel", "roi-optimization", "lead-scoring", "conversion-optimization"]
+    },
+    {
+      "id": "retain001",
+      "category": "customer_retention",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I design an effective loyalty program for cannabis customers?",
+      "expected_answer": "Points-based rewards system, tier-based benefits, exclusive product access, educational perks, referral bonuses, personalized offers, and special member events",
+      "max_score": 12,
+      "tags": ["loyalty-program", "customer-retention", "rewards-system", "personalization"]
+    },
+    {
+      "id": "retain002",
+      "category": "customer_retention",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What data-driven retention strategies should I implement to reduce churn?",
+      "expected_answer": "Predictive churn modeling, behavioral trigger campaigns, personalized product recommendations, win-back campaigns, satisfaction surveys, and customer success interventions",
+      "max_score": 16,
+      "tags": ["churn-reduction", "predictive-modeling", "behavioral-triggers", "personalization"]
+    },
+    {
+      "id": "launch001",
+      "category": "product_launch",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I plan a successful product launch campaign for a new cannabis product in {{state}}?",
+      "expected_answer": "Pre-launch education, influencer partnerships, budtender training, sample programs, launch event, social media teasers, email campaigns, and compliance verification for {{state}} regulations",
+      "max_score": 15,
+      "tags": ["product-launch", "campaign-planning", "influencer-marketing", "budtender-training"]
+    },
+    {
+      "id": "launch002",
+      "category": "product_launch",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What metrics should I track to measure product launch success?",
+      "expected_answer": "Sales velocity, market penetration, brand awareness lift, customer trial rates, repeat purchase rates, social engagement, media coverage, and retailer adoption metrics",
+      "max_score": 18,
+      "tags": ["launch-metrics", "success-measurement", "market-penetration", "performance-tracking"]
+    },
+    {
+      "id": "event001",
+      "category": "event_marketing",
+      "difficulty": "beginner",
+      "state": "{{state}}",
+      "question": "What types of events can I host to promote my cannabis business in {{state}}?",
+      "expected_answer": "Educational workshops, industry networking events, product tastings (where legal), community fundraisers, cannabis conferences, and wellness seminars within {{state}} event regulations",
+      "max_score": 10,
+      "tags": ["event-marketing", "educational-events", "community-engagement", "networking"]
+    },
+    {
+      "id": "event002",
+      "category": "event_marketing",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I maximize ROI from cannabis trade show participation?",
+      "expected_answer": "Set clear objectives, design engaging booth experiences, prepare lead capture systems, schedule strategic meetings, create exclusive show offers, and implement comprehensive follow-up processes",
+      "max_score": 14,
+      "tags": ["trade-shows", "roi-maximization", "lead-generation", "booth-design"]
+    }
+  ]
+}

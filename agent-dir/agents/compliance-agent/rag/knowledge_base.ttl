@@ -1,0 +1,122 @@
+@prefix compliance: <http://formul8.ai/ontology/compliance#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix legal: <http://formul8.ai/ontology/legal#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# California DCC Regulations
+compliance:CaliforniaDCC a compliance:RegulatoryBody ;
+    rdfs:label "California Department of Cannabis Control" ;
+    compliance:jurisdiction "California" ;
+    compliance:website "https://cannabis.ca.gov" ;
+    compliance:lastUpdated "2025-01-13T20:00:00Z"^^xsd:dateTime .
+
+compliance:CultivationLicense a compliance:LicenseType ;
+    rdfs:label "Cannabis Cultivation License" ;
+    compliance:issuedBy compliance:CaliforniaDCC ;
+    compliance:requiresBackgroundCheck true ;
+    compliance:requiresLocalPermit true ;
+    compliance:requiresSecurityPlan true ;
+    compliance:requiresWaterRights true ;
+    compliance:requiresEnvironmentalCompliance true ;
+    compliance:requiresTrackAndTrace true ;
+    compliance:requiresInsurance true ;
+    compliance:requiresFinancialDocumentation true .
+
+compliance:PackagingRequirement a compliance:Requirement ;
+    rdfs:label "Cannabis Product Labeling Requirements" ;
+    compliance:appliesTo cannabis:CannabisProduct ;
+    compliance:mandatoryFields (
+        "Product name and type"
+        "THC and CBD content in mg"
+        "Net weight"
+        "Batch/lot number"
+        "Manufacturing date"
+        "Expiration date"
+        "Licensed manufacturer info"
+        "Universal symbol"
+        "Health warnings"
+        "Lab testing results"
+        "Ingredients list"
+        "Serving size information"
+    ) .
+
+compliance:TestingRequirement a compliance:Requirement ;
+    rdfs:label "Cannabis Testing Requirements" ;
+    compliance:appliesTo cannabis:CannabisFlower ;
+    compliance:mandatoryTests (
+        compliance:PesticideTest
+        compliance:HeavyMetalsTest
+        compliance:MicrobialsTest
+        compliance:ResidualSolventsTest
+        compliance:MycotoxinsTest
+        compliance:MoistureContentTest
+        compliance:PotencyTest
+        compliance:ForeignMatterTest
+    ) .
+
+compliance:PesticideTest a compliance:LabTest ;
+    rdfs:label "Pesticide Multi-residue Analysis" ;
+    compliance:testMethod "LC-MS/MS, GC-MS/MS" ;
+    compliance:actionLimits "California DCC specified limits" .
+
+compliance:HeavyMetalsTest a compliance:LabTest ;
+    rdfs:label "Heavy Metals Analysis" ;
+    compliance:testMethod "ICP-MS" ;
+    compliance:testedSubstances ( "Lead" "Cadmium" "Mercury" "Arsenic" ) .
+
+compliance:TransportationSecurity a compliance:Requirement ;
+    rdfs:label "Cannabis Transportation Security" ;
+    compliance:appliesTo cannabis:Transportation ;
+    compliance:mandatoryFeatures (
+        "GPS tracking systems"
+        "Locked storage compartments"
+        "Security cameras"
+        "Two-person minimum crew"
+        "Communication devices"
+        "Manifest documentation"
+        "Vehicle inspection logs"
+        "Insurance coverage"
+        "Route planning and reporting"
+        "Emergency protocols"
+    ) .
+
+compliance:AdvertisingRestriction a compliance:Restriction ;
+    rdfs:label "Cannabis Advertising Restrictions" ;
+    compliance:appliesTo cannabis:Marketing ;
+    compliance:prohibitions (
+        "Targeting minors under 21"
+        "Platform-specific prohibition policies"
+        "Health claims without evidence"
+        "Free samples promotion"
+    ) ;
+    compliance:requirements (
+        "Age-gated content requirements"
+        "Warning label requirements"
+        "Location-based restrictions"
+        "State-specific compliance"
+        "Truth in advertising standards"
+    ) .
+
+# Colorado MED Regulations
+compliance:ColoradoMED a compliance:RegulatoryBody ;
+    rdfs:label "Colorado Marijuana Enforcement Division" ;
+    compliance:jurisdiction "Colorado" ;
+    compliance:website "https://sbg.colorado.gov/med" ;
+    compliance:lastUpdated "2025-01-13T20:00:00Z"^^xsd:dateTime .
+
+# Washington LCB Regulations
+compliance:WashingtonLCB a compliance:RegulatoryBody ;
+    rdfs:label "Washington State Liquor and Cannabis Board" ;
+    compliance:jurisdiction "Washington" ;
+    compliance:website "https://lcb.wa.gov" ;
+    compliance:lastUpdated "2025-01-13T20:00:00Z"^^xsd:dateTime .
+
+# Federal Regulations
+compliance:FederalCSA a compliance:RegulatoryFramework ;
+    rdfs:label "Federal Controlled Substances Act" ;
+    compliance:jurisdiction "United States" ;
+    compliance:schedule cannabis:ScheduleI ;
+    compliance:federalStatus "Controlled Substance" .

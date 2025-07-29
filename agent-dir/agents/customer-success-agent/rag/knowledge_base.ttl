@@ -1,0 +1,331 @@
+@prefix cs: <http://formul8.ai/ontology/customer_success#> .
+@prefix support: <http://formul8.ai/ontology/support#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix business: <http://formul8.ai/ontology/business#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Customer Success Framework
+cs:CustomerLifecycle a cs:Framework ;
+    rdfs:label "Cannabis Business Customer Lifecycle" ;
+    cs:stages (
+        "Awareness"
+        "Consideration"
+        "Onboarding"
+        "Adoption"
+        "Expansion"
+        "Retention"
+        "Advocacy"
+    ) ;
+    cs:keyMetrics (
+        "Customer Acquisition Cost (CAC)"
+        "Customer Lifetime Value (CLV)"
+        "Net Promoter Score (NPS)"
+        "Customer Satisfaction (CSAT)"
+        "Time to Value (TTV)"
+        "Churn Rate"
+    ) .
+
+cs:OnboardingProcess a cs:Process ;
+    rdfs:label "Cannabis Business Onboarding" ;
+    cs:duration "30-90 days typical" ;
+    cs:milestones (
+        "License verification"
+        "Compliance assessment"
+        "System setup"
+        "Staff training"
+        "First successful transaction"
+        "Quality check completion"
+    ) ;
+    cs:supportNeeds (
+        "Regulatory guidance"
+        "Technical setup"
+        "Process optimization"
+        "Staff education"
+    ) .
+
+# Customer Segmentation
+cs:Cultivator a cs:CustomerSegment ;
+    rdfs:label "Cannabis Cultivator" ;
+    cs:characteristics (
+        "Focus on plant health and yield"
+        "Regulatory compliance priority"
+        "Quality control emphasis"
+        "Operational efficiency goals"
+    ) ;
+    cs:painPoints (
+        "Regulatory complexity"
+        "Quality consistency"
+        "Pest management"
+        "Environmental control"
+        "Harvest optimization"
+    ) ;
+    cs:successMetrics (
+        "Yield per square foot"
+        "Quality grades achieved"
+        "Compliance audit results"
+        "Cost per gram produced"
+    ) .
+
+cs:Manufacturer a cs:CustomerSegment ;
+    rdfs:label "Cannabis Manufacturer" ;
+    cs:characteristics (
+        "Product development focus"
+        "Brand building priority"
+        "Scale operations"
+        "Distribution channels"
+    ) ;
+    cs:painPoints (
+        "Product consistency"
+        "Formulation challenges"
+        "Supply chain management"
+        "Market differentiation"
+        "Regulatory approvals"
+    ) ;
+    cs:successMetrics (
+        "Product launch success"
+        "Market share growth"
+        "Manufacturing efficiency"
+        "Brand recognition"
+    ) .
+
+cs:Retailer a cs:CustomerSegment ;
+    rdfs:label "Cannabis Retailer" ;
+    cs:characteristics (
+        "Customer experience focus"
+        "Inventory management"
+        "Compliance tracking"
+        "Sales optimization"
+    ) ;
+    cs:painPoints (
+        "Point of sale complexity"
+        "Inventory tracking"
+        "Customer education"
+        "Banking limitations"
+        "Tax compliance"
+    ) ;
+    cs:successMetrics (
+        "Sales per square foot"
+        "Customer retention rate"
+        "Average transaction value"
+        "Inventory turnover"
+    ) .
+
+# Support Categories
+support:ComplianceSupport a support:SupportType ;
+    rdfs:label "Regulatory Compliance Support" ;
+    support:scope (
+        "License applications"
+        "Regulatory updates"
+        "Audit preparation"
+        "Documentation review"
+        "Process compliance"
+    ) ;
+    support:urgency "High - regulatory deadlines" ;
+    support:expertise "Regulatory affairs specialists" .
+
+support:TechnicalSupport a support:SupportType ;
+    rdfs:label "Technical Support" ;
+    support:scope (
+        "System configuration"
+        "Integration issues"
+        "Performance optimization"
+        "Troubleshooting"
+        "Feature requests"
+    ) ;
+    support:channels (
+        "Live chat"
+        "Phone support"
+        "Email tickets"
+        "Screen sharing"
+        "On-site visits"
+    ) .
+
+support:EducationalSupport a support:SupportType ;
+    rdfs:label "Educational Support" ;
+    support:scope (
+        "Best practices training"
+        "Industry updates"
+        "Process optimization"
+        "New feature training"
+        "Certification programs"
+    ) ;
+    support:deliveryMethods (
+        "Webinars"
+        "Documentation"
+        "Video tutorials"
+        "Workshops"
+        "One-on-one sessions"
+    ) .
+
+# Success Metrics and KPIs
+cs:SuccessMetrics a cs:MeasurementFramework ;
+    rdfs:label "Customer Success Metrics" ;
+    cs:healthScoreFactors (
+        "Product usage frequency"
+        "Feature adoption rate"
+        "Support ticket volume"
+        "Payment compliance"
+        "Feedback scores"
+        "Renewal probability"
+    ) ;
+    cs:earlyWarningSignals (
+        "Decreased login frequency"
+        "Increased support tickets"
+        "Late payments"
+        "Negative feedback"
+        "Limited feature usage"
+    ) .
+
+cs:BusinessOutcomes a cs:ImpactMeasurement ;
+    rdfs:label "Customer Business Outcomes" ;
+    cs:operationalMetrics (
+        "Time saved on compliance tasks"
+        "Reduction in audit findings"
+        "Improved product quality scores"
+        "Faster processing times"
+        "Reduced waste/loss"
+    ) ;
+    cs:financialMetrics (
+        "Revenue growth"
+        "Cost reduction"
+        "ROI improvement"
+        "Profitability increase"
+        "Market share gains"
+    ) .
+
+# Training and Education
+cs:TrainingProgram a cs:Education ;
+    rdfs:label "Cannabis Industry Training Programs" ;
+    cs:modules (
+        "Regulatory compliance basics"
+        "Quality control procedures"
+        "Safety protocols"
+        "Technology best practices"
+        "Industry trends and updates"
+    ) ;
+    cs:certificationLevels (
+        "Basic operator"
+        "Advanced practitioner"
+        "Expert specialist"
+        "Trainer certification"
+    ) ;
+    cs:deliveryFormats (
+        "Self-paced online"
+        "Instructor-led virtual"
+        "In-person workshops"
+        "Hands-on practicum"
+    ) .
+
+# Customer Health Monitoring
+cs:HealthScoring a cs:MonitoringSystem ;
+    rdfs:label "Customer Health Scoring" ;
+    cs:scoringFactors (
+        "Usage activity: 30%"
+        "Feature adoption: 25%"
+        "Support satisfaction: 20%"
+        "Business outcomes: 15%"
+        "Renewal likelihood: 10%"
+    ) ;
+    cs:scoreRanges (
+        "Green (80-100): Thriving"
+        "Yellow (60-79): At risk"
+        "Red (0-59): Critical"
+    ) ;
+    cs:interventions (
+        "Proactive outreach"
+        "Additional training"
+        "Account review"
+        "Executive escalation"
+    ) .
+
+# Renewal and Expansion
+cs:RenewalStrategy a cs:RetentionStrategy ;
+    rdfs:label "Customer Renewal Strategy" ;
+    cs:timeline (
+        "120 days: Initial outreach"
+        "90 days: Business review"
+        "60 days: Proposal presentation"
+        "30 days: Contract negotiation"
+        "Renewal date: Agreement signing"
+    ) ;
+    cs:expansionOpportunities (
+        "Additional licenses/locations"
+        "New product lines"
+        "Advanced features"
+        "Professional services"
+        "Training programs"
+    ) .
+
+# Issue Resolution
+support:TicketManagement a support:Process ;
+    rdfs:label "Support Ticket Management" ;
+    support:priorityLevels (
+        "Critical: System down, compliance risk"
+        "High: Major functionality impacted"
+        "Medium: Minor functionality issues"
+        "Low: General questions, requests"
+    ) ;
+    support:responseTargets (
+        "Critical: 1 hour"
+        "High: 4 hours"
+        "Medium: 24 hours"
+        "Low: 48 hours"
+    ) ;
+    support:escalationPath (
+        "L1: General support"
+        "L2: Technical specialists"
+        "L3: Engineering team"
+        "L4: Product management"
+    ) .
+
+# Customer Feedback
+cs:FeedbackCollection a cs:Process ;
+    rdfs:label "Customer Feedback Collection" ;
+    cs:methods (
+        "NPS surveys"
+        "CSAT questionnaires"
+        "Feature request forms"
+        "User interviews"
+        "Focus groups"
+        "Usage analytics"
+    ) ;
+    cs:frequency (
+        "Onboarding: Week 1, 4, 12"
+        "Quarterly: Business reviews"
+        "Annual: Relationship survey"
+        "Ongoing: Touchpoint feedback"
+    ) ;
+    cs:actionPlan (
+        "Feedback analysis"
+        "Trend identification"
+        "Improvement prioritization"
+        "Implementation tracking"
+        "Follow-up communication"
+    ) .
+
+# Best Practices
+cs:BestPractices a cs:Guidance ;
+    rdfs:label "Cannabis Customer Success Best Practices" ;
+    cs:proactiveEngagement (
+        "Regular check-ins"
+        "Business reviews"
+        "Success planning"
+        "Risk mitigation"
+        "Opportunity identification"
+    ) ;
+    cs:valueDelivery (
+        "Outcome-focused metrics"
+        "ROI demonstration"
+        "Benchmark comparisons"
+        "Success story sharing"
+        "Continuous optimization"
+    ) ;
+    cs:relationshipBuilding (
+        "Executive relationships"
+        "Multi-level engagement"
+        "Trust development"
+        "Strategic partnership"
+        "Mutual growth planning"
+    ) .

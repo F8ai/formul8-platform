@@ -1,0 +1,61 @@
+modules = ["python-3.12"]
+run = "agent.py"
+
+[nix]
+channel = "stable-24_05"
+packages = ["bash", "cargo", "libiconv", "libxcrypt", "libyaml", "rustc"]
+
+[deployment]
+run = ["sh", "-c", "agent.py"]
+
+[workflows]
+runButton = "Start Dashboard"
+
+[[workflows.workflow]]
+name = "Run Agent"
+author = 42906269
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python agent.py"
+
+[[workflows.workflow]]
+name = "Run Baseline Tests"
+author = 42906269
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python run_baseline.py"
+
+[[workflows.workflow]]
+name = "Start Dashboard"
+author = 42906269
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python start_server.py"
+
+[[workflows.workflow]]
+name = "Download Regulations"
+author = 42906269
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python download_regulations.py"
+
+[[workflows.workflow]]
+name = "Update Regulations Daily"
+author = 42906269
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python update_regulations_daily.py"
+
+[[ports]]
+localPort = 5000
+externalPort = 80

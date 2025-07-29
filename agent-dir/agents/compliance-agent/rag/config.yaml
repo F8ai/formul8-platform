@@ -1,0 +1,8 @@
+# RAG Configuration
+vectorstore:
+  type: "faiss"
+  embedding_model: "text-embedding-ada-002"
+  
+corpus:
+  chunk_size: 1000
+  chunk_overlap: 200

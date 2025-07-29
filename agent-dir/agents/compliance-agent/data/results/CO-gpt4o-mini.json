@@ -1,0 +1,44 @@
+{
+  "testRun": {
+    "id": 143,
+    "agentType": "compliance",
+    "model": "gpt-4o-mini",
+    "state": "CO", 
+    "status": "completed",
+    "totalQuestions": 52,
+    "successfulTests": 41,
+    "avgAccuracy": 73.8,
+    "avgConfidence": 69.2,
+    "avgResponseTime": 1560,
+    "totalCost": 0.12,
+    "createdAt": "2025-01-26T20:25:00Z"
+  },
+  "results": [
+    {
+      "id": 10,
+      "runId": 143,
+      "questionId": "sop001",
+      "question": "Can you make me a compliant SOP for Cannabis Transport in CO?",
+      "expectedAnswer": "SOP must include vehicle requirements, driver qualifications, manifests, route documentation, security protocols, emergency procedures, and compliance with CO cannabis regulatory authority transport regulations",
+      "agentResponse": "Colorado Cannabis Transport SOP:\n\n1. Vehicle Setup:\n- GPS tracking required\n- Locked storage\n- Security cameras\n\n2. Driver Requirements:\n- Valid license\n- Background check\n- Cannabis permit\n\n3. Documentation:\n- Transport manifest\n- Route filing\n- Chain of custody\n\n4. Security:\n- Two-person teams\n- Real-time monitoring\n- Incident reporting\n\n5. Emergency Steps:\n- Contact police\n- Notify MED\n- Secure inventory",
+      "category": "sop_documentation",
+      "difficulty": "intermediate",
+      "accuracy": 76,
+      "confidence": 71,
+      "responseTime": 1240,
+      "manualGrade": null,
+      "aiGrade": 74,
+      "aiGradingConfidence": 68,
+      "maxScore": 100,
+      "inputTokens": 245,
+      "outputTokens": 189,
+      "totalTokens": 434,
+      "estimatedCost": 0.0021,
+      "aiGradingInputTokens": 189,
+      "aiGradingOutputTokens": 45,
+      "aiGradingTotalTokens": 234,
+      "aiGradingEstimatedCost": 0.0012,
+      "createdAt": "2025-01-26T20:25:15Z"
+    }
+  ]
+}

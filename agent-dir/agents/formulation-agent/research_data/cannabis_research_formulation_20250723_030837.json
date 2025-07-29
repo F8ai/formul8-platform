@@ -1,0 +1,293 @@
+[
+  {
+    "pmid": "40657679",
+    "title": "In Silico Assessment of Cannabidiol From Cannabis sativa as an Antiviral Agent Against Key Shrimp Pathogens in Aquaculture.",
+    "abstract": "Shrimp aquaculture plays a crucial role in global food production but is increasingly threatened by viral and microsporidian pathogens such as White Spot Syndrome Virus (WSSV), Enterocytozoon hepatopenaei (EHP) and Infectious Hypodermal and Haematopoietic Necrosis Virus (IHHNV). Conventional reliance on antibiotics to combat these infections has raised serious concerns regarding antimicrobial resistance, environmental contamination and food safety. Additionally, environmental stressors such as salinity shifts and poor water quality exacerbate disease outbreaks, leading to severe production losses across Asia and Latin America. To explore eco-friendly therapeutic alternatives, this study assessed the antiviral potential of cannabidiol (CBD), a bioactive compound extracted from Cannabis sativa seed oil, identified through GC-MS analysis. Using molecular docking techniques, we evaluated CBD's interactions with key viral proteins: VP28 of WSSV, the tubulin \u03b2-chain of EHP and the capsid protein of IHHNV. The docking results revealed strong binding affinities of -6.61\u2009kcal/mol (EHP), -6.72\u2009kcal/mol (IHHNV) and -5.38\u2009kcal/mol (WSSV), indicating stable and potentially inhibitory interactions. Structural models were retrieved from RCSB PDB and SwissModel, while ligand preparation and docking were performed using AutoDock 4.2. CBD also demonstrated favourable pharmacokinetic and safety profiles, with predictions indicating no mutagenicity, hepatotoxicity or cardiotoxicity, and acceptable drug-likeness characteristics. Compared to other plant-derived compounds previously tested in shrimp disease models, CBD exhibited superior binding stability, more interaction residues and better bioavailability scores. These findings highlight CBD as a promising dual-function agent, capable of both modulating shrimp immunity and directly inhibiting key viral pathogens. These findings highlight cannabidiol (CBD) as a promising dual-action compound, with the potential to both enhance shrimp immune responses and exert direct antiviral effects against key pathogens. This study lays a robust groundwork for future in\u00a0vivo validations, formulation strategies and regulatory frameworks, ultimately supporting the development of sustainable, precision-based aquaculture health management.",
+    "authors": [
+      "Shoba Gunasekaran",
+      "Atchuthan Purushothaman",
+      "K Anju"
+    ],
+    "journal": "Journal of fish diseases",
+    "publication_date": "2025-07-14",
+    "doi": "10.1111/jfd.70015",
+    "keywords": [
+      "aquaculture",
+      "cannabidiol",
+      "herb medicine",
+      "molecular docking",
+      "shrimp pathogens"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40657679/",
+    "collected_date": "2025-07-23T03:08:41.378254",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40649195",
+    "title": "Pharmacokinetics of Cannabidiol in Rat Brain Tissue After Single-Dose Administration of Different Formulations.",
+    "abstract": "Cannabidiol (CBD), a phytocannabinoid commonly isolated from chemotype III ",
+    "authors": [
+      "Zuzana Binova",
+      "Frantisek Benes",
+      "Marie Zlechovcova",
+      "Matej Maly",
+      "Petr Kastanek",
+      "Monika Cahova",
+      "Milena Stranska",
+      "Jana Hajslova"
+    ],
+    "journal": "Molecules (Basel, Switzerland)",
+    "publication_date": "2025-06-20",
+    "doi": "10.3390/molecules30132676",
+    "keywords": [
+      "Cannabidiol",
+      "LC-MS/MS",
+      "bioavailability",
+      "brain tissue",
+      "metabolites"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40649195/",
+    "collected_date": "2025-07-23T03:08:41.378409",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40573179",
+    "title": "Nanoemulsions of Cannabidiol, \u03949-Tetrahydrocannabinol, and Their Combination Similarly Exerted Anticonvulsant and Antioxidant Effects in Mice Treated with Pentyelenetetrazole.",
+    "abstract": "",
+    "authors": [
+      "Pedro Everson Alexandre de Aquino",
+      "Francisco Josimar Gir\u00e3o J\u00fanior",
+      "Tyciane de Souza Nascimento",
+      "\u00cdtalo Rosal Lustosa",
+      "Geanne Matos de Andrade",
+      "N\u00e1gila Maria Pontes Silva Ricardo",
+      "D\u00e9bora Hellen Almeida de Brito",
+      "Gabriel \u00c9rik Patr\u00edcio de Almeida",
+      "Kamilla Barreto Silveira",
+      "Davila Zampieri",
+      "Marta Maria de Fran\u00e7a Fonteles",
+      "Edilberto Rocha Silveira",
+      "Giuseppe Biagini",
+      "Glauce Socorro de Barros Viana"
+    ],
+    "journal": "Pharmaceuticals (Basel, Switzerland)",
+    "publication_date": "2025-05-23",
+    "doi": "10.3390/ph18060782",
+    "keywords": [
+      "cannabidiol",
+      "epilepsy",
+      "nanoemulsion",
+      "pentylenetetrazole",
+      "\u03949-tetrahydrocannabinol"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40573179/",
+    "collected_date": "2025-07-23T03:08:41.378541",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40550321",
+    "title": "A cannabidiol (CBD) lipid-based nanoemulsion induces anxiolytic- and panicolytic-like effects and increases FosB/deltaFosB immunoreactivity in serotonergic cells of the dorsal raphe.",
+    "abstract": "Cannabidiol (CBD) is a phytocannabinoid which holds benefit for anxiety-related disorders. This study evaluated the effects of a lipid-based CBD nanoemulsion in anxiety- and panic-related responses. Male Wistar rats were acutely or chronically orally treated (21\u00a0days) with CBD (2.5 and 5\u00a0mg/kg, 1\u00a0mL/kg) or vehicle (1\u00a0mL/kg) and tested in the avoidance and escape tasks of the elevated T-maze (ETM) and in an open field. We quantified chronic CBD in the whole brain of the animals and evaluated FosB/deltaFosB immunoreactivity (Fos-ir) in non-serotonergic cells of the dorsal raphe (DR) and periaqueductal gray matter and in serotonergic cells of the DR. Acute CBD did not alter behavior. Chronic CBD 2.5\u00a0mg yielded (mean\u00a0\u00b1\u00a0SEM) 64.25\u00a0\u00b1\u00a028.82 and CBD 5.0\u00a0mg 21.22\u00a0\u00b1\u00a06.46\u00a0ng of CBD/g of brain tissue. Chronic CBD 2.5\u00a0mg induced anxiolytic and panicolytic-like effects. Immunohistochemical results showed that chronic CBD significantly decreased Fos-ir in the lateral and dorsomedial periaqueductal gray and in the dorsal region (DRD) and ventrolateral periqueductal gray/lateral wings (lwDR) of the DR. Fos-ir in the dorsolateral periaqueductal gray was only decreased by CBD 2.5\u00a0mg. CBD increased tryptophan hydroxylase immunoreactivity in the lwDR and DRD. CBD 2.5\u00a0mg also increased tryptophan hydroxylase immunoreactivity in the ventral DR. Additionally, double immunostaining was increased in the ventrolateral periaqueductal gray/lwDR by CBD 2.5\u00a0mg. These results point to the anxiolytic- and panicolytic-like effects of a CBD lipid-based nanoemulsion and suggest that they may be related to the modulation of DR serotonin neurons.",
+    "authors": [
+      "B\u00e1rbara A Ros\u00e1rio",
+      "Maria Paula de Lima",
+      "M\u00e1rcio G Vieira",
+      "La\u00eds Garret Leite",
+      "Pedro E A de Aquino",
+      "Glauce S B Viana",
+      "Edilberto R Silveira",
+      "D\u00e9bora H A de Brito",
+      "D\u00e1vila Zampieri",
+      "N\u00e1gila Maria P S Ricardo",
+      "J\u00e9ssica A Lemes",
+      "Adriana M Tucci",
+      "Daniel A Ribeiro",
+      "Milena B Viana"
+    ],
+    "journal": "Brain research",
+    "publication_date": "2025-06-21",
+    "doi": "10.1016/j.brainres.2025.149791",
+    "keywords": [
+      "Anxiety",
+      "Cannabidiol",
+      "Cannabis sativa",
+      "Panic",
+      "Serotonin"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40550321/",
+    "collected_date": "2025-07-23T03:08:41.378623",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40533744",
+    "title": "Cannabidiol (CBD) as a potential therapeutic agent for liver cancer: a comprehensive review of current evidence.",
+    "abstract": "Hepatocellular carcinoma (HCC) is a major cause of cancer-related mortality with limited treatment options. Cannabidiol (CBD), a non-psychoactive compound from Cannabis sativa, has shown anticancer properties. This review analyzes CBD's therapeutic potential in HCC, focusing on mechanisms, preclinical/clinical findings, and integration into treatment strategies. A systematic search (PubMed, Scopus, Web of Science, Google Scholar) up to March 2025 identified 16 relevant studies (in vitro, in vivo, clinical). CBD exerts antitumor effects via multiple pathways, including apoptosis, autophagy regulation, metastasis suppression, and tumor microenvironment modulation. CBD interacts with the endocannabinoid system (ECS), inhibits oncogenic signaling (PI3K/AKT/mTOR), and enhances chemotherapeutic efficacy (sorafenib, cabozantinib). Studies show CBD induces pyroptosis via caspase-3/GSDME, and modulates autophagy by inhibiting the PI3K/Akt/mTOR pathway. It also sensitizes HCC cells to sorafenib and cabozantinib. Preclinical results are promising, but clinical studies are limited. Challenges like bioavailability and potential hepatotoxicity require investigation. Future research should optimize formulations, determine dosing, and conduct clinical trials to validate CBD's efficacy/safety in HCC patients. Validated CBD could offer an innovative HCC management option.",
+    "authors": [
+      "Mojtaba Esmaeli",
+      "Maryam Dehghanpour Dehabadi"
+    ],
+    "journal": "Cancer cell international",
+    "publication_date": "2025-06-18",
+    "doi": "10.1186/s12935-025-03870-3",
+    "keywords": [
+      "Apoptosis",
+      "Autophagy",
+      "Cannabidiol (CBD)",
+      "Combination therapy",
+      "Endocannabinoid system",
+      "Hepatocellular carcinoma",
+      "Liver Cancer",
+      "Metastasis"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40533744/",
+    "collected_date": "2025-07-23T03:08:41.378679",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40522888",
+    "title": "Development of a Preclinical Inhalation Model to Test Vaporized Cannabis Distillates.",
+    "abstract": "Despite their growing popularity, cannabis vape products remain understudied. Cannabis vape cartridges are used with battery-powered devices that aerosolize cannabis flower extracts containing high concentrations of cannabinoids such as THC. These types of products are commonly known as cannabis distillates. The potency of these products presents challenges in establishing effective dosing for preclinical studies. Currently, there are no established, standardized preclinical models for testing the safety and efficacy of these products in ways analogous to human use patterns. Thus, the in vivo cannabis distillate exposure regime required to achieve physiologically relevant doses in comparison to what is achieved in humans remains undetermined. To address this gap, a standardized preclinical murine model for inhalation of vaporized cannabis distillates has been developed using a computer-controlled delivery system. This protocol details procedures to administer cannabis vape distillates using a regimented puff topography to mice by a nose-only exposure tower. Methods to monitor mouse behavioral outcomes post-exposure and the utilization of a semi-quantitative ELISA to confirm THC delivery into the systemic circulation are also provided. This protocol will allow for the investigation of the pulmonary and systemic responses to cannabis vape distillate products by researchers interested in exploring the impact of cannabis vaping using real-world delivery protocols, thereby providing an opportunity for rigorous safety and therapeutic evaluation.",
+    "authors": [
+      "Roham Gorgani",
+      "Valerie Orsat",
+      "David H Eidelman",
+      "Carolyn J Baglole"
+    ],
+    "journal": "Journal of visualized experiments : JoVE",
+    "publication_date": "2025-05-30",
+    "doi": "10.3791/68094",
+    "keywords": [],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40522888/",
+    "collected_date": "2025-07-23T03:08:41.378722",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40461928",
+    "title": "Targeting Gastrointestinal Cancers with Cannabidiol: Mechanisms, Challenges, and Therapeutic Implications.",
+    "abstract": "Cannabidiol (CBD), a non-psychoactive compound derived from cannabis, has gained significant attention for its potential therapeutic effects across various types of cancer. This manuscript presents a systematic review of the current evidence on the application of CBD in gastrointestinal (GI) malignancies, with a focus on gastric and colorectal cancers. The review aims to explore CBD's mechanisms of action, including its effects on apoptosis, cell cycle regulation, angiogenesis, inflammation, and its potential to enhance the efficacy of conventional therapies. Furthermore, it examines the challenges involved in translating preclinical findings into clinical settings, such as issues related to bioavailability and regulatory hurdles. The review also addresses future directions for the use of CBD in combination therapies and its potential to overcome resistance mechanisms in GI cancers. By analyzing the molecular pathways modulated by CBD, this manuscript seeks to offer a comprehensive understanding of its therapeutic potential, contributing to the future of GI cancer treatment.",
+    "authors": [
+      "Mojtaba Esmaeli",
+      "Maryam Dehghanpour Dehabadi"
+    ],
+    "journal": "Medical oncology (Northwood, London, England)",
+    "publication_date": "2025-06-03",
+    "doi": "10.1007/s12032-025-02790-6",
+    "keywords": [
+      "CBD and digestive system",
+      "Cannabidiol (CBD)",
+      "Colorectal cancer",
+      "Gastric cancer",
+      "Gastrointestinal cancer",
+      "Small intestine cancer"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40461928/",
+    "collected_date": "2025-07-23T03:08:41.378813",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40454502",
+    "title": "Innovations in Cannabis Delivery Systems: A Patent Review (2012-2024).",
+    "abstract": "INTRODUCTION: Cannabis sativa has been cultivated for over 11,700 years, originating in Central and Southeast Asia, and has been used for medical, recreational, and religious purposes. Among its therapeutic potentials, it is notable for its capacity to alleviate pain, nausea, anxiety, and more. The plant's primary secondary metabolites are cannabinoids, which interact with the endocannabinoid system to produce these effects. However, due to the dosage variability and the secondary effects associated with a lack of targeted action, their medical use is limited, creating the need for effective delivery systems. METHODOLOGY: This systematic patent review on cannabis drug delivery systems was conducted using patents retrieved from the Espacenet database. The search employed the keywords \"Cannabis\" and \"Delivery,\" along with the IPC classification code A61, to filter patents filed between 2012 and 2024. This initial search yielded 99 patents, which were further screened to identify 15 patents that met the inclusion criteria. RESULTS: Of the selected patents, most originated from the United States, followed by Canada, international patents (WIPO), and China. A notable increase in patent filings occurred in 2022, coinciding with the peak in scientific publications on the topic. This trend indicates a growing interest in the design of cannabis delivery systems. DISCUSSION: The historical importance and therapeutic potential of Cannabis sativa are welldocumented, yet modern medical use remains restricted due to pharmacokinetic limitations. Delivery systems such as extracellular vesicles, microneedles, and emulsions have been developed to improve the bioavailability and stability of cannabinoids. Extracellular vesicles facilitate targeted, noninvasive delivery of cannabinoids to the central nervous system. Microneedles offer a painless method for transdermal administration, overcoming skin barrier limitations. Emulsions improve the solubility and bioavailability of lipophilic cannabinoids, making them suitable for various administration routes. CONCLUSION: Since 2012, there has been considerable growth in patents and publications related to cannabis drug delivery systems, driven by the therapeutic potential of cannabinoids. Innovations in delivery systems like emulsions, microneedles, and extracellular vesicles aim to improve the pharmacokinetics and therapeutic efficacy of cannabis-derived compounds, representing a shift towards medical cannabis applications.",
+    "authors": [
+      "Ana Sof\u00eda Guerrero Casas",
+      "Vanessa Castro Felix Lima",
+      "Nicolas Redondo",
+      "Izabel Almeida Alves",
+      "Diana Marcela Arag\u00f3n"
+    ],
+    "journal": "Mini reviews in medicinal chemistry",
+    "publication_date": "2025-05-29",
+    "doi": "10.2174/0113895575343984250519051357",
+    "keywords": [
+      "Cannabis sativa.",
+      "Patents",
+      "drug delivery",
+      "phytocannabinoids"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40454502/",
+    "collected_date": "2025-07-23T03:08:41.378882",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40407987",
+    "title": "Cannabidiol as an immune modulator: A comprehensive review.",
+    "abstract": "Cannabidiol (CBD), a non-psychoactive phytocannabinoid derived from Cannabis sativa, has emerged as a promising therapeutic agent due to its diverse pharmacological properties, including potent anti-inflammatory, neuroprotective, and immunomodulatory effects. CBD modulates immune responses, including the regulation of T cell activity, induction of macrophage apoptosis, suppression of pro-inflammatory cytokines, and modulation of signaling pathways involved in inflammation and immune homeostasis. A comprehensive literature search was conducted using PubMed, Scopus, and Web of Science databases to identify relevant preclinical and clinical studies on CBD's immunomodulatory effects. Preclinical and clinical studies demonstrate its efficacy in treating autoimmune diseases such as Type 1 diabetes, multiple sclerosis, rheumatoid arthritis, and inflammatory bowel disease, along with its potential in neuropathic pain and cancer therapy. Recent advancements in nanotechnology-based delivery systems have further enhanced CBD's therapeutic potential by improving its solubility, bioavailability, and targeted delivery, enabling innovative approaches for wound healing, inflammation management, and cancer treatment. However, challenges such as variability in immune responses, limited long-term safety data, and potential drug-drug interactions persist. This review comprehensively examines CBD's pharmacokinetics, pharmacodynamics, and immunomodulatory mechanisms, highlighting its clinical potential, existing limitations, and future directions in advancing its integration into precision medicine and immune regulation.",
+    "authors": [
+      "Khizra Mujahid",
+      "Muhammad Shahzaib Rasheed",
+      "Azka Sabir",
+      "Jutaek Nam",
+      "Talha Ramzan",
+      "Waseem Ashraf",
+      "Imran Imran"
+    ],
+    "journal": "Saudi pharmaceutical journal : SPJ : the official publication of the Saudi Pharmaceutical Society",
+    "publication_date": "2025-05-23",
+    "doi": "10.1007/s44446-025-00005-7",
+    "keywords": [
+      "Autoimmune diseases",
+      "Cannabidiol",
+      "Immune cells",
+      "Immune modulation",
+      "Pharmacodynamics",
+      "Pharmacokinetics"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40407987/",
+    "collected_date": "2025-07-23T03:08:41.379098",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40359332",
+    "title": "Approaches for Cannabinoid Glycosylation Catalyzed by CrUGT74AN3 and BlCGTase.",
+    "abstract": "Phytocannabinoids are natural products with highly promising pharmaceutical potential, mainly known from the plant Cannabis\u00a0sativa. However, their bioavailability is limited due to their high lipophilicity. Modification through glycosylation is known to improve the water solubility and stability of molecules. Enzymatic glycosylation requires specific enzymes with high catalytic activity in combination with efficient production systems. To date, only a few glycosyltransferases with activity toward cannabinoids have been described. In this study, we explore the substrate spectrum of the promiscuous UDP-glycosyltransferase CrUGT74AN3 from Catharanthus\u00a0roseus and demonstrate activity towards a broad range of cannabinoids and their biosynthetic intermediates. The highest activity was observed using cannabidiol (CBD) as an acceptor molecule. In addition, we show efficient biotransformation of CBD in an engineered Saccharomyces\u00a0cerevisiae strain. We investigate the influence of the hydrolytic activity of endogenous glucosidases and identify the UDP-glucose supply as a limiting factor in the yeast system. The co-expression of CrUGT74AN3 and a cyclodextrin glycosyltransferase from Bacillus\u00a0licheniformis in the engineered yeast strain led to the production of CBD-glycosides with up to six glucose moieties from CBD and cyclodextrin in\u00a0vivo. Finally, we confirm the applicability of the engineered yeast systems to other cannabinoids using cannabigerol and cannabinol.",
+    "authors": [
+      "Christina Schmidt",
+      "Astrid Maria Imann",
+      "Nikolay Vasilev",
+      "Oliver Kayser"
+    ],
+    "journal": "Biotechnology journal",
+    "publication_date": "2025-05-01",
+    "doi": "10.1002/biot.70007",
+    "keywords": [
+      "biotransformation",
+      "cannabinoids",
+      "glycosylation",
+      "metabolic engineering",
+      "yeast"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40359332/",
+    "collected_date": "2025-07-23T03:08:41.379161",
+    "has_full_text": false,
+    "full_text_source": null
+  }
+]

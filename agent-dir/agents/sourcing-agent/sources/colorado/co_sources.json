@@ -1,0 +1,287 @@
+{
+  "state": "CO",
+  "state_name": "CO",
+  "last_updated": "2024-12-19",
+  "total_sources": 0,
+  "categories": {
+    "dispensaries": {
+      "description": "Licensed cannabis dispensaries in Colorado",
+      "count": 0
+    },
+    "cultivators": {
+      "description": "Licensed cannabis cultivators and growers",
+      "count": 0
+    },
+    "manufacturers": {
+      "description": "Licensed cannabis product manufacturers",
+      "count": 0
+    },
+    "suppliers": {
+      "description": "Equipment, nutrients, and supply vendors",
+      "count": 0
+    },
+    "testing_labs": {
+      "description": "Licensed cannabis testing laboratories",
+      "count": 0
+    },
+    "transporters": {
+      "description": "Licensed cannabis transporters",
+      "count": 0
+    }
+  },
+  "dispensaries": [
+    {
+      "name": "Native Roots",
+      "url": "https://nativeroots.com",
+      "locations": ["Denver", "Boulder", "Aspen", "Vail", "Breckenridge"],
+      "type": "recreational_medical",
+      "preferred": true,
+      "description": "Colorado's largest cannabis dispensary chain",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "The Green Solution",
+      "url": "https://thegreensolution.com",
+      "locations": ["Denver", "Aurora", "Lakewood", "Thornton"],
+      "type": "recreational_medical",
+      "preferred": true,
+      "description": "Premium cannabis retailer with multiple locations",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "LivWell",
+      "url": "https://livwell.com",
+      "locations": ["Denver", "Boulder", "Fort Collins", "Pueblo"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Vertically integrated cannabis company",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "Terrapin Care Station",
+      "url": "https://terrapincarestation.com",
+      "locations": ["Boulder", "Aurora", "Denver", "Fort Collins"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Community-focused cannabis dispensary",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "The Farm",
+      "url": "https://thefarmco.com",
+      "locations": ["Boulder"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Boulder's premier cannabis dispensary",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "Green Dragon",
+      "url": "https://greendragon.com",
+      "locations": ["Denver", "Aurora", "Lakewood", "Commerce City"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Value-focused cannabis retailer",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "Lightshade",
+      "url": "https://lightshade.com",
+      "locations": ["Denver", "Aurora", "Lakewood"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Premium cannabis dispensary chain",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "Medicine Man",
+      "url": "https://medicinemandenver.com",
+      "locations": ["Denver", "Aurora"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Denver's original cannabis dispensary",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "Botanico",
+      "url": "https://botanico.com",
+      "locations": ["Denver"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Denver cannabis dispensary",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    },
+    {
+      "name": "Euflora",
+      "url": "https://euflora.com",
+      "locations": ["Denver", "Aurora"],
+      "type": "recreational_medical",
+      "preferred": false,
+      "description": "Colorado cannabis dispensary",
+      "services": ["flower", "concentrates", "edibles", "topicals", "accessories"]
+    }
+  ],
+  "cultivators": [
+    {
+      "name": "The Green Solution Cultivation",
+      "url": "https://thegreensolution.com",
+      "location": "Denver",
+      "type": "cultivator",
+      "preferred": true,
+      "description": "Large-scale cannabis cultivation facility",
+      "products": ["flower", "clones", "seeds"]
+    },
+    {
+      "name": "LivWell Cultivation",
+      "url": "https://livwell.com",
+      "location": "Denver",
+      "type": "cultivator",
+      "preferred": false,
+      "description": "Commercial cannabis cultivation",
+      "products": ["flower", "clones", "seeds"]
+    },
+    {
+      "name": "Native Roots Cultivation",
+      "url": "https://nativeroots.com",
+      "location": "Denver",
+      "type": "cultivator",
+      "preferred": false,
+      "description": "Premium cannabis cultivation",
+      "products": ["flower", "clones", "seeds"]
+    }
+  ],
+  "manufacturers": [
+    {
+      "name": "Incredibles",
+      "url": "https://incredibles.com",
+      "location": "Denver",
+      "type": "manufacturer",
+      "preferred": true,
+      "description": "Premium cannabis edibles manufacturer",
+      "products": ["edibles", "beverages", "tinctures"]
+    },
+    {
+      "name": "Wana Brands",
+      "url": "https://wanabrands.com",
+      "location": "Boulder",
+      "type": "manufacturer",
+      "preferred": true,
+      "description": "Leading cannabis edibles manufacturer",
+      "products": ["edibles", "tinctures", "topicals"]
+    },
+    {
+      "name": "Dixie Brands",
+      "url": "https://dixiebrands.com",
+      "location": "Denver",
+      "type": "manufacturer",
+      "preferred": false,
+      "description": "Cannabis edibles and beverages",
+      "products": ["edibles", "beverages", "tinctures"]
+    },
+    {
+      "name": "Coda Signature",
+      "url": "https://codasignature.com",
+      "location": "Denver",
+      "type": "manufacturer",
+      "preferred": false,
+      "description": "Artisan cannabis edibles",
+      "products": ["edibles", "chocolates", "truffles"]
+    },
+    {
+      "name": "Sweet Grass Kitchen",
+      "url": "https://sweetgrasskitchen.com",
+      "location": "Boulder",
+      "type": "manufacturer",
+      "preferred": false,
+      "description": "Organic cannabis edibles",
+      "products": ["edibles", "baked_goods", "tinctures"]
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "Grow Generation",
+      "url": "https://growgeneration.com",
+      "location": "Denver",
+      "type": "supplier",
+      "preferred": true,
+      "description": "Hydroponic and organic gardening supplies",
+      "products": ["nutrients", "equipment", "growing_media", "lighting"]
+    },
+    {
+      "name": "Botanicare",
+      "url": "https://botanicare.com",
+      "location": "Tempe, AZ",
+      "type": "supplier",
+      "preferred": true,
+      "description": "Premium hydroponic nutrients and supplements",
+      "products": ["nutrients", "supplements", "growing_media"]
+    },
+    {
+      "name": "Advanced Nutrients",
+      "url": "https://advancednutrients.com",
+      "location": "Vancouver, BC",
+      "type": "supplier",
+      "preferred": true,
+      "description": "Premium cannabis nutrients and supplements",
+      "products": ["nutrients", "supplements", "pH_adjusters"]
+    },
+    {
+      "name": "General Hydroponics",
+      "url": "https://generalhydroponics.com",
+      "location": "Sebastopol, CA",
+      "type": "supplier",
+      "preferred": false,
+      "description": "Hydroponic nutrients and equipment",
+      "products": ["nutrients", "equipment", "growing_media"]
+    },
+    {
+      "name": "FoxFarm",
+      "url": "https://foxfarm.com",
+      "location": "Arcata, CA",
+      "type": "supplier",
+      "preferred": false,
+      "description": "Organic soil and nutrients",
+      "products": ["soil", "nutrients", "supplements"]
+    }
+  ],
+  "testing_labs": [
+    {
+      "name": "SC Labs",
+      "url": "https://sclabs.com",
+      "location": "Denver",
+      "type": "testing_lab",
+      "preferred": true,
+      "description": "Comprehensive cannabis testing laboratory",
+      "services": ["potency_testing", "pesticide_testing", "microbial_testing", "residual_solvent_testing"]
+    },
+    {
+      "name": "Steep Hill Labs",
+      "url": "https://steephill.com",
+      "location": "Denver",
+      "type": "testing_lab",
+      "preferred": false,
+      "description": "Cannabis testing and research laboratory",
+      "services": ["potency_testing", "pesticide_testing", "microbial_testing", "residual_solvent_testing"]
+    },
+    {
+      "name": "ProVerde Laboratories",
+      "url": "https://proverdelabs.com",
+      "location": "Denver",
+      "type": "testing_lab",
+      "preferred": false,
+      "description": "Cannabis testing and research",
+      "services": ["potency_testing", "pesticide_testing", "microbial_testing", "residual_solvent_testing"]
+    }
+  ],
+  "transporters": [
+    {
+      "name": "Colorado Cannabis Transport",
+      "url": "https://coloradocannabistransport.com",
+      "location": "Denver",
+      "type": "transporter",
+      "preferred": false,
+      "description": "Licensed cannabis transportation services",
+      "services": ["cannabis_transport", "secure_logistics", "tracking"]
+    }
+  ]
+} 

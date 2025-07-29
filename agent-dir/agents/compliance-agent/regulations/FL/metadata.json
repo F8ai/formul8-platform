@@ -1,0 +1,30 @@
+{
+  "state": "FL",
+  "name": "Florida (Medical Only)",
+  "agency": "Department of Health",
+  "main_url": "https://knowthefactsmmj.com",
+  "mirrored_domains": [
+    "knowthefactsmmj.com",
+    "flrules.org/gateway/department.asp?id=64"
+  ],
+  "domain_results": {
+    "knowthefactsmmj.com": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    },
+    "flrules.org/gateway/department.asp?id=64": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    }
+  },
+  "last_updated": "2025-07-15T20:12:01.050388",
+  "mirror_success": false,
+  "total_files": 0,
+  "total_size_mb": 0.0
+}

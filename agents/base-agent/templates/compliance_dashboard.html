@@ -1,0 +1,599 @@
+{% extends "base_dashboard.html" %}
+
+{% block extra_head %}
+    <!-- Add Plotly.js for US map -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* US Map specific styles */
+        .us-map-section {
+            margin: 30px 0;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .us-maps-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .map-container {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .map-container h4 {
+            margin: 0 0 10px 0;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        .small-map {
+            width: 100%;
+            height: 300px;
+            margin: 0 auto;
+        }
+        
+        .map-legend {
+            margin-top: 15px;
+            font-size: 0.95em;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+        
+        /* Compliance-specific styles */
+        .compliance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+        
+        .stat-value {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+{% endblock %}
+
+{% block agent_header_content %}
+    <div class="agent-header-content">
+        <p>🧬 Cannabis Regulatory Compliance Agent</p>
+        <p>Monitoring compliance across all 50 states and territories</p>
+    </div>
+{% endblock %}
+
+{% block agent_specific_content %}
+    <div class="agent-specific-content">
+        <h2>🗺️ State Regulation Status</h2>
+        
+        <!-- Compliance Statistics -->
+        <div class="compliance-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="states-complete">0</div>
+                <div class="stat-label">States Complete</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="states-processing">0</div>
+                <div class="stat-label">States Processing</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="states-missing">0</div>
+                <div class="stat-label">States Illegal</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-regulations">0</div>
+                <div class="stat-label">Total Regulations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-size-mb">0</div>
+                <div class="stat-label">Total Size (MB)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avg-size-mb">0</div>
+                <div class="stat-label">Avg Size/State (MB)</div>
+            </div>
+        </div>
+        
+        <!-- US Maps Grid -->
+        <div class="us-maps-grid">
+            <div class="map-container">
+                <h4>📋 Regulations</h4>
+                <div class="small-map" id="regulations-map"></div>
+            </div>
+            <div class="map-container">
+                <h4>📊 Baseline Results</h4>
+                <div class="small-map" id="baseline-map"></div>
+            </div>
+            <div class="map-container">
+                <h4>🔍 Coverage Status</h4>
+                <div class="small-map" id="coverage-map"></div>
+            </div>
+            <div class="map-container">
+                <h4>⚡ Performance</h4>
+                <div class="small-map" id="performance-map"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Compliance-specific functionality
+    async function loadComplianceData() {
+        try {
+            // Load all data sources
+            const [regulationSizes, baselineData] = await Promise.all([
+                fetch('/regulation_sizes.json').then(r => r.ok ? r.json() : null).catch(() => null),
+                fetch('/api/baseline-results-by-state').then(r => r.ok ? r.json() : null).catch(() => null)
+            ]);
+            
+            // Render all 4 maps
+            renderRegulationsMap(regulationSizes);
+            renderBaselineMap(baselineData);
+            renderCoverageMap(regulationSizes);
+            renderPerformanceMap(baselineData);
+            
+            // Update stats
+            if (regulationSizes) updateSizeStats(regulationSizes);
+            
+        } catch (error) {
+            console.error('Error loading compliance data:', error);
+            // Show error messages in maps
+            document.getElementById('regulations-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">Error loading data</p>';
+            document.getElementById('baseline-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">Error loading data</p>';
+            document.getElementById('coverage-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">Error loading data</p>';
+            document.getElementById('performance-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">Error loading data</p>';
+        }
+    }
+    
+
+    
+    function getSampleStateData() {
+        // Sample state status data with regulation sizes - replace with real data
+        // States with no data at all are simply not included
+        return {
+            "CA": { status: "complete", size: 1250, files: 45 },
+            "NY": { status: "processing", size: 850, files: 32 }, 
+            "FL": { status: "complete", size: 980, files: 38 },
+            "AK": { status: "complete", size: 420, files: 15 },
+            "AZ": { status: "processing", size: 650, files: 25 },
+            "AR": { status: "complete", size: 380, files: 12 },
+            "CO": { status: "complete", size: 720, files: 28 },
+            "CT": { status: "processing", size: 450, files: 18 },
+            "GA": { status: "complete", size: 580, files: 22 },
+            "HI": { status: "processing", size: 320, files: 14 },
+            "IL": { status: "complete", size: 890, files: 35 },
+            "IN": { status: "processing", size: 280, files: 11 },
+            "IA": { status: "complete", size: 340, files: 13 },
+            "KY": { status: "processing", size: 190, files: 8 },
+            "LA": { status: "complete", size: 520, files: 20 },
+            "MD": { status: "processing", size: 410, files: 16 },
+            "MA": { status: "complete", size: 1100, files: 42 },
+            "MI": { status: "complete", size: 760, files: 29 },
+            "MN": { status: "processing", size: 380, files: 15 },
+            "MO": { status: "complete", size: 680, files: 26 },
+            "MT": { status: "processing", size: 240, files: 9 },
+            "NV": { status: "complete", size: 540, files: 21 },
+            "NH": { status: "processing", size: 180, files: 7 },
+            "NJ": { status: "complete", size: 920, files: 34 },
+            "NC": { status: "processing", size: 360, files: 14 },
+            "OH": { status: "complete", size: 780, files: 30 },
+            "OK": { status: "processing", size: 420, files: 17 },
+            "OR": { status: "complete", size: 830, files: 31 },
+            "PA": { status: "complete", size: 950, files: 36 },
+            "SC": { status: "processing", size: 290, files: 12 },
+            "TN": { status: "complete", size: 480, files: 19 },
+            "UT": { status: "processing", size: 220, files: 10 },
+            "VA": { status: "complete", size: 640, files: 24 },
+            "WA": { status: "complete", size: 870, files: 33 },
+            "WV": { status: "processing", size: 150, files: 6 },
+            "WY": { status: "complete", size: 260, files: 10 }
+        };
+    }
+    
+    const allStates = [
+        "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+    ];
+
+    function renderRegulationsMap(sizeData) {
+        if (!sizeData || !sizeData.state_sizes) {
+            document.getElementById('regulations-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No regulation data</p>';
+            return;
+        }
+        
+        const statesWithData = [];
+        const sizes = [];
+        const locations = [];
+        const text = [];
+        
+        allStates.forEach(st => {
+            const stateSizeData = sizeData.state_sizes[st];
+            if (stateSizeData && stateSizeData.size_mb > 0) {
+                statesWithData.push(st);
+                sizes.push(stateSizeData.size_mb);
+                locations.push(st);
+                text.push(`${st}: ${stateSizeData.size_mb} MB<br>Files: ${stateSizeData.file_count}`);
+            }
+        });
+        
+        if (statesWithData.length === 0) {
+            document.getElementById('regulations-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No regulation data</p>';
+            return;
+        }
+        
+        const maxSize = Math.max(...sizes);
+        const colorscale = [
+            [0, 'rgba(231, 76, 60, 0.4)'],
+            [0.5, 'rgba(243, 156, 18, 0.7)'],
+            [1, 'rgba(39, 174, 96, 1)']
+        ];
+        const z = sizes.map(size => size / maxSize);
+        
+        Plotly.newPlot('regulations-map', [{
+            type: 'choropleth',
+            locationmode: 'USA-states',
+            locations: locations,
+            z: z,
+            text: text,
+            colorscale: colorscale,
+            showscale: false,
+            marker: { line: { color: 'white', width: 1 } },
+            hoverinfo: 'text',
+        }], {
+            geo: {
+                scope: 'usa',
+                projection: { type: 'albers usa' },
+                showlakes: true,
+                lakecolor: 'rgb(255,255,255)'
+            },
+            margin: { t: 0, b: 0, l: 0, r: 0 },
+        }, {responsive: true});
+    }
+
+    function renderBaselineMap(baselineData) {
+        if (!baselineData) {
+            document.getElementById('baseline-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No baseline data</p>';
+            return;
+        }
+        
+        const statesWithData = [];
+        const percents = [];
+        const locations = [];
+        const text = [];
+        
+        allStates.forEach(st => {
+            const stateData = baselineData[st];
+            if (stateData && stateData.total > 0) {
+                statesWithData.push(st);
+                percents.push(stateData.percent);
+                locations.push(st);
+                text.push(`${st}: ${stateData.percent.toFixed(1)}% correct<br>Avg: ${stateData.avg_score.toFixed(1)}`);
+            }
+        });
+        
+        if (statesWithData.length === 0) {
+            document.getElementById('baseline-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No baseline data</p>';
+            return;
+        }
+        
+        const colorscale = [
+            [0, 'rgba(231, 76, 60, 0.4)'],
+            [0.5, 'rgba(243, 156, 18, 0.7)'],
+            [1, 'rgba(39, 174, 96, 1)']
+        ];
+        const z = percents.map(p => p / 100);
+        
+        Plotly.newPlot('baseline-map', [{
+            type: 'choropleth',
+            locationmode: 'USA-states',
+            locations: locations,
+            z: z,
+            text: text,
+            colorscale: colorscale,
+            showscale: false,
+            marker: { line: { color: 'white', width: 1 } },
+            hoverinfo: 'text',
+        }], {
+            geo: {
+                scope: 'usa',
+                projection: { type: 'albers usa' },
+                showlakes: true,
+                lakecolor: 'rgb(255,255,255)'
+            },
+            margin: { t: 0, b: 0, l: 0, r: 0 },
+        }, {responsive: true});
+    }
+
+    function renderCoverageMap(sizeData) {
+        if (!sizeData || !sizeData.state_sizes) {
+            document.getElementById('coverage-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No coverage data</p>';
+            return;
+        }
+        
+        // Legal states that should have regulations
+        const legalStates = new Set([
+            "AK", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "HI", "ID", "IL", "IN", 
+            "KS", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", 
+            "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", 
+            "VA", "VT", "WA", "WI", "WY"
+        ]);
+        
+        const locations = [];
+        const coverage = [];
+        const text = [];
+        
+        allStates.forEach(st => {
+            const stateSizeData = sizeData.state_sizes[st];
+            locations.push(st);
+            
+            if (stateSizeData && stateSizeData.size_mb > 0) {
+                coverage.push(2); // Has coverage (green)
+                text.push(`${st}: Covered<br>${stateSizeData.file_count} files`);
+            } else if (legalStates.has(st)) {
+                coverage.push(0); // Legal but missing (red)
+                text.push(`${st}: Legal but missing regulations`);
+            } else {
+                coverage.push(1); // Illegal state (gray)
+                text.push(`${st}: Illegal state`);
+            }
+        });
+        
+        const colorscale = [
+            [0, 'rgba(231, 76, 60, 0.8)'],    // Red for legal but missing
+            [0.5, 'rgba(189, 195, 199, 0.3)'], // Gray for illegal
+            [1, 'rgba(39, 174, 96, 0.8)']      // Green for covered
+        ];
+        
+        Plotly.newPlot('coverage-map', [{
+            type: 'choropleth',
+            locationmode: 'USA-states',
+            locations: locations,
+            z: coverage,
+            text: text,
+            colorscale: colorscale,
+            showscale: false,
+            marker: { line: { color: 'white', width: 1 } },
+            hoverinfo: 'text',
+        }], {
+            geo: {
+                scope: 'usa',
+                projection: { type: 'albers usa' },
+                showlakes: true,
+                lakecolor: 'rgb(255,255,255)'
+            },
+            margin: { t: 0, b: 0, l: 0, r: 0 },
+        }, {responsive: true});
+    }
+
+    function renderPerformanceMap(baselineData) {
+        if (!baselineData) {
+            document.getElementById('performance-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No performance data</p>';
+            return;
+        }
+        
+        const locations = [];
+        const performance = [];
+        const text = [];
+        
+        allStates.forEach(st => {
+            const stateData = baselineData[st];
+            locations.push(st);
+            if (stateData && stateData.total > 0) {
+                const perf = stateData.avg_score / 10; // Normalize to 0-1
+                performance.push(perf);
+                text.push(`${st}: ${stateData.avg_score.toFixed(1)}/10<br>${stateData.percent.toFixed(1)}% correct`);
+            } else {
+                performance.push(0);
+                text.push(`${st}: No data`);
+            }
+        });
+        
+        const colorscale = [
+            [0, 'rgba(231, 76, 60, 0.4)'],
+            [0.5, 'rgba(243, 156, 18, 0.7)'],
+            [1, 'rgba(39, 174, 96, 1)']
+        ];
+        
+        Plotly.newPlot('performance-map', [{
+            type: 'choropleth',
+            locationmode: 'USA-states',
+            locations: locations,
+            z: performance,
+            text: text,
+            colorscale: colorscale,
+            showscale: false,
+            marker: { line: { color: 'white', width: 1 } },
+            hoverinfo: 'text',
+        }], {
+            geo: {
+                scope: 'usa',
+                projection: { type: 'albers usa' },
+                showlakes: true,
+                lakecolor: 'rgb(255,255,255)'
+            },
+            margin: { t: 0, b: 0, l: 0, r: 0 },
+        }, {responsive: true});
+    }
+    
+    function updateComplianceStats(stateData) {
+        const allStates = [
+            "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+        ];
+        
+        const stats = {
+            complete: 0,
+            processing: 0,
+            missing: 0,
+            total: allStates.length,
+            totalRegulations: 0,
+            totalFiles: 0
+        };
+        
+        allStates.forEach(st => {
+            const data = stateData[st];
+            if (data && typeof data === 'object' && data.size > 0) {
+                const status = data.status || "unknown";
+                if (status === 'complete') stats.complete++;
+                else if (status === 'processing') stats.processing++;
+                else if (status === 'missing' || status === 'error') stats.missing++;
+                
+                stats.totalRegulations += data.size || 0;
+                stats.totalFiles += data.files || 0;
+            } else {
+                // States without data are counted as missing
+                stats.missing++;
+            }
+        });
+        
+        document.getElementById('states-complete').textContent = stats.complete;
+        document.getElementById('states-processing').textContent = stats.processing;
+        document.getElementById('states-missing').textContent = stats.missing;
+        document.getElementById('total-regulations').textContent = stats.totalRegulations.toLocaleString();
+    }
+    
+    function updateSizeStats(sizeData) {
+        const totalSize = sizeData.total_size_mb;
+        const statesWithRegs = sizeData.states_with_regulations;
+        const avgSize = statesWithRegs > 0 ? (totalSize / statesWithRegs) : 0;
+        
+        document.getElementById('total-size-mb').textContent = totalSize.toFixed(1);
+        document.getElementById('avg-size-mb').textContent = avgSize.toFixed(2);
+    }
+    
+    function updateMapWithSizes(sizeData) {
+        // Update the map colors based on file sizes instead of regulation chunks
+        const allStates = [
+            "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+        ];
+        
+        // Filter states that have regulation data (size > 0)
+        const statesWithData = [];
+        const sizes = [];
+        const locations = [];
+        const text = [];
+        
+        allStates.forEach(st => {
+            const stateSizeData = sizeData.state_sizes[st];
+            if (stateSizeData && stateSizeData.size_mb > 0) {
+                statesWithData.push(st);
+                sizes.push(stateSizeData.size_mb);
+                locations.push(st);
+                
+                const fileCount = stateSizeData.file_count;
+                text.push(`${st}: ${stateSizeData.size_mb} MB<br>Files: ${fileCount}`);
+            }
+        });
+        
+        // Only create map if we have data
+        if (statesWithData.length === 0) {
+            document.getElementById('us-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No regulation data available</p>';
+            return;
+        }
+        
+        // Find max size for normalization
+        const maxSize = Math.max(...sizes);
+        
+        // Create color scale based on file size (only for states with data)
+        const colorscale = [
+            [0, 'rgba(231, 76, 60, 0.4)'],      // Light red for small
+            [0.3, 'rgba(231, 76, 60, 0.7)'],    // Medium red
+            [0.5, 'rgba(243, 156, 18, 0.6)'],   // Orange for medium
+            [0.7, 'rgba(243, 156, 18, 0.8)'],   // Darker orange
+            [0.9, 'rgba(39, 174, 96, 0.7)'],    // Light green
+            [1, 'rgba(39, 174, 96, 1)']         // Full green for large
+        ];
+        
+        // Normalize sizes to 0-1 range
+        const z = sizes.map(size => size / maxSize);
+        
+        Plotly.newPlot('us-map', [{
+            type: 'choropleth',
+            locationmode: 'USA-states',
+            locations: locations,
+            z: z,
+            text: text,
+            colorscale: colorscale,
+            showscale: true,
+            colorbar: {
+                title: 'File Size (MB)',
+                titleside: 'right',
+                tickmode: 'array',
+                tickvals: [0, 0.25, 0.5, 0.75, 1],
+                ticktext: ['0', (maxSize * 0.25).toFixed(1), (maxSize * 0.5).toFixed(1), (maxSize * 0.75).toFixed(1), maxSize.toFixed(1)]
+            },
+            marker: { line: { color: 'white', width: 2 } },
+            hoverinfo: 'text',
+        }], {
+            geo: {
+                scope: 'usa',
+                projection: { type: 'albers usa' },
+                showlakes: true,
+                lakecolor: 'rgb(255,255,255)'
+            },
+            margin: { t: 0, b: 0, l: 0, r: 0 },
+        }, {responsive: true});
+    }
+    
+    // Override the base getCategoryFromId function for compliance-specific categories
+    function getCategoryFromId(id) {
+        if (id.includes('co') || id.includes('ca') || id.includes('wa') || id.includes('or')) return 'Licensing';
+        if (id.includes('testing') || id.includes('lab')) return 'Testing & Lab';
+        if (id.includes('security') || id.includes('surveillance')) return 'Security';
+        if (id.includes('labeling') || id.includes('packaging')) return 'Labeling & Packaging';
+        if (id.includes('taxation') || id.includes('costs') || id.includes('fees')) return 'Business & Finance';
+        if (id.includes('cultivation') || id.includes('growing')) return 'Cultivation';
+        if (id.includes('distribution') || id.includes('transport')) return 'Distribution';
+        if (id.includes('retail') || id.includes('dispensary')) return 'Retail';
+        if (id.includes('medical') || id.includes('patient')) return 'Medical';
+        if (id.includes('recreational') || id.includes('adult')) return 'Recreational';
+        return 'General Compliance';
+    }
+    
+    // Load compliance data when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load baseline results (from base template)
+        loadBaselineResults();
+        
+        // Load compliance-specific data
+        loadComplianceData();
+    });
+</script>
+{% endblock %} 

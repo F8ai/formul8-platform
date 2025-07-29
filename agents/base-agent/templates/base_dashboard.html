@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ agent_name }} - Baseline Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Agent-specific header content */
+        .agent-header-content {
+            margin-top: 20px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .mode-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+
+        .mode-card.o3 { border-left-color: #e74c3c; }
+        .mode-card.o3_prompt { border-left-color: #f39c12; }
+        .mode-card.o3_prompt_rag { border-left-color: #27ae60; }
+        .mode-card.o3_prompt_rag_sparql { border-left-color: #9b59b6; }
+
+        .mode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .mode-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .mode-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .badge-o3 { background: #e74c3c; }
+        .badge-o3_prompt { background: #f39c12; }
+        .badge-o3_prompt_rag { background: #27ae60; }
+        .badge-o3_prompt_rag_sparql { background: #9b59b6; }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .confidence-breakdown {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .confidence-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .confidence-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .confidence-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .confidence-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            width: 120px;
+        }
+
+        .confidence-progress {
+            flex: 1;
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            margin: 0 10px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            transition: width 0.3s ease;
+        }
+
+        .confidence-value {
+            font-size: 0.9em;
+            font-weight: bold;
+            color: #2c3e50;
+            width: 40px;
+            text-align: right;
+        }
+
+        .agent-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .agent-info div {
+            margin-bottom: 5px;
+        }
+
+        .agent-info strong {
+            color: #2c3e50;
+        }
+
+        /* Agent-specific content area */
+        .agent-specific-content {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .comparison-section {
+            padding: 30px;
+        }
+
+        .comparison-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .comparison-chart {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: end;
+            height: 250px;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, #3498db, #2ecc71);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            min-width: 60px;
+        }
+
+        .bar.o3 { background: linear-gradient(to top, #e74c3c, #c0392b); }
+        .bar.o3_prompt { background: linear-gradient(to top, #f39c12, #e67e22); }
+        .bar.o3_prompt_rag { background: linear-gradient(to top, #27ae60, #16a085); }
+        .bar.o3_prompt_rag_sparql { background: linear-gradient(to top, #9b59b6, #8e44ad); }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .detailed-results {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .results-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .results-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .score-cell {
+            font-weight: bold;
+        }
+
+        .score-high { color: #27ae60; }
+        .score-medium { color: #f39c12; }
+        .score-low { color: #e74c3c; }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #7f8c8d;
+        }
+
+        .error {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-bar {
+                flex-direction: column;
+                height: auto;
+                gap: 10px;
+            }
+            
+            .bar {
+                height: 40px;
+                min-width: auto;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ agent_name }} - Baseline Dashboard</h1>
+            <p>Compare agent performance across modes and configurations</p>
+            {% block agent_header_content %}{% endblock %}
+        </div>
+
+        <div class="summary-grid" id="summary-grid">
+            <div class="loading">Loading baseline results...</div>
+        </div>
+
+        {% block agent_specific_content %}{% endblock %}
+
+        <div class="comparison-section">
+            <h2 class="comparison-title">📊 Performance Comparison</h2>
+            
+            <div class="comparison-chart">
+                <h3>Average Scores by Mode</h3>
+                <div class="chart-container">
+                    <div class="chart-bar" id="score-chart">
+                        <!-- Chart bars will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-chart">
+                <h3>Response Times by Mode</h3>
+                <div class="chart-container">
+                    <div class="chart-bar" id="time-chart">
+                        <!-- Chart bars will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="detailed-results">
+                <h3>📋 Detailed Results</h3>
+                <div id="detailed-results">
+                    <div class="loading">Loading detailed results...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base dashboard functionality
+        async function loadBaselineResults() {
+            const modes = ['o3', 'o3_prompt', 'o3_prompt_rag', 'o3_prompt_rag_sparql'];
+            const results = {};
+
+            try {
+                // Load all result files
+                for (const mode of modes) {
+                    const response = await fetch(`results/baseline_results_${mode}.json`);
+                    if (response.ok) {
+                        results[mode] = await response.json();
+                    } else {
+                        console.error(`Failed to load ${mode} results`);
+                    }
+                }
+
+                displaySummaryGrid(results);
+                displayComparisonCharts(results);
+                displayDetailedResults(results);
+
+            } catch (error) {
+                console.error('Error loading results:', error);
+                document.getElementById('summary-grid').innerHTML = 
+                    '<div class="error">Error loading baseline results. Please ensure all result files are available.</div>';
+            }
+        }
+
+        function displaySummaryGrid(results) {
+            const grid = document.getElementById('summary-grid');
+            grid.innerHTML = '';
+
+            Object.entries(results).forEach(([mode, data]) => {
+                const card = createModeCard(mode, data);
+                grid.appendChild(card);
+            });
+        }
+
+        function createModeCard(mode, data) {
+            const card = document.createElement('div');
+            card.className = `mode-card ${mode}`;
+
+            const summary = data.summary;
+            const agentInfo = data.agent_info;
+
+            card.innerHTML = `
+                <div class="mode-header">
+                    <div class="mode-name">${getModeDisplayName(mode)}</div>
+                    <div class="mode-badge badge-${mode}">${mode.toUpperCase()}</div>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <div class="metric-value">${summary.pass_rate}%</div>
+                        <div class="metric-label">Pass Rate</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${summary.average_score}</div>
+                        <div class="metric-label">Avg Score</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${summary.average_response_time}s</div>
+                        <div class="metric-label">Response Time</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">${summary.passed_tests}/${summary.total_tests}</div>
+                        <div class="metric-label">Tests Passed</div>
+                    </div>
+                </div>
+                <div class="confidence-breakdown">
+                    <div class="confidence-title">Confidence Breakdown</div>
+                    <div class="confidence-bars">
+                        ${createConfidenceBars(data.results)}
+                    </div>
+                </div>
+                <div class="agent-info">
+                    <div><strong>Model:</strong> ${agentInfo.llm_model}</div>
+                    <div><strong>Prompt Engineering:</strong> ${agentInfo.prompt_engineering ? 'Yes' : 'No'}</div>
+                    <div><strong>RAG Enabled:</strong> ${agentInfo.rag_enabled ? 'Yes' : 'No'}</div>
+                    <div><strong>Tools:</strong> ${agentInfo.tools.length > 0 ? agentInfo.tools.join(', ') : 'None'}</div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function createConfidenceBars(results) {
+            const avgSelfAssessment = results.reduce((sum, r) => sum + r.confidence_breakdown.self_assessment, 0) / results.length;
+            const avgQualityMetrics = results.reduce((sum, r) => sum + r.confidence_breakdown.quality_metrics, 0) / results.length;
+            const avgExpectedSimilarity = results.reduce((sum, r) => sum + r.confidence_breakdown.expected_answer_similarity, 0) / results.length;
+            const avgCombined = results.reduce((sum, r) => sum + r.confidence_breakdown.combined, 0) / results.length;
+
+            return `
+                <div class="confidence-bar">
+                    <div class="confidence-label">Self Assessment</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: ${avgSelfAssessment * 100}%"></div>
+                    </div>
+                    <div class="confidence-value">${(avgSelfAssessment * 100).toFixed(1)}%</div>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">Quality Metrics</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: ${avgQualityMetrics * 100}%"></div>
+                    </div>
+                    <div class="confidence-value">${(avgQualityMetrics * 100).toFixed(1)}%</div>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">Expected Similarity</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: ${avgExpectedSimilarity * 100}%"></div>
+                    </div>
+                    <div class="confidence-value">${(avgExpectedSimilarity * 100).toFixed(1)}%</div>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-label">Combined</div>
+                    <div class="confidence-progress">
+                        <div class="confidence-fill" style="width: ${avgCombined * 100}%"></div>
+                    </div>
+                    <div class="confidence-value">${(avgCombined * 100).toFixed(1)}%</div>
+                </div>
+            `;
+        }
+
+        function displayComparisonCharts(results) {
+            const modes = Object.keys(results);
+            const scores = modes.map(mode => results[mode].summary.average_score);
+            const times = modes.map(mode => results[mode].summary.average_response_time);
+
+            // Score chart
+            const scoreChart = document.getElementById('score-chart');
+            scoreChart.innerHTML = modes.map((mode, i) => `
+                <div class="bar ${mode}" style="height: ${(scores[i] / Math.max(...scores)) * 200}px">
+                    <div class="bar-value">${scores[i]}</div>
+                    <div class="bar-label">${getModeDisplayName(mode)}</div>
+                </div>
+            `).join('');
+
+            // Time chart
+            const timeChart = document.getElementById('time-chart');
+            timeChart.innerHTML = modes.map((mode, i) => `
+                <div class="bar ${mode}" style="height: ${(times[i] / Math.max(...times)) * 200}px">
+                    <div class="bar-value">${times[i]}s</div>
+                    <div class="bar-label">${getModeDisplayName(mode)}</div>
+                </div>
+            `).join('');
+        }
+
+        function displayDetailedResults(results) {
+            const container = document.getElementById('detailed-results');
+            
+            // Create a table showing sample questions across all modes
+            const firstMode = Object.keys(results)[0];
+            const questions = results[firstMode].results.slice(0, 5); // Show first 5 questions
+
+            let tableHTML = `
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Question ID</th>
+                            <th>Category</th>
+                            ${Object.keys(results).map(mode => `<th>${getModeDisplayName(mode)}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            questions.forEach(q => {
+                const row = `
+                    <tr>
+                        <td>${q.id}</td>
+                        <td>${getCategoryFromId(q.id)}</td>
+                        ${Object.keys(results).map(mode => {
+                            const result = results[mode].results.find(r => r.id === q.id);
+                            const score = result ? result.score : 0;
+                            const scoreClass = score >= 8 ? 'score-high' : score >= 6 ? 'score-medium' : 'score-low';
+                            return `<td class="score-cell ${scoreClass}">${score}</td>`;
+                        }).join('')}
+                    </tr>
+                `;
+                tableHTML += row;
+            });
+
+            tableHTML += '</tbody></table>';
+            container.innerHTML = tableHTML;
+        }
+
+        function getModeDisplayName(mode) {
+            const names = {
+                'o3': 'Plain O3',
+                'o3_prompt': 'O3 + Prompt',
+                'o3_prompt_rag': 'O3 + Prompt + RAG',
+                'o3_prompt_rag_sparql': 'O3 + Prompt + RAG + SPARQL'
+            };
+            return names[mode] || mode;
+        }
+
+        function getCategoryFromId(id) {
+            // Base implementation - can be overridden by specific agents
+            if (id.includes('co') || id.includes('ca') || id.includes('wa') || id.includes('or')) return 'Licensing';
+            if (id.includes('testing')) return 'Testing';
+            if (id.includes('security')) return 'Security';
+            if (id.includes('labeling') || id.includes('packaging')) return 'Labeling';
+            if (id.includes('taxation') || id.includes('costs')) return 'Business';
+            return 'General';
+        }
+
+        // Load results when page loads
+        document.addEventListener('DOMContentLoaded', loadBaselineResults);
+    </script>
+    
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html> 

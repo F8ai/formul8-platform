@@ -1,0 +1,22 @@
+{
+  "state": "NV",
+  "name": "Nevada",
+  "agency": "Cannabis Compliance Board",
+  "main_url": "https://ccb.nv.gov",
+  "mirrored_domains": [
+    "ccb.nv.gov"
+  ],
+  "domain_results": {
+    "ccb.nv.gov": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    }
+  },
+  "last_updated": "2025-07-15T20:11:54.387558",
+  "mirror_success": false,
+  "total_files": 0,
+  "total_size_mb": 0.0
+}

@@ -1,0 +1,18 @@
+{
+  "state": "OR",
+  "name": "Oregon",
+  "agency": "Oregon Liquor and Cannabis Commission",
+  "main_url": "https://www.oregon.gov/olcc/marijuana",
+  "downloaded_urls": [
+    "https://www.oregon.gov/olcc/marijuana",
+    "https://www.oregon.gov/olcc/marijuana/pages/default.aspx",
+    "https://www.oregon.gov/olcc/marijuana/_layouts/15/OID.SharePoint.StarterTemplate/styles/icon-animations.css",
+    "https://www.oregon.gov/olcc/marijuana/_layouts/15/OID.SharePoint.StarterTemplate/styles/markup-styles.css",
+    "https://www.oregon.gov/olcc/marijuana/Pages/default.aspx",
+    "https://www.oregon.gov/olcc/marijuana/Pages/default.aspx"
+  ],
+  "last_updated": "2025-07-15T20:49:36.500083",
+  "total_files": 6,
+  "total_size_mb": 0.41,
+  "mirror_success": true
+}

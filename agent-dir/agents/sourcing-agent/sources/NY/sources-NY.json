@@ -1,0 +1,312 @@
+{
+  "state": "NY",
+  "last_updated": "224-1219",
+  "sources": [
+    {
+      "name": "Curaleaf",
+      "url": "https://curaleaf.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Columbia Care",
+      "url": "https://col-care.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Etain Health",
+      "url": "https://etainhealth.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Vireo Health",
+      "url": "https://vireohealth.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "MedMen",
+      "url": "https://medmen.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Harvest Health",
+      "url": "ttps://harvesthoc.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Green Thumb Industries",
+      "url": "https://gtigrows.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Cresco Labs",
+      "url": "https://crescolabs.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Acreage Holdings",
+      "url": "https://acreageholdings.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "iAnthus Capital",
+      "url": "https://ianthuscapital.com",
+      "categories": ["cannabis", "dispensary"],
+      "city": "New York City",
+      "type": "retail",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "xtract Consultants",
+      "url": "ttps://extractconsultants.com",
+      "categories": ["terpenes", "ingredients", "consulting", "equipment"],
+      "city": "Denver",
+      "type": "consultant",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "GrowGeneration",
+      "url": "https://growgeneration.com",
+      "categories": ["grow_equipment", "nutrients", "supplies"],
+      "city": "Denver",
+      "type": "supplier",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "SC Labs",
+      "url": "https://sclabs.com",
+      "categories": ["testing", "lab"],
+      "city": "Denver",
+      "type": "lab",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Steep Hill Labs",
+      "url": "https://steephill.com",
+      "categories": ["testing", "lab"],
+      "city": "Denver",
+      "type": "lab",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Verde Laboratories",
+      "url": "https://proverdelabs.com",
+      "categories": ["testing", "lab"],
+      "city": "Denver",
+      "type": "lab",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "ColoradoCannabis Transport",
+      "url": "https://coloradocannabistransport.com",
+      "categories": ["transport", "logistics"],
+      "city": "Denver",
+      "type": "transporter",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Botanicare",
+      "url": "https://botanicare.com",
+      "categories": ["nutrients", "supplies"],
+      "city": "Tempe",
+      "type": "supplier",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Advanced Nutrients",
+      "url": "https://advancednutrients.com",
+      "categories": ["nutrients", "supplies"],
+      "city": "Vancouver",
+      "type": "supplier",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "eneral Hydroponics",
+      "url": "https://generalhydroponics.com",
+      "categories": ["nutrients", "equipment"],
+      "city": "ebastopol",
+      "type": "supplier",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "FoxFarm",
+      "url": "https://foxfarm.com",
+      "categories": ["nutrients", "soil"],
+      "city": "Arcata",
+      "type": "supplier",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Gavita",
+      "url": "https://gavita.com",
+      "categories": ["grow_equipment", "lighting"],
+      "city": "Vancouver",
+      "type": "equipment",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Spider Farmer",
+      "url": "https://spider-farmer.com",
+      "categories": ["grow_equipment", "lighting"],
+      "city": "Shenzhen",
+      "type": "equipment",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Mars Hydro",
+      "url": "https://mars-hydro.com",
+      "categories": ["grow_equipment", "lighting"],
+      "city": "Shenzhen",
+      "type": "equipment",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Vivosun",
+      "url": "https://vivosun.com",
+      "categories": ["grow_equipment", "supplies"],
+      "city": "os Angeles",
+      "type": "equipment",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Kush Supply Co",
+      "url": "https://kushsupplyco.com",
+      "categories": ["packaging", "supplies"],
+      "city": "os Angeles",
+      "type": "supplier",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Stink Sack",
+      "url": "https://stinksack.com",
+      "categories": ["packaging", "supplies"],
+      "city": "Denver",
+      "type": "supplier",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "ecision Extraction",
+      "url": "https://precisionextraction.com",
+      "categories": ["lab_equipment", "machinery"],
+      "city": "Sacramento",
+      "type": "equipment",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Apeks Supercritical",
+      "url": "https://apekssupercritical.com",
+      "categories": ["lab_equipment", "machinery"],
+      "city": "Columbus",
+      "type": "equipment",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Waters Corporation",
+      "url": "https://waters.com",
+      "categories": ["lab_equipment", "machinery"],
+      "city": "Milford",
+      "type": "equipment",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "ilent Technologies",
+      "url": "https://agilent.com",
+      "categories": ["lab_equipment", "achinery"],
+      "city": "anta Clara",
+      "type": "equipment",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "True Terpenes",
+      "url": "https://trueterpenes.com",
+      "categories": ["terpenes", "ingredients"],
+      "city": "Portland",
+      "type": "supplier",
+      "license": "",
+      "preferred": true
+    },
+    {
+      "name": "Cannabis Business Advisors",
+      "url": "https://cannabisbusinessadvisors.com",
+      "categories": ["consulting", "services"],
+      "city": "Denver",
+      "type": "consultant",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Cannabis Industry Institute",
+      "url": "https://cannabisindustryinstitute.com",
+      "categories": ["consulting", "training"],
+      "city": "New York City",
+      "type": "consultant",
+      "license": "",
+      "preferred": false
+    },
+    {
+      "name": "Cannabis Compliance Consultants",
+      "url": "https://cannabiscomplianceconsultants.com",
+      "categories": ["consulting", "compliance"],
+      "city": "New York City",
+      "type": "consultant",
+      "license": "",
+      "preferred": false
+    }
+  ]
+} 

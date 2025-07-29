@@ -1,0 +1,256 @@
+@prefix marketing: <http://formul8.ai/ontology/marketing#> .
+@prefix platform: <http://formul8.ai/ontology/platform#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Marketing Platforms
+platform:Facebook a platform:SocialMediaPlatform ;
+    rdfs:label "Facebook" ;
+    platform:allowsCannabis false ;
+    platform:restrictions "Prohibits cannabis advertising" ;
+    platform:workarounds (
+        "Wellness angle"
+        "Educational content"
+        "Brand awareness only"
+        "No product promotion"
+    ) ;
+    platform:targetingOptions (
+        "Age 21+"
+        "Interest-based"
+        "Lookalike audiences"
+        "Geographic"
+    ) .
+
+platform:Instagram a platform:SocialMediaPlatform ;
+    rdfs:label "Instagram" ;
+    platform:allowsCannabis false ;
+    platform:restrictions "Prohibits cannabis content" ;
+    platform:workarounds (
+        "Lifestyle branding"
+        "Behind-the-scenes content"
+        "Community building"
+        "Influencer partnerships"
+    ) .
+
+platform:GoogleAds a platform:AdvertisingPlatform ;
+    rdfs:label "Google Ads" ;
+    platform:allowsCannabis false ;
+    platform:restrictions "Prohibits cannabis advertising globally" ;
+    platform:workarounds (
+        "SEO optimization"
+        "Content marketing"
+        "Local SEO"
+        "Brand awareness campaigns"
+    ) .
+
+platform:Weedmaps a platform:CannabisSpecificPlatform ;
+    rdfs:label "Weedmaps" ;
+    platform:allowsCannabis true ;
+    platform:audience "Cannabis consumers" ;
+    platform:adTypes (
+        "Dispensary listings"
+        "Product showcases"
+        "Brand promotions"
+        "Educational content"
+    ) ;
+    platform:costPerClick "2.50-15.00"^^xsd:decimal .
+
+platform:Leafly a platform:CannabisSpecificPlatform ;
+    rdfs:label "Leafly" ;
+    platform:allowsCannabis true ;
+    platform:audience "Cannabis enthusiasts and patients" ;
+    platform:adTypes (
+        "Strain listings"
+        "Dispensary profiles"
+        "Product reviews"
+        "Educational articles"
+    ) .
+
+# Marketing Strategies
+marketing:WellnessAngle a marketing:Strategy ;
+    rdfs:label "Wellness and Health Angle" ;
+    marketing:description "Position cannabis as wellness product" ;
+    marketing:messaging (
+        "Natural wellness solutions"
+        "Holistic health approach"
+        "Quality of life improvement"
+        "Sleep and relaxation aid"
+    ) ;
+    marketing:platforms (
+        platform:Facebook
+        platform:Instagram
+        platform:Pinterest
+    ) .
+
+marketing:EducationalContent a marketing:Strategy ;
+    rdfs:label "Educational Content Marketing" ;
+    marketing:description "Focus on education and awareness" ;
+    marketing:contentTypes (
+        "How-to guides"
+        "Industry insights"
+        "Research findings"
+        "Regulation updates"
+    ) ;
+    marketing:platforms (
+        platform:YouTube
+        platform:LinkedIn
+        platform:Blog
+    ) .
+
+marketing:CommunityBuilding a marketing:Strategy ;
+    rdfs:label "Community Building" ;
+    marketing:description "Build engaged community around brand" ;
+    marketing:tactics (
+        "User-generated content"
+        "Community events"
+        "Brand ambassadors"
+        "Social listening"
+    ) .
+
+# Target Demographics
+marketing:MillennialConsumer a marketing:Demographic ;
+    rdfs:label "Millennial Cannabis Consumer" ;
+    marketing:ageRange "26-41" ;
+    marketing:characteristics (
+        "Quality-focused"
+        "Brand-conscious"
+        "Digital-native"
+        "Value transparency"
+    ) ;
+    marketing:preferredChannels (
+        "Instagram"
+        "Email"
+        "Podcasts"
+        "YouTube"
+    ) .
+
+marketing:GenZConsumer a marketing:Demographic ;
+    rdfs:label "Gen Z Cannabis Consumer" ;
+    marketing:ageRange "21-25" ;
+    marketing:characteristics (
+        "Price-sensitive"
+        "Authenticity-focused"
+        "Mobile-first"
+        "Sustainability-minded"
+    ) ;
+    marketing:preferredChannels (
+        "TikTok"
+        "Instagram"
+        "Snapchat"
+        "Twitter"
+    ) .
+
+marketing:MedicalPatient a marketing:Demographic ;
+    rdfs:label "Medical Cannabis Patient" ;
+    marketing:characteristics (
+        "Efficacy-focused"
+        "Dosage-conscious"
+        "Doctor-referred"
+        "Symptom-specific needs"
+    ) ;
+    marketing:preferredChannels (
+        "Educational websites"
+        "Medical forums"
+        "Doctor referrals"
+        "Patient communities"
+    ) .
+
+# Campaign Types
+marketing:BrandAwareness a marketing:CampaignType ;
+    rdfs:label "Brand Awareness Campaign" ;
+    marketing:objectives (
+        "Increase brand recognition"
+        "Build brand association"
+        "Expand market reach"
+    ) ;
+    marketing:metrics (
+        "Brand recall"
+        "Reach and impressions"
+        "Share of voice"
+    ) .
+
+marketing:ProductLaunch a marketing:CampaignType ;
+    rdfs:label "Product Launch Campaign" ;
+    marketing:objectives (
+        "Generate product awareness"
+        "Drive initial sales"
+        "Educate on benefits"
+    ) ;
+    marketing:phases (
+        "Pre-launch teasing"
+        "Launch announcement"
+        "Post-launch amplification"
+    ) .
+
+marketing:EducationalCampaign a marketing:CampaignType ;
+    rdfs:label "Educational Campaign" ;
+    marketing:objectives (
+        "Educate consumers"
+        "Build trust"
+        "Position as expert"
+    ) ;
+    marketing:contentTypes (
+        "Webinars"
+        "White papers"
+        "Video tutorials"
+        "Infographics"
+    ) .
+
+# Creative Workarounds
+marketing:CreativeWorkaround a marketing:Technique ;
+    rdfs:label "Creative Advertising Workarounds" ;
+    marketing:techniques (
+        "Lifestyle imagery without product"
+        "Abstract brand elements"
+        "Educational focus"
+        "Wellness positioning"
+        "Community storytelling"
+        "Behind-the-scenes content"
+    ) .
+
+# Compliance Considerations
+marketing:ComplianceRequirement a marketing:Regulation ;
+    rdfs:label "Cannabis Marketing Compliance" ;
+    marketing:federalRestrictions (
+        "No interstate commerce promotion"
+        "Age verification required"
+        "Health claims restrictions"
+    ) ;
+    marketing:stateRequirements (
+        "Licensed retailer promotion only"
+        "Location-based restrictions"
+        "Warning label requirements"
+        "Truth in advertising"
+    ) .
+
+# Market Intelligence
+marketing:MarketData a marketing:Intelligence ;
+    rdfs:label "Cannabis Market Intelligence" ;
+    marketing:marketSize "25.5 billion USD"^^xsd:decimal ;
+    marketing:growthRate "14.7%"^^xsd:decimal ;
+    marketing:keyTrends (
+        "Premium products growth"
+        "Micro-dosing popularity"
+        "Sustainability focus"
+        "Personalization demand"
+    ) .
+
+# Pricing Strategy
+marketing:PricingModel a marketing:Strategy ;
+    rdfs:label "Cannabis Pricing Models" ;
+    marketing:strategies (
+        "Premium positioning"
+        "Value pricing"
+        "Bundle pricing"
+        "Subscription models"
+        "Loyalty programs"
+    ) ;
+    marketing:factors (
+        "Product quality"
+        "Brand positioning"
+        "Market competition"
+        "Regulatory costs"
+    ) .

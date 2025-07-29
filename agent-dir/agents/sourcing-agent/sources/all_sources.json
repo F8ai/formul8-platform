@@ -1,0 +1,619 @@
+{
+  "metadata": {
+    "description": "Comprehensive cannabis industry sources from ALL legal states",
+    "version": "3.0.0",
+    "last_updated": "2024-12-19",
+    "total_sources": 0,
+    "states_covered": 0,
+    "categories": ["dispensaries", "cultivators", "manufacturers", "suppliers", "testing_labs", "transporters", "consultants"]
+  },
+  "states": {
+    "ak": {
+      "state_name": "Alaska",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Alaska Fireweed",
+          "url": "https://alaskafireweed.com",
+          "location": "Anchorage",
+          "type": "recreational_medical",
+          "preferred": false
+        },
+        {
+          "name": "Alaska Buds",
+          "url": "https://alaskabuds.com",
+          "location": "Anchorage",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "az": {
+      "state_name": "Arizona",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Harvest Health & Recreation",
+          "url": "https://harvesthoc.com",
+          "location": "Phoenix",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Phoenix",
+          "type": "recreational_medical",
+          "preferred": true
+        }
+      ]
+    },
+    "ca": {
+      "state_name": "California",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "MedMen",
+          "url": "https://medmen.com",
+          "location": "Los Angeles",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "Harborside",
+          "url": "https://harborside.com",
+          "location": "Oakland",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "The Apothecarium",
+          "url": "https://apothecarium.com",
+          "location": "San Francisco",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "co": {
+      "state_name": "Colorado",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Native Roots",
+          "url": "https://nativeroots.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "The Green Solution",
+          "url": "https://thegreensolution.com",
+          "location": "Denver",
+          "type": "recreational_medical",
+          "preferred": true
+        }
+      ]
+    },
+    "ct": {
+      "state_name": "Connecticut",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Fine Fettle",
+          "url": "https://finefettle.com",
+          "location": "Hartford",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "de": {
+      "state_name": "Delaware",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "First State Compassion",
+          "url": "https://firststatecompassion.com",
+          "location": "Wilmington",
+          "type": "medical_only",
+          "preferred": false
+        }
+      ]
+    },
+    "fl": {
+      "state_name": "Florida",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Trulieve",
+          "url": "https://trulieve.com",
+          "location": "Tallahassee",
+          "type": "medical_only",
+          "preferred": true
+        },
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Miami",
+          "type": "medical_only",
+          "preferred": true
+        }
+      ]
+    },
+    "hi": {
+      "state_name": "Hawaii",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Aloha Green",
+          "url": "https://alohagreen.com",
+          "location": "Honolulu",
+          "type": "medical_only",
+          "preferred": false
+        }
+      ]
+    },
+    "il": {
+      "state_name": "Illinois",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Cresco Labs",
+          "url": "https://crescolabs.com",
+          "location": "Chicago",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "Green Thumb Industries",
+          "url": "https://gtigrows.com",
+          "location": "Chicago",
+          "type": "recreational_medical",
+          "preferred": true
+        }
+      ]
+    },
+    "me": {
+      "state_name": "Maine",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Wellness Connection",
+          "url": "https://mainewellness.org",
+          "location": "Portland",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "md": {
+      "state_name": "Maryland",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Baltimore",
+          "type": "recreational_medical",
+          "preferred": true
+        }
+      ]
+    },
+    "ma": {
+      "state_name": "Massachusetts",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Boston",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "Theory Wellness",
+          "url": "https://theorywellness.org",
+          "location": "Boston",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "mi": {
+      "state_name": "Michigan",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Green Peak Innovations",
+          "url": "https://greenpeakinnovations.com",
+          "location": "Lansing",
+          "type": "recreational_medical",
+          "preferred": false
+        },
+        {
+          "name": "Cresco Labs",
+          "url": "https://crescolabs.com",
+          "location": "Detroit",
+          "type": "recreational_medical",
+          "preferred": true
+        }
+      ]
+    },
+    "mn": {
+      "state_name": "Minnesota",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Green Goods",
+          "url": "https://greengoods.com",
+          "location": "Minneapolis",
+          "type": "medical_only",
+          "preferred": false
+        }
+      ]
+    },
+    "mo": {
+      "state_name": "Missouri",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Greenlight",
+          "url": "https://greenlight.com",
+          "location": "Kansas City",
+          "type": "medical_only",
+          "preferred": false
+        }
+      ]
+    },
+    "mt": {
+      "state_name": "Montana",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Montana Cannabis",
+          "url": "https://montanacannabis.com",
+          "location": "Helena",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "nv": {
+      "state_name": "Nevada",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Planet 13",
+          "url": "https://planet13holdings.com",
+          "location": "Las Vegas",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "The Source",
+          "url": "https://thesourcenv.com",
+          "location": "Las Vegas",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "nj": {
+      "state_name": "New Jersey",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "Trenton",
+          "type": "recreational_medical",
+          "preferred": true
+        }
+      ]
+    },
+    "nm": {
+      "state_name": "New Mexico",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Ultra Health",
+          "url": "https://ultrahealth.com",
+          "location": "Albuquerque",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "ny": {
+      "state_name": "New York",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Curaleaf",
+          "url": "https://curaleaf.com",
+          "location": "New York City",
+          "type": "recreational_medical",
+          "preferred": true
+        },
+        {
+          "name": "Columbia Care",
+          "url": "https://col-care.com",
+          "location": "New York City",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "oh": {
+      "state_name": "Ohio",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Verano",
+          "url": "https://verano.com",
+          "location": "Cleveland",
+          "type": "medical_only",
+          "preferred": false
+        }
+      ]
+    },
+    "or": {
+      "state_name": "Oregon",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Nectar",
+          "url": "https://nectar.com",
+          "location": "Portland",
+          "type": "recreational_medical",
+          "preferred": false
+        },
+        {
+          "name": "Electric Lettuce",
+          "url": "https://electriclettuce.com",
+          "location": "Portland",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "pa": {
+      "state_name": "Pennsylvania",
+      "legal_status": "medical_only",
+      "dispensaries": [
+        {
+          "name": "Cresco Labs",
+          "url": "https://crescolabs.com",
+          "location": "Philadelphia",
+          "type": "medical_only",
+          "preferred": true
+        },
+        {
+          "name": "Trulieve",
+          "url": "https://trulieve.com",
+          "location": "Pittsburgh",
+          "type": "medical_only",
+          "preferred": true
+        }
+      ]
+    },
+    "ri": {
+      "state_name": "Rhode Island",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Greenleaf",
+          "url": "https://greenleaf.com",
+          "location": "Providence",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "vt": {
+      "state_name": "Vermont",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Cerridwen",
+          "url": "https://cerridwen.com",
+          "location": "Burlington",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "va": {
+      "state_name": "Virginia",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Columbia Care",
+          "url": "https://col-care.com",
+          "location": "Richmond",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "wa": {
+      "state_name": "Washington",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Cannabis City",
+          "url": "https://cannabiscity.com",
+          "location": "Seattle",
+          "type": "recreational_medical",
+          "preferred": false
+        },
+        {
+          "name": "Uncle Ike's",
+          "url": "https://uncleikes.com",
+          "location": "Seattle",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    },
+    "dc": {
+      "state_name": "Washington DC",
+      "legal_status": "recreational_medical",
+      "dispensaries": [
+        {
+          "name": "Capital City Care",
+          "url": "https://capitalcitycare.com",
+          "location": "Washington DC",
+          "type": "recreational_medical",
+          "preferred": false
+        }
+      ]
+    }
+  },
+  "national_suppliers": {
+    "equipment": [
+      {
+        "name": "Gavita",
+        "url": "https://gavita.com",
+        "category": "lighting",
+        "description": "Professional LED grow lights",
+        "preferred": true,
+        "products": ["led_lights", "grow_systems", "controllers"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "GrowGeneration",
+        "url": "https://growgeneration.com",
+        "category": "equipment",
+        "description": "Hydroponic and organic gardening supplies",
+        "preferred": true,
+        "products": ["nutrients", "equipment", "growing_media", "lighting"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Botanicare",
+        "url": "https://botanicare.com",
+        "category": "nutrients",
+        "description": "Premium hydroponic nutrients and supplements",
+        "preferred": true,
+        "products": ["nutrients", "supplements", "growing_media"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Advanced Nutrients",
+        "url": "https://advancednutrients.com",
+        "category": "nutrients",
+        "description": "Premium cannabis nutrients and supplements",
+        "preferred": true,
+        "products": ["nutrients", "supplements", "pH_adjusters"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "General Hydroponics",
+        "url": "https://generalhydroponics.com",
+        "category": "nutrients",
+        "description": "Hydroponic nutrients and equipment",
+        "preferred": false,
+        "products": ["nutrients", "equipment", "growing_media"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "FoxFarm",
+        "url": "https://foxfarm.com",
+        "category": "nutrients",
+        "description": "Organic soil and nutrients",
+        "preferred": false,
+        "products": ["soil", "nutrients", "supplements"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Spider Farmer",
+        "url": "https://spider-farmer.com",
+        "category": "lighting",
+        "description": "LED grow lights and equipment",
+        "preferred": false,
+        "products": ["led_lights", "grow_tents", "accessories"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Mars Hydro",
+        "url": "https://mars-hydro.com",
+        "category": "lighting",
+        "description": "LED grow lights and hydroponic systems",
+        "preferred": false,
+        "products": ["led_lights", "grow_tents", "nutrients"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Vivosun",
+        "url": "https://vivosun.com",
+        "category": "equipment",
+        "description": "Grow tents, lights, and accessories",
+        "preferred": false,
+        "products": ["grow_tents", "lights", "ventilation", "accessories"],
+        "coverage": "nationwide"
+      }
+    ],
+    "packaging": [
+      {
+        "name": "Kush Supply Co",
+        "url": "https://kushsupplyco.com",
+        "category": "packaging",
+        "description": "Cannabis packaging and supplies",
+        "preferred": true,
+        "products": ["containers", "bags", "labels", "exit_bags"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Stink Sack",
+        "url": "https://stinksack.com",
+        "category": "packaging",
+        "description": "Odor-proof cannabis storage bags",
+        "preferred": false,
+        "products": ["storage_bags", "containers", "accessories"],
+        "coverage": "nationwide"
+      }
+    ],
+    "testing": [
+      {
+        "name": "SC Labs",
+        "url": "https://sclabs.com",
+        "category": "testing",
+        "description": "Comprehensive cannabis testing laboratory",
+        "preferred": true,
+        "services": ["potency_testing", "pesticide_testing", "microbial_testing"],
+        "coverage": "nationwide"
+      },
+      {
+        "name": "Steep Hill Labs",
+        "url": "https://steephill.com",
+        "category": "testing",
+        "description": "Cannabis testing and research laboratory",
+        "preferred": false,
+        "services": ["potency_testing", "pesticide_testing", "microbial_testing"],
+        "coverage": "nationwide"
+      }
+    ]
+  },
+  "consulting_services": [
+    {
+      "name": "Extract Consultants",
+      "url": "https://extractconsultants.com",
+      "category": "consulting",
+      "description": "Leading cannabis extraction consulting and equipment",
+      "preferred": true,
+      "services": ["extraction_consulting", "equipment_sales", "training"],
+      "coverage": "nationwide"
+    },
+    {
+      "name": "Cannabis Business Advisors",
+      "url": "https://cannabisbusinessadvisors.com",
+      "category": "consulting",
+      "description": "Cannabis business consulting and compliance",
+      "preferred": false,
+      "services": ["business_consulting", "compliance", "licensing"],
+      "coverage": "nationwide"
+    }
+  ]
+} 

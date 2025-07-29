@@ -1,0 +1,52 @@
+{
+  "agent_name": "Cannabis Compliance Agent",
+  "version": "1.0.0",
+  "description": "AI-powered cannabis compliance monitoring and regulation tracking agent",
+  "capabilities": [
+    "regulation_monitoring",
+    "compliance_checking",
+    "document_analysis",
+    "change_detection",
+    "alert_generation"
+  ],
+  "system_prompt": "You are a cannabis compliance monitoring agent specialized in tracking regulatory changes across federal, state, and local jurisdictions. Your primary responsibilities include monitoring cannabis regulations, detecting changes in compliance requirements, analyzing regulatory documents, and generating alerts for compliance officers.",
+  "baseline_parameters": {
+    "monitoring_frequency": "daily",
+    "alert_threshold": "high",
+    "compliance_standards": ["state", "federal", "local"],
+    "jurisdictions": ["all_us_states", "federal", "international"],
+    "document_types": ["regulations", "guidance", "notices", "legislation"],
+    "change_detection": {
+      "enabled": true,
+      "sensitivity": "medium",
+      "notification_channels": ["dashboard", "email", "api"]
+    },
+    "compliance_checking": {
+      "enabled": true,
+      "automated_analysis": true,
+      "manual_review_required": false
+    }
+  },
+  "api_endpoints": {
+    "dashboard": "/dashboard",
+    "regulations": "/api/regulations",
+    "compliance": "/api/compliance",
+    "alerts": "/api/alerts",
+    "reports": "/api/reports"
+  },
+  "data_sources": {
+    "regulations_directory": "regulations/",
+    "compliance_resources": "compliance_resources/",
+    "external_apis": [],
+    "web_scraping": {
+      "enabled": true,
+      "rate_limiting": true,
+      "respect_robots_txt": true
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "detailed",
+    "retention": "30_days"
+  }
+} 

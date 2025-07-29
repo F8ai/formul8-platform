@@ -1,0 +1,22 @@
+{
+  "state": "RI",
+  "name": "Rhode Island",
+  "agency": "Department of Business Regulation",
+  "main_url": "https://dbr.ri.gov/divisions/commercial-licensing/cannabis",
+  "mirrored_domains": [
+    "dbr.ri.gov/divisions/commercial-licensing/cannabis"
+  ],
+  "domain_results": {
+    "dbr.ri.gov/divisions/commercial-licensing/cannabis": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    }
+  },
+  "last_updated": "2025-07-15T20:11:57.092749",
+  "mirror_success": false,
+  "total_files": 0,
+  "total_size_mb": 0.0
+}

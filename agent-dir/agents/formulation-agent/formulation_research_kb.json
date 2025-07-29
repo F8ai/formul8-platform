@@ -1,0 +1,377 @@
+{
+  "metadata": {
+    "processed_date": "2025-07-23T03:08:43.831191",
+    "total_articles": 60,
+    "formulation_relevance_scoring": true,
+    "categories_processed": [
+      "cannabinoids",
+      "terpenes",
+      "extraction",
+      "formulation",
+      "pharmacokinetics",
+      "stability"
+    ]
+  },
+  "formulation_categories": {
+    "cannabinoids": {
+      "research_count": 10,
+      "high_relevance_count": 0,
+      "full_text_available": 0,
+      "key_insights": [],
+      "top_articles": [
+        {
+          "pmid": "40690631",
+          "title": "Wisconsin Young Adults' Attitudes, Beliefs, Motivations, and Behaviors Surrounding E-Cigarette Use and Cessation.",
+          "relevance_score": 3.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40690631/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40689972",
+          "title": "[The cannabinoid hyperemesis syndrome-A narrative review].",
+          "relevance_score": 3.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40689972/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40688379",
+          "title": "The role of cannabis in epilepsy illustrated by two case reports.",
+          "relevance_score": 3.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40688379/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40687272",
+          "title": "Inflammatory bowel disease patients believe cannabis and cannabidiol oil relieve symptoms.",
+          "relevance_score": 3.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40687272/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40686258",
+          "title": "Evaluating Household Income and Tobacco Exposure as Moderators of the Association Between Prenatal Cannabis Exposure and Newborn Neurobehavior.",
+          "relevance_score": 3.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40686258/",
+          "has_full_text": false
+        }
+      ]
+    },
+    "terpenes": {
+      "research_count": 10,
+      "high_relevance_count": 0,
+      "full_text_available": 0,
+      "key_insights": [],
+      "top_articles": [
+        {
+          "pmid": "40589191",
+          "title": "Toward a Cannabis Terroir: Untargeted Metabolomic Profiling of Authentic Samples Using Gas Chromatography-High-Resolution Mass Spectrometry (GC-HRMS) and Liquid Chromatography-High-Resolution Tandem Mass Spectrometry (LC-HRMS/MS).",
+          "relevance_score": 4.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40589191/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40656959",
+          "title": "Integrated platform for structural and functional analysis of terpene synthases of ",
+          "relevance_score": 3.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40656959/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40528799",
+          "title": "Following the smell: terpene emission profiles through the cannabis life-cycle.",
+          "relevance_score": 3.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40528799/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40683942",
+          "title": "Characterization of terpene extract from Cannabis sativa flower and evaluation of its anti-melanogenetic effect in melan-a cells.",
+          "relevance_score": 2.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40683942/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40660358",
+          "title": "Effects of five cannabis oils with different CBD: THC ratios and terpenes on hypertension, dyslipidemia, hepatic steatosis, oxidative stress, and CB1 receptor in an experimental model.",
+          "relevance_score": 2.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40660358/",
+          "has_full_text": false
+        }
+      ]
+    },
+    "extraction": {
+      "research_count": 10,
+      "high_relevance_count": 0,
+      "full_text_available": 0,
+      "key_insights": [],
+      "top_articles": [
+        {
+          "pmid": "38108556",
+          "title": "An analytical approach for on-site analysis of breath samples for \u03949-tetrahydrocannabinol (THC).",
+          "relevance_score": 4.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38108556/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40524919",
+          "title": "Pilot-Scale Preparation of Broad-Spectrum CBD: Extraction Optimization and Purification using Centrifugal Partition Chromatography.",
+          "relevance_score": 4.0,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40524919/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40552084",
+          "title": "Cannabis concentrate vaping chemistry.",
+          "relevance_score": 2.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40552084/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40094806",
+          "title": "Maximizing Cannabinoid and Polyphenol Extraction from Industrial Hemp (",
+          "relevance_score": 2.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40094806/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40075119",
+          "title": "Optimizing ethanol-modified supercritical CO\u2082 extraction for enhanced bioactive compound recovery in hemp seed oil.",
+          "relevance_score": 2.5,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40075119/",
+          "has_full_text": false
+        }
+      ]
+    },
+    "formulation": {
+      "research_count": 10,
+      "high_relevance_count": 1,
+      "full_text_available": 0,
+      "key_insights": [
+        "Found 1 highly relevant formulation studies",
+        "Key formulation themes: drug delivery"
+      ],
+      "top_articles": [
+        {
+          "pmid": "40454502",
+          "title": "Innovations in Cannabis Delivery Systems: A Patent Review (2012-2024).",
+          "relevance_score": 7.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40454502/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40550321",
+          "title": "A cannabidiol (CBD) lipid-based nanoemulsion induces anxiolytic- and panicolytic-like effects and increases FosB/deltaFosB immunoreactivity in serotonergic cells of the dorsal raphe.",
+          "relevance_score": 6.0,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40550321/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40657679",
+          "title": "In Silico Assessment of Cannabidiol From Cannabis sativa as an Antiviral Agent Against Key Shrimp Pathogens in Aquaculture.",
+          "relevance_score": 5.1,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40657679/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40407987",
+          "title": "Cannabidiol as an immune modulator: A comprehensive review.",
+          "relevance_score": 5.1,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40407987/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40573179",
+          "title": "Nanoemulsions of Cannabidiol, \u03949-Tetrahydrocannabinol, and Their Combination Similarly Exerted Anticonvulsant and Antioxidant Effects in Mice Treated with Pentyelenetetrazole.",
+          "relevance_score": 5.0,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40573179/",
+          "has_full_text": false
+        }
+      ]
+    },
+    "pharmacokinetics": {
+      "research_count": 10,
+      "high_relevance_count": 0,
+      "full_text_available": 0,
+      "key_insights": [],
+      "top_articles": [
+        {
+          "pmid": "40667862",
+          "title": "Cannabis Use and Its Association with Complications and Outcomes in Burn Patients: Insights from the National Trauma Data Bank.",
+          "relevance_score": 5.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40667862/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40660358",
+          "title": "Effects of five cannabis oils with different CBD: THC ratios and terpenes on hypertension, dyslipidemia, hepatic steatosis, oxidative stress, and CB1 receptor in an experimental model.",
+          "relevance_score": 5.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40660358/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40657679",
+          "title": "In Silico Assessment of Cannabidiol From Cannabis sativa as an Antiviral Agent Against Key Shrimp Pathogens in Aquaculture.",
+          "relevance_score": 5.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40657679/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40640509",
+          "title": "Cannabidiol mitigates alcohol dependence and withdrawal with neuroprotective effects in the basolateral amygdala and striatum.",
+          "relevance_score": 5.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40640509/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40533744",
+          "title": "Cannabidiol (CBD) as a potential therapeutic agent for liver cancer: a comprehensive review of current evidence.",
+          "relevance_score": 5.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40533744/",
+          "has_full_text": false
+        }
+      ]
+    },
+    "stability": {
+      "research_count": 10,
+      "high_relevance_count": 0,
+      "full_text_available": 0,
+      "key_insights": [],
+      "top_articles": [
+        {
+          "pmid": "40602693",
+          "title": "Characteristics and Trends in Child Cannabis Exposures During Legalization in California.",
+          "relevance_score": 5.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40602693/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40684614",
+          "title": "Harmonizing cannabis and environmental policy.",
+          "relevance_score": 4.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40684614/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40552084",
+          "title": "Cannabis concentrate vaping chemistry.",
+          "relevance_score": 4.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40552084/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40525672",
+          "title": "Hemp-Derived Iron Oxide Nanoparticles for Biomedical Applications: Synthesis, Characterization, and Therapeutic Potential.",
+          "relevance_score": 4.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40525672/",
+          "has_full_text": false
+        },
+        {
+          "pmid": "40422361",
+          "title": "Development of Edible Carbohydrate-Protein Sports Gels to Optimize the Muscle Glycogen Re-Synthesis.",
+          "relevance_score": 4.3,
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40422361/",
+          "has_full_text": false
+        }
+      ]
+    }
+  },
+  "research_gaps": [
+    "Limited research on nanoemulsion (2 articles)",
+    "Limited research on liposome (0 articles)",
+    "Limited research on transdermal (1 articles)",
+    "Limited research on sustained release (1 articles)",
+    "Limited research on bioavailability enhancement (0 articles)",
+    "Limited research on stability testing (0 articles)",
+    "Limited research on quality control (1 articles)"
+  ],
+  "formulation_applications": {
+    "oral_delivery": [
+      "40550321",
+      "40660358",
+      "40640509",
+      "40602693",
+      "40422361",
+      "40688379",
+      "40686258",
+      "40686207",
+      "40679815",
+      "40522888",
+      "40660358",
+      "40660358"
+    ],
+    "topical_delivery": [
+      "40454502",
+      "40518055",
+      "40422361",
+      "40689972",
+      "40684872"
+    ],
+    "inhalation": [
+      "38108556",
+      "40552084",
+      "40690631",
+      "40686207",
+      "40522888",
+      "40552084",
+      "40552084"
+    ],
+    "extraction_optimization": [
+      "38108556",
+      "40524919",
+      "40533871",
+      "40457413",
+      "40094806",
+      "40075119",
+      "40042239",
+      "39820562",
+      "39204658"
+    ],
+    "stability_enhancement": [
+      "40454502",
+      "40657679",
+      "40602693",
+      "40657679",
+      "40359332",
+      "40518055",
+      "40684614",
+      "40552084",
+      "40525672",
+      "40422361",
+      "40533871",
+      "40552084",
+      "40552084",
+      "40042239"
+    ],
+    "quality_control": [
+      "40657679",
+      "40602693",
+      "40657679",
+      "40589191",
+      "38108556",
+      "40518055",
+      "40525672",
+      "40422361",
+      "40686207",
+      "40656959",
+      "40522888",
+      "40533871",
+      "40457413",
+      "40683942",
+      "40592253",
+      "40042239"
+    ]
+  },
+  "usage_guide": {
+    "description": "Cannabis formulation research knowledge base",
+    "categories": [
+      "cannabinoids",
+      "terpenes",
+      "extraction",
+      "formulation",
+      "pharmacokinetics",
+      "stability"
+    ],
+    "relevance_scoring": "Articles scored 0-10 based on formulation relevance",
+    "full_text_access": "Use SciHub URLs when available for complete research access"
+  }
+}

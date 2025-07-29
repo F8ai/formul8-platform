@@ -1,0 +1,301 @@
+@prefix science: <http://formul8.ai/ontology/science#> .
+@prefix research: <http://formul8.ai/ontology/research#> .
+@prefix pubmed: <http://formul8.ai/ontology/pubmed#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix medical: <http://formul8.ai/ontology/medical#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Research Areas
+research:CannabinoidPharmacology a research:ResearchArea ;
+    rdfs:label "Cannabinoid Pharmacology" ;
+    research:description "Study of cannabinoid interactions with biological systems" ;
+    research:keyTerms (
+        "endocannabinoid system"
+        "CB1 receptors"
+        "CB2 receptors"
+        "pharmacokinetics"
+        "bioavailability"
+    ) ;
+    research:relatedMeshTerms (
+        "Cannabinoids/pharmacology"
+        "Receptors, Cannabinoid"
+        "Endocannabinoids"
+    ) .
+
+research:MedicalCannabis a research:ResearchArea ;
+    rdfs:label "Medical Cannabis Research" ;
+    research:description "Clinical studies on therapeutic applications of cannabis" ;
+    research:conditions (
+        "Epilepsy"
+        "Chronic pain"
+        "PTSD"
+        "Cancer"
+        "Multiple sclerosis"
+        "Glaucoma"
+    ) ;
+    research:evidenceLevel "Mixed - varies by condition" .
+
+research:CannabisChemistry a research:ResearchArea ;
+    rdfs:label "Cannabis Chemistry" ;
+    research:description "Chemical composition and analysis of cannabis" ;
+    research:compounds (
+        "Delta-9-THC"
+        "Cannabidiol"
+        "Cannabigerol"
+        "Terpenes"
+        "Flavonoids"
+    ) ;
+    research:analyticalMethods (
+        "HPLC"
+        "GC-MS"
+        "LC-MS/MS"
+        "NMR spectroscopy"
+    ) .
+
+# Evidence Quality Metrics
+science:EvidenceLevel a science:QualityMetric ;
+    rdfs:label "Evidence Level Classification" ;
+    science:levels (
+        "Systematic review/meta-analysis"
+        "Randomized controlled trials"
+        "Cohort studies"
+        "Case-control studies"
+        "Case series"
+        "Expert opinion"
+    ) ;
+    science:qualityFactors (
+        "Study design"
+        "Sample size"
+        "Control groups"
+        "Blinding"
+        "Publication bias"
+    ) .
+
+science:StudyQuality a science:QualityMetric ;
+    rdfs:label "Study Quality Assessment" ;
+    science:criteria (
+        "Methodology rigor"
+        "Statistical power"
+        "Bias control"
+        "Reproducibility"
+        "Peer review status"
+    ) ;
+    science:scoringSystem "High/Moderate/Low confidence" .
+
+# Research Findings
+science:THC_Epilepsy a science:ResearchFinding ;
+    rdfs:label "THC for Epilepsy Treatment" ;
+    science:condition "Epilepsy" ;
+    science:intervention "Delta-9-THC" ;
+    science:evidenceLevel "Moderate" ;
+    science:findings (
+        "Reduced seizure frequency in some patients"
+        "Side effects include psychoactivity"
+        "Limited to treatment-resistant cases"
+    ) ;
+    science:studyTypes (
+        "Case series"
+        "Small RCTs"
+        "Observational studies"
+    ) .
+
+science:CBD_Epilepsy a science:ResearchFinding ;
+    rdfs:label "CBD for Epilepsy Treatment" ;
+    science:condition "Epilepsy" ;
+    science:intervention "Cannabidiol" ;
+    science:evidenceLevel "High" ;
+    science:findings (
+        "FDA-approved for specific epilepsy types"
+        "Significant seizure reduction"
+        "Dravet syndrome and LGS efficacy"
+    ) ;
+    science:studyTypes (
+        "Large-scale RCTs"
+        "Systematic reviews"
+        "Long-term studies"
+    ) .
+
+science:Cannabis_Pain a science:ResearchFinding ;
+    rdfs:label "Cannabis for Chronic Pain" ;
+    science:condition "Chronic pain" ;
+    science:intervention "Medical cannabis" ;
+    science:evidenceLevel "Moderate" ;
+    science:findings (
+        "Modest pain reduction"
+        "Improved sleep quality"
+        "Reduced opioid use"
+        "Variable individual responses"
+    ) ;
+    science:limitations (
+        "Short-term studies"
+        "Dosing variability"
+        "Placebo effect considerations"
+    ) .
+
+# PubMed Integration
+pubmed:SearchStrategy a pubmed:Method ;
+    rdfs:label "PubMed Cannabis Search Strategy" ;
+    pubmed:searchTerms (
+        "Cannabis[MeSH Terms]"
+        "Cannabinoids[MeSH Terms]"
+        "Marijuana"
+        "CBD OR cannabidiol"
+        "THC OR tetrahydrocannabinol"
+    ) ;
+    pubmed:filters (
+        "Humans"
+        "English language"
+        "Clinical trial"
+        "Systematic review"
+        "Last 10 years"
+    ) .
+
+pubmed:CitationMetrics a pubmed:QualityIndicator ;
+    rdfs:label "Citation-based Quality Metrics" ;
+    pubmed:metrics (
+        "Citation count"
+        "Impact factor"
+        "h-index of authors"
+        "Journal ranking"
+        "Altmetric score"
+    ) ;
+    pubmed:qualityThresholds (
+        "High impact: >50 citations"
+        "Moderate impact: 10-50 citations"
+        "Low impact: <10 citations"
+    ) .
+
+# Research Methodology
+science:ClinicalTrialDesign a science:Methodology ;
+    rdfs:label "Cannabis Clinical Trial Design" ;
+    science:challenges (
+        "Blinding difficulties"
+        "Placebo design"
+        "Dosing standardization"
+        "Legal/regulatory barriers"
+        "Funding limitations"
+    ) ;
+    science:considerations (
+        "Patient safety"
+        "Dose escalation"
+        "Endpoint selection"
+        "Control group ethics"
+    ) .
+
+science:SystematicReview a science:Methodology ;
+    rdfs:label "Cannabis Systematic Review Methods" ;
+    science:steps (
+        "Protocol development"
+        "Literature search"
+        "Study selection"
+        "Quality assessment"
+        "Data extraction"
+        "Meta-analysis"
+    ) ;
+    science:qualityTools (
+        "Cochrane Risk of Bias"
+        "PRISMA guidelines"
+        "GRADE system"
+    ) .
+
+# Therapeutic Areas
+medical:Neurological a medical:TherapeuticArea ;
+    rdfs:label "Neurological Conditions" ;
+    medical:conditions (
+        "Epilepsy"
+        "Multiple sclerosis"
+        "Parkinson's disease"
+        "Alzheimer's disease"
+        "Huntington's disease"
+    ) ;
+    medical:mechanisms (
+        "Neuroprotection"
+        "Anti-inflammatory"
+        "Seizure threshold"
+        "Motor function"
+    ) .
+
+medical:Psychiatric a medical:TherapeuticArea ;
+    rdfs:label "Psychiatric Conditions" ;
+    medical:conditions (
+        "PTSD"
+        "Anxiety disorders"
+        "Depression"
+        "Schizophrenia"
+        "Bipolar disorder"
+    ) ;
+    medical:considerations (
+        "Psychoactive effects"
+        "Addiction potential"
+        "Cognitive impacts"
+        "Drug interactions"
+    ) .
+
+medical:Oncology a medical:TherapeuticArea ;
+    rdfs:label "Cancer-Related Applications" ;
+    medical:indications (
+        "Chemotherapy-induced nausea"
+        "Cancer pain"
+        "Appetite stimulation"
+        "Sleep disturbances"
+    ) ;
+    medical:evidence (
+        "Nausea: Strong evidence"
+        "Pain: Moderate evidence"
+        "Appetite: Moderate evidence"
+        "Tumor effects: Limited evidence"
+    ) .
+
+# Research Gaps
+science:ResearchGap a science:KnowledgeGap ;
+    rdfs:label "Cannabis Research Gaps" ;
+    science:areas (
+        "Long-term safety studies"
+        "Pediatric applications"
+        "Drug interaction studies"
+        "Optimal dosing protocols"
+        "Delivery method comparisons"
+        "Genetic variations in response"
+    ) ;
+    science:priorities (
+        "Standardized preparations"
+        "Biomarker development"
+        "Personalized medicine"
+        "Combination therapies"
+    ) .
+
+# Regulatory Science
+science:RegulatoryScience a science:ResearchArea ;
+    rdfs:label "Cannabis Regulatory Science" ;
+    science:focus (
+        "Product standardization"
+        "Quality control methods"
+        "Safety assessment"
+        "Pharmacovigilance"
+        "Good manufacturing practices"
+    ) ;
+    science:guidelines (
+        "FDA guidance documents"
+        "ICH guidelines"
+        "USP standards"
+        "WHO recommendations"
+    ) .
+
+# Literature Analysis
+science:LiteratureAnalysis a science:Method ;
+    rdfs:label "Cannabis Literature Analysis Methods" ;
+    science:approaches (
+        "Bibliometric analysis"
+        "Network analysis"
+        "Trend identification"
+        "Gap analysis"
+        "Quality assessment"
+    ) ;
+    science:tools (
+        "VOSviewer"
+        "Gephi"
+        "R bibliometrix"
+        "CiteSpace"
+    ) .

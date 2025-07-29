@@ -1,0 +1,54 @@
+{
+  "agent": "compliance",
+  "timestamp": "2025-07-26T20:02:26.562Z",
+  "results": {
+    "test002": {
+      "question_id": "test002",
+      "question": "Can I make an infused pre-roll without retesting it if I am using already tested flower and concentrate?",
+      "expected_answer": "No, infused products typically require comprehensive testing as a new manufactured product, including potency, homogeneity, pesticides, and other contaminants regardless of input testing status",
+      "category": "testing_infusion",
+      "difficulty": "advanced",
+      "models": {
+        "gpt-4o": {
+          "answer": "The ability to produce an infused pre-roll without retesting depends on the specific cannabis regulations of the state or country in which you are operating. However, I can provide general guidance based on common regulatory practices in the United States:\n\n1. **Understand State Regulations**: Each state has its own cannabis regulatory framework, and requirements can vary significantly. It is crucial to consult the specific regulations of your state.\n\n2. **Testing Requirements**: Generally, both the flower and the concentrate used in cannabis products must be tested for potency, contaminants, and other safety parameters before they are used in manufacturing. However, when these components are combined to create a new product, such as an infused pre-roll, additional testing may be required.\n\n3. **Final Product Testing**: Many states require that the final product undergo testing to ensure that it meets safety and potency standards. This is because the process of combining ingredients can alter the final product's characteristics, including potency and homogeneity.\n\n4. **Labeling and Potency Verification**: Even if retesting is not explicitly required, you must ensure that the labeling accurately reflects the potency and cannabinoid content of the final product. This often necessitates some form of verification testing.\n\n5. **Batch and Lot Tracking**: Maintain detailed records of the batch and lot numbers of the flower and concentrate used, along with their respective test results. This documentation is crucial for compliance and traceability.\n\n6. **Consult with a Compliance Expert**: Given the complexity and variability of cannabis regulations, it is advisable to consult with a compliance expert or legal counsel familiar with your jurisdiction's cannabis laws.\n\n7. **Quality Assurance Protocols**: Implement robust quality assurance protocols to ensure consistency and safety in your manufacturing process. This includes standard operating procedures for blending and rolling the infused pre-rolls.\n\n8. **Stay Updated**: Cannabis regulations are frequently updated. Regularly review regulatory changes to ensure ongoing compliance.\n\nIn summary, while using pre-tested flower and concentrate might reduce some testing requirements, it is likely that the final infused pre-roll will need to be tested to ensure compliance with state regulations. Always verify with your local regulatory authority or a compliance expert.",
+          "confidence": 74,
+          "grade": 75,
+          "gradingConfidence": 85,
+          "responseTime": 7446,
+          "cost": 0.0061175000000000005,
+          "status": "success",
+          "timestamp": "2025-07-26T04:30:39.743Z"
+        }
+      }
+    },
+    "sop001": {
+      "question_id": "sop001",
+      "question": "Can you make me a compliant SOP for Cannabis Transport in CO?",
+      "expected_answer": "SOP must include vehicle requirements, driver qualifications, manifests, route documentation, security protocols, emergency procedures, and compliance with CO cannabis regulatory authority transport regulations",
+      "category": "sop_documentation",
+      "difficulty": "intermediate",
+      "models": {
+        "claude-3-haiku": {
+          "answer": "Error: Unsupported model: claude-3-haiku",
+          "confidence": 0,
+          "grade": 0,
+          "gradingConfidence": 0,
+          "responseTime": 0,
+          "cost": 0,
+          "status": "error",
+          "timestamp": "2025-07-26T20:02:26.562Z"
+        },
+        "claude-3.5-sonnet": {
+          "answer": "# Standard Operating Procedure: Cannabis Transport in Colorado\n\n**Document Control:**\n- SOP Number: TRANS-001\n- Effective Date: [Insert Date]\n- Review Date: [Annual Review Required]\n- Approved By: [Compliance Officer Name/Title]\n\n## 1. PURPOSE AND SCOPE\n\nThis SOP establishes procedures for the compliant transport of cannabis and cannabis products in Colorado in accordance with Colorado Marijuana Rules (CMR) and applicable state regulations.\n\n## 2. REGULATORY AUTHORITY\n\n- Colorado Revised Statutes Title 44, Article 10\n- Colorado Marijuana Rules (CMR) 1 CCR 212-3\n- Colorado Department of Revenue Marijuana Enforcement Division (MED) requirements\n\n## 3. DEFINITIONS\n\n**Transport:** The movement of cannabis or cannabis products from one licensed premises to another\n**Manifest:** Required documentation accompanying all cannabis shipments\n**Sealed Container:** Tamper-evident packaging meeting state requirements\n\n## 4. TRANSPORT REQUIREMENTS\n\n### 4.1 Licensing Requirements\n- Only licensed cannabis businesses may transport cannabis\n- Transport must occur between licensed premises only\n- Transporter must possess valid MED Occupational License\n- Vehicle registration and insurance documentation required\n\n### 4.2 Vehicle Requirements\n- Commercial vehicle insurance minimum $1,000,000\n- GPS tracking system installed and operational\n- Secure storage compartment (locked and enclosed)\n- No cannabis business identification on exterior of vehicle\n- First aid kit and fire extinguisher required\n\n### 4.3 Personnel Requirements\n- Minimum two (2) persons required for transport\n- Both individuals must possess valid MED Occupational Licenses\n- One person remains with vehicle at all times during transport\n- Valid driver's license and clean driving record required\n\n## 5. MANIFEST PROCEDURES\n\n### 5.1 Manifest Creation\n- Generate manifest in METRC (Marijuana Enforcement Tracking Reporting Compliance) system\n- Include all required information:\n  - Origin and destination license numbers\n  - Product descriptions and quantities\n  - Batch/lot numbers\n  - Transport date and estimated delivery time\n  - Transporter information\n\n### 5.2 Manifest Documentation\n- Print three (3) copies of manifest\n- Driver retains one copy during transport\n- One copy remains at origin facility\n- One copy provided to receiving facility\n- Digital backup maintained in METRC system\n\n## 6. PACKAGING AND LABELING\n\n### 6.1 Package Requirements\n- All products in tamper-evident, sealed containers\n- Child-resistant packaging for retail products\n- Opaque packaging preventing visual identification\n- Proper labeling per CMR requirements\n\n### 6.2 Weight Limits\n- Maximum 10 pounds of cannabis flower per package\n- Maximum 20 pounds of cannabis concentrate per package\n- Infused products: follow manufacturer packaging requirements\n\n## 7. TRANSPORT PROCEDURES\n\n### 7.1 Pre-Transport Checklist\n- [ ] Verify manifest accuracy in METRC\n- [ ] Confirm vehicle inspection completed\n- [ ] Check GPS tracking system functionality\n- [ ] Verify personnel licensing current\n- [ ] Confirm insurance documentation present\n- [ ] Load products in secure compartment\n- [ ] Lock storage compartment\n\n### 7.2 During Transport\n- Maintain direct route between licensed premises\n- No stops except for emergencies or vehicle issues\n- One person remains with vehicle at all times\n- Maintain communication with dispatch/management\n- Keep manifest readily available for inspection\n\n### 7.3 Delivery Procedures\n- Verify receiving facility license status\n- Confirm identity of receiving personnel\n- Update METRC system upon delivery\n- Obtain signature confirmation on manifest\n- Photograph delivery confirmation (optional but recommended)\n\n## 8. SECURITY PROTOCOLS\n\n### 8.1 Route Planning\n- Plan most direct route between facilities\n- Avoid high-crime areas when possible\n- Vary routes and timing when feasible\n- Document route deviations and reasons\n\n### 8.2 Emergency Procedures\n- Immediately contact law enforcement for theft/robbery\n- Notify MED within 24 hours of any security incidents\n- Document all incidents thoroughly\n- Update METRC system with incident details\n\n## 9. RECORD KEEPING\n\n### 9.1 Required Documentation\n- Transport manifests (3 years retention)\n- Vehicle inspection records\n- Personnel licensing documentation\n- Insurance certificates\n- GPS tracking records\n- Incident reports\n\n### ",
+          "confidence": 77,
+          "grade": 95,
+          "gradingConfidence": 85,
+          "responseTime": 20929,
+          "cost": 0.008702,
+          "status": "success",
+          "timestamp": "2025-07-26T09:55:36.455Z"
+        }
+      }
+    }
+  }
+}

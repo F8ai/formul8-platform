@@ -1,0 +1,47 @@
+[
+  {
+    "questionId": "chrom001",
+    "question": "What HPLC conditions are optimal for cannabinoid separation and quantification?",
+    "response": "High-Performance Liquid Chromatography (HPLC) is a widely used technique for the separation and quantification of cannabinoids in cannabis products. The optimal HPLC conditions can vary based on the specific cannabinoids of interest, the type of HPLC system, and the desired resolution. However, here are general guidelines for optimal HPLC conditions for cannabinoid separation and quantification:\n\n### 1. **Column Selection:**\n   - **Type:** Use a C18 reversed-phase column (e.g., 150 mm x 4.6 mm, 5 µm particle size) for effective separation of cannabinoids.\n   - **Temperature:** Maintain the column temperature between 25°C to 40°C to improve peak shape and resolution.\n\n### 2. **Mobile Phase:**\n   - **Solvents:** A typical mobile phase consists of:\n     - **A:** Water (with 0.1% formic acid or acetic acid)\n     - **B:** Organic solvent (commonly acetonitrile or methanol)\n   - **Gradient Elution:** Start with a lower percentage of organic solvent (e.g., 30% B) and gradually increase to 100% B over a set time (e.g., 15-30 minutes) to effectively separate cannabinoids.\n\n### 3. **Flow Rate:**\n   - A flow rate of 1.0 mL/min is commonly used, but this may be adjusted based on the specific column and system to optimize resolution and analysis time.\n\n### 4. **Injection Volume:**\n   - An injection volume of 10-20 µL is typical for cannabinoid analysis, but this can vary depending on the concentration of cannabinoids in the sample.\n\n### 5. **Detection:**\n   - **Detector Type:** Use a UV detector set at 210 nm or 254 nm for cannabinoid detection, as many cannabinoids absorb UV light at these wavelengths.\n   - **Sensitivity:** Ensure the detector is calibrated for the specific cannabinoids being analyzed to achieve accurate quantification.\n\n### 6. **Sample Preparation:**\n   - Prior to HPLC analysis, samples should be properly prepared, which may include homogenization, dilution, and filtration to remove particulates. Consider using solid-phase extraction (SPE) for complex matrices.\n\n### 7. **Calibration and Standards:**\n   - Use certified reference materials (CRMs) for calibration curves, ensuring that the standards cover the expected concentration range of cannabinoids in your samples.\n\n###",
+    "expectedAnswer": "",
+    "grade": 95,
+    "confidence": 90.66703061755841,
+    "model": "gpt-4o-mini",
+    "cost": 0.0003072,
+    "inputTokens": 48,
+    "outputTokens": 500,
+    "responseTime": 5936,
+    "status": "success",
+    "timestamp": "2025-07-27T22:47:27.022Z"
+  },
+  {
+    "questionId": "chrom002",
+    "question": "How do I develop a method for separating acidic and neutral cannabinoids simultaneously?",
+    "response": "Developing a method for separating acidic and neutral cannabinoids simultaneously involves several steps, including selecting the appropriate extraction and chromatographic techniques. Here’s a practical guide based on current best practices:\n\n### 1. **Understand the Cannabinoid Forms**\n   - **Acidic Cannabinoids**: These are the non-psychoactive forms, such as THCA (tetrahydrocannabinolic acid) and CBDA (cannabidiolic acid).\n   - **Neutral Cannabinoids**: These are the decarboxylated forms, such as THC (tetrahydrocannabinol) and CBD (cannabidiol).\n\n### 2. **Sample Preparation**\n   - **Extraction**: Use a solvent extraction method that can effectively extract both acidic and neutral cannabinoids. Common solvents include ethanol, methanol, or a mixture of water and organic solvents.\n   - **pH Adjustment**: Acidic cannabinoids are more soluble in acidic conditions, while neutral cannabinoids are better extracted in neutral to slightly basic conditions. You may need to adjust the pH of your extraction solvent to optimize the extraction of both forms.\n\n### 3. **Chromatographic Technique**\n   - **High-Performance Liquid Chromatography (HPLC)**: This is the preferred method for separating cannabinoids without the need for prior decarboxylation. Use a reverse-phase column with a suitable mobile phase.\n   - **Column Selection**: C18 columns are commonly used. Consider using a gradient elution method to separate acidic and neutral cannabinoids effectively.\n   - **Mobile Phase**: A typical mobile phase might include a combination of water (with acid, e.g., formic acid) and organic solvents (e.g., acetonitrile or methanol). Adjust the pH to optimize separation.\n\n### 4. **Detection Method**\n   - **UV-Vis Detection**: Cannabinoids can be detected at specific wavelengths (e.g., 210 nm for acidic cannabinoids and 254 nm for neutral cannabinoids).\n   - **Mass Spectrometry (MS)**: For more accurate identification and quantification, coupling HPLC with mass spectrometry (HPLC-MS) can provide detailed information on the cannabinoid profiles.\n\n### 5. **Method Validation**\n   - **Selectivity and Specificity**: Ensure that the method can distinguish between acidic and neutral cannabinoids.\n   - **Linearity**: Validate the method over a range of concentrations for both forms.\n   - **Accuracy",
+    "expectedAnswer": "",
+    "grade": 85,
+    "confidence": 88.77785151464747,
+    "model": "gpt-4o-mini",
+    "cost": 0.0003072,
+    "inputTokens": 48,
+    "outputTokens": 500,
+    "responseTime": 7201,
+    "status": "success",
+    "timestamp": "2025-07-27T22:47:34.723Z"
+  },
+  {
+    "questionId": "ms001",
+    "question": "What MS/MS parameters should I use for cannabinoid identification and quantification?",
+    "response": "When performing MS/MS (tandem mass spectrometry) for cannabinoid identification and quantification, several key parameters and considerations should be taken into account to ensure accurate results. Here are the recommended parameters and best practices:\n\n### 1. **Instrument Setup**\n   - **Mass Spectrometer Type**: Use a triple quadrupole (QqQ) or a hybrid mass spectrometer (such as QTOF) for better sensitivity and specificity.\n   - **Ionization Source**: Electrospray Ionization (ESI) is commonly used for cannabinoids due to its compatibility with polar solvents.\n\n### 2. **Sample Preparation**\n   - **Extraction Method**: Use solid-phase extraction (SPE) or liquid-liquid extraction (LLE) to isolate cannabinoids from the matrix. Ensure that the method is validated for the specific matrix (e.g., flower, oil, edibles).\n   - **Dilution**: Dilute the extracts appropriately to fall within the calibration range of your method.\n\n### 3. **Chromatography**\n   - **Column Selection**: Use a C18 reversed-phase column for optimal separation of cannabinoids.\n   - **Mobile Phase**: A gradient elution with a mixture of water (with 0.1% formic acid) and acetonitrile or methanol is commonly used.\n\n### 4. **MS/MS Parameters**\n   - **Ionization Voltage**: Optimize the source voltage (typically around 3-5 kV for ESI).\n   - **Collision Energy**: This will vary based on the specific cannabinoid being analyzed. A starting point is usually between 20-40 eV, but this should be optimized for each target compound.\n   - **Precursor Ions**: Identify the most abundant precursor ions for each cannabinoid. Common cannabinoids include:\n     - THC (Δ9-tetrahydrocannabinol): m/z 315\n     - CBD (cannabidiol): m/z 314\n     - CBN (cannabinol): m/z 311\n   - **Product Ions**: Select product ions based on fragmentation patterns. For example:\n     - THC: m/z 193, 217\n     - CBD: m/z 193, 289\n     - CBN: m/z 193, 285\n\n### 5. **Quantification**\n   - **Calibration Curve**: Prepare a calibration curve using standard solutions of known concentrations for each",
+    "expectedAnswer": "",
+    "grade": 95,
+    "confidence": 85.31555187262217,
+    "model": "gpt-4o-mini",
+    "cost": 0.00030734999999999996,
+    "inputTokens": 49,
+    "outputTokens": 500,
+    "responseTime": 7109,
+    "status": "success",
+    "timestamp": "2025-07-27T22:47:42.332Z"
+  }
+]

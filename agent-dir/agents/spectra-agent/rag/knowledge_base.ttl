@@ -1,0 +1,311 @@
+@prefix spectra: <http://formul8.ai/ontology/spectra#> .
+@prefix analytical: <http://formul8.ai/ontology/analytical#> .
+@prefix cannabis: <http://formul8.ai/ontology/cannabis#> .
+@prefix coa: <http://formul8.ai/ontology/coa#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Analytical Methods
+analytical:HPLC a analytical:ChromatographyMethod ;
+    rdfs:label "High Performance Liquid Chromatography" ;
+    analytical:principle "Separation based on polarity and molecular interaction" ;
+    analytical:applications (
+        "Cannabinoid quantification"
+        "Potency testing"
+        "Impurity analysis"
+        "Stability studies"
+    ) ;
+    analytical:detectors (
+        "UV-Vis detector"
+        "Diode array detector"
+        "Mass spectrometer"
+        "Fluorescence detector"
+    ) ;
+    analytical:advantages (
+        "High precision"
+        "Quantitative analysis"
+        "Separation of isomers"
+        "Wide linear range"
+    ) .
+
+analytical:GCMS a analytical:ChromatographyMethod ;
+    rdfs:label "Gas Chromatography Mass Spectrometry" ;
+    analytical:principle "Separation by volatility and mass spectrometric identification" ;
+    analytical:applications (
+        "Terpene profiling"
+        "Pesticide residue analysis"
+        "Residual solvent testing"
+        "Volatile compound identification"
+    ) ;
+    analytical:ionization (
+        "Electron impact (EI)"
+        "Chemical ionization (CI)"
+    ) ;
+    analytical:advantages (
+        "Excellent separation"
+        "Structural identification"
+        "High sensitivity"
+        "Library matching"
+    ) .
+
+analytical:LCMSMS a analytical:ChromatographyMethod ;
+    rdfs:label "Liquid Chromatography Tandem Mass Spectrometry" ;
+    analytical:principle "LC separation with MS/MS fragmentation" ;
+    analytical:applications (
+        "Trace contaminant analysis"
+        "Mycotoxin detection"
+        "Heavy metals analysis"
+        "Metabolite identification"
+    ) ;
+    analytical:ionization (
+        "Electrospray ionization (ESI)"
+        "Atmospheric pressure chemical ionization (APCI)"
+    ) ;
+    analytical:advantages (
+        "Ultra-high sensitivity"
+        "Structural confirmation"
+        "Quantitative precision"
+        "Matrix tolerance"
+    ) .
+
+analytical:FTIR a analytical:SpectroscopyMethod ;
+    rdfs:label "Fourier Transform Infrared Spectroscopy" ;
+    analytical:principle "Molecular vibration analysis" ;
+    analytical:applications (
+        "Chemical fingerprinting"
+        "Functional group identification"
+        "Adulterant detection"
+        "Rapid screening"
+    ) ;
+    analytical:advantages (
+        "Non-destructive"
+        "Rapid analysis"
+        "Minimal sample prep"
+        "Chemical identification"
+    ) .
+
+analytical:NMR a analytical:SpectroscopyMethod ;
+    rdfs:label "Nuclear Magnetic Resonance Spectroscopy" ;
+    analytical:principle "Nuclear spin interactions in magnetic field" ;
+    analytical:applications (
+        "Structural elucidation"
+        "Purity assessment"
+        "Quantitative analysis"
+        "Metabolomics"
+    ) ;
+    analytical:nuclei (
+        "1H NMR"
+        "13C NMR"
+        "31P NMR"
+        "19F NMR"
+    ) ;
+    analytical:advantages (
+        "Structural information"
+        "Quantitative without standards"
+        "Non-destructive"
+        "Stereochemical analysis"
+    ) .
+
+# Certificate of Analysis Components
+coa:PotencySection a coa:AnalysisSection ;
+    rdfs:label "Cannabinoid Potency Analysis" ;
+    coa:analytes (
+        "Delta-9-THC"
+        "THCA"
+        "CBD"
+        "CBDA"
+        "CBG"
+        "CBC"
+        "CBN"
+        "Delta-8-THC"
+    ) ;
+    coa:reportingUnits "mg/g or percentage" ;
+    coa:methodology "HPLC-UV or HPLC-DAD" ;
+    coa:limits "LOQ typically 0.01%" .
+
+coa:ContaminantSection a coa:AnalysisSection ;
+    rdfs:label "Contaminant Analysis" ;
+    coa:categories (
+        "Pesticides"
+        "Heavy metals"
+        "Microbiological"
+        "Mycotoxins"
+        "Residual solvents"
+    ) ;
+    coa:actionLimits "State-specific regulatory limits" ;
+    coa:methodology "LC-MS/MS, ICP-MS, PCR, culture methods" .
+
+coa:TerpeneSection a coa:AnalysisSection ;
+    rdfs:label "Terpene Profile Analysis" ;
+    coa:majorTerpenes (
+        "Myrcene"
+        "Limonene"
+        "Pinene"
+        "Linalool"
+        "Caryophyllene"
+        "Humulene"
+        "Terpinolene"
+        "Ocimene"
+    ) ;
+    coa:reportingUnits "mg/g" ;
+    coa:methodology "GC-MS or GC-FID" .
+
+# Spectral Interpretation
+spectra:HPLCSpectrum a spectra:Chromatogram ;
+    rdfs:label "HPLC Cannabinoid Chromatogram" ;
+    spectra:retentionTimes (
+        "CBD: 8.5-9.5 min"
+        "CBG: 10.5-11.5 min"
+        "Delta-9-THC: 12.5-13.5 min"
+        "CBC: 14.0-15.0 min"
+        "CBN: 16.0-17.0 min"
+    ) ;
+    spectra:wavelength "220-280 nm typical" ;
+    spectra:peakIdentification "Retention time and UV spectrum matching" .
+
+spectra:GCMSSpectrum a spectra:MassSpectrum ;
+    rdfs:label "GC-MS Terpene Analysis" ;
+    spectra:ionizationMode "Electron impact (70 eV)" ;
+    spectra:fragmentationPatterns (
+        "Monoterpenes: m/z 93, 136"
+        "Sesquiterpenes: m/z 93, 161, 204"
+        "Molecular ion peaks often weak"
+    ) ;
+    spectra:libraryMatching "NIST, Wiley, or custom terpene libraries" .
+
+spectra:FTIRSpectrum a spectra:InfraredSpectrum ;
+    rdfs:label "FTIR Cannabis Fingerprint" ;
+    spectra:keyBands (
+        "O-H stretch: 3200-3600 cm-1"
+        "C-H stretch: 2800-3000 cm-1"
+        "C=O stretch: 1650-1750 cm-1"
+        "Aromatic C=C: 1450-1650 cm-1"
+        "C-O stretch: 1000-1300 cm-1"
+    ) ;
+    spectra:applications (
+        "Strain differentiation"
+        "Adulterant detection"
+        "Quality assessment"
+    ) .
+
+# Quality Control Parameters
+spectra:QualityMetrics a spectra:QualityAssurance ;
+    rdfs:label "Analytical Quality Metrics" ;
+    spectra:precision "RSD <5% for major components" ;
+    spectra:accuracy "80-120% recovery for spiked samples" ;
+    spectra:linearityRange "0.01-100 mg/g typical" ;
+    spectra:detectabilityLimits (
+        "LOD: 0.003-0.01 mg/g"
+        "LOQ: 0.01-0.03 mg/g"
+    ) ;
+    spectra:matrixEffects "Evaluated using matrix-matched standards" .
+
+spectra:MethodValidation a spectra:ValidationProcess ;
+    rdfs:label "Analytical Method Validation" ;
+    spectra:parameters (
+        "Specificity/selectivity"
+        "Linearity and range"
+        "Accuracy"
+        "Precision (repeatability/reproducibility)"
+        "Detection/quantitation limits"
+        "Robustness"
+        "Stability"
+    ) ;
+    spectra:guidelines (
+        "ICH Q2(R1)"
+        "USP <1225>"
+        "FDA guidance"
+        "AOAC guidelines"
+    ) .
+
+# Sample Preparation
+spectra:SamplePrep a spectra:Procedure ;
+    rdfs:label "Cannabis Sample Preparation" ;
+    spectra:steps (
+        "Homogenization"
+        "Extraction"
+        "Cleanup"
+        "Concentration"
+        "Dilution"
+        "Filtration"
+    ) ;
+    spectra:extractionMethods (
+        "Solvent extraction"
+        "Supercritical fluid extraction"
+        "Solid phase extraction"
+        "QuEChERS"
+    ) ;
+    spectra:considerations (
+        "Decarboxylation prevention"
+        "Light protection"
+        "Temperature control"
+        "Solvent selection"
+    ) .
+
+# Data Analysis and Interpretation
+spectra:DataAnalysis a spectra:AnalyticalProcess ;
+    rdfs:label "Spectral Data Analysis" ;
+    spectra:software (
+        "ChemStation"
+        "Empower"
+        "MassLynx"
+        "OpenLab"
+        "LIMS integration"
+    ) ;
+    spectra:processing (
+        "Baseline correction"
+        "Peak integration"
+        "Calibration curve fitting"
+        "Quantification"
+        "Statistical analysis"
+    ) ;
+    spectra:reporting (
+        "Concentration calculations"
+        "Uncertainty estimation"
+        "Pass/fail determination"
+        "Graphical presentation"
+    ) .
+
+# Regulatory Compliance
+spectra:RegulatoryTesting a spectra:ComplianceFramework ;
+    rdfs:label "Regulatory Testing Requirements" ;
+    spectra:mandatoryTests (
+        "Potency analysis"
+        "Pesticide screening"
+        "Heavy metals"
+        "Microbiological testing"
+        "Mycotoxin analysis"
+        "Residual solvents"
+    ) ;
+    spectra:frequency (
+        "Batch testing required"
+        "Periodic proficiency testing"
+        "Method verification"
+        "Quality control samples"
+    ) ;
+    spectra:documentation (
+        "Standard operating procedures"
+        "Method validation reports"
+        "Certificate of analysis"
+        "Chain of custody"
+    ) .
+
+# Emerging Technologies
+spectra:EmergingMethods a spectra:Innovation ;
+    rdfs:label "Emerging Analytical Technologies" ;
+    spectra:technologies (
+        "Portable NIR spectrometers"
+        "Handheld Raman devices"
+        "Ion mobility spectrometry"
+        "High-resolution mass spectrometry"
+        "2D chromatography"
+        "Supercritical fluid chromatography"
+    ) ;
+    spectra:advantages (
+        "Field testing capability"
+        "Faster analysis"
+        "Higher resolution"
+        "Reduced solvent use"
+        "Green chemistry principles"
+    ) .

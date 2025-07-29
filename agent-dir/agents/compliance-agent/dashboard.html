@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Agent Dashboard | Formul8</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .formul8-gradient {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+        .formul8-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        .compliance-badge {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-emerald-100 min-h-screen">
+    <!-- Header -->
+    <div class="formul8-gradient text-white p-6 shadow-lg">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">Compliance Agent Dashboard</h1>
+                        <p class="text-green-100">Cannabis Regulatory Intelligence & Compliance Monitoring</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-sm text-green-100">System Status</div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                            <span class="text-sm font-medium">Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto p-6 space-y-6">
+        
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="formul8-card rounded-xl p-6 shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">States Monitored</p>
+                        <p class="text-3xl font-bold text-gray-900">25</p>
+                        <p class="text-sm text-green-600">Cannabis Legal</p>
+                    </div>
+                    <div class="w-12 h-12 compliance-badge rounded-lg flex items-center justify-center">
+                        <i class="fas fa-map-marked-alt text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formul8-card rounded-xl p-6 shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Regulations</p>
+                        <p class="text-3xl font-bold text-gray-900">1,847</p>
+                        <p class="text-sm text-blue-600">Active Rules</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-gavel text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formul8-card rounded-xl p-6 shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Last Update</p>
+                        <p class="text-3xl font-bold text-gray-900">24h</p>
+                        <p class="text-sm text-orange-600">Auto-Sync</p>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-sync-alt text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="formul8-card rounded-xl p-6 shadow-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Compliance</p>
+                        <p class="text-3xl font-bold text-gray-900">98%</p>
+                        <p class="text-sm text-purple-600">Coverage</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-check-circle text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="formul8-card rounded-xl p-6 shadow-lg">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900">Cannabis Compliance Intelligence</h3>
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span class="text-sm text-gray-600">Real-time Monitoring</span>
+                </div>
+            </div>
+            <div class="text-center py-12">
+                <i class="fas fa-shield-alt text-6xl text-green-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Compliance Agent Active</h3>
+                <p class="text-gray-600 mb-6">Monitoring cannabis regulations across 25 states with real-time updates</p>
+                <div class="flex justify-center space-x-4">
+                    <button class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        <i class="fas fa-search mr-2"></i>Query Regulations
+                    </button>
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-chart-bar mr-2"></i>View Reports
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

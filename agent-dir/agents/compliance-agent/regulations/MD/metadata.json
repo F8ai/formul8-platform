@@ -1,0 +1,22 @@
+{
+  "state": "MD",
+  "name": "Maryland",
+  "agency": "Cannabis Control Authority",
+  "main_url": "https://mmcc.maryland.gov",
+  "mirrored_domains": [
+    "mmcc.maryland.gov"
+  ],
+  "domain_results": {
+    "mmcc.maryland.gov": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    }
+  },
+  "last_updated": "2025-07-15T20:11:52.725967",
+  "mirror_success": false,
+  "total_files": 0,
+  "total_size_mb": 0.0
+}

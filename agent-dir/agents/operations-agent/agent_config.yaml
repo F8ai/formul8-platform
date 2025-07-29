@@ -1,0 +1,162 @@
+# Operations Agent Configuration
+agent:
+  name: "operations-agent"
+  type: "operations"
+  version: "1.0.0"
+  description: "Cannabis operations expert with business analytics and process optimization"
+  
+llm:
+  provider: "openai"
+  model: "gpt-4o"
+  temperature: 0.2
+  max_tokens: 2000
+  
+rag:
+  enabled: true
+  vectorstore_type: "faiss"
+  embedding_model: "text-embedding-ada-002"
+  chunk_size: 1000
+  chunk_overlap: 200
+  retrieval_k: 5
+  
+rdf_knowledge:
+  enabled: true
+  knowledge_base_path: "rag/knowledge_base.ttl"
+  sparql_endpoint: null
+  phi2_model_path: "microsoft/phi-2"
+  
+memory:
+  type: "conversation_buffer_window"
+  window_size: 10
+  return_messages: true
+  
+tools:
+  - name: "business_performance_analysis"
+    enabled: true
+    description: "Analyze business KPIs and operational metrics"
+    
+  - name: "supply_chain_optimization"
+    enabled: true
+    description: "Optimize supply chain and inventory management"
+    
+  - name: "financial_modeling"
+    enabled: true
+    description: "Create financial models and forecasts"
+    
+  - name: "operational_efficiency_analysis"
+    enabled: true
+    description: "Analyze and improve operational efficiency"
+    
+  - name: "staff_management_optimization"
+    enabled: true
+    description: "Optimize staffing levels and productivity"
+    
+  - name: "compliance_monitoring"
+    enabled: true
+    description: "Monitor and ensure regulatory compliance"
+    
+  - name: "operations_knowledge_search"
+    enabled: true
+    requires: ["vectorstore"]
+    description: "RAG search of operations knowledge"
+    
+  - name: "structured_operations_query"
+    enabled: true
+    requires: ["rdf_knowledge"]
+    description: "SPARQL queries on structured knowledge"
+
+specialization:
+  domain: "cannabis_operations"
+  expertise_areas:
+    - "business_analytics"
+    - "process_optimization"
+    - "supply_chain_management"
+    - "financial_modeling"
+    - "staff_management"
+    - "compliance_monitoring"
+    - "inventory_management"
+    - "quality_control"
+  
+  operational_areas:
+    cultivation:
+      - "grow_room_management"
+      - "harvest_optimization"
+      - "nutrient_management"
+      - "environmental_controls"
+    processing:
+      - "extraction_operations"
+      - "trim_and_cure"
+      - "packaging_automation"
+      - "quality_testing"
+    retail:
+      - "inventory_turnover"
+      - "customer_experience"
+      - "point_of_sale"
+      - "staff_training"
+    distribution:
+      - "supply_chain"
+      - "logistics"
+      - "vendor_management"
+      - "delivery_operations"
+  
+  key_metrics:
+    financial:
+      - "revenue_growth"
+      - "profit_margins"
+      - "cash_flow"
+      - "roi"
+    operational:
+      - "inventory_turnover"
+      - "efficiency_ratios"
+      - "waste_percentages"
+      - "throughput"
+    quality:
+      - "pass_rates"
+      - "customer_satisfaction"
+      - "compliance_scores"
+      - "defect_rates"
+    staff:
+      - "productivity"
+      - "retention_rates"
+      - "training_effectiveness"
+      - "safety_metrics"
+  
+  optimization_frameworks:
+    - "lean_manufacturing"
+    - "six_sigma"
+    - "continuous_improvement"
+    - "process_reengineering"
+    - "automation_integration"
+
+performance:
+  response_time_target: 18  # seconds
+  accuracy_target: 0.87
+  confidence_threshold: 0.73
+  
+baseline_testing:
+  enabled: true
+  test_file: "baseline.json"
+  auto_evaluate: true
+  
+logging:
+  level: "INFO"
+  file: "logs/operations_agent.log"
+  
+analytics_integration:
+  enabled: true
+  data_sources:
+    - "pos_systems"
+    - "inventory_management"
+    - "financial_systems"
+    - "compliance_tracking"
+  
+dependencies:
+  required:
+    - "langchain"
+    - "openai"
+    - "faiss-cpu"
+  optional:
+    - "pandas"
+    - "numpy"
+    - "rdflib"
+    - "transformers"

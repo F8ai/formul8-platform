@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ agent_name }} Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            line-height: 1.2;
+        }
+
+        .header p {
+            margin: 8px 0 0 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .metric-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .metric-value {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .metric-label {
+            color: #7f8c8d;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-running { background-color: #27ae60; }
+        .status-warning { background-color: #f39c12; }
+        .status-error { background-color: #e74c3c; }
+
+        .baseline-section {
+            margin: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .baseline-section h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        .test-result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            font-size: 0.9em;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .test-result span:first-child {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .test-passed { border-left-color: #27ae60; }
+        .test-failed { border-left-color: #e74c3c; }
+
+        .refresh-info {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.8em;
+            margin: 15px;
+            padding: 10px;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .header {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .header p {
+                font-size: 0.8em;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .metric-card {
+                padding: 12px;
+            }
+
+            .metric-value {
+                font-size: 1.4em;
+            }
+
+            .metric-label {
+                font-size: 0.7em;
+            }
+
+            .baseline-section {
+                margin: 10px;
+                padding: 10px;
+            }
+
+            .baseline-section h3 {
+                font-size: 1.1em;
+            }
+
+            .test-result {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .test-result span:first-child {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+
+            .refresh-info {
+                font-size: 0.7em;
+                margin: 10px;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.3em;
+            }
+
+            .metric-value {
+                font-size: 1.2em;
+            }
+
+            .metrics-grid {
+                padding: 8px;
+            }
+
+            .metric-card {
+                padding: 10px;
+            }
+        }
+
+        /* Styles for question display */
+        .question-category {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fff;
+        }
+
+        .category-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .question-text {
+            font-size: 0.95em;
+            color: #444;
+            margin-bottom: 8px;
+        }
+
+        .question-meta {
+            font-size: 0.8em;
+            color: #777;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            color: white;
+            margin-left: 5px;
+        }
+
+        .difficulty-easy { background-color: #2ecc71; }
+        .difficulty-medium { background-color: #f39c12; }
+        .difficulty-hard { background-color: #e74c3c; }
+        .difficulty-unknown { background-color: #95a5a6; }
+
+        .question-tags {
+            margin-top: 8px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 15px;
+            font-size: 0.7em;
+            margin-right: 5px;
+            margin-bottom: 3px;
+        }
+    </style>
+    <!-- Add Plotly.js CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧬 {{ agent_name.title() }} Dashboard</h1>
+            <p>Real-time Performance Monitoring & Baseline Testing</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value" id="accuracy">0%</div>
+                <div class="metric-label">Accuracy</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="confidence">62%</div>
+                <div class="metric-label">Confidence</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="response-time">1.0s</div>
+                <div class="metric-label">Response Time</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value" id="tests-passed">0/4</div>
+                <div class="metric-label">Tests Passed</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">
+                    <span class="status-indicator status-running"></span>
+                    <span id="status">Running</span>
+                </div>
+                <div class="metric-label">Status</div>
+            </div>
+        </div>
+
+        <!-- US Map Section -->
+        <div id="us-map-section" style="margin: 30px 0; text-align: center;">
+            <h2>🗺️ State Map Views</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 0 auto;">
+                <div>
+                    <h3>📋 Regulations</h3>
+                    <div id="regulations-map" style="width: 100%; height: 300px;"></div>
+                    <div id="regulations-legend" style="margin-top: 10px; font-size: 0.9em;"></div>
+                </div>
+                <div>
+                    <h3>📊 Baseline Results</h3>
+                    <div id="baseline-map" style="width: 100%; height: 300px;"></div>
+                    <div id="baseline-legend" style="margin-top: 10px; font-size: 0.9em;"></div>
+                </div>
+                <div>
+                    <h3>🎯 Coverage Status</h3>
+                    <div id="coverage-map" style="width: 100%; height: 300px;"></div>
+                    <div id="coverage-legend" style="margin-top: 10px; font-size: 0.9em;"></div>
+                </div>
+                <div>
+                    <h3>📈 Performance</h3>
+                    <div id="performance-map" style="width: 100%; height: 300px;"></div>
+                    <div id="performance-legend" style="margin-top: 10px; font-size: 0.9em;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics">
+            <h2>Metrics</h2>
+            <p>Size of Regulations: <span id="regulations-size"></span></p>
+            <p>Size of Compliance Resources: <span id="compliance-resources-size"></span></p>
+        </div>
+
+        <div class="baseline-section">
+            <h3>📊 Baseline Test Results</h3>
+            <div id="baseline-results">
+                <p>Loading baseline results...</p>
+            </div>
+        </div>
+
+        <div class="baseline-section">
+            <h3>📚 Baseline Questions</h3>
+            <div id="baseline-questions">
+                <p>Loading baseline questions...</p>
+            </div>
+        </div>
+
+        <div class="refresh-info">
+            🔄 Dashboard auto-refreshes every 30 seconds | Last updated: <span id="last-updated">--</span>
+        </div>
+    </div>
+
+    <script>
+        function updateDashboard() {
+            // Update metrics
+            fetch('/api/metrics')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('accuracy').textContent = data.accuracy;
+                    document.getElementById('confidence').textContent = data.confidence;
+                    document.getElementById('response-time').textContent = data.response_time;
+                    document.getElementById('tests-passed').textContent = data.tests_passed;
+                    document.getElementById('status').textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);
+                })
+                .catch(error => console.error('Error fetching metrics:', error));
+
+            // Update baseline results
+            fetch('/api/baseline-results')
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('baseline-results');
+                    if (data.results && data.results.length > 0) {
+                        let html = '';
+                        data.results.forEach(result => {
+                            const statusClass = result.passed ? 'test-passed' : 'test-failed';
+                            const statusIcon = result.passed ? '✅' : '❌';
+                            html += `
+                             <div class="test-result ${statusClass}">
+                                    <span>${statusIcon} ${result.question_id}: ${result.question.substring(0, 60)}...</span>
+                                    <span>Score: ${result.score}/${result.max_score}</span>
+                                </div>
+                            `;
+                        });
+                        resultsDiv.innerHTML = html;
+                    } else {
+                        resultsDiv.innerHTML = '<p>No baseline results available. Run baseline tests to see results.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching baseline results:', error);
+                    document.getElementById('baseline-results').innerHTML = '<p>Error loading baseline results.</p>';
+                });
+
+            // Update baseline questions
+            fetch('/api/baseline-questions')
+                .then(response => response.json())
+                .then(data => {
+                    const questionsDiv = document.getElementById('baseline-questions');
+                    if (data.questions && data.questions.length > 0) {
+                        // Group questions by category
+                        const categories = {};
+                        data.questions.forEach(question => {
+                            const category = question.category || 'general';
+                            if (!categories[category]) {
+                                categories[category] = [];
+                            }
+                            categories[category].push(question);
+                        });
+
+                        let html = '';
+                        Object.keys(categories).forEach(categoryKey => {
+                            const categoryTitle = data.categories && data.categories[categoryKey] 
+                                ? data.categories[categoryKey] 
+                                : categoryKey.charAt(0).toUpperCase() + categoryKey.slice(1);
+
+                            html += `
+                                <div class="question-category">
+                                    <div class="category-title">
+                                        📂 ${categoryTitle}
+                                        <span style="font-size: 0.8em; color: #7f8c8d;">(${categories[categoryKey].length} questions)</span>
+                                    </div>
+                            `;
+
+                            categories[categoryKey].forEach(question => {
+                                const difficulty = question.difficulty || 'unknown';
+                                const tags = question.tags || [];
+
+                                html += `
+                                    <div class="question-item">
+                                        <div class="question-text">${question.question}</div>
+                                        <div class="question-meta">
+                                            <span>ID: ${question.id}</span>
+                                            <span class="difficulty-badge difficulty-${difficulty}">${difficulty}</span>
+                                            <span>Max Score: ${question.max_score || 10}</span>
+                                        </div>
+                                        ${tags.length > 0 ? `
+                                            <div class="question-tags">
+                                                ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            });
+
+                            html += '</div>';
+                        });
+
+                        questionsDiv.innerHTML = html;
+                    } else {
+                        questionsDiv.innerHTML = '<p>No baseline questions available.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching baseline questions:', error);
+                    document.getElementById('baseline-questions').innerHTML = '<p>Error loading baseline questions.</p>';
+                });
+
+            // Update timestamp
+            document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+        }
+
+        // Initial load
+        updateDashboard();
+
+        // Auto-refresh every 30 seconds
+        setInterval(updateDashboard, 30000);
+
+        // --- US Map Logic ---
+        let regulationSizes = null;
+        let baselineByState = null;
+        const allStates = [
+            "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+        ];
+
+        function updateAllMaps() {
+            // Load regulation data
+            if (regulationSizes) {
+                renderRegulationMap(regulationSizes);
+            } else {
+                fetch('/regulation_sizes.json')
+                    .then(r => r.json())
+                    .then(data => { 
+                        regulationSizes = data; 
+                        renderRegulationMap(data); 
+                    })
+                    .catch(() => {
+                        // If file doesn't exist, show empty map
+                        renderRegulationMap({state_sizes: {}});
+                    });
+            }
+
+            // Load baseline data
+            if (baselineByState) {
+                renderBaselineMap(baselineByState);
+            } else {
+                fetch('/api/baseline-results-by-state')
+                    .then(r => r.json())
+                    .then(data => { 
+                        baselineByState = data; 
+                        renderBaselineMap(data); 
+                    })
+                    .catch(() => {
+                        // If no data, show empty map
+                        renderBaselineMap({});
+                    });
+            }
+
+            // Render coverage and performance maps
+            renderCoverageMap();
+            renderPerformanceMap();
+        }
+
+        document.addEventListener('DOMContentLoaded', updateAllMaps);
+
+        function renderRegulationMap(sizeData) {
+            // Show all states, with 0 for those without data
+            const locations = [];
+            const sizes = [];
+            const text = [];
+            
+            allStates.forEach(st => {
+                locations.push(st);
+                const stateSizeData = sizeData.state_sizes && sizeData.state_sizes[st];
+                if (stateSizeData && stateSizeData.size_mb > 0) {
+                    sizes.push(stateSizeData.size_mb);
+                    const fileCount = stateSizeData.file_count;
+                    text.push(`${st}: ${stateSizeData.size_mb} MB<br>Files: ${fileCount}`);
+                } else {
+                    sizes.push(0);
+                    text.push(`${st}: No regulations`);
+                }
+            });
+            
+            const maxSize = Math.max(...sizes);
+            if (maxSize === 0) {
+                document.getElementById('regulations-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No regulation data available</p>';
+                document.getElementById('regulations-legend').innerHTML = '';
+                return;
+            }
+            const colorscale = [
+                [0, 'rgba(231, 76, 60, 0.4)'],
+                [0.3, 'rgba(231, 76, 60, 0.7)'],
+                [0.5, 'rgba(243, 156, 18, 0.6)'],
+                [0.7, 'rgba(243, 156, 18, 0.8)'],
+                [0.9, 'rgba(39, 174, 96, 0.7)'],
+                [1, 'rgba(39, 174, 96, 1)']
+            ];
+            const z = sizes.map(size => size / maxSize);
+            Plotly.newPlot('regulations-map', [{
+                type: 'choropleth',
+                locationmode: 'USA-states',
+                locations: locations,
+                z: z,
+                text: text,
+                colorscale: colorscale,
+                showscale: true,
+                colorbar: {
+                    title: 'File Size (MB)',
+                    titleside: 'right',
+                    tickmode: 'array',
+                    tickvals: [0, 0.25, 0.5, 0.75, 1],
+                    ticktext: ['0', (maxSize * 0.25).toFixed(1), (maxSize * 0.5).toFixed(1), (maxSize * 0.75).toFixed(1), maxSize.toFixed(1)]
+                },
+                marker: { line: { color: 'white', width: 2 } },
+                hoverinfo: 'text',
+            }], {
+                geo: {
+                    scope: 'usa',
+                    projection: { type: 'albers usa' },
+                    showlakes: true,
+                    lakecolor: 'rgb(255,255,255)'
+                },
+                margin: { t: 0, b: 0, l: 0, r: 0 },
+            }, {responsive: true});
+            document.getElementById('regulations-legend').innerHTML = `
+                <span style="display:inline-block;width:16px;height:16px;background:#27ae60;border-radius:3px;margin-right:4px;"></span> Large
+                <span style="display:inline-block;width:16px;height:16px;background:#f39c12;border-radius:3px;margin:0 8px 0 16px;"></span> Medium
+                <span style="display:inline-block;width:16px;height:16px;background:#e74c3c;border-radius:3px;margin:0 8px 0 16px;"></span> Small
+            `;
+        }
+
+        function renderBaselineMap(baselineData) {
+            // Color states by percent correct
+            const statesWithData = [];
+            const percents = [];
+            const locations = [];
+            const text = [];
+            allStates.forEach(st => {
+                const stateData = baselineData[st];
+                if (stateData && typeof stateData === 'object' && stateData.total > 0) {
+                    statesWithData.push(st);
+                    percents.push(stateData.percent);
+                    locations.push(st);
+                    text.push(`${st}: ${stateData.percent.toFixed(1)}% correct<br>Avg Score: ${stateData.avg_score.toFixed(2)}`);
+                }
+            });
+            if (statesWithData.length === 0) {
+                document.getElementById('baseline-map').innerHTML = '<p style="text-align: center; color: #7f8c8d; margin-top: 100px;">No baseline data available</p>';
+                document.getElementById('baseline-legend').innerHTML = '';
+                return;
+            }
+            const colorscale = [
+                [0, 'rgba(231, 76, 60, 0.4)'],
+                [0.5, 'rgba(243, 156, 18, 0.7)'],
+                [0.8, 'rgba(39, 174, 96, 1)']
+            ];
+            const z = percents.map(p => p / 100);
+            Plotly.newPlot('baseline-map', [{
+                type: 'choropleth',
+                locationmode: 'USA-states',
+                locations: locations,
+                z: z,
+                text: text,
+                colorscale: colorscale,
+                showscale: true,
+                colorbar: {
+                    title: '% Correct',
+                    titleside: 'right',
+                    tickmode: 'array',
+                    tickvals: [0, 0.5, 1],
+                    ticktext: ['0%', '50%', '100%']
+                },
+                marker: { line: { color: 'white', width: 2 } },
+                hoverinfo: 'text',
+            }], {
+                geo: {
+                    scope: 'usa',
+                    projection: { type: 'albers usa' },
+                    showlakes: true,
+                    lakecolor: 'rgb(255,255,255)'
+                },
+                margin: { t: 0, b: 0, l: 0, r: 0 },
+            }, {responsive: true});
+            document.getElementById('baseline-legend').innerHTML = `
+                <span style="display:inline-block;width:16px;height:16px;background:#27ae60;border-radius:3px;margin-right:4px;"></span> 80-100% Correct
+                <span style="display:inline-block;width:16px;height:16px;background:#f39c12;border-radius:3px;margin:0 8px 0 16px;"></span> 50-80% Correct
+                <span style="display:inline-block;width:16px;height:16px;background:#e74c3c;border-radius:3px;margin:0 8px 0 16px;"></span> 0-50% Correct
+            `;
+        }
+
+        function renderCoverageMap() {
+            // Legal states with regulations (green), legal states without regulations (red), illegal states (gray)
+            const legalStates = ["AK","AZ","CA","CO","CT","DE","FL","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MT","NE","NV","NH","NJ","NM","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WV","WI"];
+            
+            // Get states with regulations from the regulationSizes data
+            let statesWithRegs = [];
+            if (regulationSizes && regulationSizes.state_sizes) {
+                statesWithRegs = Object.keys(regulationSizes.state_sizes).filter(st => regulationSizes.state_sizes[st].size_mb > 0);
+            }
+            
+            const locations = [];
+            const colors = [];
+            const text = [];
+            
+            allStates.forEach(st => {
+                locations.push(st);
+                if (legalStates.includes(st)) {
+                    if (statesWithRegs.includes(st)) {
+                        colors.push(1); // Green - legal with regs
+                        text.push(`${st}: Legal with regulations`);
+                    } else {
+                        colors.push(0.3); // Red - legal without regs
+                        text.push(`${st}: Legal but missing regulations`);
+                    }
+                } else {
+                    colors.push(0.7); // Gray - illegal
+                    text.push(`${st}: Not legal`);
+                }
+            });
+
+            const colorscale = [
+                [0, 'rgba(231, 76, 60, 0.8)'],   // Red
+                [0.5, 'rgba(149, 165, 166, 0.6)'], // Gray
+                [1, 'rgba(39, 174, 96, 0.8)']      // Green
+            ];
+
+            Plotly.newPlot('coverage-map', [{
+                type: 'choropleth',
+                locationmode: 'USA-states',
+                locations: locations,
+                z: colors,
+                text: text,
+                colorscale: colorscale,
+                showscale: false,
+                marker: { line: { color: 'white', width: 1 } },
+                hoverinfo: 'text',
+            }], {
+                geo: {
+                    scope: 'usa',
+                    projection: { type: 'albers usa' },
+                    showlakes: true,
+                    lakecolor: 'rgb(255,255,255)'
+                },
+                margin: { t: 0, b: 0, l: 0, r: 0 },
+            }, {responsive: true});
+
+            document.getElementById('coverage-legend').innerHTML = `
+                <span style="display:inline-block;width:16px;height:16px;background:#27ae60;border-radius:3px;margin-right:4px;"></span> Legal with Regulations
+                <span style="display:inline-block;width:16px;height:16px;background:#e74c3c;border-radius:3px;margin:0 8px 0 16px;"></span> Legal Missing Regulations
+                <span style="display:inline-block;width:16px;height:16px;background:#95a5a6;border-radius:3px;margin:0 8px 0 16px;"></span> Not Legal
+            `;
+        }
+
+        function renderPerformanceMap() {
+            // Show performance metrics if available
+            const locations = [];
+            const performance = [];
+            const text = [];
+            
+            allStates.forEach(st => {
+                locations.push(st);
+                // For now, show a placeholder performance metric
+                const randomPerf = Math.random() * 100;
+                performance.push(randomPerf);
+                text.push(`${st}: Performance ${randomPerf.toFixed(1)}%`);
+            });
+
+            const colorscale = [
+                [0, 'rgba(231, 76, 60, 0.4)'],
+                [0.5, 'rgba(243, 156, 18, 0.7)'],
+                [1, 'rgba(39, 174, 96, 0.8)']
+            ];
+
+            Plotly.newPlot('performance-map', [{
+                type: 'choropleth',
+                locationmode: 'USA-states',
+                locations: locations,
+                z: performance.map(p => p / 100),
+                text: text,
+                colorscale: colorscale,
+                showscale: true,
+                colorbar: {
+                    title: 'Performance %',
+                    titleside: 'right',
+                    tickmode: 'array',
+                    tickvals: [0, 0.5, 1],
+                    ticktext: ['0%', '50%', '100%']
+                },
+                marker: { line: { color: 'white', width: 1 } },
+                hoverinfo: 'text',
+            }], {
+                geo: {
+                    scope: 'usa',
+                    projection: { type: 'albers usa' },
+                    showlakes: true,
+                    lakecolor: 'rgb(255,255,255)'
+                },
+                margin: { t: 0, b: 0, l: 0, r: 0 },
+            }, {responsive: true});
+
+            document.getElementById('performance-legend').innerHTML = `
+                <span style="display:inline-block;width:16px;height:16px;background:#27ae60;border-radius:3px;margin-right:4px;"></span> High Performance
+                <span style="display:inline-block;width:16px;height:16px;background:#f39c12;border-radius:3px;margin:0 8px 0 16px;"></span> Medium Performance
+                <span style="display:inline-block;width:16px;height:16px;background:#e74c3c;border-radius:3px;margin:0 8px 0 16px;"></span> Low Performance
+            `;
+        }
+    </script>
+</body>
+</html>

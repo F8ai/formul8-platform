@@ -1,0 +1,44 @@
+{
+  "testRun": {
+    "id": 375,
+    "agentType": "compliance",
+    "model": "claude-3-5-sonnet-20241022",
+    "state": "CO",
+    "status": "completed", 
+    "totalQuestions": 52,
+    "successfulTests": 47,
+    "avgAccuracy": 91.2,
+    "avgConfidence": 86.4,
+    "avgResponseTime": 2120,
+    "totalCost": 0.28,
+    "createdAt": "2025-01-26T20:35:00Z"
+  },
+  "results": [
+    {
+      "id": 20,
+      "runId": 375,
+      "questionId": "sop001",
+      "question": "Can you make me a compliant SOP for Cannabis Transport in CO?",
+      "expectedAnswer": "SOP must include vehicle requirements, driver qualifications, manifests, route documentation, security protocols, emergency procedures, and compliance with CO cannabis regulatory authority transport regulations",
+      "agentResponse": "# Colorado Cannabis Transport Standard Operating Procedure\n\n## Vehicle Requirements\n- Commercial vehicle with GPS tracking system\n- Locked, enclosed storage compartment\n- Security camera system with recording capability\n- Emergency communication equipment\n- Vehicle registration and insurance documentation\n\n## Personnel Qualifications\n- Valid Colorado driver's license\n- Occupational license from Colorado MED\n- Background check clearance (renewed annually)\n- Transport training certification\n- Drug testing compliance\n\n## Transport Documentation\n- Transport manifest (detailed inventory)\n- Route plan filed with MED 24 hours prior\n- Chain of custody documentation\n- Emergency contact information\n- Product testing certificates\n\n## Security Protocols\n- Minimum two-person transport team\n- Real-time GPS monitoring\n- Secure packaging per MED requirements\n- Direct transport routes only\n- No overnight storage in vehicle\n\n## Emergency Procedures\n- Immediate law enforcement contact\n- MED notification within 24 hours\n- Inventory security and documentation\n- Incident report completion\n- Insurance claim procedures",
+      "category": "sop_documentation",
+      "difficulty": "intermediate",
+      "accuracy": 95,
+      "confidence": 92,
+      "responseTime": 2540,
+      "manualGrade": null,
+      "aiGrade": 93,
+      "aiGradingConfidence": 89,
+      "maxScore": 100,
+      "inputTokens": 245,
+      "outputTokens": 387,
+      "totalTokens": 632,
+      "estimatedCost": 0.0095,
+      "aiGradingInputTokens": 189,
+      "aiGradingOutputTokens": 72,
+      "aiGradingTotalTokens": 261,
+      "aiGradingEstimatedCost": 0.0039,
+      "createdAt": "2025-01-26T20:35:15Z"
+    }
+  ]
+}

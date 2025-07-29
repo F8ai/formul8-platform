@@ -1,0 +1,22 @@
+{
+  "state": "OH",
+  "name": "Ohio (Medical Only)",
+  "agency": "Department of Commerce",
+  "main_url": "https://www.com.ohio.gov/divisions/division-of-industrial-compliance-and-labor/bureaus/bureau-of-workers-compensation/medical-marijuana-control-program",
+  "mirrored_domains": [
+    "com.ohio.gov/divisions/division-of-industrial-compliance-and-labor"
+  ],
+  "domain_results": {
+    "com.ohio.gov/divisions/division-of-industrial-compliance-and-labor": {
+      "status": "failed",
+      "files": 0,
+      "size": 0,
+      "has_html": false,
+      "size_mb": 0.0
+    }
+  },
+  "last_updated": "2025-07-15T20:12:01.295744",
+  "mirror_success": false,
+  "total_files": 0,
+  "total_size_mb": 0.0
+}

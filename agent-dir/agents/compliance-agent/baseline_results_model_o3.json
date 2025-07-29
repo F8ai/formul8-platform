@@ -1,0 +1,1124 @@
+{
+  "agent": "compliance-agent",
+  "timestamp": "2025-07-24T20:36:01.492326",
+  "model": "o3",
+  "state": "MULTI",
+  "configuration": {
+    "rag_enabled": false,
+    "tools_enabled": false,
+    "kb_enabled": false,
+    "custom_prompt": false
+  },
+  "summary": {
+    "total_questions": 52,
+    "successful_tests": 52,
+    "failed_tests": 0,
+    "avg_accuracy": 2.09,
+    "avg_confidence": 0.0,
+    "avg_response_time": 0.2
+  },
+  "category_breakdown": {
+    "sop_documentation": {
+      "count": 3,
+      "avg_accuracy": 4.68975468975469,
+      "avg_confidence": 0.0
+    },
+    "testing_infusion": {
+      "count": 6,
+      "avg_accuracy": 0.0,
+      "avg_confidence": 0.0
+    },
+    "labeling_packaging": {
+      "count": 4,
+      "avg_accuracy": 1.3157894736842104,
+      "avg_confidence": 0.0
+    },
+    "edibles_potency": {
+      "count": 4,
+      "avg_accuracy": 0.0,
+      "avg_confidence": 0.0
+    },
+    "formulation_ingredients": {
+      "count": 3,
+      "avg_accuracy": 0.0,
+      "avg_confidence": 0.0
+    },
+    "facility_operations": {
+      "count": 5,
+      "avg_accuracy": 2.1764705882352944,
+      "avg_confidence": 0.0
+    },
+    "extraction_production": {
+      "count": 5,
+      "avg_accuracy": 3.157894736842105,
+      "avg_confidence": 0.0
+    },
+    "inventory_tracking": {
+      "count": 5,
+      "avg_accuracy": 2.791762013729977,
+      "avg_confidence": 0.0
+    },
+    "recordkeeping": {
+      "count": 2,
+      "avg_accuracy": 0.0,
+      "avg_confidence": 0.0
+    },
+    "waste_management": {
+      "count": 5,
+      "avg_accuracy": 4.444444444444445,
+      "avg_confidence": 0.0
+    },
+    "employee_training": {
+      "count": 5,
+      "avg_accuracy": 3.2748538011695905,
+      "avg_confidence": 0.0
+    },
+    "transport_transfer": {
+      "count": 5,
+      "avg_accuracy": 2.0526315789473686,
+      "avg_confidence": 0.0
+    }
+  },
+  "detailed_results": [
+    {
+      "question_id": "sop001",
+      "question": "Can you make me a compliant SOP for Cannabis Transport in {{state}}?",
+      "expected_answer": "SOP must include vehicle requirements, driver qualifications, manifests, route documentation, security protocols, emergency procedures, and compliance with {{state}} cannabis regulatory authority transport regulations",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 4.761904761904762,
+      "response_time": 0.83,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "sop_documentation",
+      "difficulty": "intermediate",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "sop002",
+      "question": "Can you make me a compliant SOP for pre-roll production in {{state}}?",
+      "expected_answer": "SOP must cover facility requirements, material handling, quality control, packaging, labeling, batch tracking, testing protocols, and compliance with {{state}} cannabis management manufacturing regulations",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 4.761904761904762,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "sop_documentation",
+      "difficulty": "intermediate",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "sop003",
+      "question": "Can you make me a product recall SOP?",
+      "expected_answer": "SOP must include recall triggers, notification procedures, inventory tracking, customer communication, regulatory reporting, product retrieval, disposal methods, and documentation requirements per state regulations",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 4.545454545454546,
+      "response_time": 0.86,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "sop_documentation",
+      "difficulty": "advanced",
+      "max_score": 20,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "test001",
+      "question": "What are the requirements for testing regular pre-rolls when I bought the raw material from a cultivator that already tested it?",
+      "expected_answer": "Most states require additional testing for manufactured products even with tested inputs, including potency verification, moisture content, and foreign matter. Check specific state requirements for pre-roll testing exemptions",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 1.15,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "testing_infusion",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "test002",
+      "question": "Can I make an infused pre-roll without retesting it if I am using already tested flower and concentrate?",
+      "expected_answer": "No, infused products typically require comprehensive testing as a new manufactured product, including potency, homogeneity, pesticides, and other contaminants regardless of input testing status",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.44,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "testing_infusion",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "test003",
+      "question": "Do I have to show harvest date or production date on infused products?",
+      "expected_answer": "Most states require production/manufacture date for infused products, not harvest date. Some states also require expiration dates. Check specific state labeling requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.38,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "testing_infusion",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "test004",
+      "question": "Are there different rules for various types of infused products related to this same question?",
+      "expected_answer": "Yes, edibles, topicals, beverages, and other infused products may have different dating, testing, and labeling requirements. Edibles often have stricter expiration requirements than topicals",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.36,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "testing_infusion",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "test005",
+      "question": "What are the requirements in my state for me to be able to introduce or infuse cannabis or botanical-derived terpenes into my products?",
+      "expected_answer": "Requirements vary by state but typically include approved ingredient lists, testing for contaminants, potency limits, labeling of added terpenes, and compliance with manufacturing license restrictions",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.86,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "testing_infusion",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "test006",
+      "question": "Does this vary for different products?",
+      "expected_answer": "Yes, terpene addition rules vary significantly between smokable products, edibles, topicals, and concentrates. Each product category has different safety and labeling requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "testing_infusion",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "label001",
+      "question": "What are the labeling requirements for packaged concentrates?",
+      "expected_answer": "Requirements typically include potency information, batch numbers, test results, warning statements, universal cannabis symbol, child-resistant packaging, and extraction method disclosure",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "labeling_packaging",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "label002",
+      "question": "Is my edibles packaging compliant to national, state, and local regulations?",
+      "expected_answer": "Compliance requires checking FDA food safety rules, state cannabis regulations, local ordinances, child-resistant requirements, nutritional labeling, and cannabis-specific warning statements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.09,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "labeling_packaging",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "label003",
+      "question": "When is childproof packaging required for certain cannabis products?",
+      "expected_answer": "Most states require child-resistant packaging for all cannabis products, especially edibles, concentrates, and products with high THC content. Some states have exceptions for certain medical products",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "labeling_packaging",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "label004",
+      "question": "Can I use leftover packaging labels from last month if they're still accurate?",
+      "expected_answer": "Generally yes if information remains accurate, but check for regulatory updates, expiration dates on compliance certifications, and any changes to required warning statements or symbols",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.263157894736842,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "labeling_packaging",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "edible001",
+      "question": "How potent can our edibles be?",
+      "expected_answer": "Varies by state: typically 5-10mg THC per serving, 50-100mg per package for recreational, higher limits for medical. Check specific state potency limits and serving size requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "edibles_potency",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "edible002",
+      "question": "Can we do 100 or 200 mg packages?",
+      "expected_answer": "Depends on state and market type. Many recreational markets cap at 100mg per package, while medical markets may allow higher potencies. Check specific state regulations",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.5,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "edibles_potency",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "edible003",
+      "question": "Can we do more than 200 mg?",
+      "expected_answer": "Very few states allow over 200mg packages even for medical use. Requires special licensing, additional safety measures, and strict dispensing protocols where permitted",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "edibles_potency",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "edible004",
+      "question": "Is there a per-piece requirement for max dosage?",
+      "expected_answer": "Yes, most states limit individual pieces to 5-10mg THC regardless of package total. This prevents accidental overconsumption and ensures consistent dosing",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.31,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "edibles_potency",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "form001",
+      "question": "What am I allowed to cut my vape cartridge APIs (distillate or decarbed resin) with that is safe and compliant?",
+      "expected_answer": "Approved cutting agents typically include cannabis-derived terpenes, some botanical terpenes, and specific carrier oils. Prohibited substances include Vitamin E acetate, MCT oil in some states, and non-approved additives",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "formulation_ingredients",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "form002",
+      "question": "What are considered banned substances when formulating various cannabis products?",
+      "expected_answer": "Commonly banned substances include artificial coloring, certain preservatives, non-food grade additives, tobacco products, alcohol above certain limits, and any non-approved cutting agents",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "formulation_ingredients",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "form003",
+      "question": "Can I use hemp-based cannabinoids like CBD or CBG (or others) in production of my cannabis products?",
+      "expected_answer": "Varies by state. Some allow hemp-derived cannabinoids in cannabis products, others require all cannabinoids come from licensed cannabis sources. Check state-specific ingredient sourcing rules",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.13,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "formulation_ingredients",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "facility001",
+      "question": "Can I store finished products in the same room as raw biomass?",
+      "expected_answer": "Generally no, most states require separation between raw materials and finished products to prevent contamination and maintain proper inventory tracking. Check specific state facility requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "facility_operations",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "facility002",
+      "question": "Do I need to log the cleaning of the extraction booth before starting the next run?",
+      "expected_answer": "Yes, most states require documentation of cleaning and sanitization procedures, especially between different batches or strains to prevent cross-contamination",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "facility_operations",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "facility003",
+      "question": "Is it okay to perform maintenance on the hydrocarbon extractor during operating hours?",
+      "expected_answer": "Generally no, maintenance should be performed during non-operating hours with proper lockout/tagout procedures. Emergency maintenance requires special protocols and documentation",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.88235294117647,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "facility_operations",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "facility004",
+      "question": "Am I allowed to have non-lab staff enter the extraction area if they're just observing?",
+      "expected_answer": "Most states require all personnel in extraction areas to be properly trained and authorized. Observers may need visitor badges, safety training, and escort protocols",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.0,
+      "response_time": 0.14,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "facility_operations",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "facility005",
+      "question": "Do I need to notify regulators before making changes to the lab layout?",
+      "expected_answer": "Yes, most states require pre-approval for significant facility modifications, especially those affecting safety systems, security, or operational flow. Minor changes may only require notification",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "facility_operations",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "extract001",
+      "question": "Can I use ethanol I purchased from a non-cannabis supplier in today's extraction?",
+      "expected_answer": "Generally yes if the ethanol meets food/pharmaceutical grade requirements and proper documentation is maintained. Some states may require pre-approval of solvent suppliers",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.263157894736842,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "extraction_production",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "extract002",
+      "question": "Is it compliant to run two different extraction methods in the same lab on the same day?",
+      "expected_answer": "Usually yes if proper cleaning protocols are followed between methods and adequate separation exists to prevent cross-contamination. Document all procedures thoroughly",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.263157894736842,
+      "response_time": 0.12,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "extraction_production",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "extract003",
+      "question": "Do I need to document the purge time for each batch of concentrate?",
+      "expected_answer": "Yes, most states require detailed documentation of purge times, temperatures, and vacuum levels to ensure residual solvent compliance and product safety",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "extraction_production",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "extract004",
+      "question": "Am I allowed to blend two different strain inputs into a single extraction batch?",
+      "expected_answer": "Generally yes, but requires proper documentation of all input strains, their ratios, and testing results. Final product labeling must reflect the blend composition",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.263157894736842,
+      "response_time": 0.13,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "extraction_production",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "extract005",
+      "question": "Do I need to label intermediary oils before refinement is complete?",
+      "expected_answer": "Yes, all cannabis products including intermediary materials typically require proper labeling and tracking through the seed-to-sale system for inventory control",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "extraction_production",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "inventory001",
+      "question": "Can I repackage bulk oil into smaller units without creating a new UID?",
+      "expected_answer": "Most states require new UIDs when changing package sizes or configurations. Check specific state seed-to-sale system requirements for repackaging procedures",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "inventory_tracking",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "inventory002",
+      "question": "Is it compliant to pre-fill vape cartridges before the lab test results are back?",
+      "expected_answer": "Generally no, most states prohibit final packaging or sale preparation until all required test results are received and passed. Products must be quarantined until testing completion",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 8.695652173913043,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "inventory_tracking",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "inventory003",
+      "question": "Do I have to update the batch weight in the system if I lose some product to spillage?",
+      "expected_answer": "Yes, most seed-to-sale systems require accurate weight tracking including documentation of losses due to spillage, waste, or other factors with proper justification",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "inventory_tracking",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "inventory004",
+      "question": "Do I need to generate a new COA if I repackage the same batch in a different container?",
+      "expected_answer": "Generally no if the product itself hasn't changed, but the new package may need updated labeling with the existing COA information. Check state-specific requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.263157894736842,
+      "response_time": 0.12,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "inventory_tracking",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "inventory005",
+      "question": "Can I submit test results to regulators before final packaging is complete?",
+      "expected_answer": "Test results are typically submitted by the testing lab directly to regulators. Manufacturers usually receive results but don't submit them unless specifically required by state regulations",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.14,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "inventory_tracking",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "record001",
+      "question": "Am I allowed to digitally sign the waste disposal manifest, or do I need a physical copy?",
+      "expected_answer": "Most states now accept digital signatures on waste manifests, but check specific state requirements. Some may still require physical copies or notarization for certain types of waste",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "recordkeeping",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "record002",
+      "question": "How long do I need to retain extraction logbooks for compliance?",
+      "expected_answer": "Typically 3-7 years depending on state requirements. Some states require longer retention for manufacturing records. Maintain both physical and digital backups where permitted",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "recordkeeping",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "waste001",
+      "question": "Can I dispose of spent biomass without mixing it with non-consumable waste first?",
+      "expected_answer": "Most states require cannabis waste to be rendered unusable by mixing with non-consumable materials before disposal. Check specific state waste destruction requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.555555555555555,
+      "response_time": 0.12,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "waste_management",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "waste002",
+      "question": "Is it okay to store cannabis waste in the same area as general lab trash temporarily?",
+      "expected_answer": "Generally no, cannabis waste must be stored separately and securely until proper disposal. Cross-contamination and security concerns require segregated storage",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 11.11111111111111,
+      "response_time": 0.14,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "waste_management",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "waste003",
+      "question": "Do I need a secondary person to verify destruction of cannabis waste?",
+      "expected_answer": "Many states require witness verification for waste destruction activities. Check specific state requirements for witness protocols and documentation procedures",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "waste_management",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "waste004",
+      "question": "Can I incinerate solvent-contaminated material on-site?",
+      "expected_answer": "Generally no, solvent-contaminated waste typically requires hazardous waste disposal through licensed facilities. On-site incineration may violate environmental regulations",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.09,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "waste_management",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "waste005",
+      "question": "Am I allowed to treat ethanol waste differently than cannabis plant waste?",
+      "expected_answer": "Yes, ethanol waste may be classified as hazardous waste requiring special disposal procedures, while plant waste follows cannabis-specific destruction requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.555555555555555,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "waste_management",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "employee001",
+      "question": "Does every team member need to complete chemical safety training before using the fume hood?",
+      "expected_answer": "Yes, all personnel working with chemicals or extraction equipment typically require safety training, including proper fume hood operation and emergency procedures",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.11,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "employee_training",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "employee002",
+      "question": "Is a glove change required between processing two different batches?",
+      "expected_answer": "Yes, glove changes and hand washing are typically required between batches to prevent cross-contamination and maintain product integrity",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.12,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "employee_training",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "employee003",
+      "question": "Can a lab tech sign off on their own QC checklist?",
+      "expected_answer": "Most states require independent verification for QC procedures. A second qualified person should review and sign off on QC checklists to ensure objectivity",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.12,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "employee_training",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "employee004",
+      "question": "Am I allowed to let an intern shadow a live extraction session?",
+      "expected_answer": "Interns may observe if properly trained, badged, and supervised. They typically cannot handle materials directly without proper licensing and training completion",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.263157894736842,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "employee_training",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "employee005",
+      "question": "Do I need to document breaks if they occur during active batch processing?",
+      "expected_answer": "Yes, all activities during batch processing should be documented including breaks, personnel changes, and any interruptions to maintain complete batch records",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 11.11111111111111,
+      "response_time": 0.09,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "employee_training",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "transport001",
+      "question": "Can I transfer crude oil to another facility before final testing?",
+      "expected_answer": "Generally yes if both facilities are properly licensed and the transfer is documented in the seed-to-sale system. Receiving facility becomes responsible for testing requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.263157894736842,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "transport_transfer",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "transport002",
+      "question": "Is a licensed cannabis transporter required for in-state product transfers?",
+      "expected_answer": "Varies by state. Some require licensed transporters for all transfers, others allow self-transport between licensed facilities. Check specific state transport regulations",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "transport_transfer",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "transport003",
+      "question": "Do I need to notify the receiving party before sending a partial product shipment?",
+      "expected_answer": "Yes, receiving facilities typically need advance notice to prepare for incoming products and ensure proper receiving procedures and documentation",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.09,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "transport_transfer",
+      "difficulty": "beginner",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "transport004",
+      "question": "Can I transport cannabis waste using a standard courier service?",
+      "expected_answer": "No, cannabis waste typically requires licensed cannabis transport or specialized hazardous waste transporters. Standard couriers are generally prohibited from handling cannabis materials",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 0.0,
+      "response_time": 0.09,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "transport_transfer",
+      "difficulty": "advanced",
+      "max_score": 15,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    },
+    {
+      "question_id": "transport005",
+      "question": "Am I allowed to batch multiple COAs together for a single delivery manifest?",
+      "expected_answer": "Generally yes if all products are going to the same destination and the manifest clearly identifies each product with its corresponding COA. Check state-specific manifest requirements",
+      "agent_response": "Error processing query: Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}",
+      "confidence": 0,
+      "accuracy": 5.0,
+      "response_time": 0.1,
+      "model": "o3",
+      "state": "MULTI",
+      "rag_enabled": false,
+      "tools_enabled": false,
+      "kb_enabled": false,
+      "category": "transport_transfer",
+      "difficulty": "intermediate",
+      "max_score": 10,
+      "metadata": {
+        "error": "Error code: 404 - {'error': {'message': 'Your organization must be verified to use the model `o3`. Please go to: https://platform.openai.com/settings/organization/general and click on Verify Organization. If you just verified, it can take up to 15 minutes for access to propagate.', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}"
+      }
+    }
+  ]
+}

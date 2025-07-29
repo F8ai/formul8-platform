@@ -1,0 +1,47 @@
+[
+  {
+    "questionId": "sop001",
+    "question": "Can you make me a compliant SOP for Cannabis Transport in Colorado?",
+    "response": "Creating a compliant Standard Operating Procedure (SOP) for cannabis transport in Colorado involves understanding both state regulations and best practices in the industry. Below is a sample SOP that you can customize to fit your specific operations. Please ensure that you review it with legal counsel and compliance experts to ensure it meets all applicable laws and regulations.\n\n---\n\n**Standard Operating Procedure (SOP) for Cannabis Transport in Colorado**\n\n**SOP Number:** [Insert Number]  \n**Effective Date:** [Insert Date]  \n**Revision Date:** [Insert Date]  \n**Prepared By:** [Insert Name/Title]  \n**Approved By:** [Insert Name/Title]\n\n### 1. Purpose\nThis SOP outlines the procedures for the safe and compliant transport of cannabis products in accordance with Colorado state regulations.\n\n### 2. Scope\nThis SOP applies to all employees involved in the transport of cannabis products, including drivers, dispatchers, and management.\n\n### 3. Definitions\n- **Cannabis Products:** Any product containing cannabis, including flower, edibles, concentrates, and infused products.\n- **Transport Vehicle:** Any vehicle used for the transport of cannabis products.\n\n### 4. Regulatory Compliance\nAll transport activities must comply with the Colorado Marijuana Code (C.R.S. § 44-10-101 et seq.) and any local regulations. This includes:\n- Obtaining a valid transport license.\n- Ensuring all employees involved in transport are properly trained and licensed.\n- Adhering to all record-keeping requirements.\n\n### 5. Responsibilities\n- **Transport Manager:** Oversee all transport operations and ensure compliance with SOPs and regulations.\n- **Drivers:** Responsible for the safe transport of cannabis products and adherence to all transport protocols.\n- **Dispatch:** Coordinate transport schedules and maintain communication with drivers.\n\n### 6. Transport Procedures\n\n#### 6.1 Pre-Transport Preparation\n- **Vehicle Inspection:** Conduct a daily inspection of the transport vehicle to ensure it is in good working condition. Check brakes, lights, tires, and security features.\n- **Secure Storage:** Ensure that all cannabis products are stored in a locked, secure area of the vehicle during transport.\n- **Documentation:** Prepare all necessary documentation, including:\n  - Transport manifest detailing the type and quantity of products being transported.\n  - Copies of all relevant licenses.\n  - Any additional documentation required by local jurisdictions.\n\n#### 6.2 Loading Procedures\n- **Identification:** Verify the identity of the person loading the vehicle and ensure they are",
+    "expectedAnswer": "",
+    "grade": 85,
+    "confidence": 89.74323944170435,
+    "model": "gpt-4o-mini",
+    "cost": 0.00030704999999999996,
+    "inputTokens": 47,
+    "outputTokens": 500,
+    "responseTime": 6770,
+    "status": "success",
+    "timestamp": "2025-07-27T22:45:32.964Z"
+  },
+  {
+    "questionId": "sop002",
+    "question": "Can you make me a compliant SOP for pre-roll production in Colorado?",
+    "response": "Certainly! Below is a sample Standard Operating Procedure (SOP) for pre-roll production in Colorado's cannabis industry. This SOP is designed to ensure compliance with state regulations and best practices. Please customize it to fit your specific operations and consult with legal counsel or a compliance expert to ensure it meets all local and state regulations.\n\n---\n\n**Standard Operating Procedure (SOP) for Pre-Roll Production**\n\n**SOP Number:** [Insert Number]  \n**Effective Date:** [Insert Date]  \n**Revision Date:** [Insert Date]  \n**Department:** Production  \n**Prepared by:** [Insert Name/Title]  \n**Approved by:** [Insert Name/Title]  \n\n### 1. Purpose\nThis SOP outlines the procedures for the production of pre-roll cannabis products to ensure compliance with Colorado state regulations, maintain product quality, and ensure the safety of employees and consumers.\n\n### 2. Scope\nThis SOP applies to all employees involved in the pre-roll production process at [Company Name] located in [Facility Address].\n\n### 3. Definitions\n- **Pre-roll:** A cannabis product that is rolled and ready for consumption.\n- **Cannabis:** Any part of the plant Cannabis sativa L., including its derivatives.\n- **Batch:** A specific quantity of product produced during a single production run.\n\n### 4. Responsibilities\n- **Production Manager:** Oversee the pre-roll production process and ensure compliance with this SOP.\n- **Quality Control (QC) Personnel:** Conduct inspections and testing of raw materials and finished products.\n- **Production Staff:** Follow the procedures outlined in this SOP and maintain cleanliness and safety standards.\n\n### 5. Materials and Equipment\n- Cannabis flower (from licensed cultivation facility)\n- Rolling papers\n- Pre-roll cones\n- Grinder\n- Scale (calibrated for accuracy)\n- Sealing machine\n- Packaging materials (child-resistant containers)\n- Labels (with required information)\n- Personal Protective Equipment (PPE)\n\n### 6. Procedure\n\n#### 6.1 Preparation\n1. **Sanitation:** Clean and sanitize all equipment and work surfaces before starting production.\n2. **PPE:** All personnel must wear appropriate PPE, including gloves, masks, and hairnets.\n3. **Material Inspection:** Verify that all cannabis flower and materials meet quality standards and are sourced from licensed facilities. Check for proper documentation.\n\n#### 6.2 Production Process\n1. **Grinding:**\n   - Weigh the required amount of cannabis flower for the batch using",
+    "expectedAnswer": "",
+    "grade": 85,
+    "confidence": 92.109233746594,
+    "model": "gpt-4o-mini",
+    "cost": 0.0003072,
+    "inputTokens": 48,
+    "outputTokens": 500,
+    "responseTime": 6606,
+    "status": "success",
+    "timestamp": "2025-07-27T22:45:40.070Z"
+  },
+  {
+    "questionId": "sop003",
+    "question": "Can you make me a product recall SOP?",
+    "response": "Certainly! A Standard Operating Procedure (SOP) for product recalls in the cannabis industry is essential for ensuring compliance with regulations and maintaining consumer safety. Below is a template for a Product Recall SOP that you can customize to fit your specific operations.\n\n---\n\n### Standard Operating Procedure (SOP) for Product Recall\n\n**SOP Number:** [Insert Number]  \n**Effective Date:** [Insert Date]  \n**Revision Date:** [Insert Date]  \n**Prepared by:** [Insert Name/Title]  \n**Approved by:** [Insert Name/Title]  \n\n#### 1. Purpose\nTo establish a standardized procedure for the effective recall of cannabis products to ensure consumer safety and compliance with regulatory requirements.\n\n#### 2. Scope\nThis SOP applies to all employees involved in the production, distribution, and sale of cannabis products at [Company Name].\n\n#### 3. Definitions\n- **Recall:** An action taken to remove a product from the market due to safety concerns, labeling issues, or non-compliance with regulations.\n- **Affected Product:** Any product that is subject to the recall.\n- **Recall Coordinator:** The designated individual responsible for managing the recall process.\n\n#### 4. Responsibilities\n- **Recall Coordinator:** Oversee the recall process, communicate with regulatory agencies, and manage documentation.\n- **Quality Assurance (QA) Team:** Assess the reason for the recall and ensure compliance with safety standards.\n- **Operations Team:** Execute the recall plan, including retrieval and disposal of affected products.\n- **Customer Service Team:** Communicate with customers and provide information regarding the recall.\n\n#### 5. Procedure\n\n##### 5.1 Identification of Recall Need\n- Monitor product quality and safety through regular testing and customer feedback.\n- If a potential issue is identified, the Recall Coordinator will assess the situation and determine if a recall is necessary.\n\n##### 5.2 Initiating a Recall\n- Upon determination of a recall necessity, the Recall Coordinator will:\n  - Notify senior management and the QA team.\n  - Document the reason for the recall, including any relevant data or incidents.\n\n##### 5.3 Notification\n- Notify the following parties immediately:\n  - Regulatory agencies (as required by state and federal laws).\n  - Distributors and retailers carrying the affected product.\n  - Consumers (if applicable) through public announcements, social media, and direct communication.\n\n##### 5.4 Retrieval of Affected Products\n- Develop a plan for the retrieval of affected products, including:\n  - Identification of",
+    "expectedAnswer": "",
+    "grade": 85,
+    "confidence": 86.75116715354132,
+    "model": "gpt-4o-mini",
+    "cost": 0.00030645,
+    "inputTokens": 43,
+    "outputTokens": 500,
+    "responseTime": 7369,
+    "status": "success",
+    "timestamp": "2025-07-27T22:45:47.940Z"
+  }
+]

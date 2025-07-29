@@ -1,0 +1,137 @@
+agent:
+  description: Cannabis formulation specialist with integrated PubMed research database.
+    Access to 60 curated research articles covering cannabinoids, terpenes, extraction,
+    formulation science, pharmacokinetics, and stability.
+  name: formulation-agent
+  type: formulation
+  version: 1.0.0
+baseline_testing:
+  auto_evaluate: true
+  enabled: true
+  test_file: baseline.json
+dependencies:
+  optional:
+  - rdkit-pypi
+  - rdflib
+  - transformers
+  required:
+  - langchain
+  - openai
+  - faiss-cpu
+llm:
+  max_tokens: 2000
+  model: gpt-4o
+  provider: openai
+  temperature: 0.1
+logging:
+  file: logs/formulation_agent.log
+  level: INFO
+memory:
+  return_messages: true
+  type: conversation_buffer_window
+  window_size: 10
+performance:
+  accuracy_target: 0.85
+  confidence_threshold: 0.7
+  response_time_target: 15
+rag:
+  chunk_overlap: 200
+  chunk_size: 1000
+  embedding_model: text-embedding-ada-002
+  enabled: true
+  retrieval_k: 5
+  vectorstore_type: faiss
+rdf_knowledge:
+  enabled: true
+  knowledge_base_path: rag/knowledge_base.ttl
+  phi2_model_path: microsoft/phi-2
+  sparql_endpoint: null
+research_integration:
+  corpus_file: rag/corpus.jsonl
+  knowledge_base_file: formulation_research_kb.json
+  last_updated: '2025-07-23T03:08:43.831191'
+  pubmed_enabled: true
+  research_categories:
+  - cannabinoids
+  - terpenes
+  - extraction
+  - formulation
+  - pharmacokinetics
+  - stability
+  scihub_enabled: true
+  total_articles: 60
+specialization:
+  cannabinoids:
+    acidic_forms:
+    - THCA
+    - CBDA
+    - CBGA
+    minor:
+    - CBC
+    - THCV
+    - CBDV
+    primary:
+    - THC
+    - CBD
+    - CBG
+    - CBN
+  domain: cannabis_formulation
+  expertise_areas:
+  - molecular_analysis
+  - cannabinoid_chemistry
+  - terpene_chemistry
+  - extraction_methods
+  - formulation_optimization
+  - stability_testing
+  - potency_analysis
+  - rdkit_integration
+  extraction_methods:
+  - co2_extraction
+  - hydrocarbon_extraction
+  - ethanol_extraction
+  - steam_distillation
+  - rosin_press
+  - ice_water_extraction
+  molecular_tools:
+    calculation_types:
+    - molecular_weight
+    - logp
+    - topological_polar_surface_area
+    - h_bond_donors
+    - h_bond_acceptors
+    - lipinski_rule_of_five
+    rdkit_enabled: true
+  terpenes:
+    primary:
+    - myrcene
+    - limonene
+    - pinene
+    - linalool
+    - caryophyllene
+    secondary:
+    - humulene
+    - terpinolene
+    - ocimene
+    - bisabolol
+tools:
+- description: RDKit molecular property analysis
+  enabled: true
+  name: molecular_analysis
+  requires:
+  - rdkit
+- description: RAG search of formulation knowledge
+  enabled: true
+  name: formulation_search
+  requires:
+  - vectorstore
+- description: SPARQL queries on structured knowledge
+  enabled: true
+  name: structured_knowledge_query
+  requires:
+  - rdf_knowledge
+- description: Cannabinoid profile analysis
+  enabled: true
+  name: cannabinoid_analysis
+- description: Extraction method recommendations
+  enabled: true
+  name: extraction_recommendation

@@ -1,0 +1,116 @@
+{
+  "agent": "formulation-agent",
+  "description": "Cannabis Product Formulation and Development Questions covering extraction methods, cannabinoid profiles, terpene integration, and manufacturing processes",
+  "categories": {
+    "extraction_methods": "Cannabis extraction and concentrate production techniques",
+    "cannabinoid_profiles": "Cannabinoid ratio design and optimization",
+    "terpene_integration": "Terpene profile development and preservation",
+    "product_formulation": "Product development and recipe optimization",
+    "stability_testing": "Product stability and shelf-life analysis",
+    "quality_control": "Manufacturing quality assurance and testing",
+    "manufacturing_processes": "Production scaling and process optimization", 
+    "regulatory_compliance": "Formulation compliance and safety standards",
+    "molecular_analysis": "Chemical analysis and characterization",
+    "bioavailability": "Absorption and bioavailability optimization"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic formulation concepts and standard procedures",
+    "intermediate": "Advanced formulation techniques and optimization",
+    "advanced": "Complex molecular design and regulatory compliance"
+  },
+  "questions": [
+    {
+      "id": "extract001",
+      "category": "extraction_methods",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What extraction method best preserves terpenes in cannabis concentrates?",
+      "expected_answer": "Low-temperature methods like CO2 extraction at 20-40°C, hydrocarbon extraction with cold temperatures, or live resin processing preserve terpenes by staying below their boiling points (150-220°C)",
+      "max_score": 12,
+      "tags": ["extraction", "terpenes", "preservation", "temperature-control"]
+    },
+    {
+      "id": "extract002",
+      "category": "extraction_methods",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I optimize CO2 extraction parameters for maximum cannabinoid yield while preserving terpenes?",
+      "expected_answer": "Use supercritical CO2 at 31°C-40°C, 1500-3000 PSI, implement step-wise pressure reduction, use co-solvents like ethanol (5-10%), and employ fractional collection to separate cannabinoids and terpenes",
+      "max_score": 18,
+      "tags": ["co2-extraction", "parameter-optimization", "yield-maximization", "terpene-preservation"]
+    },
+    {
+      "id": "molec001",
+      "category": "molecular_analysis", 
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "Calculate the molecular weight and LogP of THC and explain its formulation implications.",
+      "expected_answer": "THC has molecular weight 314.46 g/mol and LogP ~6.97, indicating high lipophilicity. This requires oil-based carriers, nano-emulsification for water solubility, or liposomal delivery systems",
+      "max_score": 15,
+      "tags": ["molecular-weight", "logp", "lipophilicity", "formulation-strategy"]
+    },
+  {
+    "id": "baseline_003",
+    "question": "What's the optimal decarboxylation temperature and time for converting THCA to THC?",
+    "expected_answer": "Optimal decarboxylation occurs at 105-120°C for 30-60 minutes, balancing complete conversion with minimal terpene loss.",
+    "keywords": ["105-120°C", "30-60 minutes", "THCA", "THC", "decarboxylation", "terpene preservation"],
+    "category": "processing",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "baseline_004",
+    "question": "How do you create a water-soluble cannabis formulation for beverages?",
+    "expected_answer": "Use nano-emulsification to reduce cannabinoid particle size to 20-200 nanometers, creating stable water-soluble formulations with faster onset and higher bioavailability.",
+    "keywords": ["nano-emulsification", "20-200 nanometers", "water-soluble", "bioavailability", "beverages"],
+    "category": "formulation",
+    "difficulty": "advanced"
+  },
+  {
+    "id": "baseline_005",
+    "question": "What cannabinoid and terpene profile would you recommend for sleep formulations?",
+    "expected_answer": "CBN for sedation, myrcene for relaxation, and moderate THC levels. CBN concentrations of 2-5mg combined with myrcene-dominant terpene profiles promote sleep.",
+    "keywords": ["CBN", "myrcene", "sedation", "sleep", "2-5mg", "relaxation"],
+    "category": "cannabinoid_profiles",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "baseline_006",
+    "question": "Explain the entourage effect in cannabis formulations.",
+    "expected_answer": "The entourage effect describes synergistic interactions between cannabinoids and terpenes in full-spectrum extracts, potentially enhancing therapeutic benefits compared to isolated compounds.",
+    "keywords": ["entourage effect", "synergistic", "full-spectrum", "cannabinoids", "terpenes", "therapeutic"],
+    "category": "pharmacology",
+    "difficulty": "basic"
+  },
+  {
+    "id": "baseline_007",
+    "question": "What stability testing parameters should be monitored for cannabis formulations?",
+    "expected_answer": "Monitor cannabinoid potency retention, terpene degradation, microbial growth, pH changes, and oxidation over time under various temperature and humidity conditions.",
+    "keywords": ["potency retention", "terpene degradation", "microbial", "pH", "oxidation", "stability"],
+    "category": "quality_control",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "baseline_008",
+    "question": "How does beta-caryophyllene differ from other terpenes pharmacologically?",
+    "expected_answer": "Beta-caryophyllene uniquely binds to CB2 receptors, acting as a dietary cannabinoid with anti-inflammatory properties, unlike other terpenes that primarily modulate effects.",
+    "keywords": ["beta-caryophyllene", "CB2 receptors", "dietary cannabinoid", "anti-inflammatory", "unique binding"],
+    "category": "terpene_pharmacology", 
+    "difficulty": "advanced"
+  },
+  {
+    "id": "baseline_009",
+    "question": "What carrier oil is best for sublingual CBD formulations and why?",
+    "expected_answer": "MCT oil or fractionated coconut oil provides optimal bioavailability for sublingual absorption due to medium-chain triglycerides that enhance cannabinoid solubility and absorption.",
+    "keywords": ["MCT oil", "coconut oil", "bioavailability", "sublingual", "medium-chain triglycerides", "absorption"],
+    "category": "formulation",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": "baseline_010",
+    "question": "Compare CO2 vs ethanol extraction for cannabinoid preservation.",
+    "expected_answer": "CO2 extraction preserves heat-sensitive compounds better with precise temperature control, while ethanol is more efficient but requires cold temperatures (-40°C) to prevent degradation.",
+    "keywords": ["CO2 extraction", "ethanol", "heat-sensitive", "temperature control", "cold ethanol", "-40°C"],
+    "category": "extraction_comparison",
+    "difficulty": "advanced"
+  }
+]

@@ -1,0 +1,183 @@
+{
+  "agent": "customer-success-agent",
+  "description": "Cannabis Customer Success and Experience Management Questions covering customer onboarding, retention strategies, feedback systems, and relationship management",
+  "categories": {
+    "onboarding_education": "New customer education and onboarding processes",
+    "product_consultation": "Product recommendations and consultation services",
+    "customer_retention": "Retention strategies and loyalty programs",
+    "feedback_systems": "Customer feedback collection and analysis",
+    "compliance_education": "Customer education on cannabis regulations",
+    "support_systems": "Customer service and technical support processes",
+    "relationship_management": "Long-term customer relationship strategies",
+    "experience_optimization": "Customer journey and experience improvement",
+    "communication_strategies": "Multi-channel customer communication approaches",
+    "success_metrics": "Customer success measurement and KPI tracking"
+  },
+  "difficulty_levels": {
+    "beginner": "Basic customer service and onboarding procedures",
+    "intermediate": "Advanced customer success strategies and program development",
+    "advanced": "Complex customer experience optimization and retention analytics"
+  },
+  "questions": [
+    {
+      "id": "onboard001",
+      "category": "onboarding_education",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I create an effective onboarding program for new cannabis customers in {{state}}?",
+      "expected_answer": "Develop educational materials on {{state}} laws, product types, dosing guidelines, consumption methods, safety protocols, create welcome kits, provide consultation sessions, and establish follow-up schedules",
+      "max_score": 12,
+      "tags": ["onboarding", "education", "state-laws", "dosing-guidelines"]
+    },
+    {
+      "id": "onboard002",
+      "category": "onboarding_education",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What personalized onboarding strategies work best for different cannabis customer segments?",
+      "expected_answer": "Segment by experience level, medical vs recreational use, age demographics, create customized education paths, implement progressive disclosure, use behavioral triggers, and track engagement metrics",
+      "max_score": 18,
+      "tags": ["personalization", "customer-segments", "progressive-disclosure", "behavioral-triggers"]
+    },
+    {
+      "id": "consult001",
+      "category": "product_consultation",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I provide effective product consultations for medical cannabis patients in {{state}}?",
+      "expected_answer": "Understand {{state}} medical programs, assess patient needs, review medical conditions, recommend appropriate products, provide dosing guidance, document recommendations, and ensure compliance with regulations",
+      "max_score": 15,
+      "tags": ["medical-cannabis", "patient-consultation", "dosing-guidance", "compliance"]
+    },
+    {
+      "id": "consult002",
+      "category": "product_consultation",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I develop a data-driven product recommendation system for cannabis customers?",
+      "expected_answer": "Implement customer profiling, track purchase history, analyze consumption patterns, use machine learning algorithms, incorporate feedback loops, A/B test recommendations, and measure success rates",
+      "max_score": 20,
+      "tags": ["data-driven", "recommendation-system", "machine-learning", "consumption-patterns"]
+    },
+    {
+      "id": "retention001",
+      "category": "customer_retention",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What retention strategies are most effective for cannabis dispensaries in {{state}}?",
+      "expected_answer": "Implement loyalty programs, personalized communication, exclusive offers, educational events, feedback systems, quality assurance, community building, and compliance with {{state}} marketing restrictions",
+      "max_score": 12,
+      "tags": ["retention-strategies", "loyalty-programs", "community-building", "marketing-restrictions"]
+    },
+    {
+      "id": "retention002",
+      "category": "customer_retention",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I create a comprehensive customer lifecycle management program?",
+      "expected_answer": "Map customer journey stages, identify touchpoints, implement lifecycle triggers, create stage-specific campaigns, use predictive analytics for churn prevention, and measure lifetime value metrics",
+      "max_score": 18,
+      "tags": ["lifecycle-management", "customer-journey", "predictive-analytics", "churn-prevention"]
+    },
+    {
+      "id": "feedback001",
+      "category": "feedback_systems",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "What methods should I use to collect and analyze customer feedback for cannabis products?",
+      "expected_answer": "Implement surveys, review systems, focus groups, social listening, purchase tracking, complaint analysis, satisfaction metrics, and create feedback-to-improvement processes",
+      "max_score": 12,
+      "tags": ["feedback-collection", "surveys", "social-listening", "satisfaction-metrics"]
+    },
+    {
+      "id": "feedback002",
+      "category": "feedback_systems",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I build a real-time customer sentiment analysis system for cannabis brands?",
+      "expected_answer": "Implement sentiment analysis tools, monitor social media, track online reviews, use NLP algorithms, create sentiment dashboards, establish alert systems, and integrate with CRM systems",
+      "max_score": 20,
+      "tags": ["sentiment-analysis", "real-time-monitoring", "nlp-algorithms", "sentiment-dashboards"]
+    },
+    {
+      "id": "compliance001",
+      "category": "compliance_education",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I educate customers about cannabis compliance requirements in {{state}}?",
+      "expected_answer": "Create educational materials on {{state}} laws, possession limits, consumption restrictions, transportation rules, provide compliance checklists, offer training sessions, and update on regulatory changes",
+      "max_score": 12,
+      "tags": ["compliance-education", "possession-limits", "consumption-restrictions", "regulatory-updates"]
+    },
+    {
+      "id": "compliance002",
+      "category": "compliance_education",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What compliance training program should I develop for cannabis industry customers?",
+      "expected_answer": "Create role-specific training modules, implement certification programs, provide regular updates, use interactive learning tools, track completion rates, ensure regulatory alignment, and offer continuing education",
+      "max_score": 18,
+      "tags": ["compliance-training", "certification-programs", "interactive-learning", "continuing-education"]
+    },
+    {
+      "id": "support001",
+      "category": "support_systems",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "What customer support systems work best for cannabis businesses in {{state}}?",
+      "expected_answer": "Implement multi-channel support, train knowledgeable staff, create FAQ resources, establish escalation procedures, ensure {{state}} compliance, provide product guidance, and maintain response time standards",
+      "max_score": 12,
+      "tags": ["customer-support", "multi-channel", "escalation-procedures", "response-times"]
+    },
+    {
+      "id": "support002",
+      "category": "support_systems",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I implement AI-powered customer support for cannabis operations?",
+      "expected_answer": "Deploy chatbots for basic inquiries, implement knowledge bases, use natural language processing, create escalation triggers, maintain human oversight, ensure compliance, and track resolution rates",
+      "max_score": 20,
+      "tags": ["ai-support", "chatbots", "natural-language-processing", "escalation-triggers"]
+    },
+    {
+      "id": "relationship001",
+      "category": "relationship_management",
+      "difficulty": "intermediate",
+      "state": "MULTI",
+      "question": "How do I build long-term relationships with cannabis customers?",
+      "expected_answer": "Implement personal communication, remember preferences, provide value-added services, create community events, offer exclusive access, maintain consistent quality, and build trust through transparency",
+      "max_score": 12,
+      "tags": ["relationship-building", "personal-communication", "value-added-services", "community-events"]
+    },
+    {
+      "id": "relationship002",
+      "category": "relationship_management",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "What CRM strategies are most effective for cannabis customer relationship management?",
+      "expected_answer": "Implement comprehensive customer profiles, track interaction history, automate communication workflows, segment customers, personalize experiences, measure engagement, and integrate with POS systems",
+      "max_score": 18,
+      "tags": ["crm-strategies", "customer-profiles", "automation-workflows", "personalization"]
+    },
+    {
+      "id": "experience001",
+      "category": "experience_optimization",
+      "difficulty": "intermediate",
+      "state": "{{state}}",
+      "question": "How do I optimize the customer experience in cannabis retail in {{state}}?",
+      "expected_answer": "Design welcoming environments, streamline checkout processes, provide educational displays, ensure {{state}} compliance, train staff thoroughly, gather feedback, and create memorable experiences",
+      "max_score": 12,
+      "tags": ["experience-optimization", "retail-environment", "checkout-processes", "staff-training"]
+    },
+    {
+      "id": "experience002",
+      "category": "experience_optimization",
+      "difficulty": "advanced",
+      "state": "MULTI",
+      "question": "How do I create an omnichannel customer experience for cannabis brands?",
+      "expected_answer": "Integrate online and offline touchpoints, ensure consistent messaging, synchronize customer data, provide seamless transitions, maintain compliance across channels, and measure cross-channel performance",
+      "max_score": 20,
+      "tags": ["omnichannel", "touchpoint-integration", "consistent-messaging", "cross-channel-performance"]
+    }
+  ]
+}

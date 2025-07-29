@@ -1,0 +1,32 @@
+{
+  "timestamp": "20250723_030725",
+  "curation_parameters": {
+    "max_per_category": 50,
+    "days_back": 730,
+    "include_scihub": false
+  },
+  "total_categories": 6,
+  "total_articles": 260,
+  "total_with_full_text": 0,
+  "full_text_rate": "0.0%",
+  "category_counts": {
+    "cannabinoids": 49,
+    "terpenes": 50,
+    "extraction": 11,
+    "formulation": 50,
+    "pharmacokinetics": 50,
+    "stability": 50
+  },
+  "category_full_text": {
+    "cannabinoids": 0,
+    "terpenes": 0,
+    "extraction": 0,
+    "formulation": 0,
+    "pharmacokinetics": 0,
+    "stability": 0
+  },
+  "sources": [
+    "PubMed"
+  ],
+  "scihub_mirrors_attempted": 0
+}

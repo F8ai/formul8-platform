@@ -1,0 +1,19 @@
+{
+  "state": "CA",
+  "name": "California",
+  "agency": "Department of Cannabis Control",
+  "main_url": "https://cannabis.ca.gov",
+  "downloaded_urls": [
+    "https://cannabis.ca.gov",
+    "https://cannabis.ca.gov/",
+    "https://cannabis.ca.gov/assets/cannabis_favicon_16x16.png",
+    "https://cannabis.ca.gov/applicants/ceqa-review-for-cannabis-businesses/",
+    "https://cannabis.ca.gov/licensees/cannaconnect-compliance-hub/",
+    "https://cannabis.ca.gov/consumers/medicinal-cannabis/",
+    "https://cannabis.ca.gov/licensees/"
+  ],
+  "last_updated": "2025-07-15T20:48:25.719137",
+  "total_files": 7,
+  "total_size_mb": 0.63,
+  "mirror_success": true
+}

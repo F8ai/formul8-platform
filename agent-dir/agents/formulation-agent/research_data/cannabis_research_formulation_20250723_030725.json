@@ -1,0 +1,1449 @@
+[
+  {
+    "pmid": "40657679",
+    "title": "In Silico Assessment of Cannabidiol From Cannabis sativa as an Antiviral Agent Against Key Shrimp Pathogens in Aquaculture.",
+    "abstract": "Shrimp aquaculture plays a crucial role in global food production but is increasingly threatened by viral and microsporidian pathogens such as White Spot Syndrome Virus (WSSV), Enterocytozoon hepatopenaei (EHP) and Infectious Hypodermal and Haematopoietic Necrosis Virus (IHHNV). Conventional reliance on antibiotics to combat these infections has raised serious concerns regarding antimicrobial resistance, environmental contamination and food safety. Additionally, environmental stressors such as salinity shifts and poor water quality exacerbate disease outbreaks, leading to severe production losses across Asia and Latin America. To explore eco-friendly therapeutic alternatives, this study assessed the antiviral potential of cannabidiol (CBD), a bioactive compound extracted from Cannabis sativa seed oil, identified through GC-MS analysis. Using molecular docking techniques, we evaluated CBD's interactions with key viral proteins: VP28 of WSSV, the tubulin \u03b2-chain of EHP and the capsid protein of IHHNV. The docking results revealed strong binding affinities of -6.61\u2009kcal/mol (EHP), -6.72\u2009kcal/mol (IHHNV) and -5.38\u2009kcal/mol (WSSV), indicating stable and potentially inhibitory interactions. Structural models were retrieved from RCSB PDB and SwissModel, while ligand preparation and docking were performed using AutoDock 4.2. CBD also demonstrated favourable pharmacokinetic and safety profiles, with predictions indicating no mutagenicity, hepatotoxicity or cardiotoxicity, and acceptable drug-likeness characteristics. Compared to other plant-derived compounds previously tested in shrimp disease models, CBD exhibited superior binding stability, more interaction residues and better bioavailability scores. These findings highlight CBD as a promising dual-function agent, capable of both modulating shrimp immunity and directly inhibiting key viral pathogens. These findings highlight cannabidiol (CBD) as a promising dual-action compound, with the potential to both enhance shrimp immune responses and exert direct antiviral effects against key pathogens. This study lays a robust groundwork for future in\u00a0vivo validations, formulation strategies and regulatory frameworks, ultimately supporting the development of sustainable, precision-based aquaculture health management.",
+    "authors": [
+      "Shoba Gunasekaran",
+      "Atchuthan Purushothaman",
+      "K Anju"
+    ],
+    "journal": "Journal of fish diseases",
+    "publication_date": "2025-07-14",
+    "doi": "10.1111/jfd.70015",
+    "keywords": [
+      "aquaculture",
+      "cannabidiol",
+      "herb medicine",
+      "molecular docking",
+      "shrimp pathogens"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40657679/",
+    "collected_date": "2025-07-23T03:07:30.552279",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40649195",
+    "title": "Pharmacokinetics of Cannabidiol in Rat Brain Tissue After Single-Dose Administration of Different Formulations.",
+    "abstract": "Cannabidiol (CBD), a phytocannabinoid commonly isolated from chemotype III ",
+    "authors": [
+      "Zuzana Binova",
+      "Frantisek Benes",
+      "Marie Zlechovcova",
+      "Matej Maly",
+      "Petr Kastanek",
+      "Monika Cahova",
+      "Milena Stranska",
+      "Jana Hajslova"
+    ],
+    "journal": "Molecules (Basel, Switzerland)",
+    "publication_date": "2025-06-20",
+    "doi": "10.3390/molecules30132676",
+    "keywords": [
+      "Cannabidiol",
+      "LC-MS/MS",
+      "bioavailability",
+      "brain tissue",
+      "metabolites"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40649195/",
+    "collected_date": "2025-07-23T03:07:30.552399",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40573179",
+    "title": "Nanoemulsions of Cannabidiol, \u03949-Tetrahydrocannabinol, and Their Combination Similarly Exerted Anticonvulsant and Antioxidant Effects in Mice Treated with Pentyelenetetrazole.",
+    "abstract": "",
+    "authors": [
+      "Pedro Everson Alexandre de Aquino",
+      "Francisco Josimar Gir\u00e3o J\u00fanior",
+      "Tyciane de Souza Nascimento",
+      "\u00cdtalo Rosal Lustosa",
+      "Geanne Matos de Andrade",
+      "N\u00e1gila Maria Pontes Silva Ricardo",
+      "D\u00e9bora Hellen Almeida de Brito",
+      "Gabriel \u00c9rik Patr\u00edcio de Almeida",
+      "Kamilla Barreto Silveira",
+      "Davila Zampieri",
+      "Marta Maria de Fran\u00e7a Fonteles",
+      "Edilberto Rocha Silveira",
+      "Giuseppe Biagini",
+      "Glauce Socorro de Barros Viana"
+    ],
+    "journal": "Pharmaceuticals (Basel, Switzerland)",
+    "publication_date": "2025-05-23",
+    "doi": "10.3390/ph18060782",
+    "keywords": [
+      "cannabidiol",
+      "epilepsy",
+      "nanoemulsion",
+      "pentylenetetrazole",
+      "\u03949-tetrahydrocannabinol"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40573179/",
+    "collected_date": "2025-07-23T03:07:30.552510",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40550321",
+    "title": "A cannabidiol (CBD) lipid-based nanoemulsion induces anxiolytic- and panicolytic-like effects and increases FosB/deltaFosB immunoreactivity in serotonergic cells of the dorsal raphe.",
+    "abstract": "Cannabidiol (CBD) is a phytocannabinoid which holds benefit for anxiety-related disorders. This study evaluated the effects of a lipid-based CBD nanoemulsion in anxiety- and panic-related responses. Male Wistar rats were acutely or chronically orally treated (21\u00a0days) with CBD (2.5 and 5\u00a0mg/kg, 1\u00a0mL/kg) or vehicle (1\u00a0mL/kg) and tested in the avoidance and escape tasks of the elevated T-maze (ETM) and in an open field. We quantified chronic CBD in the whole brain of the animals and evaluated FosB/deltaFosB immunoreactivity (Fos-ir) in non-serotonergic cells of the dorsal raphe (DR) and periaqueductal gray matter and in serotonergic cells of the DR. Acute CBD did not alter behavior. Chronic CBD 2.5\u00a0mg yielded (mean\u00a0\u00b1\u00a0SEM) 64.25\u00a0\u00b1\u00a028.82 and CBD 5.0\u00a0mg 21.22\u00a0\u00b1\u00a06.46\u00a0ng of CBD/g of brain tissue. Chronic CBD 2.5\u00a0mg induced anxiolytic and panicolytic-like effects. Immunohistochemical results showed that chronic CBD significantly decreased Fos-ir in the lateral and dorsomedial periaqueductal gray and in the dorsal region (DRD) and ventrolateral periqueductal gray/lateral wings (lwDR) of the DR. Fos-ir in the dorsolateral periaqueductal gray was only decreased by CBD 2.5\u00a0mg. CBD increased tryptophan hydroxylase immunoreactivity in the lwDR and DRD. CBD 2.5\u00a0mg also increased tryptophan hydroxylase immunoreactivity in the ventral DR. Additionally, double immunostaining was increased in the ventrolateral periaqueductal gray/lwDR by CBD 2.5\u00a0mg. These results point to the anxiolytic- and panicolytic-like effects of a CBD lipid-based nanoemulsion and suggest that they may be related to the modulation of DR serotonin neurons.",
+    "authors": [
+      "B\u00e1rbara A Ros\u00e1rio",
+      "Maria Paula de Lima",
+      "M\u00e1rcio G Vieira",
+      "La\u00eds Garret Leite",
+      "Pedro E A de Aquino",
+      "Glauce S B Viana",
+      "Edilberto R Silveira",
+      "D\u00e9bora H A de Brito",
+      "D\u00e1vila Zampieri",
+      "N\u00e1gila Maria P S Ricardo",
+      "J\u00e9ssica A Lemes",
+      "Adriana M Tucci",
+      "Daniel A Ribeiro",
+      "Milena B Viana"
+    ],
+    "journal": "Brain research",
+    "publication_date": "2025-06-21",
+    "doi": "10.1016/j.brainres.2025.149791",
+    "keywords": [
+      "Anxiety",
+      "Cannabidiol",
+      "Cannabis sativa",
+      "Panic",
+      "Serotonin"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40550321/",
+    "collected_date": "2025-07-23T03:07:30.552589",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40533744",
+    "title": "Cannabidiol (CBD) as a potential therapeutic agent for liver cancer: a comprehensive review of current evidence.",
+    "abstract": "Hepatocellular carcinoma (HCC) is a major cause of cancer-related mortality with limited treatment options. Cannabidiol (CBD), a non-psychoactive compound from Cannabis sativa, has shown anticancer properties. This review analyzes CBD's therapeutic potential in HCC, focusing on mechanisms, preclinical/clinical findings, and integration into treatment strategies. A systematic search (PubMed, Scopus, Web of Science, Google Scholar) up to March 2025 identified 16 relevant studies (in vitro, in vivo, clinical). CBD exerts antitumor effects via multiple pathways, including apoptosis, autophagy regulation, metastasis suppression, and tumor microenvironment modulation. CBD interacts with the endocannabinoid system (ECS), inhibits oncogenic signaling (PI3K/AKT/mTOR), and enhances chemotherapeutic efficacy (sorafenib, cabozantinib). Studies show CBD induces pyroptosis via caspase-3/GSDME, and modulates autophagy by inhibiting the PI3K/Akt/mTOR pathway. It also sensitizes HCC cells to sorafenib and cabozantinib. Preclinical results are promising, but clinical studies are limited. Challenges like bioavailability and potential hepatotoxicity require investigation. Future research should optimize formulations, determine dosing, and conduct clinical trials to validate CBD's efficacy/safety in HCC patients. Validated CBD could offer an innovative HCC management option.",
+    "authors": [
+      "Mojtaba Esmaeli",
+      "Maryam Dehghanpour Dehabadi"
+    ],
+    "journal": "Cancer cell international",
+    "publication_date": "2025-06-18",
+    "doi": "10.1186/s12935-025-03870-3",
+    "keywords": [
+      "Apoptosis",
+      "Autophagy",
+      "Cannabidiol (CBD)",
+      "Combination therapy",
+      "Endocannabinoid system",
+      "Hepatocellular carcinoma",
+      "Liver Cancer",
+      "Metastasis"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40533744/",
+    "collected_date": "2025-07-23T03:07:30.552642",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40522888",
+    "title": "Development of a Preclinical Inhalation Model to Test Vaporized Cannabis Distillates.",
+    "abstract": "Despite their growing popularity, cannabis vape products remain understudied. Cannabis vape cartridges are used with battery-powered devices that aerosolize cannabis flower extracts containing high concentrations of cannabinoids such as THC. These types of products are commonly known as cannabis distillates. The potency of these products presents challenges in establishing effective dosing for preclinical studies. Currently, there are no established, standardized preclinical models for testing the safety and efficacy of these products in ways analogous to human use patterns. Thus, the in vivo cannabis distillate exposure regime required to achieve physiologically relevant doses in comparison to what is achieved in humans remains undetermined. To address this gap, a standardized preclinical murine model for inhalation of vaporized cannabis distillates has been developed using a computer-controlled delivery system. This protocol details procedures to administer cannabis vape distillates using a regimented puff topography to mice by a nose-only exposure tower. Methods to monitor mouse behavioral outcomes post-exposure and the utilization of a semi-quantitative ELISA to confirm THC delivery into the systemic circulation are also provided. This protocol will allow for the investigation of the pulmonary and systemic responses to cannabis vape distillate products by researchers interested in exploring the impact of cannabis vaping using real-world delivery protocols, thereby providing an opportunity for rigorous safety and therapeutic evaluation.",
+    "authors": [
+      "Roham Gorgani",
+      "Valerie Orsat",
+      "David H Eidelman",
+      "Carolyn J Baglole"
+    ],
+    "journal": "Journal of visualized experiments : JoVE",
+    "publication_date": "2025-05-30",
+    "doi": "10.3791/68094",
+    "keywords": [],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40522888/",
+    "collected_date": "2025-07-23T03:07:30.552691",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40461928",
+    "title": "Targeting Gastrointestinal Cancers with Cannabidiol: Mechanisms, Challenges, and Therapeutic Implications.",
+    "abstract": "Cannabidiol (CBD), a non-psychoactive compound derived from cannabis, has gained significant attention for its potential therapeutic effects across various types of cancer. This manuscript presents a systematic review of the current evidence on the application of CBD in gastrointestinal (GI) malignancies, with a focus on gastric and colorectal cancers. The review aims to explore CBD's mechanisms of action, including its effects on apoptosis, cell cycle regulation, angiogenesis, inflammation, and its potential to enhance the efficacy of conventional therapies. Furthermore, it examines the challenges involved in translating preclinical findings into clinical settings, such as issues related to bioavailability and regulatory hurdles. The review also addresses future directions for the use of CBD in combination therapies and its potential to overcome resistance mechanisms in GI cancers. By analyzing the molecular pathways modulated by CBD, this manuscript seeks to offer a comprehensive understanding of its therapeutic potential, contributing to the future of GI cancer treatment.",
+    "authors": [
+      "Mojtaba Esmaeli",
+      "Maryam Dehghanpour Dehabadi"
+    ],
+    "journal": "Medical oncology (Northwood, London, England)",
+    "publication_date": "2025-06-03",
+    "doi": "10.1007/s12032-025-02790-6",
+    "keywords": [
+      "CBD and digestive system",
+      "Cannabidiol (CBD)",
+      "Colorectal cancer",
+      "Gastric cancer",
+      "Gastrointestinal cancer",
+      "Small intestine cancer"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40461928/",
+    "collected_date": "2025-07-23T03:07:30.552758",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40454502",
+    "title": "Innovations in Cannabis Delivery Systems: A Patent Review (2012-2024).",
+    "abstract": "INTRODUCTION: Cannabis sativa has been cultivated for over 11,700 years, originating in Central and Southeast Asia, and has been used for medical, recreational, and religious purposes. Among its therapeutic potentials, it is notable for its capacity to alleviate pain, nausea, anxiety, and more. The plant's primary secondary metabolites are cannabinoids, which interact with the endocannabinoid system to produce these effects. However, due to the dosage variability and the secondary effects associated with a lack of targeted action, their medical use is limited, creating the need for effective delivery systems. METHODOLOGY: This systematic patent review on cannabis drug delivery systems was conducted using patents retrieved from the Espacenet database. The search employed the keywords \"Cannabis\" and \"Delivery,\" along with the IPC classification code A61, to filter patents filed between 2012 and 2024. This initial search yielded 99 patents, which were further screened to identify 15 patents that met the inclusion criteria. RESULTS: Of the selected patents, most originated from the United States, followed by Canada, international patents (WIPO), and China. A notable increase in patent filings occurred in 2022, coinciding with the peak in scientific publications on the topic. This trend indicates a growing interest in the design of cannabis delivery systems. DISCUSSION: The historical importance and therapeutic potential of Cannabis sativa are welldocumented, yet modern medical use remains restricted due to pharmacokinetic limitations. Delivery systems such as extracellular vesicles, microneedles, and emulsions have been developed to improve the bioavailability and stability of cannabinoids. Extracellular vesicles facilitate targeted, noninvasive delivery of cannabinoids to the central nervous system. Microneedles offer a painless method for transdermal administration, overcoming skin barrier limitations. Emulsions improve the solubility and bioavailability of lipophilic cannabinoids, making them suitable for various administration routes. CONCLUSION: Since 2012, there has been considerable growth in patents and publications related to cannabis drug delivery systems, driven by the therapeutic potential of cannabinoids. Innovations in delivery systems like emulsions, microneedles, and extracellular vesicles aim to improve the pharmacokinetics and therapeutic efficacy of cannabis-derived compounds, representing a shift towards medical cannabis applications.",
+    "authors": [
+      "Ana Sof\u00eda Guerrero Casas",
+      "Vanessa Castro Felix Lima",
+      "Nicolas Redondo",
+      "Izabel Almeida Alves",
+      "Diana Marcela Arag\u00f3n"
+    ],
+    "journal": "Mini reviews in medicinal chemistry",
+    "publication_date": "2025-05-29",
+    "doi": "10.2174/0113895575343984250519051357",
+    "keywords": [
+      "Cannabis sativa.",
+      "Patents",
+      "drug delivery",
+      "phytocannabinoids"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40454502/",
+    "collected_date": "2025-07-23T03:07:30.552811",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40407987",
+    "title": "Cannabidiol as an immune modulator: A comprehensive review.",
+    "abstract": "Cannabidiol (CBD), a non-psychoactive phytocannabinoid derived from Cannabis sativa, has emerged as a promising therapeutic agent due to its diverse pharmacological properties, including potent anti-inflammatory, neuroprotective, and immunomodulatory effects. CBD modulates immune responses, including the regulation of T cell activity, induction of macrophage apoptosis, suppression of pro-inflammatory cytokines, and modulation of signaling pathways involved in inflammation and immune homeostasis. A comprehensive literature search was conducted using PubMed, Scopus, and Web of Science databases to identify relevant preclinical and clinical studies on CBD's immunomodulatory effects. Preclinical and clinical studies demonstrate its efficacy in treating autoimmune diseases such as Type 1 diabetes, multiple sclerosis, rheumatoid arthritis, and inflammatory bowel disease, along with its potential in neuropathic pain and cancer therapy. Recent advancements in nanotechnology-based delivery systems have further enhanced CBD's therapeutic potential by improving its solubility, bioavailability, and targeted delivery, enabling innovative approaches for wound healing, inflammation management, and cancer treatment. However, challenges such as variability in immune responses, limited long-term safety data, and potential drug-drug interactions persist. This review comprehensively examines CBD's pharmacokinetics, pharmacodynamics, and immunomodulatory mechanisms, highlighting its clinical potential, existing limitations, and future directions in advancing its integration into precision medicine and immune regulation.",
+    "authors": [
+      "Khizra Mujahid",
+      "Muhammad Shahzaib Rasheed",
+      "Azka Sabir",
+      "Jutaek Nam",
+      "Talha Ramzan",
+      "Waseem Ashraf",
+      "Imran Imran"
+    ],
+    "journal": "Saudi pharmaceutical journal : SPJ : the official publication of the Saudi Pharmaceutical Society",
+    "publication_date": "2025-05-23",
+    "doi": "10.1007/s44446-025-00005-7",
+    "keywords": [
+      "Autoimmune diseases",
+      "Cannabidiol",
+      "Immune cells",
+      "Immune modulation",
+      "Pharmacodynamics",
+      "Pharmacokinetics"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40407987/",
+    "collected_date": "2025-07-23T03:07:30.552945",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40359332",
+    "title": "Approaches for Cannabinoid Glycosylation Catalyzed by CrUGT74AN3 and BlCGTase.",
+    "abstract": "Phytocannabinoids are natural products with highly promising pharmaceutical potential, mainly known from the plant Cannabis\u00a0sativa. However, their bioavailability is limited due to their high lipophilicity. Modification through glycosylation is known to improve the water solubility and stability of molecules. Enzymatic glycosylation requires specific enzymes with high catalytic activity in combination with efficient production systems. To date, only a few glycosyltransferases with activity toward cannabinoids have been described. In this study, we explore the substrate spectrum of the promiscuous UDP-glycosyltransferase CrUGT74AN3 from Catharanthus\u00a0roseus and demonstrate activity towards a broad range of cannabinoids and their biosynthetic intermediates. The highest activity was observed using cannabidiol (CBD) as an acceptor molecule. In addition, we show efficient biotransformation of CBD in an engineered Saccharomyces\u00a0cerevisiae strain. We investigate the influence of the hydrolytic activity of endogenous glucosidases and identify the UDP-glucose supply as a limiting factor in the yeast system. The co-expression of CrUGT74AN3 and a cyclodextrin glycosyltransferase from Bacillus\u00a0licheniformis in the engineered yeast strain led to the production of CBD-glycosides with up to six glucose moieties from CBD and cyclodextrin in\u00a0vivo. Finally, we confirm the applicability of the engineered yeast systems to other cannabinoids using cannabigerol and cannabinol.",
+    "authors": [
+      "Christina Schmidt",
+      "Astrid Maria Imann",
+      "Nikolay Vasilev",
+      "Oliver Kayser"
+    ],
+    "journal": "Biotechnology journal",
+    "publication_date": "2025-05-01",
+    "doi": "10.1002/biot.70007",
+    "keywords": [
+      "biotransformation",
+      "cannabinoids",
+      "glycosylation",
+      "metabolic engineering",
+      "yeast"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40359332/",
+    "collected_date": "2025-07-23T03:07:30.552997",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40296894",
+    "title": "Acute cannabis intoxication among the paediatric population.",
+    "abstract": "This narrative review synthesizes the toxicological, clinical and medico-legal aspects of paediatric cannabis intoxication. By providing a comprehensive overview, it aims to inform future research, guide policymaking, and enhance clinical and toxicological practice in addressing this growing public health concern. The pharmacokinetics of cannabinoid ingestion in children are significantly influenced by the immaturity of their gastrointestinal tract and metabolic enzyme systems, resulting in altered oral bioavailability. Clinical data indicate that \u03949-tetrahydrocannabinol (THC)-related effects in paediatricpaediatric patients typically emerge within 2\u00a0hours of ingestion, with more severe symptoms developing within 4\u00a0hours. The endocannabinoid system (ECS) undergoes significant developmental changes, with marked differences in cannabinoid receptor expression and distribution across fetal, neonatal, and adult brains. During neurodevelopment, CB1 receptors exhibit unique expression patterns, including transient localization in brainstem regions critical for neurovegetative functions. These developmental dynamics likely explain children's heightened sensitivity to THC's neurological and neurovegetative effects, often resulting in more severe outcomes compared to adults. The reliable detection of cannabinoids involves integrating screening methods with confirmatory analytical techniques. Urine immunoassay testing is widely considered an helpful toolto assess a previous exposure, becoming positive within 3-4\u00a0h of ingestion. However, this method is prone to false positives. Plasma THC concentration, when measured close to the event, offers valuable insights into the quantity ingested and the correlation between exposure and clinical outcomes in the impairment window. Hair analysis, while useful for distinguishing between acute and chronic use, is susceptible to various biases. The rising incidence of acute cannabis intoxication in children underscores the urgent need for targeted public health interventions and stricter regulatory frameworks. Preventive measures such as child-resistant packaging, public education campaigns, and cannabis use screening during pregnancy are essential to mitigate risks. Clinicians should consider THC exposure in the differential diagnosis of children presenting with unexplained neurological, immune, or metabolic symptoms.",
+    "authors": [
+      "Ginevra Malta",
+      "Giuseppe Davide Albano",
+      "Gianluca Lavanco",
+      "Anna Brancato",
+      "Carla Cannizzaro",
+      "Antonina Argo",
+      "Simona Contorno",
+      "Fulvio Plescia",
+      "Stefania Zerbo"
+    ],
+    "journal": "Frontiers in toxicology",
+    "publication_date": "2025-01-01",
+    "doi": "10.3389/ftox.2025.1558721",
+    "keywords": [
+      "THC",
+      "cannabis",
+      "children",
+      "forensic",
+      "intoxication",
+      "medico-legal issues",
+      "paediatric",
+      "toxicology"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40296894/",
+    "collected_date": "2025-07-23T03:07:30.553177",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40261351",
+    "title": "Cannabinoids in neuropathic pain treatment: pharmacological insights and clinical outcomes from recent trials.",
+    "abstract": "Neuropathic pain, a complex and often devastating condition, poses significant challenges for its effective management. Despite promising research on various cannabis formulations and delivery methods for neuropathic pain, significant gaps remain in our knowledge. While inhaled cannabis shows analgesic effects and alternative delivery methods may improve bioavailability, oral formulations have yielded mixed results, often limited by small sample sizes and placebo effects. Therefore, further research is essential to optimize cannabis formulations, identify responder profiles to tailor treatments effectively, and, most critically, confirm the long-term safety and efficacy of cannabis-based therapies in managing NP. This review article aims to provide a comprehensive analysis of the therapeutic potential of cannabis-based medicines, with a particular focus on cannabinoids. This review, though not systematic, examines 11 clinical studies, specifically Randomised Clinical Trials) published from 2014 to 2024, highlighting the efficacy of numerous cannabis formulations, in alleviating neuropathic pain. Key findings show that cannabinoids can reduce pain perception, improve patient quality of life, and mitigate other symptoms associated with neuropathic pain. The synergistic effects of tetrahydrocannabinol and cannabidiol are discussed, emphasizing their ability to enhance analgesic effects, while potentially reducing the psychoactive side effects of tetrahydrocannabinol. This review emphasizes the importance of the personalized approach to improve therapeutic outcomes. Limitations of the existing research focusing on cannabis for neuropathic pain are limited by heterogeneity, lack of standardization, small sample sizes, and reliance on subjective outcomes, impacting the reliability and generalizability of findings. However, this exhaustive review aims to inform clinicians and researchers about the evolving role of cannabis in contemporary pain management strategies, illustrating the diverse pharmacological profiles of cannabinoids and their potential as adjunct therapies for neuropathic pain management.",
+    "authors": [
+      "Mohammad Gayoor Khan",
+      "Sajid Hussain Altaf Hussain",
+      "Faris F Aba Alkhayl",
+      "Marya Ahsan",
+      "Hayder Ridha-Salman"
+    ],
+    "journal": "Naunyn-Schmiedeberg's archives of pharmacology",
+    "publication_date": "2025-04-22",
+    "doi": "10.1007/s00210-025-04134-7",
+    "keywords": [
+      "Cannabinol",
+      "Cannabis",
+      "Neuropathic pain",
+      "Peripheral neuropathy",
+      "RCTs"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40261351/",
+    "collected_date": "2025-07-23T03:07:30.553277",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40130357",
+    "title": "Pharmacokinetics and Bioavailability of Cannabinoids Administered via a Novel Orobuccal Nanoparticle Formulation (NanoCelle\u2122) in Patients with Advanced Cancer.",
+    "abstract": "",
+    "authors": [
+      "Stephanie E Reuter",
+      "Hayley B Schultz",
+      "Andrew J McLachlan",
+      "Jeremy D Henson",
+      "Luis Vitetta"
+    ],
+    "journal": "Cannabis and cannabinoid research",
+    "publication_date": "2025-03-25",
+    "doi": "10.1089/can.2024.0117",
+    "keywords": [
+      "cannabinoid",
+      "clinical",
+      "pharmacokinetics"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40130357/",
+    "collected_date": "2025-07-23T03:07:30.553345",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40125437",
+    "title": "The Potential of Nano-Formulated Natural Drugs in Melanoma Treatment: A Review of Pharmacological Efficacy and Mechanistic Insights.",
+    "abstract": "Melanoma is a very aggressive skin cancer; its treatment bears great challenges, hence the interest in new therapeutic approaches is growing. In this review, potential nano-formulated natural drugs from plants such as Ginseng, Pistacia lentiscus, Amaranthus hypochondriacus, and Cannabis sativa in the treatment of melanoma are discussed. We discuss various characteristics of nanoformulations, including liposomes and nanoemulsions, with respect to their ability in enhancing drug delivery and bioavailability. Key mechanisms of action including reactive oxygen species modulation, apoptotic signaling induction, immune modulation through TLR4/MyD88, and inhibition of angiogenesis by VEGF pathways are discussed. Although these natural nanoformulations show promise in improving therapeutic outcomes, challenges related to their clinical application and safety persist. Further research is warranted to fully explore how this novel approach can best be utilized against melanoma.",
+    "authors": [
+      "Bowen Wang",
+      "Yinan Wang"
+    ],
+    "journal": "International journal of nanomedicine",
+    "publication_date": "2025-01-01",
+    "doi": "10.2147/IJN.S505394",
+    "keywords": [
+      "cancer",
+      "mechanisms of action",
+      "melanoma",
+      "nanotechnology",
+      "natural",
+      "plant-derived compounds",
+      "plants",
+      "preclinical studies"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40125437/",
+    "collected_date": "2025-07-23T03:07:30.553415",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "40016810",
+    "title": "CANDI: a web server for predicting molecular targets and pathways of cannabis-based therapeutics.",
+    "abstract": "BACKGROUND: Cannabis sativa L. with a rich history of traditional medicinal use, has garnered significant attention in contemporary research for its potential therapeutic applications in various human diseases, including pain, inflammation, cancer, and osteoarthritis. However, the specific molecular targets and mechanisms underlying the synergistic effects of its diverse phytochemical constituents remain elusive. Understanding these mechanisms is crucial for developing targeted, effective cannabis-based therapies. METHODS: To investigate the molecular targets and pathways involved in the synergistic effects of cannabis compounds, we utilized DRIFT, a deep learning model that leverages attention-based neural networks to predict compound-target interactions. We considered both whole plant extracts and specific plant-based formulations. Predicted targets were then mapped to the Reactome pathway database to identify the biological processes affected. To facilitate the prediction of molecular targets and associated pathways for any user-specified cannabis formulation, we developed CANDI (Cannabis-derived compound Analysis and Network Discovery Interface), a web-based server. This platform offers a user-friendly interface for researchers and drug developers to explore the therapeutic potential of cannabis compounds. RESULTS: Our analysis using DRIFT and CANDI successfully identified numerous molecular targets of cannabis compounds, many of which are involved in pathways relevant to pain, inflammation, cancer, and other diseases. The CANDI server enables researchers to predict the molecular targets and affected pathways for any specific cannabis formulation, providing valuable insights for developing targeted therapies. CONCLUSIONS: By combining computational approaches with knowledge of traditional cannabis use, we have developed the CANDI server, a tool that allows us to harness the therapeutic potential of cannabis compounds for the effective treatment of various disorders. By bridging traditional pharmaceutical development with cannabis-based medicine, we propose a novel approach for botanical-based treatment modalities.",
+    "authors": [
+      "Srinivasan Ekambaram",
+      "Jian Wang",
+      "Nikolay V Dokholyan"
+    ],
+    "journal": "Journal of cannabis research",
+    "publication_date": "2025-02-27",
+    "doi": "10.1186/s42238-025-00268-w",
+    "keywords": [
+      "CANDI",
+      "Cannabis",
+      "Protein-targets and pathways"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40016810/",
+    "collected_date": "2025-07-23T03:07:30.553478",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39938143",
+    "title": "Does cannabis and electronic nicotine delivery system (ENDS) use interfere with cigarette smoking cessation in young adulthood?",
+    "abstract": "AIMS: Reducing combustible cigarette smoking is a major public health concern. Research identifies both electronic nicotine delivery systems (ENDS) and cannabis use as factors that are related to combustible cigarette cessation. The current study examined whether using substances in similar ways (e.g., inhaling them) triggers the urge to smoke, thereby undermining attempts to quit. DESIGN: Analyses examined how using ENDS and smoking or vaping cannabis, both separately and together, were associated with reductions in daily combustible cigarette smoking among young adult smokers. PARTICIPANTS: Three waves of data from the Community Youth Development Study, including 909 participants who reported daily cigarette smoking at age 23, 26, and/or 28, were included in analyses. SETTING: Participants were dispersed throughout 48 US states. MEASUREMENTS: Latent growth modeling was used to model daily cigarette smoking over time. Models using past-month ENDS use, past-month smoking/vaping cannabis, and past-month co-use of ENDS and cannabis (using ENDS and smoking/vaping cannabis within the past month) as time-varying covariates were tested. FINDINGS: Over time, there was a tendency towards cessation of daily combustible cigarette use among this smoking sample. Smoking/vaping cannabis was associated with a decreased rate of daily combustible cigarette cessation among the sample, whereas ENDS use was associated with an increased rate of daily smoking cessation. The predicted additive effect of using ENDS and smoking/vaping cannabis was not significant. CONCLUSIONS: Among young adult daily cigarette smokers, smoking cannabis, on its own, poses a risk to quitting combustible cigarettes, while using ENDS may promote cigarette cessation, possibly through substitution.",
+    "authors": [
+      "Sarah Danzo",
+      "Marina Epstein",
+      "Rick Kosterman",
+      "Max A Halvorson",
+      "Justin D Caouette",
+      "Karryn Satchell",
+      "Margaret R Kuklinski",
+      "Sabrina Oesterle"
+    ],
+    "journal": "Addictive behaviors",
+    "publication_date": "2025-05-01",
+    "doi": "10.1016/j.addbeh.2025.108289",
+    "keywords": [
+      "Cannabis",
+      "Combustible cigarettes",
+      "Smoking",
+      "Vaping",
+      "Young adulthood",
+      "electronic nicotine delivery systems (ENDS)"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39938143/",
+    "collected_date": "2025-07-23T03:07:30.553574",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39929375",
+    "title": "Cannabidiol-A friend or a foe?",
+    "abstract": "Cannabidiol (CBD), one of the main actives from Cannabis sativa has been perpetually explored lately for its therapeutic effects. Its main attributes, such as anti-inflammatory and antioxidant effects, snowball into pain management, epilepsy and seizure alleviation, anxiety relief, as well as numerous other implications through the entire metabolism. However, conventional administration routes challenge its therapeutic potential, with reported poor water solubility, hepatic degradation, gastric instability and erratic bioavailability observed in oral administration. As a result, the transdermal delivery systems have emerged as a promising alternative to oral or inhaled routes, offering improved bioavailability and targeted effects. The medical use of CBD throughout Europe, UK, USA or Australia is extensive and usually represented by pharmaceutical preparations recommended after conventional treatment routs fail. The non-medical use is limited by each country's own legislation, a wider range of products being available, but the irregular regulatory landscape coupled with the growing market of cannabinoid-infused products, emphasizes the need for standardized formulations and further clinical research. The present work critically examines the transdermal administration of cannabidiol, explores the skin's potential as a route and the strategies involved in using it for systemic targeting. We highlighted key challenges and provided insights into CBD`s variable bioavailability based on different administration routes and methods, thus compiling a literature-based absorption, distribution, metabolism, and excretion (ADME) study. We also explore the role of the endocannabinoid system, its function in various medical conditions, and the therapeutic effects associated with CBD, particularly in light of the varying legislation across countries. While the breadth of potential benefits is compelling, it is essential to emphasize the ongoing nature of CBD research as individual responses to it can vary significantly.",
+    "authors": [
+      "Bianca-Maria Tih\u0103uan",
+      "Tatiana Onisei",
+      "Walter Slootweg",
+      "Daniel Gun\u0103",
+      "Ciprian Iliescu",
+      "Mariana-Carmen Chifiriuc"
+    ],
+    "journal": "European journal of pharmaceutical sciences : official journal of the European Federation for Pharmaceutical Sciences",
+    "publication_date": "2025-05-01",
+    "doi": "10.1016/j.ejps.2025.107036",
+    "keywords": [
+      "ADME",
+      "Bioavailability",
+      "Cannabidiol",
+      "Cannabis policies",
+      "Transdermal drug delivery"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39929375/",
+    "collected_date": "2025-07-23T03:07:30.553624",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39923334",
+    "title": "Use of multiple devices among U.S. adults frequently using ENDS in 2023.",
+    "abstract": "BACKGROUND: Studies on electronic nicotine delivery systems (ENDS) often report data on the use of one device. However, people who use ENDS may use more than one device. Little is known about the prevalence of multiple device use among adults. METHODS: 1290\u2009U.S. adults (21\u2009+) using ENDS 5\u2009+\u2009 days/week completed the Wave 5 (February-April 2023) VAPER study survey, reported their device usage, and submitted photos of their most used ENDS device and liquid. We examined multiple device use and its association with cigarette smoking status, co-use of multiple substances, and characteristics of participants' most commonly used device and liquid using Rao-Scott chi-square tests and ANOVAs. RESULTS: 45.3\u2009% of participants used multiple devices (two 27.9\u2009%, three 12.7\u2009%, four+ 4.7\u2009%). Compared to single device use, participants who used multiple devices were more likely to currently smoke cigarettes (two 32.5\u2009% vs. three+ 44.0\u2009% vs. one 22.4\u2009%, p\u2009<\u20090.0001), use multiple nicotine products and cannabis in the past 30 days (two 28.3\u2009% vs. three+ 37.4\u2009% vs. one 17.7\u2009%, p\u2009<\u20090.0001), use disposable devices (salt, no adjustable settings) (two 44.3\u2009% vs. three+ 56.5\u2009% vs. one 20.4\u2009%, p\u2009<\u20090.0001) and nicotine salt liquid (two 70.2\u2009% vs. three+ 77.3\u2009% vs. one 58.9\u2009%, p\u2009<\u20090.0001). CONCLUSIONS: About half of adults frequently using ENDS used more than one device. Multiple device use was associated with current cigarette smoking, multiple substance use, and use of disposable devices as their most commonly used ENDS. Understanding multiple ENDS device use can help contextualize real-world use and inform potential benefits and unintended consequences of future regulations.",
+    "authors": [
+      "Qinghua Nian",
+      "Jeffrey J Hardesty",
+      "Elizabeth Crespi",
+      "Joanna E Cohen"
+    ],
+    "journal": "Drug and alcohol dependence",
+    "publication_date": "2025-03-01",
+    "doi": "10.1016/j.drugalcdep.2025.112580",
+    "keywords": [
+      "Device",
+      "Electronic nicotine delivery system",
+      "Nicotine",
+      "Sociodemographic"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39923334/",
+    "collected_date": "2025-07-23T03:07:30.553681",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39880884",
+    "title": "A high-fat meal significantly impacts the bioavailability and biphasic absorption of cannabidiol (CBD) from a CBD-rich extract in men and women.",
+    "abstract": "Cannabidiol (CBD), a specialized metabolite (phytocannabinoid) abundant in Cannabis sativa, is attracting increasing attention for its alleged health-promoting properties. The present study aimed to investigate the pharmacokinetics of CBD and its primary metabolite, 7-hydroxy-cannabidiol (7-OH-CBD), following a single oral dose of a CBD-rich Cannabis sativa extract, equivalent to 70 mg CBD, in healthy male (n=5) and female (n=6) participants. Using a randomized crossover design, the study evaluated the impact of a standardized high-fat meal compared to fasting on the oral bioavailability of CBD. Consumption of a high-fat meal significantly increases the bioavailability of CBD. The geometric mean ratio (GMR) of CBD C",
+    "authors": [
+      "Bo Anne Dani\u00eblla Frederique Saals",
+      "Tessa Helena De Bie",
+      "Eral Osmanoglou",
+      "Ties van de Laar",
+      "Adriaan Willem Tuin",
+      "Anne Claire Benedikte van Orten-Luiten",
+      "Renger Frederik Witkamp"
+    ],
+    "journal": "Scientific reports",
+    "publication_date": "2025-01-29",
+    "doi": "10.1038/s41598-025-87621-4",
+    "keywords": [],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39880884/",
+    "collected_date": "2025-07-23T03:07:30.553750",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39859413",
+    "title": "Utilization of Cannabidiol in Post-Organ-Transplant Care.",
+    "abstract": "Cannabidiol (CBD) is one of the major phytochemical constituents of cannabis, ",
+    "authors": [
+      "Sachiko Koyama",
+      "Jumar Etkins",
+      "Joshua Jun",
+      "Matthew Miller",
+      "Gerald C So",
+      "Debora L Gisch",
+      "Michael T Eadon"
+    ],
+    "journal": "International journal of molecular sciences",
+    "publication_date": "2025-01-15",
+    "doi": "10.3390/ijms26020699",
+    "keywords": [
+      "adverse events",
+      "cannabidiol",
+      "cannabis plant chemical constituent",
+      "chemical formulation",
+      "cytochrome P450",
+      "drug\u2013drug interaction",
+      "inflammation",
+      "organ transplant",
+      "pharmacodynamics",
+      "pharmacokinetics"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39859413/",
+    "collected_date": "2025-07-23T03:07:30.553941",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39781554",
+    "title": "Predictors of Response to Medical Cannabis for Chronic Pain: A Retrospective Review of Real-Time Observational Data.",
+    "abstract": "OBJECTIVE: People living with chronic pain increasingly use medical cannabis for symptom relief. We conducted a retrospective cohort study examining cannabis for chronic pain relief using anonymous archival data obtained from the medicinal cannabis tracking app, Strainprint\u00ae. METHOD: We acquired cannabis utilization data from 741 adults with chronic pain and used multilevel modeling to examine the association of age, sex, type of pain (muscle, joint or nerve pain), cannabis formulation (high CBD, balanced CBD:THC, or high THC), route of administration (inhaled or ingested), cannabis use before vs. during the COVID-19 pandemic, and duration of cannabis use, with pain relief. RESULTS: Most patients were female ( CONCLUSIONS: We found that people living with chronic pain report important pain relief when using cannabis for medical purposes, and that men may achieve greater pain relief than women.",
+    "authors": [
+      "Aidan Giangregorio",
+      "Li Wang",
+      "Sheila Sprague",
+      "Michelle Arbus",
+      "Jason W Busse"
+    ],
+    "journal": "Cannabis (Albuquerque, N.M.)",
+    "publication_date": "2024-01-01",
+    "doi": "10.26828/cannabis/2024/000259",
+    "keywords": [
+      "Strainprint",
+      "cannabis",
+      "chronic pain",
+      "cohort",
+      "marijuana",
+      "mobile application"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39781554/",
+    "collected_date": "2025-07-23T03:07:30.553999",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39781553",
+    "title": "Potential Risks from Cannabis-Infused Beverages: A Critical Review.",
+    "abstract": "UNLABELLED: Although Canada legalized cannabis beverages in 2019, most available research on acute cannabis intoxication derives from dried flower and edible products. The distinct bioavailability and pharmacokinetic properties of phytocannabinoids ingested from beverages, however, contribute to significantly different acute and long-term effects that need to be better understood to ensure consumer safety. OBJECTIVE: This review investigates existing cannabis beverage literature, with a particular focus on acute intoxication effects. METHOD:  RESULTS: Human studies report aversive acute subjective and physiological effects induced by cannabis beverages in healthy, infrequent users. Beverages also showed inaccurate cannabinoid labeling, posing potential risks to consumers. This review highlights the paucity and inconsistency of available research, further exacerbated by the sheer diversity of formulations investigated, while beginning to address some questions surrounding the safety and risks associated with cannabis beverages. CONCLUSIONS: Given the extensive differences in effects across cannabis-infused beverages, and the growing 'drinkables' market, it is essential that more studies directly examine both acute and long-term impacts of cannabis beverage consumption.",
+    "authors": [
+      "Anna Marie Froude",
+      "Nikki Pangborn",
+      "Phillip Britz-McKibbin",
+      "James MacKillop",
+      "Iris Balodis"
+    ],
+    "journal": "Cannabis (Albuquerque, N.M.)",
+    "publication_date": "2024-01-01",
+    "doi": "10.26828/cannabis/2024/000271",
+    "keywords": [
+      "acute intoxication",
+      "cannabinoids",
+      "cannabis",
+      "cannabis beverages",
+      "systematic review"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39781553/",
+    "collected_date": "2025-07-23T03:07:30.554077",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39738884",
+    "title": "Enhancement of cannabidiol oral bioavailability through the development of nanostructured lipid carriers: In vitro and in vivo\u00a0evaluation studies.",
+    "abstract": "Cannabidiol (CBD) is a natural product isolated from the Cannabis sativa plant that was approved by the United States Food and Drug Administration (US FDA) for the treatment of resistant epilepsy. Despite its therapeutic potential, CBD's clinical application is limited by its poor aqueous solubility and low oral bioavailability. The primary aim of this research was to enhance the aqueous solubility and oral bioavailability of CBD by developing nanostructured lipid carriers (NLCs) using conventional hot homogenization method (CHH). In the current study, nine CBD NLC formulations were developed through CHH, of which, NLC5 emerged as the most promising formulation, exhibiting high CBD entrapment efficiency (99.23%), particle size of 207\u00a0nm, a polydispersity index of 0.19, and a zeta potential of -26 mV. Additionally, drug release testing for NLC5 showed a high CBD release rate of more than 90% within 15\u00a0min, indicating an enhancement of CBD dissolving rate compared to pure CBD. The in vivo pharmacokinetic study of NLC5 formulation showed 27% CBD oral bioavailability. Furthermore, Stability studies conducted at 4\u00a0\u00b0C and 25\u00a0\u00b0C on this formulation over three months, revealed consistent parameters, underscoring the robustness of the formulation. In conclusion, the successful formulation of CBD-loaded NLCs resulted in improved CBD release rate, enhanced oral bioavailability of CBD, and maintained stability, making it a promising approach for the effective delivery of CBD.",
+    "authors": [
+      "Iman E Taha",
+      "Mahmoud A ElSohly",
+      "Mohamed M Radwan",
+      "Rasha M Elkanayati",
+      "Amira Wanas",
+      "Poorva H Joshi",
+      "Eman A Ashour"
+    ],
+    "journal": "Drug delivery and translational research",
+    "publication_date": "2025-08-01",
+    "doi": "10.1007/s13346-024-01766-9",
+    "keywords": [
+      "Cannabidiol (CBD)",
+      "Hot Homogenization",
+      "In Vitro and In Vivo Evaluation",
+      "Nanostructured Lipid Carrier (NLC)",
+      "Oral Bioavailability"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39738884/",
+    "collected_date": "2025-07-23T03:07:30.554188",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39728493",
+    "title": "A Systematic Review: Assessment of the Metabolomic Profile and Anti-Nutritional Factors of ",
+    "abstract": "",
+    "authors": [
+      "Tumisho Ntsoane",
+      "Ndivho Nemukondeni",
+      "Lufuno Ethel Nemadodzi"
+    ],
+    "journal": "Metabolites",
+    "publication_date": "2024-12-18",
+    "doi": "10.3390/metabo14120712",
+    "keywords": [
+      "Cannabis sativa",
+      "anti-nutritional factors",
+      "fermentation",
+      "legislature",
+      "metabolomic profile",
+      "nutritional value"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39728493/",
+    "collected_date": "2025-07-23T03:07:30.554286",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39727528",
+    "title": "3D Printed Bigel: A Novel Delivery System for Cannabidiol-Rich Hemp Extract.",
+    "abstract": "The therapeutic potential of ",
+    "authors": [
+      "Anna Go\u015bciniak",
+      "Filip Kocaj",
+      "Anna Stasi\u0142owicz-Krzemie\u0144",
+      "Marcin Szyma\u0144ski",
+      "Tomasz M Karpi\u0144ski",
+      "Judyta Cielecka-Piontek"
+    ],
+    "journal": "Gels (Basel, Switzerland)",
+    "publication_date": "2024-11-26",
+    "doi": "10.3390/gels10120770",
+    "keywords": [
+      "bigels",
+      "cannabidiol",
+      "cannabidiolic acid",
+      "cannabis"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39727528/",
+    "collected_date": "2025-07-23T03:07:30.554411",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39722474",
+    "title": "Preclinical Evidence for a Drug-Drug Interaction Between Cannabinol and Melatonin.",
+    "abstract": "The worldwide legalization of medicinal cannabis has led to an increased use of products made by commercial operators. These products often contain minor cannabinoids such as cannabinol (CBN) which are advertised to improve sleep. Products are also available in which CBN is combined with conventional therapies, with a common product containing both CBN and the widely used sleep-aid melatonin. The combination of CBN and melatonin provides potential for a pharmacokinetic drug-drug interaction (DDI) given that cannabinoids are known to inhibit drug-metabolizing enzymes. Indeed, we recently reported that CBN potently inhibited the CYP1A2-mediated metabolism of caffeine. CYP1A2 is the major hepatic enzyme involved in the metabolism of melatonin; thus, in this study, we aimed to examine whether CBN inhibited CYP1A2-mediated metabolism of melatonin in\u00a0vitro and in\u00a0vivo. We found CBN potently inhibited CYP1A2-mediated metabolism of melatonin and increased the apparent oral bioavailability of melatonin in mice with a four-fold increase in the plasma melatonin exposure. Our results provide an additional example of a potential DDI involving melatonin.",
+    "authors": [
+      "Lyndsey L Anderson",
+      "Nicole A Hawkins",
+      "Ka Lai Yip",
+      "Michael Udoh",
+      "Jennifer A Kearney",
+      "Jonathon C Arnold"
+    ],
+    "journal": "Basic & clinical pharmacology & toxicology",
+    "publication_date": "2025-01-01",
+    "doi": "10.1111/bcpt.14120",
+    "keywords": [
+      "CYP1A2",
+      "cannabinoid",
+      "cannabinol",
+      "melatonin",
+      "metabolism"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39722474/",
+    "collected_date": "2025-07-23T03:07:30.554468",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39720705",
+    "title": "Efficacy and Safety of Transdermal Medical Cannabis (THC:CBD:CBN formula) to Treat Painful Diabetic Peripheral Neuropathy of Lower Extremities.",
+    "abstract": "INTRODUCTION: Diabetic peripheral neuropathy (DPN) represents a prevalent neurological complication affecting millions of patients globally. This clinical investigation evaluated the therapeutic efficacy and safety profile of a novel transdermal medical cannabis formulation (THC:CBD:CBN) in treating painful DPN of the lower extremities. METHODS: This phase III, double-blind, placebo-controlled, randomized clinical trial was conducted at Don Chan Hospital, Thailand, enrolling 100 participants over a 12-week intervention period. Using a computer-generated randomization sequence, participants were allocated to receive either the standardized cannabis formulation or a matched placebo. The primary outcome measure comprised pain intensity assessment using the validated Thai version of the Neuropathic Pain Symptom Inventory (NPSI-T). Secondary outcomes encompassed treatment-emergent adverse events and dermatological manifestations. Statistical analyses were performed using SPSS Version 28.0, incorporating generalized estimating equation (GEE) modeling and Analysis of Covariance (ANCOVA). The study protocol received approval from the Institutional Review Board of Khon Kaen University and the Kalasin Provincial Public Health Office Ethics Committee, with trial registration in the Thai Clinical Trials Registry. RESULTS: The intervention group demonstrated statistically significant reductions in NPSI-T scores across all measured dimensions ( CONCLUSION: This novel transdermal medical cannabis formulation (THC:CBD:CBN) demonstrated significant therapeutic efficacy in ameliorating painful DPN symptoms while maintaining a favorable safety profile. These findings provide robust clinical evidence supporting its potential as an innovative therapeutic option for managing painful DPN.",
+    "authors": [
+      "Khachornsak Seevathee",
+      "Pattapong Kessomboon",
+      "Nuttaset Manimmanakorn",
+      "Suyan Luangphimai",
+      "Tewan Thaneerat",
+      "Kulthanit Wanaratna",
+      "Sirichada Plengphanich",
+      "Thanamet Thaenkham",
+      "Wijitra Sena"
+    ],
+    "journal": "Medical cannabis and cannabinoids",
+    "publication_date": "2025-01-01",
+    "doi": "10.1159/000542511",
+    "keywords": [
+      "Clinical trial",
+      "Diabetic peripheral neuropathy",
+      "Painful",
+      "Transdermal medical cannabis"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39720705/",
+    "collected_date": "2025-07-23T03:07:30.554543",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39667593",
+    "title": "Alginate-based microencapsulation as a strategy to improve the therapeutic potential of cannabidiolic acid.",
+    "abstract": "Cannabidiolic Acid (CBDA) is a promising natural compound with potent antioxidant, anti-inflammatory, and anti-emetic properties. Its antioxidant activity rivals that of vitamin E, while its anti-inflammatory effects are also remarkable. Additionally, CBDA has been shown to effectively reduce nausea and emetic attacks. As a more natural and water-soluble alternative to CBD, CBDA offers improved bioavailability and absorption. However, despite its promising potential, the development of effective CBDA delivery systems is still in its early stages. Among the various materials suitable for drug delivery, alginate is a widely used biopolymer due to its abundance and common availability in nature. This study aimed to develop an efficient CBDA delivery carrier using a microflow-dripping method to microencapsulate CBDA into alginate carriers (Alg-CBDA). The antioxidant, antimicrobial, and cytotoxicity properties of these Alg-CBDA capsules were then evaluated. Our results demonstrated that encapsulating CBDA within alginate capsules yielded a novel multifunctional biomaterial with prolonged antioxidant activity up to 72\u00a0h and antimicrobial activity against Gram-positive bacteria. Furthermore, the encapsulation process significantly reduced CBDA's cytotoxicity, broadening its potential applications. To our knowledge, this is the first study demonstrating the advantages of CBDA within a drug delivery framework.",
+    "authors": [
+      "Pablo E Antezana",
+      "Sof\u00eda Municoy",
+      "Fresia M Silva Sofr\u00e1s",
+      "Mart\u00edn G Bellino",
+      "Pablo Evelson",
+      "Mart\u00edn F Desimone"
+    ],
+    "journal": "International journal of pharmaceutics",
+    "publication_date": "2025-01-25",
+    "doi": "10.1016/j.ijpharm.2024.125076",
+    "keywords": [
+      "Alginate",
+      "CBDA",
+      "Cannabis sativa oil",
+      "Microcapsules",
+      "Microfluidics"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39667593/",
+    "collected_date": "2025-07-23T03:07:30.554594",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39666375",
+    "title": "Discussions of Cannabis Over Patient Portal Secure Messaging: Content Analysis.",
+    "abstract": "BACKGROUND: Patient portal secure messaging allows patients to describe health-related behaviors in ways that may not be sufficiently captured in standard electronic health record (EHR) documentation, but little is known about how cannabis is discussed on this platform. OBJECTIVE: This study aimed to identify patient and provider secure messages that discussed cannabis and contextualize these discussions over periods before and after its legalization for medical purposes in Pennsylvania. METHODS: We examined 382,982 secure messages sent by 15,340 patients and 6101 providers from an integrated health delivery system in Pennsylvania, United States, from January 2012 to June 2022. We used an unsupervised natural language processing approach to construct a lexicon that identified messages explicitly discussing cannabis. We then conducted a qualitative content analysis on a random sample of identified messages to understand the medical reasons behind patients' use, the primary purposes of the cannabis-related discussions, and changes in these purposes over time. RESULTS: We identified 1782 messages sent by 1098 patients (7.2% of total patients in the study) and 800 messages sent by 430 providers (7% of total providers in the study) as explicitly discussing cannabis. The most common medical reasons for use stated by patients in 190 sampled messages included pain or a pain-related condition (50.5% of messages), anxiety (13.7% of messages), and sleep (11.1% of messages). We coded 56 different purposes behind the mentions of cannabis in patient messages and 33 purposes in 100 sampled provider messages. In years before the legalization (2012-2016), patient and provider messages (n=20 for both) were primarily driven by discussions about cannabis screening results (38.9% and 76.5% of messages, respectively). In the years following legalization (2017-2022), patient messages (n=170) primarily involved seeking assistance to facilitate medical use (35.2% of messages) and reporting current use (25.3% of messages). Provider messages (n=80) were driven by giving assistance with medical marijuana access (27.5% of messages) and stating that they were unable to refer, prescribe or recommend medical marijuana (26.3% of messages). CONCLUSIONS: Patients showed a willingness to discuss cannabis use over patient portal secure messages and expressed interest in use after the legalization of medical marijuana. Some providers responded to patient inquiries with assistance in obtaining access to medical marijuana, while others cautioned patients on the risks of use. Insight into cannabis-related discussions through secure messages can help health systems determine opportunities to improve care processes around patients' cannabis use, and providers should be supported to communicate accurate and consistent information.",
+    "authors": [
+      "Vishal A Shetty",
+      "Christina M Gregor",
+      "Lorraine D Tusing",
+      "Apoorva M Pradhan",
+      "Katrina M Romagnoli",
+      "Brian J Piper",
+      "Eric A Wright"
+    ],
+    "journal": "Journal of medical Internet research",
+    "publication_date": "2024-12-12",
+    "doi": "10.2196/63311",
+    "keywords": [
+      "EHR",
+      "United States",
+      "anxiety",
+      "cannabis",
+      "content analysis",
+      "depression",
+      "electronic health record",
+      "electronic messaging",
+      "insomnia",
+      "marijuana",
+      "message content",
+      "pain",
+      "patient portal",
+      "patient-provider communication",
+      "secure message"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39666375/",
+    "collected_date": "2025-07-23T03:07:30.554673",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39659113",
+    "title": "Design and Bottom-up Production of an Aerosolizable Cannabidiol Nanosuspension.",
+    "abstract": "Cannabidiol (CBD), a small nonpsychoactive molecule derived from ",
+    "authors": [
+      "Luca Casula",
+      "Michele Schlich",
+      "Maria Cristina Cardia",
+      "Eleonora Lai",
+      "Salvatore Marceddu",
+      "Rosa Pireddu",
+      "Donatella Valenti",
+      "Chiara Sinico",
+      "Francesco Lai",
+      "Elena Pini"
+    ],
+    "journal": "Molecular pharmaceutics",
+    "publication_date": "2025-01-06",
+    "doi": "10.1021/acs.molpharmaceut.4c01095",
+    "keywords": [
+      "cannabidiol",
+      "formulation development",
+      "lungs",
+      "nanocrystals",
+      "pulmonary delivery"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39659113/",
+    "collected_date": "2025-07-23T03:07:30.554751",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39648730",
+    "title": "A Preliminary Pharmacokinetic Comparison of \u0394-9 Tetrahydrocannabinol and Cannabidiol Extract Versus Oromucosal Spray in Healthy Men and Women.",
+    "abstract": "",
+    "authors": [
+      "Caroline A Arout",
+      "Hannah M Harris",
+      "Noah M Wilson",
+      "Kyle F Mastropietro",
+      "Amanda M Bozorgi",
+      "Gabriela Fazilov",
+      "Jos\u00e9 Tempero",
+      "Mariah Walker",
+      "Margaret Haney"
+    ],
+    "journal": "Cannabis and cannabinoid research",
+    "publication_date": "2025-06-01",
+    "doi": "10.1089/can.2023.0249",
+    "keywords": [
+      "CBD",
+      "THC",
+      "medical marijuana",
+      "nabiximols",
+      "pharmacokinetics",
+      "pharmacology"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39648730/",
+    "collected_date": "2025-07-23T03:07:30.554817",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39620407",
+    "title": "Improving the Biopharmaceutical Properties of Cannabinoids in Glioblastoma Multiforme Therapy With Nanotechnology: A Drug Delivery Perspective.",
+    "abstract": "Glioblastoma multiforme (GBM) is the most prevalent primary brain tumor in adults and is known for its rapid proliferation and infiltrative nature. Current therapeutic strategies include surgical resection followed by radio- and chemotherapy. Still, they are hindered by GBM biological characteristics and physical-chemical properties of chemotherapeutic drugs, leading to limited efficacy and poor prognosis. Cannabinoids have emerged as potential anti-GBM agents, exhibiting antiangiogenic, antimetastatic, and antiproliferative effects. However, their hydrophobicity and poor oral bioavailability pose significant challenges for clinical applications. This study evaluates the potential of nanocarriers in enhancing the solubility and targeted delivery of cannabinoids for GBM therapy. The innovative combination of nanotechnology with cannabinoid-based treatment offers a promising strategy to improve therapeutic outcomes. We addressed the application of nanocarriers to deliver cannabinoids, which can enhance passage across the blood-brain barrier and enable targeted therapy. Studies demonstrate the potential of nanocarriers in improving solubility, stability, and controlled release of cannabinoids, highlighting the advancements in nanocarrier design for optimized delivery to glioma cells. Cannabinoids can exert their antitumor effect, including the induction of apoptosis through the ceramide and p8-regulated pathways and the modulation of immune responses. The evidence found in this study supports the potential of cannabinoid-based nanotechnologies in GBM therapeutic regimens as a strategy to enhance its efficacy and patient outcomes.",
+    "authors": [
+      "Stephanie B Walker",
+      "Jonatas L Duarte",
+      "Leonardo D Di Filippo",
+      "Marlus Chorilli"
+    ],
+    "journal": "Drug development research",
+    "publication_date": "2024-12-01",
+    "doi": "10.1002/ddr.70023",
+    "keywords": [
+      "Cannabis sativa",
+      "brain cancer",
+      "glioma",
+      "nanotechnology",
+      "terpenoids"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39620407/",
+    "collected_date": "2025-07-23T03:07:30.554868",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39598730",
+    "title": "Enhancing Cannabinoid Bioavailability in Pain Management: The Role of Cyclodextrins.",
+    "abstract": "Chronic pain (CP), including pain related to cancer, affects approximately 2 billion people worldwide, significantly diminishing quality of life and imposing socio-economic burdens. Current treatments often provide limited relief and may cause adverse effects, demanding more effective alternatives. Natural compounds from ",
+    "authors": [
+      "Adriana Ribeiro",
+      "Rui Loureiro",
+      "Helena Cabral-Marques"
+    ],
+    "journal": "Molecules (Basel, Switzerland)",
+    "publication_date": "2024-11-13",
+    "doi": "10.3390/molecules29225340",
+    "keywords": [
+      "Cannabis",
+      "analgesic",
+      "anti-inflammatory",
+      "bioavailability",
+      "cannabinoid",
+      "chronic pain",
+      "cyclodextrin",
+      "drug delivery",
+      "inclusion complexes",
+      "terpene"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39598730/",
+    "collected_date": "2025-07-23T03:07:30.554950",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39529600",
+    "title": "Microencapsulation techniques for developing cannabidiol formulations: a review.",
+    "abstract": "Cannabidiol (CBD), extracted from ",
+    "authors": [
+      "Ariel Gustavo Garro",
+      "Soledad Ravetti",
+      "Sof\u00eda Gisella Brignone",
+      "Agust\u00edn Luna",
+      "Natalia Angel Villegas",
+      "Agustina Gait\u00e1n",
+      "Santiago Daniel Palma"
+    ],
+    "journal": "Therapeutic delivery",
+    "publication_date": "2025-02-01",
+    "doi": "10.1080/20415990.2024.2421155",
+    "keywords": [
+      "cannabidiol",
+      "cannabis",
+      "microencapsulation",
+      "natural products",
+      "pharmaceutical technology"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39529600/",
+    "collected_date": "2025-07-23T03:07:30.555041",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39474241",
+    "title": "Cannabinoids for the Treatment of Glaucoma: A Review.",
+    "abstract": "BACKGROUND: Glaucoma is an ocular disease with significant health burden. Despite the availability of many antiglaucoma drugs, a significant proportion of patients may experience worsening of the disease. Hence, there is a need for newer antiglaucoma drugs. SUMMARY: Natural and synthetic derivatives of cannabis plants have been studied in the treatment of glaucoma since the 1970s. This review describes the potential mechanisms of the cannabinoids in the treatment of glaucoma, summarizes the findings of clinical studies describing the efficacy of these compounds, and describes the adverse effects observed with the various cannabinoid formulations evaluated in clinical studies of glaucoma in healthy volunteers and patients. The implications of these findings in terms of the potential clinical status of cannabinoids in the treatment of glaucoma and the challenges involved have also been described. KEY MESSAGES: Cannabinoids lower intraocular pressure. However, the effect is short-lived. There is also a lack of well-formulated ocular delivery system. The available evidence is inadequate to recommend the use of cannabinoids for the routine treatment of glaucoma.",
+    "authors": [
+      "Neeraj Joshi",
+      "Haifa Mariam",
+      "Ashwin Kamath"
+    ],
+    "journal": "Medical cannabis and cannabinoids",
+    "publication_date": "2024-01-01",
+    "doi": "10.1159/000541461",
+    "keywords": [
+      "Adverse drug reaction",
+      "Cannabinoids",
+      "Efficacy",
+      "Glaucoma"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39474241/",
+    "collected_date": "2025-07-23T03:07:30.555115",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39375818",
+    "title": "Preparation of a nanoemulsion containing active ingredients of cannabis extract and its application for glioblastoma: in vitro and in vivo studies.",
+    "abstract": "Recently, the anti-tumor effects of cannabis extract on various cancers have attracted the attention of researchers. Here, we report a nanoemulsion (NE) composition designed to enhance the delivery of two active components in cannabis extracts (\u22069-Tetrahydrocannabinol (THC) and Cannabidiol (CBD)) in an animal model of glioblastoma. The efficacy of the NE containing the two drugs (NED) was compared with the bulk drugs and carrier (NE without the drugs) using the C6 tumor model in rats. Hemocompatibility factors (RBC, MCV, MCH, MCHC, RDW, PPP, PT and PTT) were studied to determine the potential in vivo toxicity of NED. The optimized NED with mean\u2009\u00b1\u2009SD diameter 29\u2009\u00b1\u20096\u00a0nm was obtained. It was shown that by administering the drugs in the form of NED, the hemocompatibility increased. Cytotoxicity studies indicated that the NE without the active components (i.e. mixture of surfactants and oil) was the most cytotoxic group, while the bulk group had no toxicity. From the in vivo MRI and survival studies, the NED group had maximum efficacy (with ~4 times smaller tumor volume on day 7 of treatment, compared with the control. Also, survival time of the control, bulk drug, NE and NED were 9, 4, 12.5 and 51 days, respectively) with no important adverse effects. In conclusion, the NE containing cannabis extract could be introduced as an effective treatment in reducing brain glioblastoma tumor progression.",
+    "authors": [
+      "Houra Mobaleghol Eslam",
+      "Fatemeh Hataminia",
+      "Fariba Esmaeili",
+      "Seyed Alireza Salami",
+      "Hossein Ghanbari",
+      "Amir Amani"
+    ],
+    "journal": "BMC pharmacology & toxicology",
+    "publication_date": "2024-10-07",
+    "doi": "10.1186/s40360-024-00788-w",
+    "keywords": [
+      "CBD",
+      "Glioblastoma",
+      "Hemocompatibility",
+      "In vivo model",
+      "Nanoemulsion",
+      "THC"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39375818/",
+    "collected_date": "2025-07-23T03:07:30.555182",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39369996",
+    "title": "Food insecurity and substance use among young adults in the United States.",
+    "abstract": "PURPOSE: The purpose of this study was to examine the association between food insecurity and substance use among young adults aged 18-25 in the U.S. METHODS: A cross-sectional online survey was completed by a diverse sample of 1024 young adults (50.2\u00a0% female; 62\u00a0% non-white; m age\u00a0=\u00a021.7[SD\u00a0=\u00a02.26]) between January-April 2022. Logistic regression analyses were used to examine the association between food insecurity and current cigarette use, Electronic Nicotine Delivery System (ENDS) use, cannabis use, alcohol use, and binge drinking controlling for socio-demographic and economic factors, mental health, and experiences of discrimination. RESULTS: Nearly 70\u00a0% of participants reported being food insecure over the past year. Substance use was also common: 45.9\u00a0% of participants reported current cigarette use, 50.9\u00a0% ENDS use, 57\u00a0% cannabis use, 65.9\u00a0% alcohol use, and 50.4\u00a0% engaged in binge drinking in the past two weeks. Being food insecure was associated with greater odds of cigarette use (OR\u00a0=\u00a02.49, 95\u00a0% CI\u00a0=\u00a0[1.77, 3.50]), ENDS use (OR\u00a0=\u00a02.18, 95\u00a0% CI\u00a0=\u00a0[1.58, 3.01]), cannabis use (OR\u00a0=\u00a01.73, 95\u00a0% CI\u00a0=\u00a0[1.26, 2.37]), alcohol use (OR\u00a0=\u00a01.60, 95\u00a0% CI\u00a0=\u00a0[1.16, 2.19]) and binge drinking (OR\u00a0=\u00a01.98, 95\u00a0% CI\u00a0=\u00a0[1.44, 2.72]), controlling for all other factors. CONCLUSION: Food insecurity may serve as an important indicator of substance use among young adults. Practitioners should consider screening for food insecurity, providing information about food access, and developing interventions to address food insecurity among the young adults with whom they work. Future research should examine these associations prospectively to better understand how food insecurity may contribute to the initiation and/or escalation of substance use.",
+    "authors": [
+      "Sarah A Pitman",
+      "Keryn E Pasch",
+      "Natalie S Poulos",
+      "Cayley E Velazquez"
+    ],
+    "journal": "Preventive medicine",
+    "publication_date": "2024-12-01",
+    "doi": "10.1016/j.ypmed.2024.108148",
+    "keywords": [
+      "Alcohol",
+      "Cigarettes",
+      "E-cigarettes",
+      "ENDS",
+      "Food insecurity",
+      "Substance use",
+      "Tobacco",
+      "Young adults",
+      "cannabis"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39369996/",
+    "collected_date": "2025-07-23T03:07:30.555228",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39357769",
+    "title": "A new cannabigerol derivative, LE-127/2, induces autophagy mediated cell death in human cutaneous melanoma cells.",
+    "abstract": "Despite the targeted- and immunotherapies used in the past decade, survival rate among patients with metastatic melanoma remains low, therefore, melanoma is responsible for the majority of skin cancer-related deaths. The ongoing investigation of natural antitumor agents, the nonpsychoactive cannabinoid, cannabigerol (CBG) found in Cannabis sativa is emerging as a promising candidate. CBG offers a potential therapeutic role in the treatment of melanoma demonstrating cell growth inhibition in some tumors. Its low water solubility and bioavailability hinder the potential effectiveness. To address these challenges, a modified CBG, namely LE-127/2 was synthesized by Mannich-type reaction. The aim was to investigate the effect of this novel compound on cell proliferation as well as the mechanism of cell death with a particular focus on autophagy and apoptosis. Human cutan melanoma cell lines, WM35, A2058 and WM3000 were utilized for the present study. Cell proliferation of the cells after the treatment with LE-127/2, parent CBG or vemurafenib was assessed by Cell Titer Blue Assay. Cells were treated with a 1.25-80 \u00b5M of the above-mentioned compounds, and it was found that at 20 \u03bcM of all drugs showed a comparable effective inhibition of cell proliferation, however, vemurafenib and CBG proved to be more effective than LE-127/2. In addition, clonogenic cell survival assays were performed to examine the inhibitory effect of LE-127/2 on the colony formation ability of melanoma cell lines. Cells treated with 20 \u00b5M of LE-127/2 for 14 days showed about a 50% suppression of clonogenic cell survival. LE-127/2 exerted the most intensive inhibition on A2058 cell colonies. Furthermore, notably, LDH cytotoxicity assay performed on HaCaT cell line, proved LE-127/2 to be cytotoxic only at higher concentration, such as 80 \u03bcM, while the parent CBG was cytotoxic at concentration as low as 5 \u03bcM, suggesting that the new CBG derivative as a drug candidate may be applied in human pharmacotherapy without causing a substantial damage in intact epidermal cells. Analysis of protein expression revealed the impact of LE-127/2 on the expression of basic proteins (LC-3, Beclin-1 and p62) involved in the process of autophagy in the three different melanoma cell lines studied. Elevated expression of these proteins was detected as a result of LE-127/2 (20 \u00b5M) treatment. LE-127/2 also induced the expression of some proteins involved in apoptosis, and it is particularly noteworthy the increased level of cleaved PARP. Based on the results obtained, it can be concluded that LE-127/2 induced autophagy could lead to the inhibition of cell proliferation and death in melanoma cells.",
+    "authors": [
+      "\u00c1gnes T\u00f3saki",
+      "Zsuzsanna Szab\u00f3",
+      "J\u00f3zsef Kir\u00e1ly",
+      "Eszter Bogl\u00e1rka L\u0151rincz",
+      "Vir\u00e1g Vass",
+      "Bence T\u00e1nczos",
+      "Ilona Bereczki",
+      "P\u00e1l Herczegh",
+      "\u00c9va Remenyik",
+      "\u00c1rp\u00e1d T\u00f3saki",
+      "Erzs\u00e9bet Szab\u00f3"
+    ],
+    "journal": "European journal of pharmaceutical sciences : official journal of the European Federation for Pharmaceutical Sciences",
+    "publication_date": "2024-12-01",
+    "doi": "10.1016/j.ejps.2024.106920",
+    "keywords": [
+      "Apoptosis",
+      "Autophagy",
+      "CBG",
+      "LE-127/2",
+      "Melanoma",
+      "Vemurafenib"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39357769/",
+    "collected_date": "2025-07-23T03:07:30.555298",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39356097",
+    "title": "Nanocarriers for Cannabinoid Delivery: Enhancing Therapeutic Potential.",
+    "abstract": "Medical cannabis has potential therapeutic benefits in managing pain, anxiety, depression, and neurological and movement disorders. Phytocannabinoids derived from the cannabis plant are responsible for their pharmacological and therapeutic properties. However, the complexity of cannabis components, especially cannabinoids, poses a challenge to effective medicinal administration. Even with the increasing acceptance of cannabis-based medicines, achieving consistent bioavailability and targeted distribution remains difficult. Conventional administration methods are plagued by solubility and absorption problems requiring innovative solutions. After conducting a thorough review of research papers and patents, it has become evident that nanotechnology holds great promise as a solution. The comprehensive review of 36 research papers has yielded valuable insights, with 7 papers reporting enhanced bioavailability, while others have focused on improvements in release, solubility, and stability. Additionally, 19 patents have been analyzed, of which 7 specifically claim enhanced bioavailability, while the remaining patents describe various formulation methods. These patents outline effective techniques for encapsulating cannabis using nanocarriers, effectively addressing solubility and controlled release. Studies on the delivery of cannabis using nanocarriers focus on improving bioavailability, prolonging release, and targeting specific areas. This synthesis highlights the potential of nanotechnology to enhance cannabis therapies and pave the way for innovative interventions and precision medicine.",
+    "authors": [
+      "Varun Singh",
+      "Samar Vihal",
+      "Rupali Rana",
+      "Charul Rathore"
+    ],
+    "journal": "Recent advances in drug delivery and formulation",
+    "publication_date": "2024-01-01",
+    "doi": "10.2174/0126673878300347240718100814",
+    "keywords": [
+      "Cannabis",
+      "cannabinoids",
+      "drug delivery",
+      "nano formulations",
+      "nanocarriers",
+      "therapeutic properties."
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39356097/",
+    "collected_date": "2025-07-23T03:07:30.555395",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39307687",
+    "title": "Synthesis of (-)-Cannabidiol (CBD), (-)-\u0394",
+    "abstract": "Cannabidiol (CBD) is garnering increasing interest due to its significant biological activity. This natural compound is one of the major cannabinoids in Cannabis sativa L. In this work, we describe the encapsulation of CBD in solid and hollow pH-sensitive poly(4-vinylpyridine) (solid@p4VP and hollow@p4VP) nanoparticles, and temperature-sensitive poly(N-isopropylacrylamide) (solid@pNIPAM and hollow@pNIPAM) nanoparticles for transport and release CBD in a controlled manner. The CBD loading into these smart polymeric systems was effective and their release profiles, solubility and resistance to stomach and intestinal conditions were evaluated, showing satisfactory properties and improved bioavailability with respect to free CBD. Finally, the A549 human lung cancer cell line was used as lung adenocarcinoma epithelial cellular model to carry out preliminary assays of the in\u2005vitro activity of the vehiculized CBD. For all these studies, synthetic CBD was employed, for which a new efficient and scalable synthesis of cannabinoids has been developed.",
+    "authors": [
+      "Federico Moya-Utrera",
+      "David Fuentes-R\u00edos",
+      "Antonio Romero-Carrasco",
+      "Manuel Do\u00f1a-Flores",
+      "Iv\u00e1n Cheng-S\u00e1nchez",
+      "Amelia D\u00edaz-Morilla",
+      "Mar\u00eda Soledad Pino-Gonz\u00e1lez",
+      "Antonio Mart\u00ednez-Ferez",
+      "Javier Moreno",
+      "Cristina Mesas",
+      "Consolaci\u00f3n Melguizo",
+      "Jos\u00e9 Prados",
+      "Francisco Sarabia",
+      "J Manuel L\u00f3pez-Romero"
+    ],
+    "journal": "Chemistry (Weinheim an der Bergstrasse, Germany)",
+    "publication_date": "2024-12-13",
+    "doi": "10.1002/chem.202402496",
+    "keywords": [
+      "Antitumoral activity",
+      "Cannabidiol",
+      "Total synthesis",
+      "p4VP",
+      "pNIPAM"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39307687/",
+    "collected_date": "2025-07-23T03:07:30.555486",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39208448",
+    "title": "Changes in Prenatal Cannabis Use Among Pregnant Individuals From 2012 to 2022.",
+    "abstract": "This population-based cross-sectional study analyzed electronic health record data of pregnant individuals in an integrated health care delivery system in California to examine changes in prenatal cannabis use through self-report and urine toxicology testing during standard prenatal care between 2012 (n=33,546) and 2022 (n=43,415), and to test whether trends differed by race and ethnicity or age. The prevalence of prenatal cannabis use increased from 5.5% (95% CI, 5.3-5.8%) in 2012 to 9.0% (95% CI, 8.7-9.2%) in 2022 (adjusted prevalence ratio [aPR] 1.82, 95% CI, 1.72-1.92), with similar increases by toxicology test (aPR 1.70, 95% CI, 1.60-1.81) and self-report (aPR 2.12, 95% CI, 1.95-2.30). The increase in prevalence varied significantly across racial and ethnic and age groups, with the highest prevalence among Black individuals and those aged 13-24 across years. Although rates increased more slowly among groups with the highest prevalence of use, disparities persisted over time.",
+    "authors": [
+      "Kelly C Young-Wolff",
+      "Felicia W Chi",
+      "Gwen T Lapham",
+      "Stacey E Alexeeff",
+      "Monique B Does",
+      "Deborah Ansley",
+      "Cynthia I Campbell"
+    ],
+    "journal": "Obstetrics and gynecology",
+    "publication_date": "2024-10-01",
+    "doi": "10.1097/AOG.0000000000005711",
+    "keywords": [],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39208448/",
+    "collected_date": "2025-07-23T03:07:30.555542",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39206436",
+    "title": "Lessons for cannabinoid regulation from electronic nicotine delivery system product regulation.",
+    "abstract": "Cannabis legalization continues to spread, with 38 states permitting the use of medical marijuana, 22 states permitting recreational use, and growing political momentum for federal legalization. The last time the Food and Drug Administration (FDA) was tasked with regulating a new product occurred with 2009's Family Smoking Prevention and Tobacco Control Act, which created the Center for Tobacco Products (CTP). Thus, the time is ripe to review the history of CTP with particular attention to difficulties the nascent center faced in regulating novel products such as e-cigarettes or electronic nicotine delivery systems (ENDS). Specifically, FDA has struggled with defining its scope of authority, determining which review pathway(s) to utilize, and promulgating timely and transparent product standards for marketing authorization-all of which offer lessons for improving cannabis product oversight and enforcement.",
+    "authors": [
+      "Brian Yagi",
+      "Stan Veuger",
+      "Brian J Miller",
+      "Paul Larkin"
+    ],
+    "journal": "Health affairs scholar",
+    "publication_date": "2024-08-01",
+    "doi": "10.1093/haschl/qxae101",
+    "keywords": [
+      "Center for Tobacco Products",
+      "ENDS product regulation",
+      "FDA policy",
+      "cannabis regulation",
+      "tobacco regulation"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39206436/",
+    "collected_date": "2025-07-23T03:07:30.555622",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39149470",
+    "title": "CANDI: A Web Server for Predicting Molecular Targets and Pathways of Cannabis-Based Therapeutics.",
+    "abstract": "BACKGROUND:  METHODS: To investigate the molecular targets and pathways involved in the synergistic effects of cannabis compounds, we utilized DRIFT, a deep learning model that leverages attention-based neural networks to predict compound-target interactions. We considered both whole plant extracts and specific plant-based formulations. Predicted targets were then mapped to the Reactome pathway database to identify the biological processes affected. To facilitate the prediction of molecular targets and associated pathways for any user-specified cannabis formulation, we developed CANDI (Cannabis-derived compound Analysis and Network Discovery Interface), a web-based server. This platform offers a user-friendly interface for researchers and drug developers to explore the therapeutic potential of cannabis compounds. RESULTS: Our analysis using DRIFT and CANDI successfully identified numerous molecular targets of cannabis compounds, many of which are involved in pathways relevant to pain, inflammation, cancer, and other diseases. The CANDI server enables researchers to predict the molecular targets and affected pathways for any specific cannabis formulation, providing valuable insights for developing targeted therapies. CONCLUSIONS: By combining computational approaches with knowledge of traditional cannabis use, we have developed the CANDI server, a tool that allows us to harness the therapeutic potential of cannabis compounds for the effective treatment of various disorders. By bridging traditional pharmaceutical development with cannabis-based medicine, we propose a novel approach for botanical-based treatment modalities.",
+    "authors": [
+      "Srinivasan Ekambaram",
+      "Jian Wang",
+      "Nikolay V Dokholyan"
+    ],
+    "journal": "Research square",
+    "publication_date": "2024-08-09",
+    "doi": "10.21203/rs.3.rs-4744915/v1",
+    "keywords": [
+      "CANDI",
+      "Cannabis",
+      "Protein-Targets and Pathways"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39149470/",
+    "collected_date": "2025-07-23T03:07:30.555732",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39074910",
+    "title": "Combinatorial approach of cannabidiol and active-targeted-mediated photodynamic therapy in malignant melanoma treatment.",
+    "abstract": "Malignant melanoma (MM) continues to claim millions of lives around the world due to its limited therapeutic alternatives. Photodynamic therapy (PDT) has gained popularity in cancer treatment due it increased potency and low off-target toxicity. Studies have pointed out that the heterogeneity of MM tumours reduces the efficacy of current therapeutic approaches, including PDT, leading to high chances of recurrences post-treatment. Accumulating evidence suggests that cannabidiol (CBD), a non-psychoactive derivative of cannabis, can synergise with various anticancer agents to increase their efficacy. However, CBD demonstrates low bioavailability, which is attributed to factors relating to poor water compatibility, poor absorption and rapid metabolism. Nanotechnology offers tools that address these issues and enhance the biological efficiency and targeted specificity of anticancer agents. Herein, we highlighted the standard therapeutic modalities of MM and their pitfalls, as well as pointed out the need for further investigation into PDT combination therapy with CBD.",
+    "authors": [
+      "Nkune Williams Nkune",
+      "Heidi Abrahamse"
+    ],
+    "journal": "Journal of biophotonics",
+    "publication_date": "2024-10-01",
+    "doi": "10.1002/jbio.202400191",
+    "keywords": [
+      "cannabidiol",
+      "green nanotechnology",
+      "malignant melanoma",
+      "nanotechnology",
+      "photodynamic therapy"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39074910/",
+    "collected_date": "2025-07-23T03:07:30.555820",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39050498",
+    "title": "Improving the water solubility of cannabidiol using a peptide carrier.",
+    "abstract": "Cannabidiol (CBD), nonpsychotropic cannabinoid found in ",
+    "authors": [
+      "Melek Parlak Khalily"
+    ],
+    "journal": "Turkish journal of chemistry",
+    "publication_date": "2024-01-01",
+    "doi": "10.55730/1300-0527.3655",
+    "keywords": [
+      "Cannabidiol",
+      "cannabis",
+      "encapsulation",
+      "self-assembling peptides",
+      "solubility"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39050498/",
+    "collected_date": "2025-07-23T03:07:30.555890",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39029981",
+    "title": "Cannabidiol: Pharmacodynamics and pharmacokinetic in the context of neuropsychiatric disorders.",
+    "abstract": "In this chapter we explored the growing interest in cannabinoids, particularly cannabidiol (CBD), over the last two decades due to their potential therapeutic applications in neurodegenerative and psychiatric disorders. CBD, a major non-psychotomimetic compound derived from Cannabis sativa, is highlighted as a safer alternative to other cannabinoids like\u00a0\u03949-tetrahydrocannabinol (THC). Clinical trials have been investigating CBD formulations for conditions such as schizophrenia, multiple sclerosis, Alzheimer's, Parkinson's diseases, and stress-related disorders. However, limited access to CBD-approved formulations primarily due to their high-cost and concerns about the quality of market-available products, challenges regulatory agencies globally. The pharmacokinetics of CBD, especially after oral administration, present challenges with erratic absorption and low bioavailability. CBD's \"promiscuous\" pharmacodynamics involve interactions with various targets beyond the endocannabinoid system, complicating precise dosing in therapeutic interventions. This chapter delves into CBD's dose-response curves, revealing complexities that pose challenges in clinical practice. Nanobiotechnology emerges as a promising solution, with recent developments showing improved bioavailability, stability, and reduced toxicity through nanoencapsulation of CBD. While this phytocannabinoid holds immense promise in neuropsychopharmacology, we provided a comprehensive overview of the current state of CBD research and suggests potential future directions regarding the pharmacology of CBD, harnessing the benefits of this intriguing compound.",
+    "authors": [
+      "Pedro H C Lirio",
+      "Priscyla D M Gaspari",
+      "Alline C Campos"
+    ],
+    "journal": "International review of neurobiology",
+    "publication_date": "2024-01-01",
+    "doi": "10.1016/bs.irn.2024.05.001",
+    "keywords": [
+      "Cannabidiol",
+      "Neuropsychiatric disorders",
+      "Pharmacodynamics, Bioavailability",
+      "Pharmacokinetics"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39029981/",
+    "collected_date": "2025-07-23T03:07:30.555951",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "39025316",
+    "title": "Long-term stability and bactericidal properties of galenic formulations of Cannabis sativa oils.",
+    "abstract": "The long-term stability in real and accelerated time for galenic oils based on full-spectrum cannabis has been studied, using sesame oil as a dilutant. Sesame oil is one of the most used vehicles in the cannabis pharmaceutical industry due to the costs and increased oral bioavailability of cannabinoids. The real-time assays conducted at 25\u00a0\u00b0C over twelve months demonstrated high stability and showed no significant changes in the composition of cannabinoids, total polyphenols, flavonoids, or antioxidant capacity. In these studies, it was observed that there was no development of microorganisms compromising the stability of the oils over a year. The three oil varieties exhibited a high bactericidal capacity against E. coli, S. aureus, and P. larvae.",
+    "authors": [
+      "Dalila E Orallo",
+      "Giselle M Fuentes",
+      "Mar\u00eda G Benavidez",
+      "Patricia A Su\u00e1rez",
+      "Diego Nutter",
+      "Mar\u00eda F Fangio",
+      "Cristina L Ramirez"
+    ],
+    "journal": "Fitoterapia",
+    "publication_date": "2024-09-01",
+    "doi": "10.1016/j.fitote.2024.106128",
+    "keywords": [
+      "Antioxidant capacity",
+      "Cannabis oil",
+      "Galenic formulations",
+      "Long-term stability",
+      "Total polyphenol content"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39025316/",
+    "collected_date": "2025-07-23T03:07:30.556040",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "38892047",
+    "title": "Transdermal Delivery of Cannabidiol for the Management of Acute Inflammatory Pain: A Comprehensive Review of the Literature.",
+    "abstract": "The emerging field of nanotechnology has paved the way for revolutionary advancements in drug delivery systems, with nanosystems emerging as a promising avenue for enhancing the therapeutic potential and the stability of various bioactive compounds. Among these, cannabidiol (CBD), the non-psychotropic compound of the ",
+    "authors": [
+      "\u00c8ve Lefebvre",
+      "Nancy Tawil",
+      "L'Hocine Yahia"
+    ],
+    "journal": "International journal of molecular sciences",
+    "publication_date": "2024-05-28",
+    "doi": "10.3390/ijms25115858",
+    "keywords": [
+      "arthritis",
+      "cannabidiol",
+      "cannabis",
+      "delivery",
+      "inflammation",
+      "polymeric",
+      "transdermal"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38892047/",
+    "collected_date": "2025-07-23T03:07:30.556168",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "38858091",
+    "title": "The Intoxication Equivalency of 11-Hydroxy-\u0394",
+    "abstract": "\u0394",
+    "authors": [
+      "Ayat Zagzoog",
+      "Kenzie Halter",
+      "Alayna M Jones",
+      "Nicole Bannatyne",
+      "Josh Cline",
+      "Alexis Wilcox",
+      "Anna-Maria Smolyakova",
+      "Robert B Laprairie"
+    ],
+    "journal": "The Journal of pharmacology and experimental therapeutics",
+    "publication_date": "2024-10-18",
+    "doi": "10.1124/jpet.123.001998",
+    "keywords": [],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38858091/",
+    "collected_date": "2025-07-23T03:07:30.556258",
+    "has_full_text": false,
+    "full_text_source": null
+  },
+  {
+    "pmid": "38850302",
+    "title": "Quantitative summary on the human pharmacokinetic properties of cannabidiol to accelerate scientific clinical application of cannabis.",
+    "abstract": "Cannabidiol (CBD) is a non-psychoactive substance that exerts numerous pharmacological benefits, including anti-inflammatory and antioxidant properties. It has received attention as a useful substance for the treatment of intractable pain, seizures, and anxiety, and related clinical trials have continued. However, the CBD pharmacokinetic results between reports are highly variable, making it difficult to clearly identify the pharmacokinetic properties of CBD. The main purpose of this study was to identify CBD clinical pharmacokinetic properties through meta-analysis. In particular, we sought to derive valid, interpretable independent variables and interpret their pharmacokinetic parameter correlations in relation to the large inter-individual and inter-study variability in CBD pharmacokinetics. For this study, CBD-related clinical trial reports were extensively screened and intercomparisons were performed between internal data sets through systematic classification and extraction of pharmacokinetic parameter values. The candidate independent variables associated with interpretation of CBD pharmacokinetic diversity established and explored in this study were as follows: diet, tetrahydrocannabinol (THC) combination, sample matrix type, liver and renal function, exposure route, dosage form, CBD exposure dose, cannabis smoking frequency, multiple exposure. The results of this study showed that CBD pharmacokinetics were influenced (increased plasma exposure by approximately 2-5 times) by diet immediately before or during CBD exposure, and that THC was not expected to have an antagonistic effect on the CBD absorption. The influence of changes in liver function would be significant in CBD pharmacokinetic diversity. Due to decreased liver function, the plasma exposure of CBD increased 2.57-5.15 times compared to healthy adults, and the half-life and clearance showed a 2.58-fold increase and a 5.15-fold decrease, respectively. CBD can be rapidly absorbed into the body (time to reach maximum concentration within 3.18\u00a0h) by oral, transdermal, and inhalation exposures, and lipid emulsification and nanoformulation of CBD will greatly improve CBD bioavailability (up to approximately 2 times). The pharmacokinetics of CBD generally follow linear kinetic characteristics. The importance of this study is that it suggests key factors that should be considered in terms of pharmacokinetics in further clinical trials and formulations of CBD in the future.",
+    "authors": [
+      "Ji-Hun Jang",
+      "Ju-Hwan Jeong",
+      "Seung-Hyun Jeong"
+    ],
+    "journal": "Naunyn-Schmiedeberg's archives of pharmacology",
+    "publication_date": "2024-11-01",
+    "doi": "10.1007/s00210-024-03185-6",
+    "keywords": [
+      "Cannabidiol",
+      "Clinical study",
+      "Independent variables",
+      "Pharmacokinetic parameters",
+      "Pharmacokinetics"
+    ],
+    "category": "formulation",
+    "source": "PubMed",
+    "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38850302/",
+    "collected_date": "2025-07-23T03:07:30.556369",
+    "has_full_text": false,
+    "full_text_source": null
+  }
+]
