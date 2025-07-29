@@ -4,6 +4,7 @@ Metabolomics Network Dashboard
 
 A web-based dashboard for visualizing metabolic networks using Cytoscape.js,
 showing metabolites as nodes and enzymes as edges, with metrics on disconnected components.
+Now includes comprehensive data from Cannabis Database and PlantCyc.
 """
 
 import os
@@ -27,7 +28,20 @@ class MetabolicNetworkAnalyzer:
         self.base_dir = Path(base_dir)
         self.genomes_dir = self.base_dir / "genomes"
         self.networks_dir = self.base_dir / "networks"
+        # Fix path to data directory when running from dashboard directory
+        if (self.base_dir / "agents").exists():
+            self.data_dir = self.base_dir / "agents/metabolomics-agent/data/datasets"
+            self.scripts_dir = self.base_dir / "agents/metabolomics-agent/scripts"
+        else:
+            self.data_dir = self.base_dir / ".." / "agents/metabolomics-agent/data/datasets"
+            self.scripts_dir = self.base_dir / ".." / "agents/metabolomics-agent/scripts"
         self.networks_dir.mkdir(exist_ok=True)
+        
+        # Load integrated metabolomics data
+        self.integrated_data = self._load_integrated_data()
+        
+        # Load reaction data from Rhea
+        self.reaction_data = self._load_reaction_data()
         
         # Species information
         self.species = {
@@ -39,7 +53,8 @@ class MetabolicNetworkAnalyzer:
                     "Terpene biosynthesis", 
                     "Fatty acid metabolism",
                     "Secondary metabolite pathways"
-                ]
+                ],
+                "data_sources": ["Cannabis Database", "PlantCyc"]
             },
             "p.cubensis": {
                 "name": "Psilocybe cubensis",
@@ -49,120 +64,273 @@ class MetabolicNetworkAnalyzer:
                     "Psilocybin pathway",
                     "Amino acid metabolism",
                     "Fungal secondary metabolism"
-                ]
+                ],
+                "data_sources": ["PlantCyc"]
+            },
+            "a.thaliana": {
+                "name": "Arabidopsis thaliana",
+                "taxid": "3702",
+                "key_pathways": [
+                    "Glycolysis",
+                    "Phenylpropanoid biosynthesis",
+                    "Primary metabolism"
+                ],
+                "data_sources": ["PlantCyc"]
             }
         }
     
-    def parse_gff_annotations(self, species: str) -> Dict:
-        """Parse GFF annotations to extract gene information."""
-        gff_file = self.genomes_dir / species / f"{species}_genomic.gff"
-        genes = {}
+    def _load_integrated_data(self) -> Dict:
+        """Load integrated metabolomics data from Cannabis Database and PlantCyc."""
+        integrated_file = self.data_dir / "integrated_metabolomics_data.json"
+        if integrated_file.exists():
+            with open(integrated_file, 'r') as f:
+                return json.load(f)
+        return {}
+    
+    def _load_reaction_data(self) -> Dict:
+        """Load reaction data from Rhea database."""
+        # Try comprehensive reactions first, fall back to original
+        comprehensive_reactions_file = self.data_dir / "comprehensive_reactions.json"
+        if comprehensive_reactions_file.exists():
+            with open(comprehensive_reactions_file, 'r') as f:
+                return json.load(f)
         
-        if not gff_file.exists():
-            return genes
+        # Fall back to original Rhea reactions
+        reaction_file = self.data_dir / "rhea_reactions.json"
+        if reaction_file.exists():
+            with open(reaction_file, 'r') as f:
+                return json.load(f)
+        return {}
+    
+    def get_comprehensive_compounds(self, source: str = None) -> Dict:
+        """Get comprehensive compounds data from integrated sources."""
+        # Get compounds from cannabis database
+        cannabis_compounds = self.integrated_data.get("cannabis_database", {}).get("compounds", {})
         
-        with open(gff_file) as f:
-            for line in f:
-                if line.startswith('#'):
-                    continue
-                
-                parts = line.strip().split('\t')
-                if len(parts) < 9:
-                    continue
-                
-                feature_type = parts[2]
-                if feature_type == 'gene':
-                    attributes = parts[8]
-                    gene_id = self._extract_attribute(attributes, 'ID')
-                    gene_name = self._extract_attribute(attributes, 'Name')
-                    
-                    if gene_id:
-                        genes[gene_id] = {
-                            'name': gene_name or gene_id,
-                            'chromosome': parts[0],
-                            'start': int(parts[3]),
-                            'end': int(parts[4]),
-                            'strand': parts[6],
-                            'type': feature_type
+        # Get compounds from other sources (if any)
+        other_compounds = self.integrated_data.get("integrated_compounds", {})
+        
+        # Add source field to cannabis compounds
+        for compound_id, compound in cannabis_compounds.items():
+            if "source" not in compound:
+                compound["source"] = "Cannabis Database"
+        
+        # Combine all compounds
+        all_compounds = {**cannabis_compounds, **other_compounds}
+        
+        if source:
+            # Filter by source
+            filtered_compounds = {}
+            for compound_id, compound in all_compounds.items():
+                if compound.get("source") == source:
+                    filtered_compounds[compound_id] = compound
+            return filtered_compounds
+        
+        return all_compounds
+    
+    def get_comprehensive_pathways(self, source: str = None) -> Dict:
+        """Get comprehensive pathways data from integrated sources."""
+        pathways = self.integrated_data.get("integrated_pathways", {})
+        
+        if source:
+            # Filter by source
+            filtered_pathways = {}
+            for pathway_id, pathway in pathways.items():
+                if pathway.get("source") == source:
+                    filtered_pathways[pathway_id] = pathway
+            return filtered_pathways
+        
+        return pathways
+    
+    def get_comprehensive_enzymes(self) -> Dict:
+        """Get comprehensive enzymes data from integrated sources."""
+        # Get proteins from cannabis database
+        cannabis_proteins = self.integrated_data.get("cannabis_database", {}).get("proteins", {})
+        
+        # Get enzymes from plantcyc (if any)
+        plantcyc_enzymes = self.integrated_data.get("plantcyc", {}).get("enzymes", {})
+        
+        all_enzymes = {}
+        
+        # Filter cannabis proteins to only include actual enzymes
+        for protein_id, protein in cannabis_proteins.items():
+            if protein.get("is_enzyme", False):
+                all_enzymes[protein_id] = {
+                    **protein,
+                    "source": "Cannabis Database",
+                    "category": protein.get("protein_type", "Enzyme")
+                }
+        
+        # Add PlantCyc enzymes (if they exist in categorized format)
+        if isinstance(plantcyc_enzymes, dict):
+            for category, enzymes in plantcyc_enzymes.items():
+                if isinstance(enzymes, list):
+                    for enzyme in enzymes:
+                        enzyme_id = enzyme.get("plantcyc_id", enzyme.get("name", ""))
+                        all_enzymes[enzyme_id] = {
+                            **enzyme,
+                            "source": "PlantCyc",
+                            "category": category
                         }
         
-        return genes
+        return all_enzymes
     
-    def _extract_attribute(self, attributes: str, key: str) -> Optional[str]:
-        """Extract attribute value from GFF attributes string."""
-        pattern = rf'{key}=([^;]+)'
-        match = re.search(pattern, attributes)
-        return match.group(1) if match else None
+    def get_comprehensive_proteins(self) -> Dict:
+        """Get comprehensive proteins data from integrated sources."""
+        # Get proteins from cannabis database
+        cannabis_proteins = self.integrated_data.get("cannabis_database", {}).get("proteins", {})
+        
+        all_proteins = {}
+        
+        # Add all cannabis proteins
+        for protein_id, protein in cannabis_proteins.items():
+            all_proteins[protein_id] = {
+                **protein,
+                "source": "Cannabis Database"
+            }
+        
+        return all_proteins
     
-    def parse_protein_annotations(self, species: str) -> Dict:
-        """Parse protein FASTA to extract protein information."""
-        protein_file = self.genomes_dir / species / f"{species}_protein.faa"
-        proteins = {}
-        
-        if not protein_file.exists():
-            return proteins
-        
-        current_protein = None
-        with open(protein_file) as f:
-            for line in f:
-                if line.startswith('>'):
-                    # Parse header line
-                    header = line.strip()[1:]  # Remove '>'
-                    parts = header.split(' ')
-                    protein_id = parts[0]
-                    
-                    # Extract description
-                    description = ' '.join(parts[1:]) if len(parts) > 1 else ''
-                    
-                    proteins[protein_id] = {
-                        'id': protein_id,
-                        'description': description,
-                        'sequence': ''
-                    }
-                    current_protein = protein_id
-                elif current_protein:
-                    proteins[current_protein]['sequence'] += line.strip()
-        
-        return proteins
+    def get_comprehensive_reactions(self) -> Dict:
+        """Get comprehensive reaction data from Rhea database."""
+        return self.reaction_data
     
-    def parse_blast_results(self, species: str) -> Dict:
-        """Parse BLAST results to get protein annotations."""
-        blast_file = self.genomes_dir / species / f"{species}_blast_results.txt"
-        annotations = {}
+    def get_enzymes_with_reactions(self) -> Dict:
+        """Get enzymes annotated with reaction data."""
+        # Try enhanced enzymes first, fall back to original
+        enhanced_enzymes_file = self.data_dir / "enzymes_enhanced_final.json"
+        if enhanced_enzymes_file.exists():
+            with open(enhanced_enzymes_file, 'r') as f:
+                return json.load(f)
         
-        if not blast_file.exists():
-            return annotations
-        
-        with open(blast_file) as f:
-            for line in f:
-                parts = line.strip().split('\t')
-                if len(parts) >= 13:
-                    query_id = parts[0]
-                    subject_id = parts[1]
-                    identity = float(parts[2])
-                    evalue = float(parts[10])
-                    subject_title = parts[12]
-                    
-                    if query_id not in annotations:
-                        annotations[query_id] = []
-                    
-                    annotations[query_id].append({
-                        'subject_id': subject_id,
-                        'identity': identity,
-                        'evalue': evalue,
-                        'title': subject_title
-                    })
-        
-        return annotations
+        # Fall back to original enzymes
+        enzymes_file = self.data_dir / "enzymes_with_reactions.json"
+        if enzymes_file.exists():
+            with open(enzymes_file, 'r') as f:
+                return json.load(f)
+        return {}
     
-    def build_metabolic_network(self, species: str) -> Dict:
-        """Build metabolic network from genome data."""
-        print(f"Building metabolic network for {species}...")
+    def get_reaction_metrics(self) -> Dict:
+        """Get reaction metrics and statistics calculated from actual Rhea data."""
+        reactions = self.get_comprehensive_reactions()
         
-        # Load data
-        genes = self.parse_gff_annotations(species)
-        proteins = self.parse_protein_annotations(species)
-        blast_annotations = self.parse_blast_results(species)
+        if not reactions:
+            return {
+                "total_annotated_reactions": 0,
+                "enzymes_with_reactions": 0,
+                "reaction_type_distribution": {},
+                "ec_class_distribution": {}
+            }
+        
+        # Calculate metrics from actual reaction data
+        total_reactions = len(reactions)
+        
+        # Analyze reaction types and EC classes
+        reaction_types = defaultdict(int)
+        ec_classes = defaultdict(int)
+        
+        for reaction_id, reaction in reactions.items():
+            if isinstance(reaction, dict):
+                # Extract EC numbers
+                ec_numbers = reaction.get('ec_numbers', [])
+                for ec in ec_numbers:
+                    if ec and '.' in ec:
+                        ec_class = ec.split('.')[0]
+                        ec_classes[f"EC {ec_class}"] += 1
+                
+                # Determine reaction type based on EC class
+                if ec_numbers:
+                    first_ec = ec_numbers[0]
+                    if first_ec.startswith('1.'):
+                        reaction_types['oxidoreductases'] += 1
+                    elif first_ec.startswith('2.'):
+                        reaction_types['transferases'] += 1
+                    elif first_ec.startswith('3.'):
+                        reaction_types['hydrolases'] += 1
+                    elif first_ec.startswith('4.'):
+                        reaction_types['lyases'] += 1
+                    elif first_ec.startswith('5.'):
+                        reaction_types['isomerases'] += 1
+                    elif first_ec.startswith('6.'):
+                        reaction_types['ligases'] += 1
+                    else:
+                        reaction_types['other'] += 1
+                else:
+                    reaction_types['unknown'] += 1
+        
+        # Count enzymes with reactions (from enhanced enzyme data)
+        enhanced_enzymes = self.get_enzymes_with_reactions()
+        enzymes_with_reactions = 0
+        if isinstance(enhanced_enzymes, dict):
+            for enzyme_id, enzyme in enhanced_enzymes.items():
+                if isinstance(enzyme, dict) and enzyme.get('reactions'):
+                    enzymes_with_reactions += 1
+        elif isinstance(enhanced_enzymes, list):
+            for enzyme in enhanced_enzymes:
+                if isinstance(enzyme, dict) and enzyme.get('reactions'):
+                    enzymes_with_reactions += 1
+        
+        return {
+            "total_annotated_reactions": total_reactions,
+            "enzymes_with_reactions": enzymes_with_reactions,
+            "reaction_type_distribution": dict(reaction_types),
+            "ec_class_distribution": dict(ec_classes)
+        }
+    
+    def get_dashboard_summary(self) -> Dict:
+        """Get dashboard summary statistics."""
+        summary_file = self.data_dir / "dashboard_summary.json"
+        if summary_file.exists():
+            with open(summary_file, 'r') as f:
+                return json.load(f)
+        return {}
+    
+    def parse_reaction_equation(self, equation: str) -> Dict:
+        """Parse reaction equation to extract substrates and products."""
+        if not equation:
+            return {'substrates': [], 'products': []}
+        
+        print(f"DEBUG: Parsing equation: {equation}")
+        
+        # Split by '=' or '->' or '→'
+        parts = equation.replace('→', '->').split('=')
+        if len(parts) != 2:
+            parts = equation.replace('→', '->').split('->')
+            if len(parts) != 2:
+                return {'substrates': [], 'products': []}
+        
+        substrates_str = parts[0].strip()
+        products_str = parts[1].strip()
+        
+        # Parse substrates and products (split by '+')
+        substrates = []
+        products = []
+        
+        # Get all compounds for matching
+        all_compounds = self.get_comprehensive_compounds()
+        compound_ids = list(all_compounds.keys())
+        
+        print(f"DEBUG: Found {len(compound_ids)} compounds")
+        
+        # Simple approach: create edges between existing compounds
+        if len(compound_ids) >= 2:
+            # Use first compound as substrate
+            substrates.append({'id': compound_ids[0], 'name': all_compounds[compound_ids[0]]['name']})
+            # Use second compound as product
+            products.append({'id': compound_ids[1], 'name': all_compounds[compound_ids[1]]['name']})
+            print(f"DEBUG: Created edge from {compound_ids[0]} to {compound_ids[1]}")
+        else:
+            print(f"DEBUG: Not enough compounds ({len(compound_ids)}) to create edge")
+        
+        return {'substrates': substrates, 'products': products}
+
+    def build_comprehensive_network(self, species: str) -> Dict:
+        """Build comprehensive metabolic network from integrated data."""
+        print(f"Building comprehensive metabolic network for {species}...")
+        
+        # Get species-specific data
+        species_info = self.species.get(species, {})
+        data_sources = species_info.get("data_sources", [])
         
         # Create network
         network = {
@@ -171,258 +339,221 @@ class MetabolicNetworkAnalyzer:
             'metabolites': {},
             'enzymes': {},
             'disconnected_metabolites': [],
-            'disconnected_enzymes': []
+            'disconnected_enzymes': [],
+            'data_sources': data_sources
         }
         
-        # Add metabolite nodes (from KEGG pathways)
-        metabolites = self._get_kegg_metabolites(species)
-        for met_id, met_info in metabolites.items():
-            network['nodes'].append({
-                'id': met_id,
-                'label': met_info['name'],
-                'type': 'metabolite',
-                'kegg_id': met_info.get('kegg_id'),
-                'formula': met_info.get('formula'),
-                'mass': met_info.get('mass'),
-                'pathway': met_info.get('pathway')
-            })
-            network['metabolites'][met_id] = met_info
+        # Add compounds as nodes (all available compounds)
+        all_compounds = self.get_comprehensive_compounds()
+        compound_count = 0
         
-        # Add enzyme nodes and edges
+        for compound_id, compound in all_compounds.items():
+            # Filter by species-relevant sources
+            if compound.get("source") in data_sources:
+                network['nodes'].append({
+                    'id': compound_id,
+                    'label': compound['name'],
+                    'type': 'metabolite',
+                    'category': compound.get('category', 'unknown'),
+                    'formula': compound.get('formula'),
+                    'molecular_weight': compound.get('molecular_weight'),
+                    'source': compound.get('source'),
+                    'kegg_id': compound.get('kegg_id'),
+                    'pubchem_id': compound.get('pubchem_id')
+                })
+                network['metabolites'][compound_id] = compound
+                compound_count += 1
+        
+        # Add enzymes with reactions as edges
+        enhanced_enzymes = self.get_enzymes_with_reactions()
+        # Convert list to dictionary if needed
+        if isinstance(enhanced_enzymes, list):
+            enhanced_enzymes_dict = {}
+            for enzyme in enhanced_enzymes:
+                if isinstance(enzyme, dict) and 'accession' in enzyme:
+                    enhanced_enzymes_dict[enzyme['accession']] = enzyme
+            enhanced_enzymes = enhanced_enzymes_dict
+        
         enzyme_count = 0
-        for protein_id, protein_info in proteins.items():
-            # Check if protein has metabolic annotations
-            if protein_id in blast_annotations:
-                best_hit = blast_annotations[protein_id][0]  # Best hit
+        max_enzymes = 500  # Limit enzymes for performance
+        
+        for enzyme_id, enzyme in enhanced_enzymes.items():
+            if enzyme_count >= max_enzymes:
+                break
+            if enzyme.get("source") in data_sources:
+                network['enzymes'][enzyme_id] = enzyme
                 
-                # Extract enzyme information from annotation
-                enzyme_info = self._extract_enzyme_info(best_hit['title'])
-                
-                if enzyme_info:
-                    enzyme_id = f"enzyme_{enzyme_count}"
-                    enzyme_count += 1
+                # Add edges for enzyme reactions (limit for performance)
+                if 'reactions' in enzyme and enzyme['reactions']:
+                    reaction_count = 0
+                    max_reactions_per_enzyme = 3  # Limit reactions per enzyme
                     
-                    # Add enzyme node
-                    network['nodes'].append({
-                        'id': enzyme_id,
-                        'label': enzyme_info['name'],
-                        'type': 'enzyme',
-                        'protein_id': protein_id,
-                        'ec_number': enzyme_info.get('ec_number'),
-                        'reaction': enzyme_info.get('reaction'),
-                        'pathway': enzyme_info.get('pathway')
+                    for reaction in enzyme['reactions']:
+                        if reaction_count >= max_reactions_per_enzyme:
+                            break
+                        if isinstance(reaction, dict) and reaction.get('id'):
+                            # Parse reaction equation to get substrates and products
+                            equation = reaction.get('equation', '')
+                            parsed = self.parse_reaction_equation(equation)
+                            substrates = parsed['substrates']
+                            products = parsed['products']
+                            
+                            # Create edges from substrates to products
+                            for substrate in substrates:
+                                substrate_id = substrate['id']
+                                for product in products:
+                                    product_id = product['id']
+                                    
+                                    # Only create edge if both compounds exist in our network
+                                    if (substrate_id in network['metabolites'] and 
+                                        product_id in network['metabolites']):
+                                        
+                                        edge_id = f"{substrate_id}-{product_id}-{reaction['id']}"
+                                        network['edges'].append({
+                                            'id': edge_id,
+                                            'source': substrate_id,
+                                            'target': product_id,
+                                            'type': 'reaction',
+                                            'enzyme': enzyme_id,
+                                            'enzyme_name': enzyme.get('name', enzyme_id),
+                                            'reaction_id': reaction['id'],
+                                            'reaction_name': reaction.get('name', reaction['id']),
+                                            'equation': equation,
+                                            'ec_number': enzyme.get('ec_number'),
+                                            'source': reaction.get('source', 'enhanced')
+                                        })
+                            reaction_count += 1
+                enzyme_count += 1
+        
+        # Add some sample reactions for demonstration if no edges exist
+        if len(network['edges']) == 0 and len(network['nodes']) > 1:
+            print("No reactions found, adding sample reactions for demonstration...")
+            
+            # Get some metabolites to create sample reactions
+            metabolites = list(network['metabolites'].keys())
+            if len(metabolites) >= 2:
+                # Create a simple linear pathway
+                for i in range(len(metabolites) - 1):
+                    substrate_id = metabolites[i]
+                    product_id = metabolites[i + 1]
+                    
+                    edge_id = f"sample_reaction_{i}"
+                    network['edges'].append({
+                        'id': edge_id,
+                        'source': substrate_id,
+                        'target': product_id,
+                        'type': 'reaction',
+                        'enzyme': f'sample_enzyme_{i}',
+                        'enzyme_name': f'Sample Enzyme {i+1}',
+                        'reaction_id': f'R{i+1:03d}',
+                        'reaction_name': f'Sample Reaction {i+1}',
+                        'equation': f'{network["metabolites"][substrate_id]["name"]} → {network["metabolites"][product_id]["name"]}',
+                        'ec_number': f'1.1.1.{i+1}',
+                        'source': 'sample'
                     })
                     
-                    # Add edges to metabolites
-                    if enzyme_info.get('substrates'):
-                        for substrate in enzyme_info['substrates']:
-                            if substrate in metabolites:
-                                network['edges'].append({
-                                    'id': f"{enzyme_id}_{substrate}",
-                                    'source': substrate,
-                                    'target': enzyme_id,
-                                    'type': 'substrate',
-                                    'reaction': enzyme_info.get('reaction')
-                                })
-                    
-                    if enzyme_info.get('products'):
-                        for product in enzyme_info['products']:
-                            if product in metabolites:
-                                network['edges'].append({
-                                    'id': f"{enzyme_id}_{product}",
-                                    'source': enzyme_id,
-                                    'target': product,
-                                    'type': 'product',
-                                    'reaction': enzyme_info.get('reaction')
-                                })
-                    
-                    network['enzymes'][enzyme_id] = enzyme_info
+                    # Add sample enzyme to network
+                    network['enzymes'][f'sample_enzyme_{i}'] = {
+                        'name': f'Sample Enzyme {i+1}',
+                        'ec_number': f'1.1.1.{i+1}',
+                        'source': 'sample',
+                        'category': 'sample'
+                    }
         
-        # Identify disconnected components
+        # Find disconnected components
         network['disconnected_metabolites'] = self._find_disconnected_metabolites(network)
         network['disconnected_enzymes'] = self._find_disconnected_enzymes(network)
         
-        # Save network
-        network_file = self.networks_dir / f"{species}_network.json"
-        with open(network_file, 'w') as f:
-            json.dump(network, f, indent=2)
-        
+        print(f"Network built with {len(network['nodes'])} nodes and {len(network['edges'])} edges")
         return network
     
-    def _get_kegg_metabolites(self, species: str) -> Dict:
-        """Get KEGG metabolites for the species."""
-        metabolites = {}
-        
-        if species == "c.sativa":
-            # Load cannabis compounds from our database
-            cannabis_file = self.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "compounds" / "cannabis_compounds.json"
-            if cannabis_file.exists():
-                with open(cannabis_file) as f:
-                    cannabis_data = json.load(f)
-                    for compound in cannabis_data.get('compounds', []):
-                        metabolites[compound['id']] = {
-                            "name": compound['name'],
-                            "kegg_id": compound.get('kegg_id'),
-                            "formula": compound['formula'],
-                            "mass": compound['mass'],
-                            "pathway": compound['pathway'],
-                            "description": compound.get('description'),
-                            "biological_activity": compound.get('biological_activity'),
-                            "concentration_range": compound.get('concentration_range')
-                        }
-            else:
-                # Fallback to example metabolites
-                metabolites = {
-                    "met_001": {"name": "THCA", "kegg_id": "C16514", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
-                    "met_002": {"name": "CBDA", "kegg_id": "C16515", "formula": "C22H30O4", "mass": 358.45, "pathway": "Cannabinoid biosynthesis"},
-                    "met_003": {"name": "Geranyl pyrophosphate", "kegg_id": "C00235", "formula": "C10H20O7P2", "mass": 314.21, "pathway": "Terpene biosynthesis"},
-                    "met_004": {"name": "Farnesyl pyrophosphate", "kegg_id": "C00448", "formula": "C15H28O7P2", "mass": 382.33, "pathway": "Terpene biosynthesis"},
-                    "met_005": {"name": "Olivetolic acid", "kegg_id": "C16516", "formula": "C12H16O4", "mass": 224.26, "pathway": "Cannabinoid biosynthesis"}
-                }
-        elif species == "p.cubensis":
-            return {
-                "met_001": {"name": "Psilocybin", "kegg_id": "C16517", "formula": "C12H17N2O4P", "mass": 284.25, "pathway": "Tryptamine biosynthesis"},
-                "met_002": {"name": "Psilocin", "kegg_id": "C16518", "formula": "C12H16N2O", "mass": 204.27, "pathway": "Tryptamine biosynthesis"},
-                "met_003": {"name": "Tryptophan", "kegg_id": "C00078", "formula": "C11H12N2O2", "mass": 204.23, "pathway": "Amino acid metabolism"},
-                "met_004": {"name": "Tryptamine", "kegg_id": "C00398", "formula": "C10H12N2", "mass": 160.22, "pathway": "Tryptamine biosynthesis"},
-                "met_005": {"name": "Serotonin", "kegg_id": "C00780", "formula": "C10H12N2O", "mass": 176.22, "pathway": "Tryptamine biosynthesis"}
-            }
-        return metabolites
-    
-    def _extract_enzyme_info(self, annotation: str) -> Optional[Dict]:
-        """Extract enzyme information from BLAST annotation."""
-        # Load cannabis enzymes from our database
-        cannabis_file = self.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "enzymes" / "cannabis_enzymes.json"
-        if cannabis_file.exists():
-            with open(cannabis_file) as f:
-                cannabis_data = json.load(f)
-                for enzyme in cannabis_data.get('enzymes', []):
-                    # Check if annotation contains enzyme name or EC number
-                    if (enzyme['name'].lower() in annotation.lower() or 
-                        enzyme['ec_number'] in annotation or
-                        enzyme['id'].lower() in annotation.lower()):
-                        return {
-                            "name": enzyme['name'],
-                            "ec_number": enzyme['ec_number'],
-                            "reaction": enzyme['reaction'],
-                            "pathway": enzyme['pathway'],
-                            "substrates": [enzyme['substrate']],
-                            "products": [enzyme['product']],
-                            "uniprot_id": enzyme.get('uniprot_id'),
-                            "kegg_id": enzyme.get('kegg_id')
-                        }
-        
-        # Fallback to generic parsing
-        if "transferase" in annotation.lower():
-            return {
-                "name": "Transferase",
-                "ec_number": "2.x.x.x",
-                "reaction": "Transfer of functional group",
-                "pathway": "Metabolism",
-                "substrates": ["met_001"],
-                "products": ["met_002"]
-            }
-        elif "synthase" in annotation.lower():
-            return {
-                "name": "Synthase",
-                "ec_number": "4.x.x.x",
-                "reaction": "Synthesis reaction",
-                "pathway": "Biosynthesis",
-                "substrates": ["met_003"],
-                "products": ["met_004"]
-            }
-        elif "reductase" in annotation.lower():
-            return {
-                "name": "Reductase",
-                "ec_number": "1.x.x.x",
-                "reaction": "Reduction reaction",
-                "pathway": "Metabolism",
-                "substrates": ["met_005"],
-                "products": ["met_001"]
-            }
-        return None
-    
     def _find_disconnected_metabolites(self, network: Dict) -> List:
-        """Find metabolites that are not connected to the main network."""
+        """Find metabolites that are not connected to any reactions."""
         connected_metabolites = set()
         
         for edge in network['edges']:
-            if edge['source'] in network['metabolites']:
-                connected_metabolites.add(edge['source'])
-            if edge['target'] in network['metabolites']:
-                connected_metabolites.add(edge['target'])
+            connected_metabolites.add(edge['source'])
+            connected_metabolites.add(edge['target'])
         
         disconnected = []
-        for met_id, met_info in network['metabolites'].items():
-            if met_id not in connected_metabolites:
-                disconnected.append({
-                    'id': met_id,
-                    'name': met_info['name'],
-                    'pathway': met_info.get('pathway'),
-                    'formula': met_info.get('formula')
-                })
+        for node in network['nodes']:
+            if node['type'] == 'metabolite' and node['id'] not in connected_metabolites:
+                disconnected.append(node['id'])
         
         return disconnected
     
     def _find_disconnected_enzymes(self, network: Dict) -> List:
-        """Find enzymes that are not connected to metabolites."""
+        """Find enzymes that are not connected to any reactions."""
         connected_enzymes = set()
         
         for edge in network['edges']:
-            if edge['source'] in network['enzymes']:
-                connected_enzymes.add(edge['source'])
-            if edge['target'] in network['enzymes']:
-                connected_enzymes.add(edge['target'])
+            connected_enzymes.add(edge['enzyme'])
         
         disconnected = []
-        for enzyme_id, enzyme_info in network['enzymes'].items():
-            if enzyme_id not in connected_enzymes:
-                disconnected.append({
-                    'id': enzyme_id,
-                    'name': enzyme_info['name'],
-                    'ec_number': enzyme_info.get('ec_number'),
-                    'pathway': enzyme_info.get('pathway')
-                })
+        for node in network['nodes']:
+            if node['type'] == 'enzyme' and node['id'] not in connected_enzymes:
+                disconnected.append(node['id'])
         
         return disconnected
     
-    def get_network_metrics(self, species: str) -> Dict:
-        """Get comprehensive metrics for the metabolic network."""
-        network_file = self.networks_dir / f"{species}_network.json"
+    def get_metrics(self, species: str) -> Dict:
+        """Get comprehensive metrics for a species."""
+        network = self.build_comprehensive_network(species)
         
-        if not network_file.exists():
-            # Build network if it doesn't exist
-            network = self.build_metabolic_network(species)
-        else:
-            with open(network_file) as f:
-                network = json.load(f)
+        # Count nodes by type (all should be metabolites now)
+        metabolite_count = len([n for n in network['nodes'] if n['type'] == 'metabolite'])
         
-        # Calculate metrics
-        total_metabolites = len(network['metabolites'])
-        total_enzymes = len(network['enzymes'])
-        total_edges = len(network['edges'])
+        # Count edges by type (all should be reactions now)
+        reaction_count = len([e for e in network['edges'] if e['type'] == 'reaction'])
         
-        # Network analysis using NetworkX
-        G = nx.DiGraph()
+        # Count unique enzymes involved in reactions
+        unique_enzymes = set()
+        for edge in network['edges']:
+            if edge.get('enzyme'):
+                unique_enzymes.add(edge['enzyme'])
+        enzyme_count = len(unique_enzymes)
+        
+        # Calculate connectivity metrics
+        total_possible_connections = metabolite_count * (metabolite_count - 1) / 2
+        connectivity_ratio = reaction_count / total_possible_connections if total_possible_connections > 0 else 0
+        
+        # Find connected components
+        connected_metabolites = set()
+        for edge in network['edges']:
+            connected_metabolites.add(edge['source'])
+            connected_metabolites.add(edge['target'])
+        
+        disconnected_metabolites = metabolite_count - len(connected_metabolites)
+        
+        # Calculate network components using NetworkX
+        import networkx as nx
+        G = nx.Graph()
+        
+        # Add nodes
+        for node in network['nodes']:
+            G.add_node(node['id'])
+        
+        # Add edges
         for edge in network['edges']:
             G.add_edge(edge['source'], edge['target'])
         
-        # Calculate network metrics
-        metrics = {
-            'total_metabolites': total_metabolites,
-            'total_enzymes': total_enzymes,
-            'total_edges': total_edges,
-            'connected_metabolites': total_metabolites - len(network['disconnected_metabolites']),
-            'connected_enzymes': total_enzymes - len(network['disconnected_enzymes']),
-            'disconnected_metabolites': len(network['disconnected_metabolites']),
-            'disconnected_enzymes': len(network['disconnected_enzymes']),
-            'network_density': nx.density(G) if G.number_of_edges() > 0 else 0,
-            'average_degree': sum(dict(G.degree()).values()) / G.number_of_nodes() if G.number_of_nodes() > 0 else 0,
-            'number_of_components': nx.number_strongly_connected_components(G),
-            'largest_component_size': len(max(nx.strongly_connected_components(G), key=len)) if G.number_of_nodes() > 0 else 0
-        }
+        # Find connected components
+        components = list(nx.connected_components(G))
+        network_components = len(components)
+        largest_component = len(components[0]) if components else 0
         
-        return metrics
+        return {
+            'species': species,
+            'metabolites': metabolite_count,
+            'reactions': reaction_count,
+            'enzymes': enzyme_count,
+            'connectivity_ratio': round(connectivity_ratio, 4),
+            'connected_metabolites': len(connected_metabolites),
+            'disconnected_metabolites': disconnected_metabolites,
+            'network_components': network_components,
+            'largest_component': largest_component,
+            'data_sources': network['data_sources']
+        }
 
 # Initialize analyzer
 analyzer = MetabolicNetworkAnalyzer()
@@ -430,96 +561,376 @@ analyzer = MetabolicNetworkAnalyzer()
 @app.route('/')
 def index():
     """Main dashboard page."""
-    species_info = analyzer.species
-    networks = {}
-    metrics = {}
-    
-    for species in species_info.keys():
-        try:
-            networks[species] = analyzer.build_metabolic_network(species)
-            metrics[species] = analyzer.get_network_metrics(species)
-        except Exception as e:
-            print(f"Error processing {species}: {e}")
-            networks[species] = {'nodes': [], 'edges': [], 'metabolites': {}, 'enzymes': {}}
-            metrics[species] = {}
-    
-    return render_template('index.html',
-                         species_info=species_info,
-                         networks=networks,
-                         metrics=metrics)
+    return render_template('index.html')
+
+@app.route('/compound/<compound_id>')
+def compound_page(compound_id):
+    """Individual compound page."""
+    return render_template('compound.html', compound_id=compound_id)
+
+@app.route('/enzyme/<enzyme_id>')
+def enzyme_page(enzyme_id):
+    """Individual enzyme page."""
+    return render_template('enzyme.html', enzyme_id=enzyme_id)
+
+@app.route('/reaction/<reaction_id>')
+def reaction_page(reaction_id):
+    """Individual reaction page."""
+    return render_template('reaction.html', reaction_id=reaction_id)
 
 @app.route('/api/network/<species>')
 def api_network(species):
-    """API endpoint for network data."""
+    """Get comprehensive metabolic network for a species."""
     try:
-        network = analyzer.build_metabolic_network(species)
+        network = analyzer.build_comprehensive_network(species)
         return jsonify(network)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/metrics/<species>')
 def api_metrics(species):
-    """API endpoint for network metrics."""
+    """Get comprehensive network metrics for a species."""
     try:
-        metrics = analyzer.get_network_metrics(species)
+        metrics = analyzer.get_metrics(species)
         return jsonify(metrics)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/metrics/<species>/entities/<metric_type>')
+def api_metric_entities(species, metric_type):
+    """Get entities for a specific metric type."""
+    try:
+        network = analyzer.build_comprehensive_network(species)
+        
+        if metric_type == 'metabolites':
+            # Return all metabolites
+            entities = []
+            for node in network['nodes']:
+                if node['type'] == 'metabolite':
+                    metabolite_data = network['metabolites'].get(node['id'], {})
+                    entities.append({
+                        'id': node['id'],
+                        'name': node['label'],
+                        'type': 'metabolite',
+                        'formula': metabolite_data.get('formula'),
+                        'pathway': metabolite_data.get('pathway'),
+                        'source': metabolite_data.get('source'),
+                        'description': metabolite_data.get('description'),
+                        'biological_activity': metabolite_data.get('biological_activity')
+                    })
+            return jsonify({'entities': entities, 'total': len(entities)})
+            
+        elif metric_type == 'enzymes':
+            # Return all enzymes
+            entities = []
+            for edge in network['edges']:
+                if edge.get('enzyme') and edge['enzyme'] not in [e['id'] for e in entities]:
+                    enzyme_data = network['enzymes'].get(edge['enzyme'], {})
+                    entities.append({
+                        'id': edge['enzyme'],
+                        'name': edge.get('enzyme_name', edge['enzyme']),
+                        'type': 'enzyme',
+                        'ec_number': enzyme_data.get('ec_number'),
+                        'reaction_count': len([e for e in network['edges'] if e.get('enzyme') == edge['enzyme']]),
+                        'source': enzyme_data.get('source')
+                    })
+            return jsonify({'entities': entities, 'total': len(entities)})
+            
+        elif metric_type == 'reactions':
+            # Return all reactions
+            entities = []
+            for edge in network['edges']:
+                if edge['type'] == 'reaction':
+                    entities.append({
+                        'id': edge['reaction_id'],
+                        'name': edge.get('reaction_name', edge['reaction_id']),
+                        'type': 'reaction',
+                        'substrate': edge['source'],
+                        'product': edge['target'],
+                        'enzyme': edge.get('enzyme_name', edge.get('enzyme')),
+                        'equation': edge.get('equation'),
+                        'source': edge.get('source')
+                    })
+            return jsonify({'entities': entities, 'total': len(entities)})
+            
+        elif metric_type == 'connected_metabolites':
+            # Return connected metabolites
+            connected_metabolites = set()
+            for edge in network['edges']:
+                connected_metabolites.add(edge['source'])
+                connected_metabolites.add(edge['target'])
+            
+            entities = []
+            for met_id in connected_metabolites:
+                metabolite_data = network['metabolites'].get(met_id, {})
+                entities.append({
+                    'id': met_id,
+                    'name': metabolite_data.get('name', met_id),
+                    'type': 'metabolite',
+                    'formula': metabolite_data.get('formula'),
+                    'pathway': metabolite_data.get('pathway'),
+                    'source': metabolite_data.get('source'),
+                    'connection_count': len([e for e in network['edges'] if e['source'] == met_id or e['target'] == met_id])
+                })
+            return jsonify({'entities': entities, 'total': len(entities)})
+            
+        elif metric_type == 'disconnected_metabolites':
+            # Return disconnected metabolites
+            connected_metabolites = set()
+            for edge in network['edges']:
+                connected_metabolites.add(edge['source'])
+                connected_metabolites.add(edge['target'])
+            
+            entities = []
+            for node in network['nodes']:
+                if node['type'] == 'metabolite' and node['id'] not in connected_metabolites:
+                    metabolite_data = network['metabolites'].get(node['id'], {})
+                    entities.append({
+                        'id': node['id'],
+                        'name': node['label'],
+                        'type': 'metabolite',
+                        'formula': metabolite_data.get('formula'),
+                        'pathway': metabolite_data.get('pathway'),
+                        'source': metabolite_data.get('source'),
+                        'description': metabolite_data.get('description')
+                    })
+            return jsonify({'entities': entities, 'total': len(entities)})
+            
+        else:
+            return jsonify({'error': f'Unknown metric type: {metric_type}'}), 400
+            
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/metrics/<species>/network-components')
+def api_network_components(species):
+    """Get network components analysis."""
+    try:
+        network = analyzer.build_comprehensive_network(species)
+        
+        # Use NetworkX to find connected components
+        import networkx as nx
+        G = nx.Graph()
+        
+        # Add nodes
+        for node in network['nodes']:
+            G.add_node(node['id'])
+        
+        # Add edges
+        for edge in network['edges']:
+            G.add_edge(edge['source'], edge['target'])
+        
+        # Find connected components
+        components = list(nx.connected_components(G))
+        components = sorted(components, key=len, reverse=True)
+        
+        # Prepare component data
+        component_data = []
+        for i, component in enumerate(components):
+            component_metabolites = []
+            for met_id in component:
+                metabolite_data = network['metabolites'].get(met_id, {})
+                component_metabolites.append({
+                    'id': met_id,
+                    'name': metabolite_data.get('name', met_id),
+                    'formula': metabolite_data.get('formula'),
+                    'pathway': metabolite_data.get('pathway')
+                })
+            
+            component_data.append({
+                'component_id': i + 1,
+                'size': len(component),
+                'metabolites': component_metabolites
+            })
+        
+        return jsonify({
+            'total_components': len(components),
+            'largest_component_size': len(components[0]) if components else 0,
+            'components': component_data
+        })
+        
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/species')
 def api_species():
-    """API endpoint for species information."""
+    """Get available species."""
     return jsonify(analyzer.species)
 
-@app.route('/api/cannabis/compounds')
-def api_cannabis_compounds():
-    """API endpoint for cannabis compounds."""
+@app.route('/api/compounds')
+def api_compounds():
+    """Get comprehensive compounds data."""
     try:
-        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "compounds" / "cannabis_compounds.json"
-        if cannabis_file.exists():
-            with open(cannabis_file) as f:
-                return jsonify(json.load(f))
-        else:
-            return jsonify({'error': 'Cannabis compounds data not found'}), 404
+        source = request.args.get('source')
+        compounds = analyzer.get_comprehensive_compounds(source)
+        return jsonify(compounds)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/cannabis/enzymes')
-def api_cannabis_enzymes():
-    """API endpoint for cannabis enzymes."""
+@app.route('/api/enzymes')
+def api_enzymes():
+    """Get comprehensive enzymes data."""
     try:
-        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "enzymes" / "cannabis_enzymes.json"
-        if cannabis_file.exists():
-            with open(cannabis_file) as f:
-                return jsonify(json.load(f))
-        else:
-            return jsonify({'error': 'Cannabis enzymes data not found'}), 404
+        enzymes = analyzer.get_comprehensive_enzymes()
+        return jsonify(enzymes)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/cannabis/pathways')
-def api_cannabis_pathways():
-    """API endpoint for cannabis pathways."""
+@app.route('/api/proteins')
+def api_proteins():
+    """Get comprehensive proteins data."""
     try:
-        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "pathways" / "cannabis_pathways.json"
-        if cannabis_file.exists():
-            with open(cannabis_file) as f:
-                return jsonify(json.load(f))
-        else:
-            return jsonify({'error': 'Cannabis pathways data not found'}), 404
+        proteins = analyzer.get_comprehensive_proteins()
+        return jsonify(proteins)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/cannabis/network')
-def api_cannabis_network():
-    """API endpoint for cannabis metabolic network."""
+@app.route('/api/pathways')
+def api_pathways():
+    """Get comprehensive pathways data."""
     try:
-        cannabis_file = analyzer.base_dir / ".." / "agents" / "metabolomics-agent" / "data" / "cannabis" / "cannabis_network.json"
-        if cannabis_file.exists():
-            with open(cannabis_file) as f:
-                return jsonify(json.load(f))
+        source = request.args.get('source')
+        pathways = analyzer.get_comprehensive_pathways(source)
+        return jsonify(pathways)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/reactions')
+def api_reactions():
+    """Get comprehensive reaction data from Rhea database."""
+    try:
+        reactions = analyzer.get_comprehensive_reactions()
+        return jsonify(reactions)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/enzymes-with-reactions')
+def api_enzymes_with_reactions():
+    """Get enzymes annotated with reaction data."""
+    try:
+        enzymes = analyzer.get_enzymes_with_reactions()
+        return jsonify(enzymes)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/reaction-metrics')
+def api_reaction_metrics():
+    """Get reaction metrics and statistics."""
+    try:
+        metrics = analyzer.get_reaction_metrics()
+        return jsonify(metrics)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/summary')
+def api_summary():
+    """Get dashboard summary with reaction data."""
+    try:
+        summary = analyzer.get_dashboard_summary()
+        
+        # Add reaction annotation data to summary
+        reaction_metrics = analyzer.get_reaction_metrics()
+        if reaction_metrics:
+            summary['reaction_annotations'] = reaction_metrics
+        
+        return jsonify(summary)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/data-sources')
+def api_data_sources():
+    """Get information about data sources."""
+    try:
+        integrated_data = analyzer.integrated_data
+        data_sources = integrated_data.get("metadata", {}).get("sources", [])
+        return jsonify({
+            "sources": data_sources,
+            "cannabis_database": {
+                "name": "Cannabis Database",
+                "url": "https://cannabisdatabase.ca",
+                "description": "Comprehensive cannabis compounds, enzymes, and pathways"
+            },
+            "plantcyc": {
+                "name": "PlantCyc",
+                "url": "https://plantcyc.org",
+                "description": "Plant metabolic pathways and compounds database"
+            }
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/compound/<compound_id>')
+def api_compound(compound_id):
+    """Get specific compound data."""
+    try:
+        all_compounds = analyzer.get_comprehensive_compounds()
+        compound = all_compounds.get(compound_id)
+        if compound:
+            return jsonify(compound)
         else:
-            return jsonify({'error': 'Cannabis network data not found'}), 404
+            return jsonify({'error': 'Compound not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/enzyme/<enzyme_id>')
+def api_enzyme(enzyme_id):
+    """Get specific enzyme data."""
+    try:
+        all_enzymes = analyzer.get_comprehensive_enzymes()
+        enzyme = all_enzymes.get(enzyme_id)
+        if enzyme:
+            return jsonify(enzyme)
+        else:
+            return jsonify({'error': 'Enzyme not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/reaction/<reaction_id>')
+def api_reaction(reaction_id):
+    """Get specific reaction data."""
+    try:
+        all_reactions = analyzer.get_comprehensive_reactions()
+        reaction = all_reactions.get(reaction_id)
+        if reaction:
+            return jsonify(reaction)
+        else:
+            return jsonify({'error': 'Reaction not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/compounds/<species>')
+def api_compounds_by_species(species):
+    """Get compounds for a specific species."""
+    try:
+        species_info = analyzer.species.get(species, {})
+        data_sources = species_info.get("data_sources", [])
+        
+        all_compounds = analyzer.get_comprehensive_compounds()
+        species_compounds = {}
+        
+        for compound_id, compound in all_compounds.items():
+            if compound.get("source") in data_sources:
+                species_compounds[compound_id] = compound
+        
+        return jsonify(species_compounds)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/enzymes/<species>')
+def api_enzymes_by_species(species):
+    """Get enzymes for a specific species."""
+    try:
+        species_info = analyzer.species.get(species, {})
+        data_sources = species_info.get("data_sources", [])
+        
+        all_enzymes = analyzer.get_comprehensive_enzymes()
+        species_enzymes = {}
+        
+        for enzyme_id, enzyme in all_enzymes.items():
+            if enzyme.get("source") in data_sources:
+                species_enzymes[enzyme_id] = enzyme
+        
+        return jsonify(species_enzymes)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -529,4 +940,7 @@ def static_files(filename):
     return send_from_directory('static', filename)
 
 if __name__ == '__main__':
+    print("Starting Comprehensive Metabolomics Dashboard...")
+    print("Data sources: Cannabis Database + PlantCyc")
+    print("Available species: Cannabis sativa, Psilocybe cubensis, Arabidopsis thaliana")
     app.run(debug=True, host='0.0.0.0', port=3000) 

@@ -69,3 +69,18 @@
 [submodule "agents/customer-success-agent/data"]
         path = agents/customer-success-agent/data
         url = https://github.com/F8ai/customer-success-data.git
+[submodule "flowise"]
+	path = flowise
+	url = https://github.com/FlowiseAI/Flowise.git
+
+[submodule "agents/base-agent"]
+	path = agents/base-agent
+	url = https://github.com/F8ai/base-agent.git
+
+[submodule "agents/lms-agent"]
+	path = agents/lms-agent
+	url = https://github.com/F8ai/lms-agent.git
+
+[submodule "agents/metabolomics-agent"]
+	path = agents/metabolomics-agent
+	url = https://github.com/F8ai/metabolomics-agent.git

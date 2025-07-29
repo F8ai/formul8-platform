@@ -21,17 +21,25 @@ interface AgentFeature {
 }
 
 export class GitHubFeatureManager {
-  private octokit: Octokit;
+  private octokit: Octokit | null = null;
   private org = 'F8ai';
 
   constructor() {
-    if (!process.env.GITHUB_PAT) {
+    // In development mode, allow server to start without GitHub PAT
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const hasGitHubPat = process.env.GITHUB_PAT && process.env.GITHUB_PAT !== 'placeholder';
+    
+    if (!hasGitHubPat && !isDevelopment) {
       throw new Error('GITHUB_PAT environment variable is required');
     }
     
-    this.octokit = new Octokit({
-      auth: process.env.GITHUB_PAT,
-    });
+    if (hasGitHubPat) {
+      this.octokit = new Octokit({
+        auth: process.env.GITHUB_PAT,
+      });
+    } else {
+      console.log('⚠️  Development mode: GitHub features will be limited');
+    }
   }
 
   // Extract all functionalities from roadmap that need GitHub issues

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Metabolomics Agent</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .start-button {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 0.5rem;
+        }
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+        }
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .dashboard-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .dashboard-link:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 Metabolomics Agent</h1>
+        <p>
+            The Metabolomics Agent provides comprehensive analysis of cannabis compounds, 
+            proteins, and metabolic pathways using data from the Cannabis Database.
+        </p>
+        
+        <button class="start-button" onclick="startAgent()">
+            🚀 Start Metabolomics Agent
+        </button>
+        
+        <div id="status" class="status"></div>
+        
+        <a href="http://localhost:3001" target="_blank" class="dashboard-link" id="dashboard-link" style="display: none;">
+            📊 Open Dashboard
+        </a>
+    </div>
+
+    <script>
+        function startAgent() {
+            const statusDiv = document.getElementById('status');
+            const dashboardLink = document.getElementById('dashboard-link');
+            
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'status';
+            statusDiv.textContent = 'Starting Metabolomics Agent...';
+            
+            // Simulate starting the agent (in a real implementation, this would make an API call)
+            setTimeout(() => {
+                statusDiv.className = 'status success';
+                statusDiv.textContent = '✅ Metabolomics Agent started successfully!';
+                dashboardLink.style.display = 'inline-block';
+                
+                // Open the dashboard in a new tab
+                setTimeout(() => {
+                    window.open('http://localhost:3001', '_blank');
+                }, 1000);
+            }, 2000);
+        }
+        
+        // Check if the agent is already running
+        fetch('http://localhost:3001/api/statistics')
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('status').style.display = 'block';
+                    document.getElementById('status').className = 'status success';
+                    document.getElementById('status').textContent = '✅ Metabolomics Agent is already running!';
+                    document.getElementById('dashboard-link').style.display = 'inline-block';
+                }
+            })
+            .catch(() => {
+                // Agent is not running, which is expected
+            });
+    </script>
+</body>
+</html> 

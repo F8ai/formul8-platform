@@ -32,13 +32,9 @@ import GoodFORUseCase from "@/pages/use/goodfor";
 import Roadmap from "@/pages/roadmap";
 import ComplianceAgent from "@/pages/ComplianceAgent";
 import BaselineAssessment from "@/pages/BaselineAssessment";
-import BaselineTestingPage from "@/pages/BaselineTestingPage";
-import BaselineResultPage from "@/pages/BaselineResultPage";
-import BaselineTableViewer from "@/pages/BaselineTableViewer";
 import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
-import DataManagementPage from "@/pages/data-management";
-import ValidationPage from "@/pages/validation";
+import VoiceflowDashboard from "@/pages/voiceflow";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -52,25 +48,15 @@ function Router() {
       <Route path="/roadmap" component={Roadmap} />
       <Route path="/federated" component={Federated} />
       <Route path="/compute" component={ComputePage} />
-      <Route path="/data" component={DataManagementPage} />
-      <Route path="/validation" component={ValidationPage} />
+      <Route path="/voiceflow" component={VoiceflowDashboard} />
       <Route path="/agent-detail/:id">
         {params => <AgentDetail agentId={params.id} />}
-      </Route>
-      <Route path="/agent-detail/:id">
-        {params => <AgentDetailPage agentId={params.id} />}
       </Route>
       <Route path="/repo/:id">
         {params => <AgentRepo agentId={params.id} />}
       </Route>
       <Route path="/agent/compliance" component={ComplianceAgent} />
-      <Route path="/agent/:agentType/baseline/baseline-:resultId" component={BaselineResultPage} />
-      <Route path="/agent/:agentType/baseline" component={BaselineTableViewer} />
-      <Route path="/agent/:agentType/baseline-:resultId" component={BaselineResultPage} />
-      <Route path="/agent/:agentType/baseline-results" component={BaselineResultPage} />
-      <Route path="/agent/:agentType">
-        {params => <AgentDashboard agentType={params.agentType} />}
-      </Route>
+      <Route path="/agent/:agentType" component={AgentDashboard} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">
         {params => <TestResults agentId={params.agentId} />}
@@ -85,7 +71,6 @@ function Router() {
           <Route path="/agents-dashboard" component={AgentsDashboard} />
           <Route path="/baselines" component={BaselineManagement} />
           <Route path="/baseline-assessment" component={BaselineAssessment} />
-          <Route path="/baseline-testing" component={BaselineTestingPage} />
           <Route path="/langgraph" component={LangGraphDashboard} />
           <Route path="/corpus-qa" component={CorpusQA} />
           <Route path="/mvp" component={MVP} />

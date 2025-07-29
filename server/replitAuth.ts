@@ -8,15 +8,28 @@ import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 
-if (!process.env.REPLIT_DOMAINS) {
+// In development mode, allow server to start without Replit authentication
+const isDevelopment = process.env.NODE_ENV === 'development';
+const hasReplitDomains = process.env.REPLIT_DOMAINS;
+
+if (!hasReplitDomains && !isDevelopment) {
   throw new Error("Environment variable REPLIT_DOMAINS not provided");
 }
 
 const getOidcConfig = memoize(
   async () => {
+    // In development mode without proper Replit environment, return a mock config
+    if (isDevelopment && !hasReplitDomains) {
+      console.log('⚠️  Development mode: using mock OIDC config');
+      return {
+        issuer: { metadata: { authorization_endpoint: 'http://localhost:3001/mock-auth' } },
+        client_id: 'dev-client-id'
+      } as any;
+    }
+    
     return await client.discovery(
       new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc"),
-      process.env.REPL_ID!
+      process.env.REPL_ID || 'dev-repl-id'
     );
   },
   { maxAge: 3600 * 1000 }
@@ -24,6 +37,22 @@ const getOidcConfig = memoize(
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
+  
+  if (isDevelopment && !hasReplitDomains) {
+    // Use memory store for development
+    console.log('⚠️  Using memory session store for development');
+    return session({
+      secret: 'dev-secret-key',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: false, // Allow HTTP in development
+        maxAge: sessionTtl,
+      },
+    });
+  }
+  
   const pgStore = connectPg(session);
   const sessionStore = new pgStore({
     conString: process.env.DATABASE_URL,
@@ -71,6 +100,11 @@ export async function setupAuth(app: Express) {
   app.use(getSession());
   app.use(passport.initialize());
   app.use(passport.session());
+
+  if (isDevelopment && !hasReplitDomains) {
+    console.log('⚠️  Skipping Replit authentication setup for development');
+    return;
+  }
 
   const config = await getOidcConfig();
 
@@ -133,6 +167,12 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
+  // In development mode without auth, allow all requests
+  if (isDevelopment && !hasReplitDomains) {
+    console.log('⚠️  Development mode: bypassing authentication');
+    return next();
+  }
+
   const user = req.user as any;
 
   if (!req.isAuthenticated() || !user.expires_at) {

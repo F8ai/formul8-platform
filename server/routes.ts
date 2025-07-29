@@ -35,6 +35,7 @@ import { orchestrator } from "./services/orchestrator";
 import { registerBenchmarkRoutes } from "./routes/benchmarks";
 import { registerAgentManagementRoutes } from "./routes/agent-management";
 import federationRouter from "./routes/federation";
+import agentModesRouter from "./routes/agent-modes";
 import { z } from "zod";
 import fs from "fs";
 import OpenAI from "openai";
@@ -1633,6 +1634,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
             llmProvider: "openai",
             model: "gpt-4o"
           }
+        },
+        'metabolomics': {
+          name: "Metabolomics Agent",
+          description: "Cannabis metabolomics and compound analysis",
+          repository: "metabolomics-agent",
+          status: "active",
+          configuration: {
+            prompt: "You are a cannabis metabolomics expert. Provide guidance on compound analysis and metabolic pathways.",
+            tools: ["cannabis-database", "compound-analyzer", "pathway-visualization"],
+            ragEnabled: true,
+            llmProvider: "openai",
+            model: "gpt-4o"
+          }
         }
       };
 
@@ -2276,6 +2290,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Register agent management routes
   registerAgentManagementRoutes(app);
+  
+  // Agent modes routes
+  app.use('/api/agent-modes', agentModesRouter);
   
   // Register LangGraph routes
   app.use('/api/langgraph', langGraphRoutes);

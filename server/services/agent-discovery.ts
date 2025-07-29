@@ -33,30 +33,18 @@ export class AgentDiscoveryService {
       return this.cache;
     }
 
-    console.log('Discovering agents from local submodules...');
+    console.log('Discovering agents from local agents directory...');
 
     try {
-      // Scan for agent directories in the /agents directory
-      const agentsPath = join(process.cwd(), 'agents');
-      
-      // Check if agents directory exists
-      try {
-        await stat(agentsPath);
-      } catch (error) {
-        console.log('No /agents directory found, returning empty array');
-        this.cache = [];
-        this.lastFetch = now;
-        return [];
-      }
-      
+      // Scan for agent directories in the agents/ subdirectory
+      const projectRoot = process.cwd();
+      const agentsPath = join(projectRoot, 'agents');
       const entries = await readdir(agentsPath, { withFileTypes: true });
       
-      // Filter for all directories in /agents (not just ending with -agent)
-      // Exclude base-agent as it's a shared dependency, not an operational agent
+      // Filter for agent directories
       const agentDirs = entries.filter(entry => 
         entry.isDirectory() && 
-        !entry.name.startsWith('.') &&
-        entry.name !== 'base-agent'
+        entry.name.endsWith('-agent')
       );
 
       console.log(`Found ${agentDirs.length} agent directories:`, agentDirs.map(d => d.name));
@@ -66,7 +54,7 @@ export class AgentDiscoveryService {
       for (const agentDir of agentDirs) {
         try {
           console.log(`Processing agent directory: ${agentDir.name}`);
-          const agentInfo = await this.parseAgentDirectory(agentDir.name);
+          const agentInfo = await this.parseLocalAgentDirectory(agentDir.name);
           if (agentInfo) {
             agents.push(agentInfo);
             console.log(`✅ Successfully processed ${agentDir.name}`);
@@ -74,7 +62,7 @@ export class AgentDiscoveryService {
         } catch (error) {
           console.warn(`Failed to parse agent ${agentDir.name}:`, error);
           
-          // Fallback agent info from /agents directory
+          // Fallback agent info from local directory
           const fallbackAgent = {
             id: agentDir.name.replace('-agent', ''),
             name: agentDir.name,
@@ -106,7 +94,7 @@ export class AgentDiscoveryService {
     }
   }
 
-  private async parseAgentDirectory(agentName: string): Promise<DiscoveredAgent | null> {
+  private async parseLocalAgentDirectory(agentName: string): Promise<DiscoveredAgent | null> {
     try {
       const agentPath = join(process.cwd(), 'agents', agentName);
       

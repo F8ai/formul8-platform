@@ -19,6 +19,21 @@
 
 ---
 
+## Platform Cost Comparison: AWS vs. Local vs. OpenAI API
+
+| Platform      | Year 1 Cost      | Ongoing Annual | 3-Year TCO   | Pros                                              | Cons                                         | Best For                      |
+|--------------|------------------|----------------|--------------|---------------------------------------------------|----------------------------------------------|-------------------------------|
+| **AWS**      | $41,860          | $25,260        | $92,380      | Fully managed, scalable, high-availability, no hardware to maintain, easy to scale | High cost, vendor lock-in, less data control | Scaling, reliability, enterprise|
+| **Local (Startup)** | $800–$4,000   | Minimal        | $1,000–$6,000| Very low cost, full data control, no cloud bills  | Limited scale, DIY maintenance, no redundancy | Early-stage, pilots, dev/test  |
+| **OpenAI API**| $6,000–$36,000   | $6,000–$36,000 | $18,000–$108,000| No infra to manage, instant access to top models, pay-as-you-go | Usage costs can escalate, data leaves org, API limits | Fast prototyping, advanced LLM, variable workloads |
+
+**Summary:**
+- **AWS**: Best for production scale, reliability, and when you want to offload all maintenance. Most expensive.
+- **Local (Startup)**: Best for early-stage teams, pilots, and when you need full data control at the lowest cost. Limited scalability.
+- **OpenAI API**: Best for rapid prototyping, leveraging state-of-the-art LLMs, and when you want zero infrastructure. Costs scale with usage and data leaves your environment.
+
+---
+
 ## Agent Overview & Compute Profiles
 
 ### 1. Compliance Agent

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Metrics Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .clickable-metric {
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clickable-metric::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease-in-out;
+        }
+
+        .clickable-metric:hover::before {
+            left: 100%;
+        }
+
+        .clickable-metric:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #007bff;
+        }
+
+        .clickable-metric:active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Clickable Network Metrics Test</h1>
+        <p class="text-muted">Click on any metric tile to view the underlying entities</p>
+        
+        <div class="row" id="metrics-content">
+            <!-- Metrics will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Modal for displaying entities -->
+    <div class="modal fade" id="metricEntitiesModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <!-- Modal content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load metrics when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMetrics('c.sativa');
+        });
+
+        function loadMetrics(species) {
+            fetch(`http://localhost:3000/api/metrics/${species}`)
+                .then(response => response.json())
+                .then(metrics => {
+                    displayMetrics(metrics, species);
+                })
+                .catch(error => {
+                    console.error('Error loading metrics:', error);
+                    document.getElementById('metrics-content').innerHTML = 
+                        '<div class="col-12"><div class="alert alert-danger">Failed to load metrics</div></div>';
+                });
+        }
+
+        function displayMetrics(metrics, species) {
+            const metricsData = [
+                {
+                    title: 'Total Metabolites',
+                    value: metrics.metabolites || 0,
+                    description: 'Compounds in network',
+                    icon: 'fas fa-atom',
+                    color: 'primary',
+                    metricType: 'metabolites',
+                    clickable: true
+                },
+                {
+                    title: 'Total Enzymes',
+                    value: metrics.enzymes || 0,
+                    description: 'Proteins in network',
+                    icon: 'fas fa-dna',
+                    color: 'success',
+                    metricType: 'enzymes',
+                    clickable: true
+                },
+                {
+                    title: 'Total Reactions',
+                    value: metrics.reactions || 0,
+                    description: 'Metabolic reactions',
+                    icon: 'fas fa-exchange-alt',
+                    color: 'info',
+                    metricType: 'reactions',
+                    clickable: true
+                },
+                {
+                    title: 'Network Density',
+                    value: metrics.connectivity_ratio || 0,
+                    description: 'Connection density',
+                    icon: 'fas fa-project-diagram',
+                    color: 'warning',
+                    metricType: 'network_density',
+                    clickable: false
+                },
+                {
+                    title: 'Disconnected Metabolites',
+                    value: metrics.disconnected_metabolites || 0,
+                    description: 'Unconnected compounds',
+                    icon: 'fas fa-unlink',
+                    color: 'danger',
+                    metricType: 'disconnected_metabolites',
+                    clickable: true
+                },
+                {
+                    title: 'Connected Metabolites',
+                    value: metrics.connected_metabolites || 0,
+                    description: 'Connected compounds',
+                    icon: 'fas fa-link',
+                    color: 'success',
+                    metricType: 'connected_metabolites',
+                    clickable: true
+                },
+                {
+                    title: 'Network Components',
+                    value: metrics.network_components || 0,
+                    description: 'Connected subgraphs',
+                    icon: 'fas fa-sitemap',
+                    color: 'secondary',
+                    metricType: 'network_components',
+                    clickable: true
+                },
+                {
+                    title: 'Largest Component',
+                    value: metrics.largest_component || 0,
+                    description: 'Main network size',
+                    icon: 'fas fa-expand',
+                    color: 'dark',
+                    metricType: 'largest_component',
+                    clickable: true
+                }
+            ];
+
+            document.getElementById('metrics-content').innerHTML = metricsData.map(metric => `
+                <div class="col-md-3 mb-3">
+                    <div class="card text-center ${metric.clickable ? 'clickable-metric' : ''}" 
+                         ${metric.clickable ? `onclick="showMetricEntities('${metric.metricType}', '${metric.title}', '${species}')"` : ''}
+                         style="${metric.clickable ? 'cursor: pointer; transition: transform 0.2s ease-in-out;' : ''}">
+                        <div class="card-body">
+                            <i class="${metric.icon} fa-2x text-${metric.color} mb-2"></i>
+                            <h4 class="card-title text-${metric.color}">${metric.value}</h4>
+                            <h6 class="card-subtitle mb-2 text-muted">${metric.title}</h6>
+                            <p class="card-text small">${metric.description}</p>
+                            ${metric.clickable ? '<small class="text-muted"><i class="fas fa-mouse-pointer me-1"></i>Click to view</small>' : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showMetricEntities(metricType, metricTitle, species) {
+            let endpoint = '';
+            if (metricType === 'network_components') {
+                endpoint = `http://localhost:3000/api/metrics/${species}/network-components`;
+            } else {
+                endpoint = `http://localhost:3000/api/metrics/${species}/entities/${metricType}`;
+            }
+            
+            fetch(endpoint)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                        return;
+                    }
+                    
+                    let modalContent = '';
+                    
+                    if (metricType === 'network_components') {
+                        modalContent = `
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-sitemap me-2"></i>
+                                    ${metricTitle} - ${species}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="card bg-light">
+                                            <div class="card-body text-center">
+                                                <h4 class="text-primary">${data.total_components}</h4>
+                                                <p class="mb-0">Total Components</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card bg-light">
+                                            <div class="card-body text-center">
+                                                <h4 class="text-success">${data.largest_component_size}</h4>
+                                                <p class="mb-0">Largest Component</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6>Component Details:</h6>
+                                <div class="accordion" id="componentsAccordion">
+                        `;
+                        
+                        data.components.forEach((component, index) => {
+                            modalContent += `
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#component${index}">
+                                            Component ${component.component_id} (${component.size} metabolites)
+                                        </button>
+                                    </h2>
+                                    <div id="component${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" data-bs-parent="#componentsAccordion">
+                                        <div class="accordion-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Formula</th>
+                                                            <th>Pathway</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                            `;
+                            
+                            component.metabolites.forEach(metabolite => {
+                                modalContent += `
+                                    <tr>
+                                        <td>${metabolite.name}</td>
+                                        <td>${metabolite.formula || 'N/A'}</td>
+                                        <td>${metabolite.pathway || 'N/A'}</td>
+                                    </tr>
+                                `;
+                            });
+                            
+                            modalContent += `
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        modalContent += `
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        const entities = data.entities || [];
+                        
+                        modalContent = `
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-list me-2"></i>
+                                    ${metricTitle} - ${species}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Showing ${entities.length} entities
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Details</th>
+                                                <th>Source</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                        `;
+                        
+                        entities.slice(0, 50).forEach(entity => { // Show first 50 entities
+                            let details = '';
+                            if (entity.type === 'metabolite') {
+                                details = entity.formula || entity.pathway || 'N/A';
+                            } else if (entity.type === 'enzyme') {
+                                details = entity.ec_number || `Reactions: ${entity.reaction_count}` || 'N/A';
+                            } else if (entity.type === 'reaction') {
+                                details = `${entity.substrate} → ${entity.product}`;
+                            }
+                            
+                            modalContent += `
+                                <tr>
+                                    <td><strong>${entity.name}</strong></td>
+                                    <td><span class="badge bg-${entity.type === 'metabolite' ? 'primary' : entity.type === 'enzyme' ? 'success' : 'info'}">${entity.type}</span></td>
+                                    <td>${details}</td>
+                                    <td><span class="badge bg-secondary">${entity.source || 'Unknown'}</span></td>
+                                </tr>
+                            `;
+                        });
+                        
+                        if (entities.length > 50) {
+                            modalContent += `
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">
+                                        <em>Showing first 50 of ${entities.length} entities</em>
+                                    </td>
+                                </tr>
+                            `;
+                        }
+                        
+                        modalContent += `
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    document.querySelector('#metricEntitiesModal .modal-content').innerHTML = modalContent;
+                    const modal = new bootstrap.Modal(document.getElementById('metricEntitiesModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error('Error loading metric entities:', error);
+                    alert('Failed to load metric entities');
+                });
+        }
+    </script>
+</body>
+</html> 

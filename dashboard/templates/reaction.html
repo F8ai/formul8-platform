@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Details - Metabolomics Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <style>
+        .reaction-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .reaction-info-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        .reaction-info-card .card-header {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-bottom: 1px solid #dee2e6;
+            font-weight: 600;
+        }
+        .property-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+        .property-item:last-child {
+            border-bottom: none;
+        }
+        .property-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .property-value {
+            color: #6c757d;
+            text-align: right;
+        }
+        .back-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        .reaction-direction {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .reaction-equation {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1rem 0;
+        }
+        .reactant {
+            color: #007bff;
+        }
+        .product {
+            color: #28a745;
+        }
+        .arrow {
+            color: #6c757d;
+            margin: 0 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Reaction Header -->
+    <div class="reaction-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <a href="/" class="back-button me-3">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                    </a>
+                    <h1 id="reaction-name">Loading...</h1>
+                    <p class="mb-0" id="reaction-id">ID: {{ reaction_id }}</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="reaction-direction" id="reaction-direction">Direction</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="loading" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <div id="reaction-content" style="display: none;">
+            <!-- Reaction Equation -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="reaction-equation" id="reaction-equation">
+                        <!-- Reaction equation will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Basic Information -->
+                <div class="col-md-6">
+                    <div class="reaction-info-card">
+                        <div class="card-header">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Basic Information
+                        </div>
+                        <div class="card-body">
+                            <div class="property-item">
+                                <span class="property-label">Rhea ID</span>
+                                <span class="property-value" id="rhea-id"></span>
+                            </div>
+                            <div class="property-item">
+                                <span class="property-label">Direction</span>
+                                <span class="property-value" id="direction"></span>
+                            </div>
+                            <div class="property-item">
+                                <span class="property-label">Status</span>
+                                <span class="property-value" id="status"></span>
+                            </div>
+                            <div class="property-item">
+                                <span class="property-label">Reaction Type</span>
+                                <span class="property-value" id="reaction-type"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enzyme Information -->
+                <div class="col-md-6">
+                    <div class="reaction-info-card">
+                        <div class="card-header">
+                            <i class="fas fa-cogs me-2"></i>
+                            Enzyme Information
+                        </div>
+                        <div class="card-body">
+                            <div class="property-item">
+                                <span class="property-label">EC Number</span>
+                                <span class="property-value" id="ec-number"></span>
+                            </div>
+                            <div class="property-item">
+                                <span class="property-label">Enzyme Name</span>
+                                <span class="property-value" id="enzyme-name"></span>
+                            </div>
+                            <div class="property-item">
+                                <span class="property-label">Enzyme Class</span>
+                                <span class="property-value" id="enzyme-class"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reactants -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="reaction-info-card">
+                        <div class="card-header">
+                            <i class="fas fa-arrow-right me-2"></i>
+                            Reactants
+                        </div>
+                        <div class="card-body">
+                            <div id="reactants-container">
+                                <!-- Reactants will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="reaction-info-card">
+                        <div class="card-header">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            Products
+                        </div>
+                        <div class="card-body">
+                            <div id="products-container">
+                                <!-- Products will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cross References -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="reaction-info-card">
+                        <div class="card-header">
+                            <i class="fas fa-external-link-alt me-2"></i>
+                            Cross References
+                        </div>
+                        <div class="card-body">
+                            <div id="cross-references-container">
+                                <!-- Cross references will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const reactionId = '{{ reaction_id }}';
+        
+        // Load reaction data
+        async function loadReactionData() {
+            try {
+                const response = await fetch(`/api/reaction/${reactionId}`);
+                if (!response.ok) {
+                    throw new Error('Reaction not found');
+                }
+                
+                const reaction = await response.json();
+                displayReactionData(reaction);
+            } catch (error) {
+                console.error('Error loading reaction data:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Error loading reaction data: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function displayReactionData(reaction) {
+            // Update header
+            document.getElementById('reaction-name').textContent = reaction.name || reaction.rhea_id || 'Unknown';
+            document.getElementById('reaction-direction').textContent = reaction.direction || 'Unknown';
+            
+            // Update basic information
+            document.getElementById('rhea-id').textContent = reaction.rhea_id || 'N/A';
+            document.getElementById('direction').textContent = reaction.direction || 'N/A';
+            document.getElementById('status').textContent = reaction.status || 'N/A';
+            document.getElementById('reaction-type').textContent = reaction.reaction_type || 'N/A';
+            
+            // Update enzyme information
+            document.getElementById('ec-number').textContent = reaction.ec_number || 'N/A';
+            document.getElementById('enzyme-name').textContent = reaction.enzyme_name || 'N/A';
+            document.getElementById('enzyme-class').textContent = reaction.enzyme_class || 'N/A';
+            
+            // Update reaction equation
+            const equationContainer = document.getElementById('reaction-equation');
+            if (reaction.reactants && reaction.products) {
+                const reactants = reaction.reactants.map(r => `<span class="reactant">${r.name || r.id}</span>`).join(' + ');
+                const products = reaction.products.map(p => `<span class="product">${p.name || p.id}</span>`).join(' + ');
+                const arrow = reaction.direction === 'REVERSIBLE' ? '⇌' : '→';
+                
+                equationContainer.innerHTML = `
+                    <span class="reactant">${reactants}</span>
+                    <span class="arrow">${arrow}</span>
+                    <span class="product">${products}</span>
+                `;
+            } else {
+                equationContainer.innerHTML = '<p class="text-muted">No equation information available</p>';
+            }
+            
+            // Update reactants
+            const reactantsContainer = document.getElementById('reactants-container');
+            if (reaction.reactants && reaction.reactants.length > 0) {
+                reactantsContainer.innerHTML = reaction.reactants.map(reactant => `
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>${reactant.name || reactant.id}</span>
+                        <a href="/compound/${reactant.id}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-external-link-alt me-1"></i>View
+                        </a>
+                    </div>
+                `).join('');
+            } else {
+                reactantsContainer.innerHTML = '<p class="text-muted">No reactants information</p>';
+            }
+            
+            // Update products
+            const productsContainer = document.getElementById('products-container');
+            if (reaction.products && reaction.products.length > 0) {
+                productsContainer.innerHTML = reaction.products.map(product => `
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span>${product.name || product.id}</span>
+                        <a href="/compound/${product.id}" class="btn btn-sm btn-outline-success">
+                            <i class="fas fa-external-link-alt me-1"></i>View
+                        </a>
+                    </div>
+                `).join('');
+            } else {
+                productsContainer.innerHTML = '<p class="text-muted">No products information</p>';
+            }
+            
+            // Update cross references
+            const crossRefsContainer = document.getElementById('cross-references-container');
+            if (reaction.cross_references && Object.keys(reaction.cross_references).length > 0) {
+                crossRefsContainer.innerHTML = Object.entries(reaction.cross_references).map(([db, id]) => `
+                    <span class="badge bg-secondary me-2 mb-2">${db}: ${id}</span>
+                `).join('');
+            } else {
+                crossRefsContainer.innerHTML = '<p class="text-muted">No cross references available</p>';
+            }
+            
+            // Show content and hide loading
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('reaction-content').style.display = 'block';
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadReactionData);
+    </script>
+</body>
+</html> 
