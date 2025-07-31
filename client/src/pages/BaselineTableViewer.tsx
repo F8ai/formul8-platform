@@ -650,6 +650,51 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
               ))}
             </SelectContent>
           </Select>
+          
+          <Button
+            variant="outline"
+            onClick={() => {
+              const visibleQuestions = filteredTestResults.map(row => row.questionId);
+              if (editingQuestions.size === 0) {
+                // Start editing all visible questions
+                setEditingQuestions(new Set(visibleQuestions));
+                const newEditingData: Record<number, Partial<BaselineQuestion>> = {};
+                filteredTestResults.forEach(row => {
+                  newEditingData[row.questionId] = {
+                    question: row.question,
+                    expected_answer: row.expected_answer,
+                    category: row.category,
+                    difficulty: row.difficulty,
+                    state: row.state
+                  };
+                });
+                setEditingData(newEditingData);
+              } else {
+                // Stop editing all
+                setEditingQuestions(new Set());
+                setEditingData({});
+              }
+            }}
+            className="flex items-center gap-2"
+          >
+            <Edit className="h-4 w-4" />
+            {editingQuestions.size === 0 ? 'Edit Mode' : 'Cancel Edits'}
+          </Button>
+          
+          {editingQuestions.size > 0 && (
+            <Button
+              onClick={() => {
+                // Save all editing questions
+                editingQuestions.forEach(questionId => {
+                  saveQuestionEdit(questionId);
+                });
+              }}
+              className="flex items-center gap-2"
+            >
+              <Save className="h-4 w-4" />
+              Save All ({editingQuestions.size})
+            </Button>
+          )}
         </div>
 
         {/* Test Results Table */}
@@ -719,20 +764,25 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                               <TableRow key={`${row.questionId}-${row.model}`} className="border-l-4 border-l-blue-200 dark:border-l-blue-800">
                           <TableCell className="min-w-[500px] max-w-[600px] align-top">
                             {isEditing ? (
-                              <div className="space-y-2">
-                                <Textarea
-                                  value={editData?.question || row.question}
-                                  onChange={(e) => updateEditingData(row.questionId, 'question', e.target.value)}
-                                  className="text-sm"
-                                  rows={3}
-                                />
+                              <div className="space-y-3 p-3 border-2 border-blue-200 dark:border-blue-800 rounded-lg bg-blue-50/30 dark:bg-blue-900/20">
                                 <div>
-                                  <label className="text-xs font-medium">Expected Answer:</label>
+                                  <label className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 block">Question:</label>
+                                  <Textarea
+                                    value={editData?.question || row.question}
+                                    onChange={(e) => updateEditingData(row.questionId, 'question', e.target.value)}
+                                    className="text-sm border-blue-300 focus:border-blue-500"
+                                    rows={3}
+                                    placeholder="Enter your question..."
+                                  />
+                                </div>
+                                <div>
+                                  <label className="text-sm font-medium text-blue-700 dark:text-blue-300 mb-2 block">Expected Answer:</label>
                                   <Textarea
                                     value={editData?.expected_answer || row.expected_answer}
                                     onChange={(e) => updateEditingData(row.questionId, 'expected_answer', e.target.value)}
-                                    className="text-xs mt-1"
+                                    className="text-sm border-blue-300 focus:border-blue-500"
                                     rows={4}
+                                    placeholder="Enter the expected answer..."
                                   />
                                 </div>
                               </div>
@@ -763,36 +813,60 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                           </TableCell>
                           <TableCell className="align-top">
                             {isEditing ? (
-                              <Input
-                                value={editData?.category || row.category}
-                                onChange={(e) => updateEditingData(row.questionId, 'category', e.target.value)}
-                                className="text-xs h-8"
-                              />
+                              <div className="p-2 border border-blue-200 rounded bg-blue-50/20 dark:bg-blue-900/10">
+                                <Input
+                                  value={editData?.category || row.category}
+                                  onChange={(e) => updateEditingData(row.questionId, 'category', e.target.value)}
+                                  className="text-xs h-8 border-blue-300 focus:border-blue-500"
+                                  placeholder="Category"
+                                />
+                              </div>
                             ) : (
-                              <Badge variant="outline" className="text-xs">
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs cursor-pointer hover:bg-gray-100"
+                                onClick={() => startEditingQuestion(row.questionId, {
+                                  id: row.questionId,
+                                  question: row.question,
+                                  expected_answer: row.expected_answer,
+                                  category: row.category,
+                                  difficulty: row.difficulty,
+                                  state: row.state
+                                } as BaselineQuestion)}
+                              >
                                 {row.category}
                               </Badge>
                             )}
                           </TableCell>
                           <TableCell className="align-top">
                             {isEditing ? (
-                              <Select 
-                                value={editData?.difficulty || row.difficulty}
-                                onValueChange={(value) => updateEditingData(row.questionId, 'difficulty', value)}
-                              >
-                                <SelectTrigger className="h-8 text-xs">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="basic">Basic</SelectItem>
-                                  <SelectItem value="intermediate">Intermediate</SelectItem>
-                                  <SelectItem value="advanced">Advanced</SelectItem>
-                                </SelectContent>
-                              </Select>
+                              <div className="p-2 border border-blue-200 rounded bg-blue-50/20 dark:bg-blue-900/10">
+                                <Select 
+                                  value={editData?.difficulty || row.difficulty}
+                                  onValueChange={(value) => updateEditingData(row.questionId, 'difficulty', value)}
+                                >
+                                  <SelectTrigger className="h-8 text-xs border-blue-300 focus:border-blue-500">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="basic">Basic</SelectItem>
+                                    <SelectItem value="intermediate">Intermediate</SelectItem>
+                                    <SelectItem value="advanced">Advanced</SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </div>
                             ) : (
                               <Badge 
                                 variant="secondary" 
-                                className={`text-xs ${getDifficultyBadgeColor(row.difficulty)}`}
+                                className={`text-xs cursor-pointer hover:opacity-80 ${getDifficultyBadgeColor(row.difficulty)}`}
+                                onClick={() => startEditingQuestion(row.questionId, {
+                                  id: row.questionId,
+                                  question: row.question,
+                                  expected_answer: row.expected_answer,
+                                  category: row.category,
+                                  difficulty: row.difficulty,
+                                  state: row.state
+                                } as BaselineQuestion)}
                               >
                                 {row.difficulty}
                               </Badge>
@@ -800,13 +874,27 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                           </TableCell>
                           <TableCell className="align-top">
                             {isEditing ? (
-                              <Input
-                                value={editData?.state || row.state}
-                                onChange={(e) => updateEditingData(row.questionId, 'state', e.target.value)}
-                                className="text-xs h-8 w-16"
-                              />
+                              <div className="p-2 border border-blue-200 rounded bg-blue-50/20 dark:bg-blue-900/10">
+                                <Input
+                                  value={editData?.state || row.state}
+                                  onChange={(e) => updateEditingData(row.questionId, 'state', e.target.value)}
+                                  className="text-xs h-8 w-16 border-blue-300 focus:border-blue-500"
+                                  placeholder="State"
+                                />
+                              </div>
                             ) : (
-                              <Badge variant="outline" className="text-xs">
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs cursor-pointer hover:bg-gray-100"
+                                onClick={() => startEditingQuestion(row.questionId, {
+                                  id: row.questionId,
+                                  question: row.question,
+                                  expected_answer: row.expected_answer,
+                                  category: row.category,
+                                  difficulty: row.difficulty,
+                                  state: row.state
+                                } as BaselineQuestion)}
+                              >
                                 {row.state}
                               </Badge>
                             )}
