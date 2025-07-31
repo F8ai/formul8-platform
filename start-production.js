@@ -1,59 +1,68 @@
 #!/usr/bin/env node
 
-// Production start script that avoids esbuild binary issues
-// Uses tsx to run TypeScript directly, which is compatible with deployment platforms
+/**
+ * Production server startup script
+ * Uses tsx runtime instead of compiled code for Cloud Run compatibility
+ */
 
 import { spawn } from 'child_process';
 import { existsSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-// Set production environment
-process.env.NODE_ENV = 'production';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Ensure the PORT environment variable is properly set for deployment
-if (!process.env.PORT) {
-  process.env.PORT = '5000';
-}
+// Production environment configuration
+const PORT = process.env.PORT || 5000;
+const NODE_ENV = 'production';
 
 console.log('🚀 Starting Formul8 Platform in production mode...');
-console.log(`📍 Using port: ${process.env.PORT}`);
-console.log('🔧 Running TypeScript directly with tsx (no esbuild)');
+console.log(`📍 Port: ${PORT}`);
+console.log(`🌍 Environment: ${NODE_ENV}`);
 
-try {
-  // Check if server file exists
-  if (!existsSync('server/index.ts')) {
-    throw new Error('Server entry point not found: server/index.ts');
-  }
-
-  // Start the server using tsx (TypeScript executor)
-  const serverProcess = spawn('npx', ['tsx', 'server/index.ts'], {
-    stdio: 'inherit',
-    env: process.env
-  });
-
-  serverProcess.on('error', (error) => {
-    console.error('❌ Failed to start server:', error.message);
-    process.exit(1);
-  });
-
-  serverProcess.on('exit', (code) => {
-    if (code !== 0) {
-      console.error(`❌ Server exited with code ${code}`);
-      process.exit(code);
-    }
-  });
-
-  // Handle graceful shutdown
-  process.on('SIGTERM', () => {
-    console.log('📴 Received SIGTERM, shutting down gracefully...');
-    serverProcess.kill('SIGTERM');
-  });
-
-  process.on('SIGINT', () => {
-    console.log('📴 Received SIGINT, shutting down gracefully...');
-    serverProcess.kill('SIGINT');
-  });
-
-} catch (error) {
-  console.error('❌ Failed to start server:', error.message);
+// Verify server file exists
+const serverFile = join(__dirname, 'server', 'index.ts');
+if (!existsSync(serverFile)) {
+  console.error('❌ Server file not found:', serverFile);
   process.exit(1);
 }
+
+// Start server with tsx runtime
+const server = spawn('npx', ['tsx', 'server/index.ts'], {
+  cwd: __dirname,
+  stdio: 'inherit',
+  env: {
+    ...process.env,
+    NODE_ENV,
+    PORT: PORT.toString()
+  }
+});
+
+// Handle server process events
+server.on('error', (error) => {
+  console.error('❌ Failed to start server:', error.message);
+  process.exit(1);
+});
+
+server.on('exit', (code, signal) => {
+  if (signal) {
+    console.log(`🛑 Server terminated with signal: ${signal}`);
+  } else {
+    console.log(`🛑 Server exited with code: ${code}`);
+  }
+  process.exit(code || 0);
+});
+
+// Graceful shutdown handling
+process.on('SIGTERM', () => {
+  console.log('📡 Received SIGTERM, shutting down gracefully...');
+  server.kill('SIGTERM');
+});
+
+process.on('SIGINT', () => {
+  console.log('📡 Received SIGINT, shutting down gracefully...');
+  server.kill('SIGINT');
+});
+
+console.log('✅ Production server starting with tsx runtime...');

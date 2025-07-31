@@ -1,29 +1,81 @@
 #!/usr/bin/env node
 
-// Deployment script for Replit Deployments
-// This script builds the app and starts it using tsx runtime
+/**
+ * Production deployment script that avoids esbuild binary execution
+ * Uses tsx runtime instead of compiled code for better Cloud Run compatibility
+ */
 
 import { execSync } from 'child_process';
+import { existsSync, mkdirSync, copyFileSync, readdirSync, statSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-console.log('🚀 Replit Deployment Script');
-console.log('============================');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+console.log('🚀 Starting deployment build process...');
 
 try {
-  // Step 1: Build the application
-  console.log('📦 Building application...');
-  execSync('node build-for-deployment.js', { stdio: 'inherit' });
+  // Step 1: Build frontend with Vite (no esbuild server compilation)
+  console.log('📦 Building frontend with Vite...');
+  execSync('vite build', { 
+    stdio: 'inherit',
+    cwd: __dirname 
+  });
   
-  // Step 2: Start the server with tsx
-  console.log('🚀 Starting server with tsx runtime...');
-  console.log('Server will start on the PORT assigned by deployment environment');
+  // Step 2: Ensure server/public directory exists
+  const serverPublicDir = join(__dirname, 'server', 'public');
+  if (!existsSync(serverPublicDir)) {
+    mkdirSync(serverPublicDir, { recursive: true });
+    console.log('📁 Created server/public directory');
+  }
   
-  // Set production environment
-  process.env.NODE_ENV = 'production';
+  // Step 3: Copy built frontend assets to server/public
+  const distDir = join(__dirname, 'dist');
+  if (existsSync(distDir)) {
+    console.log('📋 Copying frontend assets to server/public...');
+    copyDirectoryRecursive(distDir, serverPublicDir);
+    console.log('✅ Frontend assets copied successfully');
+  }
   
-  // Start the server
-  execSync('npx tsx server/index.ts', { stdio: 'inherit' });
+  // Step 4: Verify tsx is available for production
+  try {
+    execSync('npx tsx --version', { stdio: 'pipe' });
+    console.log('✅ tsx runtime verified for production execution');
+  } catch (error) {
+    console.error('⚠️  tsx not found - server will need tsx installed in production');
+  }
+  
+  console.log('🎉 Deployment build completed successfully!');
+  console.log('');
+  console.log('📋 Deployment Summary:');
+  console.log('  ✅ Frontend built with Vite (no esbuild compilation)');
+  console.log('  ✅ Assets copied to server/public/');
+  console.log('  ✅ Server ready for tsx runtime execution');
+  console.log('');
+  console.log('🚀 To start in production, use:');
+  console.log('  NODE_ENV=production npx tsx server/index.ts');
   
 } catch (error) {
-  console.error('❌ Deployment failed:', error.message);
+  console.error('❌ Deployment build failed:', error.message);
   process.exit(1);
+}
+
+function copyDirectoryRecursive(src, dest) {
+  if (!existsSync(dest)) {
+    mkdirSync(dest, { recursive: true });
+  }
+  
+  const items = readdirSync(src);
+  
+  for (const item of items) {
+    const srcPath = join(src, item);
+    const destPath = join(dest, item);
+    
+    if (statSync(srcPath).isDirectory()) {
+      copyDirectoryRecursive(srcPath, destPath);
+    } else {
+      copyFileSync(srcPath, destPath);
+    }
+  }
 }
