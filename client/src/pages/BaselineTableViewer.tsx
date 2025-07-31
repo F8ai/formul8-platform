@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -90,6 +90,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
   const [baselineJson, setBaselineJson] = useState('');
   const [editingQuestions, setEditingQuestions] = useState<Set<number>>(new Set());
   const [editingData, setEditingData] = useState<Record<number, Partial<BaselineQuestion>>>({});
+  const [collapsedCategories, setCollapsedCategories] = useState<Set<string>>(new Set());
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -364,6 +365,19 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
     return Array.from(categorySet).sort();
   }, [testResultRows]);
 
+  // Group filtered results by category
+  const groupedResults = useMemo(() => {
+    const groups: Record<string, TestResultRow[]> = {};
+    filteredTestResults.forEach(row => {
+      const category = row.category || 'Uncategorized';
+      if (!groups[category]) {
+        groups[category] = [];
+      }
+      groups[category].push(row);
+    });
+    return groups;
+  }, [filteredTestResults]);
+
 
 
 
@@ -449,6 +463,20 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
       }
     }));
   };
+
+  const toggleCategoryCollapse = (category: string) => {
+    setCollapsedCategories(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(category)) {
+        newSet.delete(category);
+      } else {
+        newSet.add(category);
+      }
+      return newSet;
+    });
+  };
+
+  const isCategoryCollapsed = (category: string) => collapsedCategories.has(category);
 
 
 
@@ -659,12 +687,36 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {filteredTestResults.map((row, index) => {
-                      const isEditing = editingQuestions.has(row.questionId);
-                      const editData = editingData[row.questionId];
+                    {Object.entries(groupedResults).map(([category, categoryRows]) => {
+                      const isCollapsed = isCategoryCollapsed(category);
+                      const questionCount = categoryRows.length;
                       
                       return (
-                        <TableRow key={`${row.questionId}-${row.model}`}>
+                        <React.Fragment key={`category-${category}`}>
+                          {/* Category Header Row */}
+                          <TableRow className="bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-800/50">
+                            <TableCell colSpan={12} className="font-semibold">
+                              <button
+                                onClick={() => toggleCategoryCollapse(category)}
+                                className="flex items-center gap-2 w-full text-left"
+                              >
+                                {isCollapsed ? (
+                                  <ChevronRight className="h-4 w-4" />
+                                ) : (
+                                  <ChevronDown className="h-4 w-4" />
+                                )}
+                                {category} ({questionCount} question{questionCount !== 1 ? 's' : ''})
+                              </button>
+                            </TableCell>
+                          </TableRow>
+
+                          {/* Category Questions */}
+                          {!isCollapsed && categoryRows.map((row, index) => {
+                            const isEditing = editingQuestions.has(row.questionId);
+                            const editData = editingData[row.questionId];
+                            
+                            return (
+                              <TableRow key={`${row.questionId}-${row.model}`} className="border-l-4 border-l-blue-200 dark:border-l-blue-800">
                           <TableCell className="min-w-[500px] max-w-[600px] align-top">
                             {isEditing ? (
                               <div className="space-y-2">
@@ -871,8 +923,11 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                             </Button>
                           )}
                         </TableCell>
-                      </TableRow>
-                    )
+                              </TableRow>
+                            );
+                          })}
+                        </React.Fragment>
+                      );
                     })}
                   </TableBody>
                 </Table>
