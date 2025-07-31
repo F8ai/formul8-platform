@@ -20,7 +20,16 @@ try {
   if (existsSync('server/public')) {
     execSync('rm -rf server/public');
   }
-  execSync('cp -r dist/public server/public');
+  
+  // Check if dist/public exists, if not use dist directly
+  if (existsSync('dist/public')) {
+    execSync('cp -r dist/public server/public');
+  } else if (existsSync('dist')) {
+    execSync('mkdir -p server/public');
+    execSync('cp -r dist/* server/public/');
+  } else {
+    console.log('⚠️  No built frontend files found, continuing with backend-only setup');
+  }
 
   // Create a deployment-ready start script
   const deploymentStartScript = `#!/bin/bash
