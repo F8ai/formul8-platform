@@ -158,7 +158,7 @@ export class GitHubFeatureManager {
       "'Your PhD Formulator' Assistant": 'Guides THC/CBD ratios, terpene profiles, excipient selection based on internal formulation science'
     };
     
-    return descriptions[name] || `Advanced ${name.toLowerCase()} functionality for ${agent.replace('-agent', '')} operations`;
+    return descriptions[name as keyof typeof descriptions] || `Advanced ${name.toLowerCase()} functionality for ${agent.replace('-agent', '')} operations`;
   }
 
   private determinePriority(name: string, index: number): 'critical' | 'high' | 'medium' | 'low' {
@@ -185,7 +185,7 @@ export class GitHubFeatureManager {
       'SOP Verification': ['Template comparison engine', 'Diff highlighting system', 'Compliance checking']
     };
     
-    return specificSteps[name] || commonSteps;
+    return specificSteps[name as keyof typeof specificSteps] || commonSteps;
   }
 
   private identifyRequiredAPIs(name: string, agent: string): string[] {
@@ -196,7 +196,7 @@ export class GitHubFeatureManager {
       'Formula & Process Regulatory Check': ['Internal regulatory DB', 'State compliance APIs']
     };
     
-    return apiMappings[name] || ['Internal APIs', 'External data sources'];
+    return apiMappings[name as keyof typeof apiMappings] || ['Internal APIs', 'External data sources'];
   }
 
   private defineKPI(name: string, agent: string): string {
@@ -212,7 +212,7 @@ export class GitHubFeatureManager {
       'customer-success-agent': 'Customer Satisfaction'
     };
     
-    return kpiMappings[agent] || 'Performance Metric';
+    return kpiMappings[agent as keyof typeof kpiMappings] || 'Performance Metric';
   }
 
   // Comprehensive roadmap feature analysis based on the document

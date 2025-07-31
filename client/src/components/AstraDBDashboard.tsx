@@ -93,30 +93,21 @@ export default function AstraDBDashboard() {
   // Vector search mutation
   const vectorSearchMutation = useMutation({
     mutationFn: async (params: VectorSearchParams) => {
-      return await apiRequest('/api/astradb/search', {
-        method: 'POST',
-        body: JSON.stringify(params)
-      });
+      return await apiRequest('/api/astradb/search', 'POST', JSON.stringify(params));
     }
   });
 
   // Cross-agent search mutation
   const crossSearchMutation = useMutation({
     mutationFn: async (params: CrossAgentSearchParams) => {
-      return await apiRequest('/api/astradb/cross-search', {
-        method: 'POST',
-        body: JSON.stringify(params)
-      });
+      return await apiRequest('/api/astradb/cross-search', 'POST', JSON.stringify(params));
     }
   });
 
   // Migration mutation
   const migrationMutation = useMutation({
     mutationFn: async (params: { agentType?: string; verifyOnly?: boolean }) => {
-      return await apiRequest('/api/astradb/migrate', {
-        method: 'POST',
-        body: JSON.stringify(params)
-      });
+      return await apiRequest('/api/astradb/migrate', 'POST', JSON.stringify(params));
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/astradb/stats'] });
