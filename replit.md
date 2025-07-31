@@ -78,6 +78,17 @@ formul8-platform/
 
 ## Recent Updates
 
+### July 31, 2025 - Comprehensive Frontend and Backend Architecture Documentation ✅ COMPLETE
+- **Design Page Enhancement**: Updated `/design` page with comprehensive frontend and backend architecture information
+- **Frontend Architecture Details**: Added React 18, TypeScript, Vite, Tailwind CSS technology stack with component patterns and performance optimization strategies
+- **Backend Architecture Coverage**: Documented Node.js Express server, PostgreSQL database, OpenAI integration, and comprehensive API endpoints
+- **Project Structure Documentation**: Added detailed file structure for both frontend (client/) and backend (server/) with clear organization patterns
+- **Multi-Agent Architecture**: Documented 12-agent system with phase-based deployment (Phase 1: 6 agents, Phase 2: 3 agents, Phase 3: 3 agents)
+- **Technology Stack Overview**: Complete coverage of UI frameworks (Shadcn/ui, Radix UI), state management (TanStack Query), routing (Wouter), and authentication (Replit Auth)
+- **Infrastructure Details**: Comprehensive documentation of individual agent repositories, baseline testing system (203 questions), Git submodules integration
+- **Performance Metrics**: Multi-model support (OpenAI GPT-4o, Anthropic Claude, Google Gemini), cost optimization, and real-time performance tracking
+- **Development Patterns**: Atomic design principles, feature-based routing, real-time updates, mobile responsiveness, and accessibility compliance
+
 ### July 31, 2025 - Complete Baseline Generation System for All Agents ✅ COMPLETE
 - **Universal Baseline Coverage**: Successfully generated and fixed baseline.json files for all 12 agents with comprehensive cannabis industry question sets
 - **JSON Syntax Resolution**: Fixed critical JSON syntax errors in formulation-agent and spectra-agent baseline files that were preventing proper system functionality

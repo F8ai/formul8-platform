@@ -378,44 +378,221 @@ export default function Design() {
 
           {/* Architecture Tab */}
           <TabsContent value="architecture" className="space-y-6">
-            {/* AWS Infrastructure Overview */}
+            {/* Frontend Architecture */}
             <Card className="formul8-card">
               <CardHeader>
-                <CardTitle className="text-formul8-text-primary">AWS AI Infrastructure Overview</CardTitle>
+                <CardTitle className="text-formul8-text-primary">Frontend Architecture</CardTitle>
                 <CardDescription className="text-formul8-text-secondary">
-                  Enterprise-grade AI platform powered by Amazon SageMaker, Bedrock, Lambda, and supporting AWS services
+                  Modern React-based frontend with TypeScript, real-time updates, and comprehensive UI components
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                  <div className="bg-gradient-to-b from-orange-50 to-orange-100 border-2 border-orange-200 rounded-lg p-4 text-center">
-                    <div className="text-2xl mb-2">🧠</div>
-                    <div className="font-semibold text-orange-800">SageMaker</div>
-                    <div className="text-xs text-orange-600 mt-1">Model Training & Inference</div>
-                  </div>
                   <div className="bg-gradient-to-b from-blue-50 to-blue-100 border-2 border-blue-200 rounded-lg p-4 text-center">
-                    <div className="text-2xl mb-2">🏗️</div>
-                    <div className="font-semibold text-blue-800">Bedrock</div>
-                    <div className="text-xs text-blue-600 mt-1">Foundation Models</div>
+                    <div className="text-2xl mb-2">⚛️</div>
+                    <div className="font-semibold text-blue-800">React 18</div>
+                    <div className="text-xs text-blue-600 mt-1">Component Framework</div>
                   </div>
-                  <div className="bg-gradient-to-b from-green-50 to-green-100 border-2 border-green-200 rounded-lg p-4 text-center">
-                    <div className="text-2xl mb-2">⚡</div>
-                    <div className="font-semibold text-green-800">Lambda</div>
-                    <div className="text-xs text-green-600 mt-1">Serverless Orchestration</div>
+                  <div className="bg-gradient-to-b from-indigo-50 to-indigo-100 border-2 border-indigo-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">📘</div>
+                    <div className="font-semibold text-indigo-800">TypeScript</div>
+                    <div className="text-xs text-indigo-600 mt-1">Type Safety</div>
                   </div>
                   <div className="bg-gradient-to-b from-purple-50 to-purple-100 border-2 border-purple-200 rounded-lg p-4 text-center">
-                    <div className="text-2xl mb-2">📊</div>
-                    <div className="font-semibold text-purple-800">CloudWatch</div>
-                    <div className="text-xs text-purple-600 mt-1">Monitoring & Analytics</div>
+                    <div className="text-2xl mb-2">⚡</div>
+                    <div className="font-semibold text-purple-800">Vite</div>
+                    <div className="text-xs text-purple-600 mt-1">Build Tool</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-emerald-50 to-emerald-100 border-2 border-emerald-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🎨</div>
+                    <div className="font-semibold text-emerald-800">Tailwind CSS</div>
+                    <div className="text-xs text-emerald-600 mt-1">Styling Framework</div>
                   </div>
                 </div>
                 
-                <div className="bg-gray-50 border rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-3">AWS Service Integration Flow</h4>
-                  <div className="text-sm text-gray-600 space-y-2">
-                    <div>🔄 <strong>Training Pipeline:</strong> S3 Data → SageMaker Training Jobs → Model Registry → Bedrock Fine-tuning</div>
-                    <div>⚡ <strong>Inference Pipeline:</strong> API Gateway → Lambda Functions → SageMaker Endpoints → Agent Responses</div>
-                    <div>📈 <strong>Monitoring:</strong> CloudWatch Metrics → Alarms → Auto-scaling → Performance Optimization</div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Core Frontend Technologies</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div><strong>UI Framework:</strong> Shadcn/ui components built on Radix UI primitives</div>
+                      <div><strong>State Management:</strong> TanStack Query for server state management</div>
+                      <div><strong>Routing:</strong> Wouter for lightweight client-side routing</div>
+                      <div><strong>Authentication:</strong> Session-based auth with Replit Auth integration</div>
+                      <div><strong>Forms:</strong> React Hook Form with Zod validation</div>
+                      <div><strong>Data Fetching:</strong> TanStack Query with optimistic updates</div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Frontend Architecture Patterns</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div><strong>Component Structure:</strong> Atomic design with reusable UI components</div>
+                      <div><strong>Page Organization:</strong> Feature-based routing with dynamic parameters</div>
+                      <div><strong>Real-time Updates:</strong> Automatic data refreshing and live polling</div>
+                      <div><strong>Mobile Responsive:</strong> Touch-friendly interface with adaptive layouts</div>
+                      <div><strong>Performance:</strong> Code splitting and lazy loading for optimal speed</div>
+                      <div><strong>Accessibility:</strong> ARIA compliance and keyboard navigation</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Backend Architecture */}
+            <Card className="formul8-card">
+              <CardHeader>
+                <CardTitle className="text-formul8-text-primary">Backend Architecture</CardTitle>
+                <CardDescription className="text-formul8-text-secondary">
+                  Node.js Express server with PostgreSQL database, AI agent orchestration, and comprehensive API endpoints
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                  <div className="bg-gradient-to-b from-green-50 to-green-100 border-2 border-green-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🟢</div>
+                    <div className="font-semibold text-green-800">Node.js</div>
+                    <div className="text-xs text-green-600 mt-1">Runtime Environment</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-gray-50 to-gray-100 border-2 border-gray-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🚀</div>
+                    <div className="font-semibold text-gray-800">Express.js</div>
+                    <div className="text-xs text-gray-600 mt-1">Web Framework</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-blue-50 to-blue-100 border-2 border-blue-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🐘</div>
+                    <div className="font-semibold text-blue-800">PostgreSQL</div>
+                    <div className="text-xs text-blue-600 mt-1">Database</div>
+                  </div>
+                  <div className="bg-gradient-to-b from-orange-50 to-orange-100 border-2 border-orange-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🧠</div>
+                    <div className="font-semibold text-orange-800">OpenAI</div>
+                    <div className="text-xs text-orange-600 mt-1">AI Integration</div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Backend Technologies</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div><strong>Language:</strong> TypeScript with ES modules</div>
+                      <div><strong>Database ORM:</strong> Drizzle ORM with Neon serverless PostgreSQL</div>
+                      <div><strong>Authentication:</strong> Replit OpenID Connect with passport.js</div>
+                      <div><strong>Session Storage:</strong> PostgreSQL-backed sessions (connect-pg-simple)</div>
+                      <div><strong>AI Integration:</strong> OpenAI GPT-4o for agent responses</div>
+                      <div><strong>File System:</strong> Agent-specific baseline and configuration management</div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">API Architecture</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div><strong>RESTful APIs:</strong> Comprehensive CRUD operations for all agent data</div>
+                      <div><strong>Agent Management:</strong> Dynamic agent discovery and configuration</div>
+                      <div><strong>Baseline Testing:</strong> Real-time AI testing and performance metrics</div>
+                      <div><strong>File Operations:</strong> Baseline question editing and repository access</div>
+                      <div><strong>Real-time Updates:</strong> Live data synchronization and polling</div>
+                      <div><strong>Error Handling:</strong> Comprehensive validation and error responses</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Project Structure */}
+            <Card className="formul8-card">
+              <CardHeader>
+                <CardTitle className="text-formul8-text-primary">Project Structure</CardTitle>
+                <CardDescription className="text-formul8-text-secondary">
+                  Organized codebase with clear separation of concerns and modular architecture
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Frontend Structure</h4>
+                    <div className="text-xs font-mono text-gray-700 space-y-1">
+                      <div>client/</div>
+                      <div>&nbsp;&nbsp;├── src/</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── components/</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── ui/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Shadcn components</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── pages/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Application pages</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── hooks/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Custom React hooks</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── lib/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Utility functions</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── assets/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Static assets</div>
+                      <div>&nbsp;&nbsp;├── index.html</div>
+                      <div>&nbsp;&nbsp;└── vite.config.ts</div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Backend Structure</h4>
+                    <div className="text-xs font-mono text-gray-700 space-y-1">
+                      <div>server/</div>
+                      <div>&nbsp;&nbsp;├── routes/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# API route handlers</div>
+                      <div>&nbsp;&nbsp;├── services/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Business logic</div>
+                      <div>&nbsp;&nbsp;├── storage.ts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Database interface</div>
+                      <div>&nbsp;&nbsp;├── replitAuth.ts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Authentication</div>
+                      <div>&nbsp;&nbsp;└── index.ts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Server entry point</div>
+                      <div>shared/</div>
+                      <div>&nbsp;&nbsp;├── schema.ts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Database schemas</div>
+                      <div>&nbsp;&nbsp;└── types.ts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Shared types</div>
+                      <div>agents/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Specialized AI agents</div>
+                      <div>&nbsp;&nbsp;├── compliance-agent/</div>
+                      <div>&nbsp;&nbsp;├── formulation-agent/</div>
+                      <div>&nbsp;&nbsp;└── ...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 12 total agents</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Agent Architecture */}
+            <Card className="formul8-card">
+              <CardHeader>
+                <CardTitle className="text-formul8-text-primary">Multi-Agent Architecture</CardTitle>
+                <CardDescription className="text-formul8-text-secondary">
+                  Specialized AI agents with individual repositories, baseline testing, and comprehensive cannabis industry expertise
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🧪</div>
+                    <div className="font-semibold text-green-800">Phase 1 Agents</div>
+                    <div className="text-xs text-green-600 mt-1">Core Operations (6 agents)</div>
+                    <div className="text-xs text-green-700 mt-2">Compliance • Formulation • Marketing<br/>Operations • Sourcing • Patent</div>
+                  </div>
+                  <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🔬</div>
+                    <div className="font-semibold text-blue-800">Phase 2 Agents</div>
+                    <div className="text-xs text-blue-600 mt-1">Advanced Analytics (3 agents)</div>
+                    <div className="text-xs text-blue-700 mt-2">Science • Spectra • FTO Analysis</div>
+                  </div>
+                  <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 text-center">
+                    <div className="text-2xl mb-2">🎓</div>
+                    <div className="font-semibold text-purple-800">Phase 3 Agents</div>
+                    <div className="text-xs text-purple-600 mt-1">Education & Support (3 agents)</div>
+                    <div className="text-xs text-purple-700 mt-2">LMS • Customer Success • Metabolomics</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Agent Infrastructure</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div><strong>Individual Repositories:</strong> Each agent has its own GitHub repository for independent development</div>
+                      <div><strong>Baseline Testing:</strong> Comprehensive question sets (203 total questions) with AI grading system</div>
+                      <div><strong>Git Submodules:</strong> Integrated into main platform while maintaining independence</div>
+                      <div><strong>Performance Tracking:</strong> Real-time metrics, confidence scoring, and cost analysis</div>
+                      <div><strong>Configuration Management:</strong> Individual YAML configs and prompt engineering</div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Agent Capabilities</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div><strong>Multi-Model Support:</strong> OpenAI GPT-4o, Anthropic Claude, Google Gemini</div>
+                      <div><strong>Domain Specialization:</strong> Cannabis-specific knowledge bases and regulatory compliance</div>
+                      <div><strong>Cross-Verification:</strong> Agent-to-agent validation for production-ready answers</div>
+                      <div><strong>Real-time Testing:</strong> Continuous baseline evaluation with authentic API responses</div>
+                      <div><strong>Cost Optimization:</strong> Per-token pricing and performance optimization across providers</div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
