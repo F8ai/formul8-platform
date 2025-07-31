@@ -1470,136 +1470,175 @@ export default function Design() {
               </CardContent>
             </Card>
           </TabsContent>
+        </Tabs>
 
-          <TabsContent value="roadmap" className="space-y-6">
-            <Card className="formul8-card">
-              <CardHeader>
-                <CardTitle className="text-formul8-text-primary">Complete Implementation Plan</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">
-                  Comprehensive 25-week project roadmap with detailed cost analysis and Gantt chart visualization
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Project Overview */}
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-formul8-text-primary">Project Overview</h4>
-                    <div className="bg-formul8-primary/10 border border-formul8-primary rounded-lg p-4">
-                      <div className="text-center space-y-2">
-                        <div className="text-3xl font-bold text-green-600">$50,000</div>
-                        <div className="text-sm text-muted-foreground">Total project cost (50% discount applied)</div>
-                        <div className="text-xs text-muted-foreground">500 hours • 25 weeks • $100/hr effective rate</div>
-                      </div>
+        {/* Federated Formul8 Section */}
+        <Card className="formul8-card mt-8">
+          <CardHeader>
+            <CardTitle className="text-formul8-text-primary">Federated Formul8 Integration</CardTitle>
+            <CardDescription className="text-formul8-text-secondary">
+              Enterprise deployment with internal customer systems, LIMS integration, and hybrid cloud architecture
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              {/* Integration Overview */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-blue-800 mb-4">🏢 Enterprise Integration</h3>
+                  <div className="space-y-3 text-sm text-blue-700">
+                    <div><strong>LIMS Integration:</strong> Direct connection to Laboratory Information Management Systems for real-time test results</div>
+                    <div><strong>ERP Connectivity:</strong> Integration with enterprise resource planning systems for inventory and compliance tracking</div>
+                    <div><strong>Quality Management:</strong> Connection to QMS platforms for batch records, SOPs, and audit trails</div>
+                    <div><strong>Regulatory Compliance:</strong> Automated reporting to state tracking systems (METRC, BioTrace, Leaf Data)</div>
+                    <div><strong>Data Sovereignty:</strong> On-premises deployment options for sensitive data retention</div>
+                  </div>
+                </div>
+                <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+                  <h3 className="text-lg font-semibold text-green-800 mb-4">🔗 Hybrid Architecture</h3>
+                  <div className="space-y-3 text-sm text-green-700">
+                    <div><strong>Local Agents:</strong> Cannabis operators deploy agents on-premises at customer.formul8.ai subdomains</div>
+                    <div><strong>Cloud Intelligence:</strong> Access to centralized AI models and regulatory updates via formul8.ai cloud</div>
+                    <div><strong>Secure Communication:</strong> mTLS encryption between local and cloud agents with certificate-based authentication</div>
+                    <div><strong>Data Classification:</strong> Sensitive data stays local, while general queries leverage cloud intelligence</div>
+                    <div><strong>Federated Learning:</strong> Local insights contribute to global knowledge without exposing proprietary data</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* LIMS Integration Details */}
+              <div className="bg-gray-50 border rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">Laboratory Information Management Systems (LIMS)</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-3">Supported LIMS Platforms</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div>• LabWare LIMS</div>
+                      <div>• Thermo Fisher SampleManager</div>
+                      <div>• Agilent OpenLAB</div>
+                      <div>• STARLIMS</div>
+                      <div>• LabVantage</div>
+                      <div>• Custom REST APIs</div>
                     </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-sm font-medium">Setup & Planning</span>
-                        <span className="text-sm text-green-600">$2,000</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-sm font-medium">Training Data</span>
-                        <span className="text-sm text-green-600">$12,000</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-sm font-medium">MVP Development</span>
-                        <span className="text-sm text-green-600">$8,000</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b">
-                        <span className="text-sm font-medium">Advanced Features</span>
-                        <span className="text-sm text-green-600">$16,000</span>
-                      </div>
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-sm font-medium">Production Deploy</span>
-                        <span className="text-sm text-green-600">$12,000</span>
-                      </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-3">Integration Capabilities</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div>• Real-time test result ingestion</div>
+                      <div>• Automated COA generation</div>
+                      <div>• Batch release automation</div>
+                      <div>• Compliance validation workflows</div>
+                      <div>• Quality control monitoring</div>
+                      <div>• Audit trail synchronization</div>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-700 mb-3">AI-Enhanced Features</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div>• Predictive quality analysis</div>
+                      <div>• Anomaly detection in test results</div>
+                      <div>• Intelligent batch routing</div>
+                      <div>• Compliance risk assessment</div>
+                      <div>• Method optimization suggestions</div>
+                      <div>• Trend analysis and forecasting</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Customer System Architecture */}
+              <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-purple-800 mb-4">Customer System Architecture</h3>
+                <div className="space-y-4">
+                  <div className="bg-white border border-purple-300 rounded-lg p-4">
+                    <div className="text-xs font-mono text-purple-700 space-y-1">
+                      <div>customer.formul8.ai/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Customer subdomain</div>
+                      <div>├── agents/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Local agent deployment</div>
+                      <div>│&nbsp;&nbsp;&nbsp;├── compliance-agent/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# On-premises compliance</div>
+                      <div>│&nbsp;&nbsp;&nbsp;├── lims-integration/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Laboratory connectivity</div>
+                      <div>│&nbsp;&nbsp;&nbsp;└── local-data/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Proprietary datasets</div>
+                      <div>├── integrations/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# System connections</div>
+                      <div>│&nbsp;&nbsp;&nbsp;├── lims-connector/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# LIMS API integration</div>
+                      <div>│&nbsp;&nbsp;&nbsp;├── erp-sync/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# ERP system sync</div>
+                      <div>│&nbsp;&nbsp;&nbsp;└── regulatory-reporting/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# State compliance</div>
+                      <div>└── cloud-bridge/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Secure cloud connection</div>
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;├── encrypted-tunnel/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# mTLS communication</div>
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;└── intelligence-sync/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# AI model updates</div>
                     </div>
                   </div>
                   
-                  {/* Timeline & Features */}
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-formul8-text-primary">Key Features & Timeline</h4>
-                    
-                    <Card className="border-2 border-formul8-success bg-formul8-success/5">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-formul8-success text-sm">Gantt Chart Visualization</CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <ul className="space-y-1 text-formul8-text-secondary text-xs">
-                          <li>• Agent maturity timeline (Week 10-16)</li>
-                          <li>• Phase-by-phase progress tracking</li>
-                          <li>• Resource allocation visualization</li>
-                          <li>• Critical path identification</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="border-2 border-formul8-warning bg-formul8-warning/5">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-formul8-warning text-sm">Cost Analysis Dashboard</CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <ul className="space-y-1 text-formul8-text-secondary text-xs">
-                          <li>• Real-time budget tracking</li>
-                          <li>• ROI projections (260% first year)</li>
-                          <li>• Break-even analysis (3.3 months)</li>
-                          <li>• Resource utilization metrics</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="border-2 border-formul8-primary bg-formul8-primary/5">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-formul8-primary text-sm">GitHub Project Integration</CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <ul className="space-y-1 text-formul8-text-secondary text-xs">
-                          <li>• 72 automated GitHub issues</li>
-                          <li>• Daily progress reports</li>
-                          <li>• Feature rollout tracking</li>
-                          <li>• Automated milestone management</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <div className="bg-formul8-surface border rounded-lg p-3">
-                      <h5 className="font-medium text-formul8-text-primary text-sm mb-2">Agent Deployment Schedule</h5>
-                      <div className="space-y-1 text-xs text-formul8-text-secondary">
-                        <div className="flex justify-between">
-                          <span>Compliance Agent</span>
-                          <span className="text-green-600">Week 10</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Formulation Agent</span>
-                          <span className="text-blue-600">Week 12</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Marketing Agent</span>
-                          <span className="text-purple-600">Week 14</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>All 9 Agents</span>
-                          <span className="text-orange-600">Week 16</span>
-                        </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h4 className="font-semibold text-purple-700 mb-3">Local Benefits</h4>
+                      <div className="text-sm text-purple-600 space-y-2">
+                        <div>• Complete data sovereignty and control</div>
+                        <div>• Zero-latency access to internal systems</div>
+                        <div>• Customized workflows and business rules</div>
+                        <div>• Proprietary data training and fine-tuning</div>
+                        <div>• Air-gap deployment options available</div>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-purple-700 mb-3">Cloud Benefits</h4>
+                      <div className="text-sm text-purple-600 space-y-2">
+                        <div>• Access to latest AI models and research</div>
+                        <div>• Regulatory updates across all states</div>
+                        <div>• Industry benchmarking and best practices</div>
+                        <div>• Global cannabis knowledge base</div>
+                        <div>• Continuous model improvements</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                
-                <div className="mt-6 pt-6 border-t">
-                  <div className="flex justify-center">
-                    <Link href="/mvp">
-                      <Button className="bg-formul8-primary hover:bg-formul8-primary/90">
-                        View Complete Implementation Plan →
-                      </Button>
-                    </Link>
+              </div>
+
+              {/* Implementation Timeline */}
+              <div className="bg-orange-50 border-2 border-orange-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-orange-800 mb-4">Federated Implementation Timeline</h3>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="bg-white border border-orange-300 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-orange-600 mb-2">Phase 1</div>
+                      <div className="text-sm text-orange-700 space-y-1">
+                        <div>Local agent deployment</div>
+                        <div>Basic LIMS integration</div>
+                        <div>4-6 weeks</div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-orange-300 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-orange-600 mb-2">Phase 2</div>
+                      <div className="text-sm text-orange-700 space-y-1">
+                        <div>Cloud bridge setup</div>
+                        <div>mTLS authentication</div>
+                        <div>2-3 weeks</div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-orange-300 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-orange-600 mb-2">Phase 3</div>
+                      <div className="text-sm text-orange-700 space-y-1">
+                        <div>ERP system integration</div>
+                        <div>Workflow automation</div>
+                        <div>3-4 weeks</div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-orange-300 rounded-lg p-4 text-center">
+                      <div className="text-2xl font-bold text-orange-600 mb-2">Phase 4</div>
+                      <div className="text-sm text-orange-700 space-y-1">
+                        <div>Advanced AI features</div>
+                        <div>Federated learning</div>
+                        <div>2-3 weeks</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
 }
+                <CardDescription className="text-formul8-text-secondary">
+                  Comprehensive 25-week project roadmap with detailed cost analysis and Gantt chart visualization
+                </CardDescription>

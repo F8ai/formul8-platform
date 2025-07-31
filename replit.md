@@ -98,6 +98,12 @@ formul8-platform/
 - **Phase 2 Enhanced Intelligence**: RAG integration, FAISS vector stores, specialized agents (Science/Spectra/FTO), multi-model support, PostgreSQL database
 - **Phase 3 Production Scale**: Full AWS cloud infrastructure (SageMaker, Bedrock, Lambda), enterprise features, auto-scaling, multi-region deployment
 - **Technical Stack Evolution**: Progressive enhancement from local development to cloud-native enterprise platform with comprehensive learning path
+- **Federated Formul8 Integration**: Added comprehensive documentation of enterprise deployment with internal customer systems and LIMS integration
+- **LIMS Integration Support**: Documented integration with major laboratory platforms (LabWare, Thermo Fisher, Agilent, STARLIMS) for real-time test results
+- **Hybrid Cloud Architecture**: Customer subdomain deployment (customer.formul8.ai) with local agents and secure cloud bridge connectivity
+- **Enterprise System Integration**: ERP connectivity, quality management systems, regulatory reporting to state tracking systems (METRC, BioTrace, Leaf Data)
+- **Data Sovereignty Options**: On-premises deployment capabilities with mTLS encryption and certificate-based authentication for sensitive data retention
+- **Federated Learning Framework**: Local insights contribute to global knowledge base without exposing proprietary customer data
 
 ### July 31, 2025 - Complete Baseline Generation System for All Agents ✅ COMPLETE
 - **Universal Baseline Coverage**: Successfully generated and fixed baseline.json files for all 12 agents with comprehensive cannabis industry question sets
