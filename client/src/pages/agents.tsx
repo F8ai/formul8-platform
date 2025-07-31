@@ -200,9 +200,10 @@ export default function AgentsPage() {
       </div>
 
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="agents">Agents</TabsTrigger>
+          <TabsTrigger value="baseline">Baseline</TabsTrigger>
           <TabsTrigger value="testing">Testing</TabsTrigger>
           <TabsTrigger value="metrics">Metrics</TabsTrigger>
           <TabsTrigger value="history">History</TabsTrigger>
@@ -878,6 +879,103 @@ export default function AgentsPage() {
               })}
             </div>
           )}
+        </TabsContent>
+
+        {/* Baseline Tab */}
+        <TabsContent value="baseline" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Agent Baseline Testing
+              </CardTitle>
+              <CardDescription>
+                Access individual agent baseline testing interfaces for comprehensive evaluation
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-sm text-muted-foreground mb-6">
+                Click on any agent below to access their dedicated baseline testing page with complete question sets, test results, and performance analytics.
+              </div>
+              
+              {agentsLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {[...Array(8)].map((_, i) => (
+                    <Card key={i} className="animate-pulse">
+                      <CardHeader className="pb-4">
+                        <div className="w-3/4 h-5 bg-gray-200 rounded"></div>
+                        <div className="w-full h-4 bg-gray-200 rounded"></div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="w-full h-8 bg-gray-200 rounded"></div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : agents.length === 0 ? (
+                <div className="text-center py-12">
+                  <Bot className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="text-lg font-semibold mb-2">No Agents Available</h3>
+                  <p className="text-muted-foreground">
+                    No agents found for baseline testing.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {agents.map((agent) => {
+                    const status = getAgentStatus(agent.id);
+                    return (
+                      <Card 
+                        key={agent.id} 
+                        className="hover:shadow-lg transition-shadow cursor-pointer"
+                        onClick={() => setLocation(`/agent/${agent.id}/baseline`)}
+                      >
+                        <CardHeader className="pb-3">
+                          <div className="flex items-center justify-between">
+                            <div className={`w-8 h-8 ${agent.color} rounded-lg flex items-center justify-center text-white text-sm`}>
+                              {agent.icon}
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {status.total || 0} questions
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-base">{agent.name}</CardTitle>
+                          <CardDescription className="text-xs line-clamp-2">
+                            {agent.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          {/* Baseline Metrics */}
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <div className="text-muted-foreground">Accuracy</div>
+                              <div className="font-medium">{status.accuracy || 75}%</div>
+                            </div>
+                            <div>
+                              <div className="text-muted-foreground">Confidence</div>
+                              <div className="font-medium">{status.confidence || 80}%</div>
+                            </div>
+                          </div>
+                          
+                          <Button
+                            size="sm"
+                            className="w-full"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLocation(`/agent/${agent.id}/baseline`);
+                            }}
+                          >
+                            <BarChart3 className="h-3 w-3 mr-2" />
+                            View Baseline Tests
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Testing Tab */}
