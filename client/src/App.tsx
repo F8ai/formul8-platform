@@ -32,6 +32,7 @@ import GoodFORUseCase from "@/pages/use/goodfor";
 import Roadmap from "@/pages/roadmap";
 import ComplianceAgent from "@/pages/ComplianceAgent";
 import BaselineAssessment from "@/pages/BaselineAssessment";
+import BaselineEditor from "@/pages/BaselineEditor";
 import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
 import VoiceflowDashboard from "@/pages/voiceflow";
@@ -57,8 +58,11 @@ function Router() {
         {params => <AgentRepo agentId={params.id} />}
       </Route>
       <Route path="/agent/compliance" component={ComplianceAgent} />
-      <Route path="/agent/:agentType/baseline">
+      <Route path="/agent/:agentType/results">
         {(params) => <BaselineTableViewer agentType={params.agentType} />}
+      </Route>
+      <Route path="/agent/:agentType/baseline">
+        {(params) => <BaselineEditor agentType={params.agentType} />}
       </Route>
       <Route path="/agent/:agentType" component={AgentDashboard} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
