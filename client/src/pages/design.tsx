@@ -904,6 +904,160 @@ export default function Design() {
 
           {/* Workflows Tab */}
           <TabsContent value="workflows" className="space-y-6">
+            {/* Deployment Phasing */}
+            <Card className="formul8-card">
+              <CardHeader>
+                <CardTitle className="text-formul8-text-primary">Deployment Phasing Strategy</CardTitle>
+                <CardDescription className="text-formul8-text-secondary">
+                  Progressive deployment approach from MVP baseline system to full cloud-native AI platform
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Phase 1 - MVP */}
+                  <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">1</div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-green-800">Phase 1: MVP Foundation</h3>
+                        <p className="text-sm text-green-600">Learning-focused baseline system with local LangChain agents</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold text-green-800 mb-3">Core Components</h4>
+                        <div className="space-y-2 text-sm text-green-700">
+                          <div><strong>No AWS Cloud:</strong> Local development environment for learning and testing</div>
+                          <div><strong>Baseline Q&A System:</strong> Comprehensive question sets (203 questions) with expected answers</div>
+                          <div><strong>LangChain Agents:</strong> Local agent implementations for query resolution</div>
+                          <div><strong>6 Core Agents:</strong> Compliance, Formulation, Marketing, Operations, Sourcing, Patent</div>
+                          <div><strong>React Frontend:</strong> Basic dashboard with agent interaction and baseline testing</div>
+                          <div><strong>Local Storage:</strong> File-based data storage with JSON configurations</div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-green-800 mb-3">Learning Objectives</h4>
+                        <div className="space-y-2 text-sm text-green-700">
+                          <div><strong>Agent Development:</strong> Understanding cannabis industry domain expertise</div>
+                          <div><strong>Baseline Testing:</strong> Establishing performance benchmarks and accuracy metrics</div>
+                          <div><strong>LangChain Integration:</strong> Mastering agent orchestration and prompt engineering</div>
+                          <div><strong>Cannabis Compliance:</strong> Building regulatory knowledge and validation systems</div>
+                          <div><strong>User Interface:</strong> Creating intuitive agent interaction patterns</div>
+                          <div><strong>Performance Metrics:</strong> Tracking response quality and system reliability</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 bg-white border border-green-300 rounded-lg p-4">
+                      <h4 className="font-semibold text-green-800 mb-3">Phase 1 Technical Stack</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <div className="font-medium text-green-700 mb-2">Frontend</div>
+                          <div className="text-sm text-green-600 space-y-1">
+                            <div>• React + TypeScript</div>
+                            <div>• Vite development server</div>
+                            <div>• Tailwind CSS + Shadcn/ui</div>
+                            <div>• Local API integration</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-green-700 mb-2">Backend</div>
+                          <div className="text-sm text-green-600 space-y-1">
+                            <div>• Node.js Express server</div>
+                            <div>• Local file system storage</div>
+                            <div>• LangChain Python agents</div>
+                            <div>• OpenAI API integration</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-green-700 mb-2">Data Management</div>
+                          <div className="text-sm text-green-600 space-y-1">
+                            <div>• JSON configuration files</div>
+                            <div>• Local baseline.json storage</div>
+                            <div>• Git version control</div>
+                            <div>• Individual agent repositories</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Phase 2 - Enhanced Intelligence */}
+                  <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">2</div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-blue-800">Phase 2: Enhanced Intelligence</h3>
+                        <p className="text-sm text-blue-600">Advanced analytics with RAG, vector stores, and specialized agents</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold text-blue-800 mb-3">Advanced Features</h4>
+                        <div className="space-y-2 text-sm text-blue-700">
+                          <div><strong>RAG Integration:</strong> Vector stores with FAISS indexing for enhanced retrieval</div>
+                          <div><strong>Specialized Agents:</strong> Science, Spectra, and FTO analysis capabilities</div>
+                          <div><strong>Knowledge Bases:</strong> RDF/TTL ontologies with SPARQL querying</div>
+                          <div><strong>Multi-Model Support:</strong> OpenAI, Anthropic Claude, Google Gemini integration</div>
+                          <div><strong>PostgreSQL Database:</strong> Persistent storage with Drizzle ORM</div>
+                          <div><strong>Cross-Agent Verification:</strong> Multi-agent consensus and validation</div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-blue-800 mb-3">Performance Enhancements</h4>
+                        <div className="space-y-2 text-sm text-blue-700">
+                          <div><strong>Vector Search:</strong> Semantic similarity search across cannabis knowledge</div>
+                          <div><strong>Cost Optimization:</strong> Per-token pricing analysis and model selection</div>
+                          <div><strong>Real-time Analytics:</strong> Performance tracking and confidence scoring</div>
+                          <div><strong>Advanced Testing:</strong> Multi-model baseline comparison and grading</div>
+                          <div><strong>Data Repositories:</strong> Git LFS for large AI/ML files and datasets</div>
+                          <div><strong>Regulatory Compliance:</strong> Automated compliance checking and validation</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Phase 3 - Production Scale */}
+                  <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">3</div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-purple-800">Phase 3: Production Scale</h3>
+                        <p className="text-sm text-purple-600">Enterprise deployment with AWS cloud infrastructure and full automation</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h4 className="font-semibold text-purple-800 mb-3">Cloud Infrastructure</h4>
+                        <div className="space-y-2 text-sm text-purple-700">
+                          <div><strong>AWS SageMaker:</strong> Model training and inference endpoints</div>
+                          <div><strong>AWS Bedrock:</strong> Foundation model access and fine-tuning</div>
+                          <div><strong>Lambda Functions:</strong> Serverless agent orchestration</div>
+                          <div><strong>CloudWatch:</strong> Comprehensive monitoring and analytics</div>
+                          <div><strong>S3 Storage:</strong> Scalable data lake for training datasets</div>
+                          <div><strong>API Gateway:</strong> Production API management and scaling</div>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-purple-800 mb-3">Enterprise Features</h4>
+                        <div className="space-y-2 text-sm text-purple-700">
+                          <div><strong>Auto-scaling:</strong> Dynamic resource allocation based on demand</div>
+                          <div><strong>Multi-region:</strong> Global deployment with edge optimization</div>
+                          <div><strong>Security:</strong> Enterprise-grade authentication and data encryption</div>
+                          <div><strong>Compliance:</strong> SOC 2, HIPAA, and cannabis industry standards</div>
+                          <div><strong>Analytics:</strong> Advanced business intelligence and reporting</div>
+                          <div><strong>Integration:</strong> Enterprise CRM, ERP, and workflow systems</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
             <Card className="formul8-card">
               <CardHeader>
                 <CardTitle className="text-formul8-text-primary">Marketing Agent Workflow Automation</CardTitle>

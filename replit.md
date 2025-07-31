@@ -93,6 +93,11 @@ formul8-platform/
 - **Repository Organization**: Detailed structure showing agents/{agent}/data/ submodule pattern with corpus/, vectorstore/, knowledge_base/, models/, and datasets/ directories
 - **Large File Support**: Complete Git LFS configuration for 24+ file types including JSONL, FAISS indices, GGUF models, Parquet datasets, and SQLite databases
 - **Independent Data Lifecycle**: Documented benefits of modular data management with version control, scalable storage, and access control separation
+- **Deployment Phasing Strategy**: Added comprehensive 3-phase deployment approach with detailed technical specifications and learning objectives
+- **Phase 1 MVP Foundation**: No AWS cloud, local LangChain agents, baseline Q&A system (203 questions), 6 core agents, React frontend with local storage
+- **Phase 2 Enhanced Intelligence**: RAG integration, FAISS vector stores, specialized agents (Science/Spectra/FTO), multi-model support, PostgreSQL database
+- **Phase 3 Production Scale**: Full AWS cloud infrastructure (SageMaker, Bedrock, Lambda), enterprise features, auto-scaling, multi-region deployment
+- **Technical Stack Evolution**: Progressive enhancement from local development to cloud-native enterprise platform with comprehensive learning path
 
 ### July 31, 2025 - Complete Baseline Generation System for All Agents ✅ COMPLETE
 - **Universal Baseline Coverage**: Successfully generated and fixed baseline.json files for all 12 agents with comprehensive cannabis industry question sets
