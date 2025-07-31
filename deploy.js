@@ -55,6 +55,11 @@ try {
   console.log('');
   console.log('🚀 To start in production, use:');
   console.log('  NODE_ENV=production npx tsx server/index.ts');
+  console.log('');
+  console.log('📋 Deployment Notes:');
+  console.log('  ✅ Authentication bypassed in dev mode (no REPLIT_DOMAINS)');
+  console.log('  ✅ Frontend assets served from server/public/');
+  console.log('  ✅ Server configured for production deployment');
   
 } catch (error) {
   console.error('❌ Deployment build failed:', error.message);

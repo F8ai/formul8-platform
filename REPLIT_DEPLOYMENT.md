@@ -2,7 +2,9 @@
 
 ## Issue Resolution ✅
 
-The deployment error was caused by the default `package.json` build script still using esbuild binary, which is incompatible with deployment platforms. This has been resolved with deployment-optimized scripts.
+**Authentication Deployment Error Fixed**: The primary deployment issue was caused by the authentication system requiring Replit-specific environment variables (REPLIT_DOMAINS) that aren't available in standard deployments. This has been completely resolved with a deployment-friendly authentication system.
+
+**Build System Optimized**: The deployment error was also caused by the default `package.json` build script using esbuild binary, which is incompatible with deployment platforms. This has been resolved with deployment-optimized scripts.
 
 ## Deployment Commands
 
@@ -10,12 +12,17 @@ The deployment error was caused by the default `package.json` build script still
 
 **Build Command:**
 ```bash
-node build-for-deployment.js
+node deploy-production.js
 ```
 
 **Start Command:**
 ```bash
-npx tsx server/index.ts
+NODE_ENV=production npx tsx server/index.ts
+```
+
+### Quick Start for Development
+```bash
+npm run dev
 ```
 
 ### Alternative: Single Script Deployment

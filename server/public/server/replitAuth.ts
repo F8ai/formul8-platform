@@ -167,20 +167,9 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
-  // In development mode without auth, allow all requests and attach demo user
+  // In development mode without auth, allow all requests
   if (isDevelopment && !hasReplitDomains) {
     console.log('⚠️  Development mode: bypassing authentication');
-    
-    // Attach demo user to request for development/deployment
-    (req as any).user = {
-      claims: {
-        sub: 'demo-user',
-        email: 'demo@formul8.ai',
-        first_name: 'Demo',
-        last_name: 'User'
-      }
-    };
-    
     return next();
   }
 

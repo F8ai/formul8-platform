@@ -909,35 +909,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Auth routes with deployment-friendly fallback
-  app.get('/api/auth/user', async (req: any, res) => {
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      // Check environment and authentication state
-      const nodeEnv = process.env.NODE_ENV || 'development';
-      const hasReplitDomains = process.env.REPLIT_DOMAINS;
-      const isAuthenticated = req.isAuthenticated && req.isAuthenticated();
-      
-      console.log(`Auth check - NODE_ENV: ${nodeEnv}, REPLIT_DOMAINS: ${!!hasReplitDomains}, isAuthenticated: ${isAuthenticated}`);
-      
-      // If not in production with Replit domains, return demo user
-      if (!hasReplitDomains || nodeEnv === 'development') {
-        console.log('Returning demo user for development/deployment');
-        return res.json({
-          id: 'demo-user',
-          email: 'demo@formul8.ai',
-          firstName: 'Demo',
-          lastName: 'User',
-          profileImageUrl: null,
-          role: 'user',
-          lastActive: new Date().toISOString()
-        });
-      }
-      
-      // Production authentication
-      if (!isAuthenticated || !req.user?.claims?.sub) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-      
       const userId = req.user.claims.sub;
       const user = await storage.getUser(userId);
       
