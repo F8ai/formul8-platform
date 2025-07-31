@@ -535,8 +535,11 @@ export default function Design() {
                       <div>&nbsp;&nbsp;└── types.ts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Shared types</div>
                       <div>agents/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Specialized AI agents</div>
                       <div>&nbsp;&nbsp;├── compliance-agent/</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── agent.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Agent implementation</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── baseline.json&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Test questions</div>
+                      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── data/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Data submodule (Git LFS)</div>
                       <div>&nbsp;&nbsp;├── formulation-agent/</div>
-                      <div>&nbsp;&nbsp;└── ...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 12 total agents</div>
+                      <div>&nbsp;&nbsp;└── ...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 12 total agents (dual repo)</div>
                     </div>
                   </div>
                 </div>
@@ -577,9 +580,10 @@ export default function Design() {
                   <div className="bg-gray-50 border rounded-lg p-4">
                     <h4 className="font-semibold text-gray-800 mb-3">Agent Infrastructure</h4>
                     <div className="text-sm text-gray-600 space-y-2">
-                      <div><strong>Individual Repositories:</strong> Each agent has its own GitHub repository for independent development</div>
+                      <div><strong>Dual Repository Architecture:</strong> Each agent has main code repository + dedicated data repository</div>
+                      <div><strong>Data Repository Structure:</strong> Separate Git LFS-enabled repos for training data, models, and vector stores</div>
+                      <div><strong>Git Submodules Integration:</strong> Data repos linked as submodules at agents/{agent}/data/ for modular management</div>
                       <div><strong>Baseline Testing:</strong> Comprehensive question sets (203 total questions) with AI grading system</div>
-                      <div><strong>Git Submodules:</strong> Integrated into main platform while maintaining independence</div>
                       <div><strong>Performance Tracking:</strong> Real-time metrics, confidence scoring, and cost analysis</div>
                       <div><strong>Configuration Management:</strong> Individual YAML configs and prompt engineering</div>
                     </div>
@@ -592,6 +596,100 @@ export default function Design() {
                       <div><strong>Cross-Verification:</strong> Agent-to-agent validation for production-ready answers</div>
                       <div><strong>Real-time Testing:</strong> Continuous baseline evaluation with authentic API responses</div>
                       <div><strong>Cost Optimization:</strong> Per-token pricing and performance optimization across providers</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Data Repository Architecture */}
+            <Card className="formul8-card">
+              <CardHeader>
+                <CardTitle className="text-formul8-text-primary">Agent Data Repository Architecture</CardTitle>
+                <CardDescription className="text-formul8-text-secondary">
+                  Dedicated data repositories with Git LFS support for large AI/ML files and independent data management
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-blue-800 mb-3">📁 Main Agent Repository</h4>
+                    <div className="text-sm text-blue-700 space-y-2">
+                      <div><strong>Code & Configuration:</strong> Python agents, YAML configs, baseline.json</div>
+                      <div><strong>Testing Framework:</strong> Baseline questions, test cases, performance tracking</div>
+                      <div><strong>Documentation:</strong> README files, implementation guides, API docs</div>
+                      <div><strong>Scripts:</strong> Agent runners, testing utilities, deployment scripts</div>
+                    </div>
+                  </div>
+                  <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4">
+                    <h4 className="font-semibold text-green-800 mb-3">🗄️ Data Repository</h4>
+                    <div className="text-sm text-green-700 space-y-2">
+                      <div><strong>Training Data:</strong> JSONL corpus files, RAG documents, knowledge bases</div>
+                      <div><strong>Vector Stores:</strong> FAISS indices, embeddings, similarity matrices</div>
+                      <div><strong>AI Models:</strong> GGUF local models, fine-tuned weights, model artifacts</div>
+                      <div><strong>Datasets:</strong> Parquet files, SQLite databases, processed training data</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 border rounded-lg p-4 mb-6">
+                  <h4 className="font-semibold text-gray-800 mb-3">Git LFS File Type Coverage</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <div className="font-medium text-gray-700 mb-2">Training Data</div>
+                      <div className="text-sm text-gray-600 space-y-1">
+                        <div>• *.jsonl (corpus files)</div>
+                        <div>• *.parquet (datasets)</div>
+                        <div>• *.sqlite (databases)</div>
+                        <div>• *.csv (data exports)</div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-700 mb-2">AI Models</div>
+                      <div className="text-sm text-gray-600 space-y-1">
+                        <div>• *.gguf (local models)</div>
+                        <div>• *.bin (model weights)</div>
+                        <div>• *.safetensors (safe tensors)</div>
+                        <div>• *.pkl (pickled models)</div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-700 mb-2">Vector Stores</div>
+                      <div className="text-sm text-gray-600 space-y-1">
+                        <div>• *.faiss (FAISS indices)</div>
+                        <div>• *.index (search indices)</div>
+                        <div>• *.npy (numpy arrays)</div>
+                        <div>• *.h5 (HDF5 files)</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Repository Organization</h4>
+                    <div className="text-xs font-mono text-gray-700 space-y-1">
+                      <div>agents/compliance-agent/</div>
+                      <div>&nbsp;&nbsp;├── agent.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Main agent code</div>
+                      <div>&nbsp;&nbsp;├── baseline.json&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Test questions</div>
+                      <div>&nbsp;&nbsp;├── agent_config.yaml&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Configuration</div>
+                      <div>&nbsp;&nbsp;└── data/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Data submodule</div>
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── corpus/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Training documents</div>
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── vectorstore/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# FAISS indices</div>
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── knowledge_base/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# RDF/TTL files</div>
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── models/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Local AI models</div>
+                      <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── datasets/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Processed data</div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 border rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-800 mb-3">Data Management Benefits</h4>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <div><strong>Independent Data Lifecycle:</strong> Training data can be updated without affecting agent code</div>
+                      <div><strong>Large File Efficiency:</strong> Git LFS handles multi-GB model files without repository bloat</div>
+                      <div><strong>Modular Development:</strong> Agents can share data repositories or maintain specialized datasets</div>
+                      <div><strong>Version Control:</strong> Complete data lineage tracking with Git history and branching</div>
+                      <div><strong>Scalable Storage:</strong> Efficient transfer and storage of large AI/ML artifacts</div>
+                      <div><strong>Access Control:</strong> Independent permissions for code vs. sensitive training data</div>
                     </div>
                   </div>
                 </div>

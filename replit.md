@@ -88,6 +88,11 @@ formul8-platform/
 - **Infrastructure Details**: Comprehensive documentation of individual agent repositories, baseline testing system (203 questions), Git submodules integration
 - **Performance Metrics**: Multi-model support (OpenAI GPT-4o, Anthropic Claude, Google Gemini), cost optimization, and real-time performance tracking
 - **Development Patterns**: Atomic design principles, feature-based routing, real-time updates, mobile responsiveness, and accessibility compliance
+- **Agent Data Repository Architecture**: Added comprehensive documentation of dual repository system with Git LFS support for large AI/ML files
+- **Data Management System**: Documented separate data repositories for training data, vector stores, AI models, and datasets with Git LFS file type coverage
+- **Repository Organization**: Detailed structure showing agents/{agent}/data/ submodule pattern with corpus/, vectorstore/, knowledge_base/, models/, and datasets/ directories
+- **Large File Support**: Complete Git LFS configuration for 24+ file types including JSONL, FAISS indices, GGUF models, Parquet datasets, and SQLite databases
+- **Independent Data Lifecycle**: Documented benefits of modular data management with version control, scalable storage, and access control separation
 
 ### July 31, 2025 - Complete Baseline Generation System for All Agents ✅ COMPLETE
 - **Universal Baseline Coverage**: Successfully generated and fixed baseline.json files for all 12 agents with comprehensive cannabis industry question sets
