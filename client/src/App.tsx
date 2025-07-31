@@ -35,6 +35,7 @@ import BaselineAssessment from "@/pages/BaselineAssessment";
 import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
 import VoiceflowDashboard from "@/pages/voiceflow";
+import BaselineTableViewer from "@/pages/BaselineTableViewer";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -56,6 +57,9 @@ function Router() {
         {params => <AgentRepo agentId={params.id} />}
       </Route>
       <Route path="/agent/compliance" component={ComplianceAgent} />
+      <Route path="/agent/:agentType/baseline">
+        {params => <BaselineTableViewer agentType={params.agentType} />}
+      </Route>
       <Route path="/agent/:agentType" component={AgentDashboard} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">
