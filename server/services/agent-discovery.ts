@@ -41,10 +41,11 @@ export class AgentDiscoveryService {
       const agentsPath = join(projectRoot, 'agents');
       const entries = await readdir(agentsPath, { withFileTypes: true });
       
-      // Filter for agent directories
+      // Filter for agent directories (exclude base-agent as it's infrastructure)
       const agentDirs = entries.filter(entry => 
         entry.isDirectory() && 
-        entry.name.endsWith('-agent')
+        entry.name.endsWith('-agent') &&
+        entry.name !== 'base-agent'
       );
 
       console.log(`Found ${agentDirs.length} agent directories:`, agentDirs.map(d => d.name));

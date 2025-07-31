@@ -58,7 +58,7 @@ function Router() {
       </Route>
       <Route path="/agent/compliance" component={ComplianceAgent} />
       <Route path="/agent/:agentType/baseline">
-        {params => <BaselineTableViewer agentType={params.agentType} />}
+        {(params) => <BaselineTableViewer agentType={params.agentType} />}
       </Route>
       <Route path="/agent/:agentType" component={AgentDashboard} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
