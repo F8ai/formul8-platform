@@ -1,0 +1,7 @@
+{
+  "buildTime": "2025-07-31T18:40:36.302Z",
+  "frontend": "Vite build (static assets)",
+  "backend": "TypeScript source with tsx runtime",
+  "staticAssets": true,
+  "tsxAvailable": true
+}
