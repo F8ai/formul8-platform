@@ -80,7 +80,7 @@ export default function BaselineAssessmentSection({ agentName }: BaselineAssessm
     return { icon: AlertTriangle, label: 'Critical', color: 'text-red-500' };
   };
 
-  const agent = assessmentData?.[0] as AssessmentData;
+  const agent = (assessmentData as any)?.[0] as AssessmentData;
 
   return (
     <Card>

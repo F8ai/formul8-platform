@@ -223,19 +223,19 @@ export default function AstraDBDashboard() {
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4">
-            <Badge className={getStatusColor(healthData?.status || 'unknown')}>
-              {healthData?.status || 'Unknown'}
+            <Badge className={getStatusColor((healthData as any)?.status || 'unknown')}>
+              {(healthData as any)?.status || 'Unknown'}
             </Badge>
-            {healthData?.status === 'healthy' && (
+            {(healthData as any)?.status === 'healthy' && (
               <div className="flex items-center gap-2 text-sm text-green-600">
                 <CheckCircle className="h-4 w-4" />
                 AstraDB Connected
               </div>
             )}
-            {healthData?.error && (
+            {(healthData as any)?.error && (
               <Alert className="flex-1">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{healthData.error}</AlertDescription>
+                <AlertDescription>{(healthData as any)?.error}</AlertDescription>
               </Alert>
             )}
           </div>
@@ -340,15 +340,15 @@ export default function AstraDBDashboard() {
                 <CardTitle>Search Results</CardTitle>
                 <p className="text-sm text-gray-600">
                   {crossAgentSearch 
-                    ? `Found ${crossSearchMutation.data?.total_results || 0} results across multiple agents`
-                    : `Found ${vectorSearchMutation.data?.total_results || 0} results in ${selectedAgent} agent`
+                    ? `Found ${(crossSearchMutation.data as any)?.total_results || 0} results across multiple agents`
+                    : `Found ${(vectorSearchMutation.data as any)?.total_results || 0} results in ${selectedAgent} agent`
                   }
                 </p>
               </CardHeader>
               <CardContent>
                 {crossAgentSearch ? (
                   <div className="space-y-6">
-                    {crossSearchMutation.data?.results && Object.entries(crossSearchMutation.data.results).map(([agent, results]) => (
+                    {(crossSearchMutation.data as any)?.results && Object.entries((crossSearchMutation.data as any).results).map(([agent, results]) => (
                       <div key={agent}>
                         <h4 className="font-medium mb-3 capitalize">{agent.replace('-', ' ')} Agent</h4>
                         {renderSearchResults(results as SearchResult[])}
@@ -356,7 +356,7 @@ export default function AstraDBDashboard() {
                     ))}
                   </div>
                 ) : (
-                  renderSearchResults(vectorSearchMutation.data?.results || [])
+                  renderSearchResults((vectorSearchMutation.data as any)?.results || [])
                 )}
               </CardContent>
             </Card>
@@ -374,23 +374,23 @@ export default function AstraDBDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {knowledgeBaseStats?.knowledge_base_stats && (
+              {(knowledgeBaseStats as any)?.knowledge_base_stats && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-blue-600">
-                      {knowledgeBaseStats.knowledge_base_stats.total_agents || 0}
+                      {(knowledgeBaseStats as any).knowledge_base_stats.total_agents || 0}
                     </div>
                     <div className="text-sm text-gray-600">Active Agents</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-600">
-                      {knowledgeBaseStats.knowledge_base_stats.total_documents || 0}
+                      {(knowledgeBaseStats as any).knowledge_base_stats.total_documents || 0}
                     </div>
                     <div className="text-sm text-gray-600">Total Documents</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-purple-600">
-                      {knowledgeBaseStats.knowledge_base_stats.last_updated || 'N/A'}
+                      {(knowledgeBaseStats as any).knowledge_base_stats.last_updated || 'N/A'}
                     </div>
                     <div className="text-sm text-gray-600">Last Updated</div>
                   </div>
@@ -417,23 +417,23 @@ export default function AstraDBDashboard() {
               </div>
             </CardHeader>
             <CardContent>
-              {agentStats?.stats && (
+              {(agentStats as any)?.stats && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="p-4 bg-blue-50 rounded-lg">
-                    <div className="text-lg font-semibold">{agentStats.stats.total_documents || 0}</div>
+                    <div className="text-lg font-semibold">{(agentStats as any).stats.total_documents || 0}</div>
                     <div className="text-sm text-gray-600">Documents</div>
                   </div>
                   <div className="p-4 bg-green-50 rounded-lg">
-                    <div className="text-lg font-semibold">{agentStats.stats.collection_name || 'N/A'}</div>
+                    <div className="text-lg font-semibold">{(agentStats as any).stats.collection_name || 'N/A'}</div>
                     <div className="text-sm text-gray-600">Collection</div>
                   </div>
                   <div className="p-4 bg-purple-50 rounded-lg">
-                    <div className="text-lg font-semibold">{agentStats.stats.vector_dimension || 0}</div>
+                    <div className="text-lg font-semibold">{(agentStats as any).stats.vector_dimension || 0}</div>
                     <div className="text-sm text-gray-600">Vector Dimension</div>
                   </div>
                   <div className="p-4 bg-yellow-50 rounded-lg">
                     <div className="text-lg font-semibold">
-                      {agentStats.stats.metadata_categories?.length || 0}
+                      {(agentStats as any).stats.metadata_categories?.length || 0}
                     </div>
                     <div className="text-sm text-gray-600">Metadata Categories</div>
                   </div>
@@ -521,28 +521,28 @@ export default function AstraDBDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {configData && (
+              {configData && (configData as any) && (
                 <div className="space-y-6">
                   <div>
                     <h4 className="font-medium mb-3">AstraDB Configuration</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="flex items-center gap-2">
-                        <Badge variant={configData.astradb.enabled ? "default" : "secondary"}>
-                          {configData.astradb.enabled ? "Enabled" : "Disabled"}
+                        <Badge variant={(configData as any).astradb?.enabled ? "default" : "secondary"}>
+                          {(configData as any).astradb?.enabled ? "Enabled" : "Disabled"}
                         </Badge>
                         <span className="text-sm">AstraDB Connection</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Badge variant={configData.astradb.hasEndpoint ? "default" : "secondary"}>
-                          {configData.astradb.hasEndpoint ? "Configured" : "Missing"}
+                        <Badge variant={(configData as any).astradb?.hasEndpoint ? "default" : "secondary"}>
+                          {(configData as any).astradb?.hasEndpoint ? "Configured" : "Missing"}
                         </Badge>
                         <span className="text-sm">API Endpoint</span>
                       </div>
                       <div className="text-sm">
-                        <strong>Embedding Model:</strong> {configData.astradb.embeddingModel}
+                        <strong>Embedding Model:</strong> {(configData as any).astradb?.embeddingModel}
                       </div>
                       <div className="text-sm">
-                        <strong>Vector Dimension:</strong> {configData.astradb.vectorDimension}
+                        <strong>Vector Dimension:</strong> {(configData as any).astradb?.vectorDimension}
                       </div>
                     </div>
                   </div>
@@ -552,7 +552,7 @@ export default function AstraDBDashboard() {
                   <div>
                     <h4 className="font-medium mb-3">Available Agents</h4>
                     <div className="grid grid-cols-3 gap-2">
-                      {configData.agents.map((agent: string) => (
+                      {(configData as any).agents?.map((agent: string) => (
                         <Badge key={agent} variant="outline">
                           {agent.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                         </Badge>
@@ -565,7 +565,7 @@ export default function AstraDBDashboard() {
                   <div>
                     <h4 className="font-medium mb-3">Features</h4>
                     <div className="grid grid-cols-2 gap-2">
-                      {Object.entries(configData.features).map(([feature, enabled]) => (
+                      {Object.entries((configData as any).features || {}).map(([feature, enabled]) => (
                         <div key={feature} className="flex items-center gap-2">
                           <Badge variant={enabled ? "default" : "secondary"}>
                             {enabled ? "Enabled" : "Disabled"}
