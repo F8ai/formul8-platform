@@ -558,19 +558,85 @@ export default function AgentDashboard({ agentType: propAgentType }: AgentDashbo
             <TabsContent value="baseline" className="space-y-4 sm:space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Baseline Questions</CardTitle>
+                  <CardTitle>Baseline Questions & Answers</CardTitle>
                   <p className="text-sm text-gray-600">
-                    View and manage all {baselineResults?.length || 0} baseline questions for this agent
+                    Complete view of all {baselineResults?.length || 0} baseline questions with full answers and AI responses
                   </p>
                 </CardHeader>
-                <CardContent className="p-0">
-                  <div className="h-[400px] sm:h-[600px] overflow-hidden">
-                    <iframe 
-                      src={`/agent/${agentType}/baseline`}
-                      className="w-full h-full border-0"
-                      title="Baseline Questions Table"
-                    />
-                  </div>
+                <CardContent>
+                  {baselineResults && baselineResults.length > 0 ? (
+                    <div className="space-y-6">
+                      {baselineResults.map((question: any, index: number) => (
+                        <div key={question.id || index} className="border rounded-lg p-4 space-y-4">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Badge variant="outline" className="text-xs">
+                                  {question.category || 'General'}
+                                </Badge>
+                                <Badge 
+                                  variant="secondary" 
+                                  className={`text-xs ${
+                                    question.difficulty === 'advanced' ? 'bg-red-100 text-red-800' :
+                                    question.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-green-100 text-green-800'
+                                  }`}
+                                >
+                                  {question.difficulty || 'basic'}
+                                </Badge>
+                                {question.state && (
+                                  <Badge variant="outline" className="text-xs">
+                                    {question.state}
+                                  </Badge>
+                                )}
+                              </div>
+                              <h4 className="font-medium text-sm mb-2">Question:</h4>
+                              <p className="text-sm leading-relaxed mb-4">
+                                {question.question}
+                              </p>
+                              
+                              <h4 className="font-medium text-sm mb-1">Expected Answer:</h4>
+                              <p className="text-xs text-muted-foreground leading-relaxed mb-4 bg-muted/30 p-3 rounded">
+                                {question.expected_answer}
+                              </p>
+                              
+                              {question.agent_response && (
+                                <div>
+                                  <h4 className="font-medium text-sm mb-1">AI Response:</h4>
+                                  <p className="text-xs bg-blue-50 p-3 rounded leading-relaxed">
+                                    {question.agent_response}
+                                  </p>
+                                  {question.ai_grade && (
+                                    <div className="mt-2 flex items-center gap-2">
+                                      <Badge 
+                                        variant={question.ai_grade >= 80 ? "default" : question.ai_grade >= 60 ? "secondary" : "destructive"}
+                                        className="text-xs"
+                                      >
+                                        AI Grade: {question.ai_grade}%
+                                      </Badge>
+                                      {question.response_time && (
+                                        <span className="text-xs text-muted-foreground">
+                                          Response time: {(question.response_time / 1000).toFixed(1)}s
+                                        </span>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                      <h3 className="text-lg font-semibold mb-2">No Baseline Questions Available</h3>
+                      <p className="text-muted-foreground">
+                        No baseline questions found for this agent.
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
