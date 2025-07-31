@@ -989,31 +989,84 @@ export default function Design() {
                       <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">2</div>
                       <div>
                         <h3 className="text-lg font-semibold text-blue-800">Phase 2: Enhanced Intelligence</h3>
-                        <p className="text-sm text-blue-600">Advanced analytics with RAG, vector stores, and specialized agents</p>
+                        <p className="text-sm text-blue-600">Advanced analytics with RAG, vector stores, and specialized domain agents</p>
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <h4 className="font-semibold text-blue-800 mb-3">Advanced Features</h4>
+                        <h4 className="font-semibold text-blue-800 mb-3">Intelligence Upgrades</h4>
                         <div className="space-y-2 text-sm text-blue-700">
-                          <div><strong>RAG Integration:</strong> Vector stores with FAISS indexing for enhanced retrieval</div>
-                          <div><strong>Specialized Agents:</strong> Science, Spectra, and FTO analysis capabilities</div>
-                          <div><strong>Knowledge Bases:</strong> RDF/TTL ontologies with SPARQL querying</div>
-                          <div><strong>Multi-Model Support:</strong> OpenAI, Anthropic Claude, Google Gemini integration</div>
-                          <div><strong>PostgreSQL Database:</strong> Persistent storage with Drizzle ORM</div>
-                          <div><strong>Cross-Agent Verification:</strong> Multi-agent consensus and validation</div>
+                          <div><strong>RAG Integration:</strong> Vector stores with FAISS indexing for contextual retrieval from regulatory documents</div>
+                          <div><strong>Specialized Agents:</strong> Science agent for research validation, Spectra agent for analytical chemistry, FTO agent for patent analysis</div>
+                          <div><strong>Knowledge Graphs:</strong> RDF/TTL ontologies with SPARQL querying for complex regulatory relationships</div>
+                          <div><strong>Multi-Model Intelligence:</strong> OpenAI GPT-4o, Anthropic Claude 3.5, Google Gemini Pro with dynamic model selection</div>
+                          <div><strong>Cross-Verification:</strong> Agent-to-agent validation for production-ready compliance answers</div>
+                          <div><strong>Semantic Search:</strong> Natural language queries across 25+ state cannabis regulations with precise citations</div>
                         </div>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-blue-800 mb-3">Performance Enhancements</h4>
+                        <h4 className="font-semibold text-blue-800 mb-3">Data & Performance</h4>
                         <div className="space-y-2 text-sm text-blue-700">
-                          <div><strong>Vector Search:</strong> Semantic similarity search across cannabis knowledge</div>
-                          <div><strong>Cost Optimization:</strong> Per-token pricing analysis and model selection</div>
-                          <div><strong>Real-time Analytics:</strong> Performance tracking and confidence scoring</div>
-                          <div><strong>Advanced Testing:</strong> Multi-model baseline comparison and grading</div>
-                          <div><strong>Data Repositories:</strong> Git LFS for large AI/ML files and datasets</div>
-                          <div><strong>Regulatory Compliance:</strong> Automated compliance checking and validation</div>
+                          <div><strong>PostgreSQL Database:</strong> Persistent storage with Drizzle ORM for conversation history and performance metrics</div>
+                          <div><strong>Vector Embeddings:</strong> Sentence transformers for semantic similarity across cannabis knowledge base</div>
+                          <div><strong>Real-time Analytics:</strong> Performance tracking, confidence scoring, and cost optimization across all models</div>
+                          <div><strong>Advanced Baseline Testing:</strong> Multi-model comparison, AI grading, and comprehensive accuracy assessment</div>
+                          <div><strong>Git LFS Data Repositories:</strong> Efficient handling of large training datasets, vector stores, and AI model files</div>
+                          <div><strong>Regulatory Automation:</strong> Automated compliance checking with change detection and citation extraction</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border border-blue-300 rounded-lg p-4 mb-6">
+                      <h4 className="font-semibold text-blue-800 mb-3">Phase 2 Agent Ecosystem</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <div className="font-medium text-blue-700 mb-2">Core Agents (Enhanced)</div>
+                          <div className="text-sm text-blue-600 space-y-1">
+                            <div>• Compliance Agent + RAG</div>
+                            <div>• Formulation Agent + Chemical DB</div>
+                            <div>• Marketing Agent + Analytics</div>
+                            <div>• Operations Agent + Workflow</div>
+                            <div>• Sourcing Agent + Supply Chain</div>
+                            <div>• Patent Agent + IP Search</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-blue-700 mb-2">Specialized Agents</div>
+                          <div className="text-sm text-blue-600 space-y-1">
+                            <div>• Science Agent (Research validation)</div>
+                            <div>• Spectra Agent (Analytical chemistry)</div>
+                            <div>• Customer Success Agent</div>
+                            <div>• Metabolomics Agent</div>
+                            <div>• LMS Agent (Training systems)</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-blue-700 mb-2">Intelligence Features</div>
+                          <div className="text-sm text-blue-600 space-y-1">
+                            <div>• Multi-agent orchestration</div>
+                            <div>• Cross-domain knowledge fusion</div>
+                            <div>• Consensus validation</div>
+                            <div>• Dynamic model selection</div>
+                            <div>• Cost-performance optimization</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-blue-100 border border-blue-300 rounded-lg p-4">
+                      <h4 className="font-semibold text-blue-800 mb-3">Phase 2 Learning Outcomes</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="text-sm text-blue-700 space-y-2">
+                          <div><strong>Advanced AI Integration:</strong> Master RAG architectures, vector databases, and semantic search</div>
+                          <div><strong>Multi-Model Orchestration:</strong> Optimize performance across different AI providers and models</div>
+                          <div><strong>Domain Expertise:</strong> Deep cannabis industry knowledge with specialized analytical capabilities</div>
+                        </div>
+                        <div className="text-sm text-blue-700 space-y-2">
+                          <div><strong>Enterprise Data Management:</strong> PostgreSQL, Git LFS, and scalable data architecture patterns</div>
+                          <div><strong>Quality Assurance:</strong> Cross-agent verification, confidence scoring, and production validation</div>
+                          <div><strong>Performance Analytics:</strong> Real-time monitoring, cost optimization, and accuracy tracking</div>
                         </div>
                       </div>
                     </div>
