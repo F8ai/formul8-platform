@@ -365,16 +365,36 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
     return Array.from(categorySet).sort();
   }, [testResultRows]);
 
-  // Group filtered results by category
+  // Group filtered results by category, then by question to avoid duplicates
   const groupedResults = useMemo(() => {
     const groups: Record<string, TestResultRow[]> = {};
+    
+    // First, group by question ID to consolidate multiple model responses
+    const questionGroups: Record<string, TestResultRow[]> = {};
     filteredTestResults.forEach(row => {
-      const category = row.category || 'Uncategorized';
+      const questionKey = `${row.questionId}`;
+      if (!questionGroups[questionKey]) {
+        questionGroups[questionKey] = [];
+      }
+      questionGroups[questionKey].push(row);
+    });
+    
+    // Then group by category, taking only the first row per question for display
+    Object.values(questionGroups).forEach(questionRows => {
+      const firstRow = questionRows[0]; // Use first model response as the primary row
+      const category = firstRow.category || 'Uncategorized';
       if (!groups[category]) {
         groups[category] = [];
       }
-      groups[category].push(row);
+      
+      // Attach all model responses to the first row for display
+      const consolidatedRow = {
+        ...firstRow,
+        allModelResponses: questionRows.map(r => r.response)
+      };
+      groups[category].push(consolidatedRow);
     });
+    
     return groups;
   }, [filteredTestResults]);
 
@@ -700,7 +720,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
         {/* Test Results Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Test Results ({filteredTestResults.length} rows)</CardTitle>
+            <CardTitle>Questions & Responses ({Object.values(groupedResults).flat().length} questions)</CardTitle>
           </CardHeader>
           <CardContent>
             {questionsLoading ? (
@@ -717,17 +737,10 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="min-w-[500px] max-w-[600px]">Question & Answers</TableHead>
+                      <TableHead className="min-w-[500px] max-w-[600px]">Question & AI Responses</TableHead>
                       <TableHead className="w-24">Category</TableHead>
                       <TableHead className="w-24">Difficulty</TableHead>
                       <TableHead className="w-16">State</TableHead>
-                      <TableHead className="w-24">Model</TableHead>
-                      <TableHead className="w-16">RAG</TableHead>
-                      <TableHead className="w-32">Knowledge Base</TableHead>
-                      <TableHead className="w-20">AI Grade</TableHead>
-                      <TableHead className="w-20">Cost</TableHead>
-                      <TableHead className="w-24">Response Time</TableHead>
-                      <TableHead className="w-32">Human Grade</TableHead>
                       <TableHead className="w-24">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -740,7 +753,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                         <React.Fragment key={`category-${category}`}>
                           {/* Category Header Row */}
                           <TableRow className="bg-gray-50 dark:bg-gray-900/50 hover:bg-gray-100 dark:hover:bg-gray-800/50">
-                            <TableCell colSpan={12} className="font-semibold">
+                            <TableCell colSpan={5} className="font-semibold">
                               <button
                                 onClick={() => toggleCategoryCollapse(category)}
                                 className="flex items-center gap-2 w-full text-left"
@@ -800,12 +813,27 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                                     {row.expected_answer}
                                   </p>
                                 </div>
-                                {row.response?.answer && (
-                                  <div>
-                                    <h4 className="font-medium text-sm mb-1">AI Response ({row.response.model}):</h4>
-                                    <p className="text-xs bg-muted/50 p-2 rounded leading-relaxed">
-                                      {row.response.answer}
-                                    </p>
+                                {(row as any).allModelResponses && (row as any).allModelResponses.length > 0 && (
+                                  <div className="space-y-2">
+                                    <h4 className="font-medium text-sm mb-2">AI Responses ({(row as any).allModelResponses.length} models):</h4>
+                                    {(row as any).allModelResponses.map((response: ModelResponse, idx: number) => (
+                                      <div key={`${row.questionId}-${response.model}-${idx}`} className="border-l-2 border-gray-200 pl-3">
+                                        <div className="flex items-center gap-2 mb-1">
+                                          <span className="text-xs font-medium text-blue-600">{response.model}</span>
+                                          {response.grade !== undefined && (
+                                            <span className={`text-xs px-1.5 py-0.5 rounded ${
+                                              response.grade >= 80 ? 'bg-green-100 text-green-700' : 
+                                              response.grade >= 60 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
+                                            }`}>
+                                              {response.grade.toFixed(1)}%
+                                            </span>
+                                          )}
+                                        </div>
+                                        <p className="text-xs bg-muted/50 p-2 rounded leading-relaxed">
+                                          {response.answer}
+                                        </p>
+                                      </div>
+                                    ))}
                                   </div>
                                 )}
                               </div>
@@ -899,81 +927,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                               </Badge>
                             )}
                           </TableCell>
-                        <TableCell className="align-top">
-                          <div className="text-sm font-medium">
-                            {row.model}
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center align-top">
-                          <Badge variant={row.ragEnabled ? "default" : "secondary"} className="text-xs">
-                            {row.ragEnabled ? "Yes" : "No"}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="align-top">
-                          <div className="text-xs">
-                            {row.knowledgeBase}
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center align-top">
-                          {row.response.grade !== undefined ? (
-                            <div className="space-y-1">
-                              <div className={`text-sm font-medium ${
-                                row.response.grade >= 80 ? 'text-green-600' : 
-                                row.response.grade >= 60 ? 'text-yellow-600' : 'text-red-600'
-                              }`}>
-                                {row.response.grade.toFixed(1)}%
-                              </div>
-                              <div className="text-xs text-muted-foreground">
-                                {row.response.gradingConfidence?.toFixed(0)}% confidence
-                              </div>
-                            </div>
-                          ) : (
-                            <span className="text-xs text-muted-foreground">No grade</span>
-                          )}
-                        </TableCell>
-                        <TableCell className="text-center align-top">
-                          {row.response.cost ? (
-                            <div className="text-xs">
-                              ${row.response.cost.toFixed(4)}
-                            </div>
-                          ) : (
-                            <span className="text-xs text-muted-foreground">—</span>
-                          )}
-                        </TableCell>
-                        <TableCell className="text-center align-top">
-                          {row.response.responseTime ? (
-                            <div className="text-xs">
-                              {(row.response.responseTime / 1000).toFixed(1)}s
-                            </div>
-                          ) : (
-                            <span className="text-xs text-muted-foreground">—</span>
-                          )}
-                        </TableCell>
-                        <TableCell className="text-center align-top">
-                          <HumanGradingInterface
-                            result={{
-                              id: row.response.id || row.questionId,
-                              questionId: row.questionId.toString(),
-                              question: row.question,
-                              agentResponse: row.response.answer,
-                              expectedAnswer: row.expected_answer,
-                              aiGrade: row.response.grade,
-                              aiGradingConfidence: row.response.gradingConfidence,
-                              aiGradingReasoning: row.response.aiGradingReasoning,
-                              humanGrade: row.response.humanGrade,
-                              humanGradedBy: row.response.humanGradedBy,
-                              humanGradingNotes: row.response.humanGradingNotes,
-                              humanImprovedResponse: row.response.humanImprovedResponse,
-                              humanGradedAt: row.response.humanGradedAt,
-                              gradingAgreement: row.response.gradingAgreement,
-                              requiresReview: row.response.requiresReview
-                            }}
-                            agentType={agentType}
-                            onGradeSubmitted={() => {
-                              refetchQuestions();
-                            }}
-                          />
-                        </TableCell>
+
                         <TableCell className="align-top">
                           {isEditing ? (
                             <div className="flex gap-1">
