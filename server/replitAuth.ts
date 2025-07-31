@@ -9,7 +9,7 @@ import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 
 // In development mode, allow server to start without Replit authentication
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = process.env.NODE_ENV === 'development' || !process.env.NODE_ENV;
 const hasReplitDomains = process.env.REPLIT_DOMAINS;
 
 if (!hasReplitDomains && !isDevelopment) {
@@ -167,9 +167,9 @@ export async function setupAuth(app: Express) {
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
-  // In development mode without auth, allow all requests and attach demo user
-  if (isDevelopment && !hasReplitDomains) {
-    console.log('⚠️  Development mode: bypassing authentication');
+  // In development mode or when NODE_ENV is not production, allow all requests and attach demo user
+  if (isDevelopment || process.env.NODE_ENV !== 'production') {
+    console.log('⚠️  Development/deployment mode: bypassing authentication');
     
     // Attach demo user to request for development/deployment
     (req as any).user = {
