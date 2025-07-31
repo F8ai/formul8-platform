@@ -813,29 +813,61 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                                     {row.expected_answer}
                                   </p>
                                 </div>
-                                {(row as any).allModelResponses && (row as any).allModelResponses.length > 0 && (
-                                  <div className="space-y-2">
-                                    <h4 className="font-medium text-sm mb-2">AI Responses ({(row as any).allModelResponses.length} models):</h4>
-                                    {(row as any).allModelResponses.map((response: ModelResponse, idx: number) => (
-                                      <div key={`${row.questionId}-${response.model}-${idx}`} className="border-l-2 border-gray-200 pl-3">
-                                        <div className="flex items-center gap-2 mb-1">
-                                          <span className="text-xs font-medium text-blue-600">{response.model}</span>
-                                          {response.grade !== undefined && (
-                                            <span className={`text-xs px-1.5 py-0.5 rounded ${
-                                              response.grade >= 80 ? 'bg-green-100 text-green-700' : 
-                                              response.grade >= 60 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
-                                            }`}>
-                                              {response.grade.toFixed(1)}%
-                                            </span>
+                                <div className="border-t pt-3 mt-3">
+                                  <h4 className="font-medium text-sm mb-2 text-blue-700 dark:text-blue-300">
+                                    🤖 AI Responses
+                                    {(row as any).allModelResponses && (row as any).allModelResponses.length > 0 ? 
+                                      ` (${(row as any).allModelResponses.length} model${(row as any).allModelResponses.length !== 1 ? 's' : ''})` : 
+                                      ''
+                                    }:
+                                  </h4>
+                                  {(row as any).allModelResponses && (row as any).allModelResponses.length > 0 ? (
+                                    <div className="space-y-3">
+                                      {(row as any).allModelResponses.map((response: ModelResponse, idx: number) => (
+                                        <div key={`${row.questionId}-${response.model}-${idx}`} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 bg-gray-50/50 dark:bg-gray-800/50">
+                                          <div className="flex items-center justify-between mb-2">
+                                            <div className="flex items-center gap-2">
+                                              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">{response.model}</span>
+                                              {response.grade !== undefined && (
+                                                <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                                                  response.grade >= 80 ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 
+                                                  response.grade >= 60 ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : 
+                                                  'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                                                }`}>
+                                                  Grade: {response.grade.toFixed(1)}%
+                                                </span>
+                                              )}
+                                            </div>
+                                            {response.cost && (
+                                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                                Cost: ${response.cost.toFixed(4)}
+                                              </span>
+                                            )}
+                                          </div>
+                                          <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded p-3">
+                                            <p className="text-sm leading-relaxed text-gray-800 dark:text-gray-200">
+                                              {response.answer || 'No response generated'}
+                                            </p>
+                                          </div>
+                                          {response.responseTime && (
+                                            <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                              Response time: {(response.responseTime / 1000).toFixed(1)}s
+                                            </div>
                                           )}
                                         </div>
-                                        <p className="text-xs bg-muted/50 p-2 rounded leading-relaxed">
-                                          {response.answer}
-                                        </p>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
+                                      ))}
+                                    </div>
+                                  ) : (
+                                    <div className="p-4 border border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-center">
+                                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        No AI responses available
+                                      </p>
+                                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                                        Run baseline tests to generate AI responses
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             )}
                           </TableCell>
