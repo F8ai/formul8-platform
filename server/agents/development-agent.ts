@@ -456,11 +456,11 @@ As the ${agent.name} specialized in ${agent.expertise}, this implementation will
 
       // Generate technical analysis
       const analysis = {
-        effort: this.estimateEffort(issue.labels, issue.body),
-        components: this.identifyComponents(issue.body),
-        dependencies: this.identifyDependencies(issue.body),
-        approach: this.recommendApproach(issue.title, issue.body),
-        testing: this.identifyTestingNeeds(issue.body),
+        effort: this.estimateEffort(issue.labels, issue.body || ''),
+        components: this.identifyComponents(issue.body || ''),
+        dependencies: this.identifyDependencies(issue.body || ''),
+        approach: this.recommendApproach(issue.title, issue.body || ''),
+        testing: this.identifyTestingNeeds(issue.body || ''),
         priority: this.determinePriority(issue.labels),
       };
 
