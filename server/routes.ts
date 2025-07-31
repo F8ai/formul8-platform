@@ -1193,7 +1193,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { agentType } = req.params;
       const { state = 'CO' } = req.query;
       
-      // Common result file patterns
+      // ALWAYS load all baseline questions from baseline.json first
+      let allBaselineQuestions: any[] = [];
+      try {
+        const baselineFile = path.resolve(process.cwd(), `agents/${agentType}-agent/baseline.json`);
+        if (fs.existsSync(baselineFile)) {
+          const baselineData = JSON.parse(fs.readFileSync(baselineFile, 'utf8'));
+          if (baselineData.questions && Array.isArray(baselineData.questions)) {
+            allBaselineQuestions = baselineData.questions.map((q: any, index: number) => ({
+              id: index + 1,
+              questionId: q.id, 
+              question: q.question,
+              expected_answer: q.expected_answer,
+              category: q.category,
+              difficulty: q.difficulty,
+              state: q.state || 'MULTI',
+              tags: q.tags || [],
+              modelResponses: [] // Will be populated with test results if available
+            }));
+            console.log(`Loaded ${allBaselineQuestions.length} baseline questions from baseline.json`);
+          }
+        }
+      } catch (error) {
+        console.warn(`Could not load baseline.json for ${agentType}:`, error);
+      }
+
+      // If no baseline questions found, return empty array
+      if (allBaselineQuestions.length === 0) {
+        console.warn(`No baseline questions found for ${agentType}`);
+        return res.json([]);
+      }
+      
+      // Optionally enhance questions with test results if available
       const resultFiles = [
         `${state}-gpt4o.json`,
         `${state}-gpt4o-mini.json`, 
@@ -1202,10 +1233,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `${state}-gemini-1.5-pro.json`
       ];
       
-      const allResults: any[] = [];
+      const testResults: any[] = [];
       const agentPath = path.resolve(process.cwd(), `agents/${agentType}-agent/data/results`);
-      
-      console.log(`Loading baseline results for ${agentType} from: ${agentPath}`);
       
       for (const fileName of resultFiles) {
         try {
@@ -1213,11 +1242,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           if (fs.existsSync(filePath)) {
             const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-            console.log(`Loaded ${fileName}: ${fileData.results ? fileData.results.length : 0} results`);
             
             if (fileData.results && Array.isArray(fileData.results)) {
               const model = fileName.replace(`${state}-`, '').replace('.json', '');
-              allResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
+              testResults.push(...fileData.results.map((r: any) => ({ ...r, model })));
             }
           }
         } catch (error) {
@@ -1225,70 +1253,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
       
-      console.log(`Total results loaded for ${agentType}: ${allResults.length}`);
-      
-      // If no results found, load baseline questions from baseline.json
-      if (allResults.length === 0) {
-        try {
-          const baselineFile = path.resolve(process.cwd(), `agents/${agentType}-agent/baseline.json`);
-          if (fs.existsSync(baselineFile)) {
-            const baselineData = JSON.parse(fs.readFileSync(baselineFile, 'utf8'));
-            if (baselineData.questions && Array.isArray(baselineData.questions)) {
-              const baselineQuestions = baselineData.questions.map((q: any) => ({
-                id: q.id,
-                questionId: q.id, 
-                question: q.question,
-                expected_answer: q.expected_answer,
-                category: q.category,
-                difficulty: q.difficulty,
-                state: q.state,
-                tags: q.tags,
-                modelResponses: [] // No model responses yet
-              }));
-              console.log(`Loaded ${baselineQuestions.length} baseline questions from baseline.json`);
-              res.json(baselineQuestions);
-              return;
-            }
+      // Enhance baseline questions with test results if available
+      if (testResults.length > 0) {
+        const resultsMap = new Map();
+        testResults.forEach(result => {
+          const questionId = result.questionId;
+          if (!resultsMap.has(questionId)) {
+            resultsMap.set(questionId, []);
           }
-        } catch (error) {
-          console.warn(`Could not load baseline.json for ${agentType}:`, error);
-        }
+          resultsMap.get(questionId).push({
+            model: result.model,
+            answer: result.answer || result.agent_response,
+            confidence: result.confidence || result.confidence_score || 0,
+            grade: result.grade || result.accuracy_score || 0,
+            gradingConfidence: result.gradingConfidence || 0,
+            responseTime: result.responseTime || result.response_time || 0,
+            cost: result.cost || 0,
+            status: 'completed'
+          });
+        });
+        
+        // Add test results to corresponding questions
+        allBaselineQuestions.forEach(question => {
+          const results = resultsMap.get(question.questionId);
+          if (results) {
+            question.modelResponses = results;
+          }
+        });
       }
       
-      // Group results by questionId and create question objects with model responses
-      const questionMap = new Map();
-      
-      allResults.forEach(result => {
-        const questionId = result.questionId;
-        if (!questionMap.has(questionId)) {
-          questionMap.set(questionId, {
-            id: result.id,
-            questionId: result.questionId,
-            question: result.question,
-            expected_answer: result.expectedAnswer,
-            category: result.category,
-            difficulty: result.difficulty,
-            modelResponses: []
-          });
-        }
-        
-        const question = questionMap.get(questionId);
-        question.modelResponses.push({
-          model: result.model,
-          answer: result.agentResponse,
-          confidence: result.confidence,
-          grade: result.aiGrade || result.accuracy,
-          gradingConfidence: result.aiGradingConfidence || result.confidence,
-          responseTime: result.responseTime,
-          cost: result.estimatedCost,
-          status: 'completed'
-        });
-      });
-      
-      res.json(Array.from(questionMap.values()));
+      res.json(allBaselineQuestions);
     } catch (error) {
-      console.error(`Error loading baseline results for ${req.params.agentType}:`, error);
-      res.status(500).json({ error: 'Failed to load baseline results', message: error.message });
+      console.error(`Error loading baseline results for ${agentType}:`, error);
+      res.status(500).json({ error: 'Failed to load baseline results' });
     }
   });
 
