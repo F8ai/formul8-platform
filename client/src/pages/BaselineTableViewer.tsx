@@ -644,15 +644,15 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-96">Question</TableHead>
-                      <TableHead className="w-20">Category</TableHead>
-                      <TableHead className="w-20">Difficulty</TableHead>
+                      <TableHead className="min-w-[500px] max-w-[600px]">Question & Answers</TableHead>
+                      <TableHead className="w-24">Category</TableHead>
+                      <TableHead className="w-24">Difficulty</TableHead>
                       <TableHead className="w-16">State</TableHead>
-                      <TableHead className="w-32">Model</TableHead>
+                      <TableHead className="w-24">Model</TableHead>
                       <TableHead className="w-16">RAG</TableHead>
-                      <TableHead className="w-24">Knowledge Base</TableHead>
-                      <TableHead className="w-16">AI Grade</TableHead>
-                      <TableHead className="w-24">Cost</TableHead>
+                      <TableHead className="w-32">Knowledge Base</TableHead>
+                      <TableHead className="w-20">AI Grade</TableHead>
+                      <TableHead className="w-20">Cost</TableHead>
                       <TableHead className="w-24">Response Time</TableHead>
                       <TableHead className="w-32">Human Grade</TableHead>
                       <TableHead className="w-24">Actions</TableHead>
@@ -665,7 +665,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                       
                       return (
                         <TableRow key={`${row.questionId}-${row.model}`}>
-                          <TableCell className="max-w-96">
+                          <TableCell className="min-w-[500px] max-w-[600px] align-top">
                             {isEditing ? (
                               <div className="space-y-2">
                                 <Textarea
@@ -685,40 +685,31 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                                 </div>
                               </div>
                             ) : (
-                              <div className="space-y-1">
-                                <p className="font-medium line-clamp-2">
-                                  {row.question}
-                                </p>
-                                <Dialog>
-                                  <DialogTrigger asChild>
-                                    <Button variant="ghost" size="sm" className="h-auto p-1 text-xs">
-                                      View details
-                                    </Button>
-                                  </DialogTrigger>
-                                  <DialogContent className="max-w-4xl">
-                                    <DialogHeader>
-                                      <DialogTitle>Question #{row.questionId}</DialogTitle>
-                                    </DialogHeader>
-                                    <div className="space-y-4">
-                                      <div>
-                                        <h4 className="font-medium">Question:</h4>
-                                        <p className="text-sm">{row.question}</p>
-                                      </div>
-                                      <div>
-                                        <h4 className="font-medium">Expected Answer:</h4>
-                                        <p className="text-sm">{row.expected_answer}</p>
-                                      </div>
-                                      <div>
-                                        <h4 className="font-medium">AI Response:</h4>
-                                        <p className="text-sm">{row.response.answer}</p>
-                                      </div>
-                                    </div>
-                                  </DialogContent>
-                                </Dialog>
+                              <div className="space-y-3">
+                                <div>
+                                  <h4 className="font-medium text-sm mb-1">Question:</h4>
+                                  <p className="text-sm leading-relaxed">
+                                    {row.question}
+                                  </p>
+                                </div>
+                                <div>
+                                  <h4 className="font-medium text-sm mb-1">Expected Answer:</h4>
+                                  <p className="text-xs text-muted-foreground leading-relaxed">
+                                    {row.expected_answer}
+                                  </p>
+                                </div>
+                                {row.response?.answer && (
+                                  <div>
+                                    <h4 className="font-medium text-sm mb-1">AI Response ({row.response.model}):</h4>
+                                    <p className="text-xs bg-muted/50 p-2 rounded leading-relaxed">
+                                      {row.response.answer}
+                                    </p>
+                                  </div>
+                                )}
                               </div>
                             )}
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="align-top">
                             {isEditing ? (
                               <Input
                                 value={editData?.category || row.category}
@@ -731,7 +722,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                               </Badge>
                             )}
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="align-top">
                             {isEditing ? (
                               <Select 
                                 value={editData?.difficulty || row.difficulty}
@@ -755,7 +746,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                               </Badge>
                             )}
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="align-top">
                             {isEditing ? (
                               <Input
                                 value={editData?.state || row.state}
@@ -768,22 +759,22 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                               </Badge>
                             )}
                           </TableCell>
-                        <TableCell>
+                        <TableCell className="align-top">
                           <div className="text-sm font-medium">
                             {row.model}
                           </div>
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center align-top">
                           <Badge variant={row.ragEnabled ? "default" : "secondary"} className="text-xs">
                             {row.ragEnabled ? "Yes" : "No"}
                           </Badge>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-top">
                           <div className="text-xs">
                             {row.knowledgeBase}
                           </div>
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center align-top">
                           {row.response.grade !== undefined ? (
                             <div className="space-y-1">
                               <div className={`text-sm font-medium ${
@@ -800,7 +791,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                             <span className="text-xs text-muted-foreground">No grade</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center align-top">
                           {row.response.cost ? (
                             <div className="text-xs">
                               ${row.response.cost.toFixed(4)}
@@ -809,7 +800,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                             <span className="text-xs text-muted-foreground">—</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center align-top">
                           {row.response.responseTime ? (
                             <div className="text-xs">
                               {(row.response.responseTime / 1000).toFixed(1)}s
@@ -818,7 +809,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                             <span className="text-xs text-muted-foreground">—</span>
                           )}
                         </TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center align-top">
                           <HumanGradingInterface
                             result={{
                               id: row.response.id || row.questionId,
@@ -843,7 +834,7 @@ export default function BaselineTableViewer({ agentType: propAgentType }: Baseli
                             }}
                           />
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="align-top">
                           {isEditing ? (
                             <div className="flex gap-1">
                               <Button
