@@ -8,8 +8,8 @@ packages = ["bash", "bc", "cairo", "catch2", "comic-neue", "coordgenlibs", "eige
 
 [deployment]
 deploymentTarget = "autoscale"
-build = ["npm", "run", "build"]
-run = ["npm", "run", "start"]
+build = ["sh", "-c", "node build.js"]
+run = ["sh", "-c", "node start.js"]
 
 [env]
 PORT = "5000"
