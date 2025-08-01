@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
+import ChatLanding from "@/pages/chat-landing";
 import Dashboard from "@/pages/dashboard";
 import Design from "@/pages/design";
 import Agents from "@/pages/agents";
@@ -72,7 +73,10 @@ function Router() {
         {params => <TestResults agentId={params.agentId} />}
       </Route>
       {isLoading || !isAuthenticated ? (
-        <Route path="/" component={Landing} />
+        <>
+          <Route path="/" component={ChatLanding} />
+          <Route path="/landing" component={Landing} />
+        </>
       ) : (
         <>
           <Route path="/" component={Dashboard} />

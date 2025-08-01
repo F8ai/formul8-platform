@@ -304,6 +304,65 @@ router.get("/threads", isAuthenticated, async (req: any, res) => {
   }
 });
 
+// Simple query endpoint for chat interface
+router.post("/query", isAuthenticated, async (req: any, res) => {
+  try {
+    const { query, threadId } = req.body;
+    const userId = req.user.claims.sub;
+
+    if (!query || typeof query !== 'string') {
+      return res.status(400).json({ 
+        error: "Query is required and must be a string" 
+      });
+    }
+
+    // Use provided threadId or create one
+    const finalThreadId = threadId || `${userId}-${Date.now()}`;
+
+    // Process through LangGraph
+    const startTime = Date.now();
+    const result = await langGraphOrchestrator.processQuery(query, finalThreadId);
+    const processingTime = Date.now() - startTime;
+
+    // Store the query in the database
+    const storedQuery = await storage.createQuery({
+      userId,
+      query,
+      status: 'completed',
+      agentType: result.primaryAgent || 'langgraph',
+      metadata: {
+        processingTime,
+        threadId: finalThreadId,
+        confidence: result.confidence || 0,
+        consensusReached: result.consensusReached || false,
+        verificationCount: result.verificationCount || 0,
+        requiresHumanReview: result.requiresHumanReview || false,
+      },
+    });
+
+    // Return the formatted response for chat interface
+    res.json({
+      query: result.query || query,
+      primaryAgent: result.primaryAgent || 'langgraph',
+      response: result.response || "I apologize, but I couldn't process your request at this time.",
+      confidence: result.confidence || 0,
+      consensusReached: result.consensusReached || false,
+      verificationCount: result.verificationCount || 0,
+      requiresHumanReview: result.requiresHumanReview || false,
+      timestamp: new Date().toISOString(),
+      queryId: storedQuery.id,
+      threadId: finalThreadId,
+    });
+
+  } catch (error) {
+    console.error("Error in LangGraph query:", error);
+    res.status(500).json({ 
+      error: "Failed to process query",
+      details: error.message,
+    });
+  }
+});
+
 // Get workflow visualization
 router.get("/visualization", isAuthenticated, async (req, res) => {
   try {

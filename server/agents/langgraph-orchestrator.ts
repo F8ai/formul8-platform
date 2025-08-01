@@ -172,7 +172,7 @@ export class LangGraphOrchestrator {
 
       for (const agentType of verificationAgents) {
         const agent = this.agents.get(agentType);
-        if (agent) {
+        if (agent && agent.verifyAgainstAgent) {
           try {
             const verification = await agent.verifyAgainstAgent(
               state.primaryResponse,
@@ -197,24 +197,28 @@ export class LangGraphOrchestrator {
         }
       }
 
-      return {
-        verificationResponses: verifications,
-        messages: [new AIMessage(`Performed verification with ${verifications.length} agents`)],
-      };
+      state.verificationResponses = verifications;
+      state.messages.push({
+        role: "assistant",
+        content: `Performed verification with ${verifications.length} agents`,
+        timestamp: new Date().toISOString(),
+      });
+    } else {
+      state.messages.push({
+        role: "assistant",
+        content: "High confidence response - skipping verification",
+        timestamp: new Date().toISOString(),
+      });
     }
-
-    return {
-      messages: [new AIMessage("High confidence response - skipping verification")],
-    };
   }
 
   // Build consensus from multiple agent responses
   private async buildConsensus(state: AgentStateType): Promise<void> {
     if (!state.verificationResponses || state.verificationResponses.length === 0) {
-      return {
-        consensusReached: true,
-        finalConfidence: state.primaryResponse?.confidence || 0,
-      };
+      state.consensusReached = true;
+      state.finalConfidence = state.primaryResponse?.confidence || 0;
+      state.requiresHumanReview = state.finalConfidence < 75;
+      return;
     }
 
     const allResponses = [state.primaryResponse, ...state.verificationResponses].filter(Boolean);
@@ -227,12 +231,15 @@ export class LangGraphOrchestrator {
     const consensusReached = confidenceRange <= 20;
     const finalConfidence = consensusReached ? averageConfidence : Math.max(0, averageConfidence - 15);
 
-    return {
-      consensusReached,
-      finalConfidence,
-      requiresHumanReview: !consensusReached || finalConfidence < 75,
-      messages: [new AIMessage(`Consensus analysis: ${consensusReached ? 'Reached' : 'Not reached'} (${finalConfidence.toFixed(1)}% confidence)`)],
-    };
+    state.consensusReached = consensusReached;
+    state.finalConfidence = finalConfidence;
+    state.requiresHumanReview = !consensusReached || finalConfidence < 75;
+    
+    state.messages.push({
+      role: "assistant",
+      content: `Consensus analysis: ${consensusReached ? 'Reached' : 'Not reached'} (${finalConfidence.toFixed(1)}% confidence)`,
+      timestamp: new Date().toISOString(),
+    });
   }
 
   // Route for human review when consensus is not reached
@@ -246,14 +253,17 @@ export class LangGraphOrchestrator {
       timestamp: new Date().toISOString(),
     };
 
-    return {
-      context: { 
-        ...state.context, 
-        humanReviewRequested: true,
-        reviewContext,
-      },
-      messages: [new AIMessage("Human review requested due to low consensus or confidence")],
+    state.context = { 
+      ...state.context, 
+      humanReviewRequested: true,
+      reviewContext,
     };
+    
+    state.messages.push({
+      role: "assistant",
+      content: "Human review requested due to low consensus or confidence",
+      timestamp: new Date().toISOString(),
+    });
   }
 
   // Finalize the response with all gathered information
@@ -269,10 +279,7 @@ export class LangGraphOrchestrator {
       timestamp: new Date().toISOString(),
     };
 
-    return {
-      context: { ...state.context, finalResponse },
-      messages: [new AIMessage(`Response finalized: ${finalResponse.confidence.toFixed(1)}% confidence${finalResponse.requiresHumanReview ? ' (human review required)' : ''}`)],
-    };
+    return finalResponse;
   }
 
   // Conditional edge functions
