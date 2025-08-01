@@ -1,0 +1,311 @@
+{
+  "nodes": [
+    {
+      "id": "start",
+      "type": "default",
+      "data": {
+        "label": "Start",
+        "content": "Welcome to Formul8 AI",
+        "blockType": "start",
+        "isNote": false
+      },
+      "position": {
+        "x": 200,
+        "y": 300
+      },
+      "style": {
+        "background": "#10b981",
+        "color": "white",
+        "border": "2px solid #047857",
+        "borderRadius": "20px",
+        "padding": "12px 16px",
+        "minWidth": "120px",
+        "maxWidth": "150px",
+        "fontSize": "13px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden"
+      }
+    },
+    {
+      "id": "welcome",
+      "type": "default",
+      "data": {
+        "label": "Welcome Message",
+        "content": "Hello! I'm Formul8 AI, your dedicated cannabis industry assistant. How can I help you today?",
+        "blockType": "message",
+        "isNote": false
+      },
+      "position": {
+        "x": 550,
+        "y": 300
+      },
+      "style": {
+        "background": "#3b82f6",
+        "color": "white",
+        "border": "2px solid #1e40af",
+        "borderRadius": "8px",
+        "padding": "12px 16px",
+        "minWidth": "200px",
+        "maxWidth": "300px",
+        "fontSize": "13px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden"
+      }
+    },
+    {
+      "id": "capture",
+      "type": "default",
+      "data": {
+        "label": "Capture User Input",
+        "content": "Capture the user's question or request",
+        "blockType": "capture-v3",
+        "isNote": false
+      },
+      "position": {
+        "x": 900,
+        "y": 300
+      },
+      "style": {
+        "background": "#ef4444",
+        "color": "white",
+        "border": "2px solid #dc2626",
+        "borderRadius": "8px",
+        "padding": "12px 16px",
+        "minWidth": "200px",
+        "maxWidth": "300px",
+        "fontSize": "13px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden"
+      }
+    },
+    {
+      "id": "analyze",
+      "type": "default",
+      "data": {
+        "label": "Analyze Request",
+        "content": "Analyze the user's request and determine the best agent to handle it",
+        "blockType": "response-prompt",
+        "isNote": false
+      },
+      "position": {
+        "x": 1250,
+        "y": 300
+      },
+      "style": {
+        "background": "#f59e0b",
+        "color": "white",
+        "border": "2px solid #d97706",
+        "borderRadius": "8px",
+        "padding": "12px 16px",
+        "minWidth": "200px",
+        "maxWidth": "300px",
+        "fontSize": "13px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden"
+      }
+    },
+    {
+      "id": "route",
+      "type": "default",
+      "data": {
+        "label": "Route to Agent",
+        "content": "Route the request to the appropriate specialized agent",
+        "blockType": "choice",
+        "isNote": false
+      },
+      "position": {
+        "x": 1600,
+        "y": 300
+      },
+      "style": {
+        "background": "#6b7280",
+        "color": "white",
+        "border": "2px solid #4b5563",
+        "borderRadius": "8px",
+        "padding": "12px 16px",
+        "minWidth": "200px",
+        "maxWidth": "300px",
+        "fontSize": "13px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden"
+      }
+    },
+    {
+      "id": "response",
+      "type": "default",
+      "data": {
+        "label": "Generate Response",
+        "content": "Generate a comprehensive response using the selected agent",
+        "blockType": "response-prompt",
+        "isNote": false
+      },
+      "position": {
+        "x": 1950,
+        "y": 300
+      },
+      "style": {
+        "background": "#f59e0b",
+        "color": "white",
+        "border": "2px solid #d97706",
+        "borderRadius": "8px",
+        "padding": "12px 16px",
+        "minWidth": "200px",
+        "maxWidth": "300px",
+        "fontSize": "13px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden"
+      }
+    },
+    {
+      "id": "note_welcome",
+      "type": "default",
+      "data": {
+        "label": "Note",
+        "content": "First, we welcome the user and ask for their question. We capture their response using a capture step.",
+        "blockType": "note",
+        "isNote": true
+      },
+      "position": {
+        "x": 200,
+        "y": 100
+      },
+      "style": {
+        "background": "#fbbf24",
+        "color": "white",
+        "border": "2px solid #f59e0b",
+        "borderRadius": "6px",
+        "padding": "10px 12px",
+        "minWidth": "200px",
+        "maxWidth": "280px",
+        "fontSize": "12px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden",
+        "opacity": "0.95"
+      }
+    },
+    {
+      "id": "note_analyze",
+      "type": "default",
+      "data": {
+        "label": "Note",
+        "content": "We analyze the user's request and determine which specialized agent should handle it based on the content.",
+        "blockType": "note",
+        "isNote": true
+      },
+      "position": {
+        "x": 1250,
+        "y": 100
+      },
+      "style": {
+        "background": "#fbbf24",
+        "color": "white",
+        "border": "2px solid #f59e0b",
+        "borderRadius": "6px",
+        "padding": "10px 12px",
+        "minWidth": "200px",
+        "maxWidth": "280px",
+        "fontSize": "12px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden",
+        "opacity": "0.95"
+      }
+    },
+    {
+      "id": "note_response",
+      "type": "default",
+      "data": {
+        "label": "Note",
+        "content": "Finally, we generate a comprehensive response using the selected specialized agent's knowledge and capabilities.",
+        "blockType": "note",
+        "isNote": true
+      },
+      "position": {
+        "x": 1950,
+        "y": 100
+      },
+      "style": {
+        "background": "#fbbf24",
+        "color": "white",
+        "border": "2px solid #f59e0b",
+        "borderRadius": "6px",
+        "padding": "10px 12px",
+        "minWidth": "200px",
+        "maxWidth": "280px",
+        "fontSize": "12px",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
+        "position": "relative",
+        "overflow": "hidden",
+        "opacity": "0.95"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-start-welcome",
+      "source": "start",
+      "target": "welcome",
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#9ca3af",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "e-welcome-capture",
+      "source": "welcome",
+      "target": "capture",
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#9ca3af",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "e-capture-analyze",
+      "source": "capture",
+      "target": "analyze",
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#9ca3af",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "e-analyze-route",
+      "source": "analyze",
+      "target": "route",
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#9ca3af",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "e-route-response",
+      "source": "route",
+      "target": "response",
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#9ca3af",
+        "strokeWidth": 2
+      }
+    }
+  ]
+}

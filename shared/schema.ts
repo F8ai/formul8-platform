@@ -10,7 +10,7 @@ import {
   boolean,
   decimal,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
 
@@ -580,3 +580,83 @@ export type AgentTool = typeof agentTools.$inferSelect;
 export type InsertAgentTool = z.infer<typeof insertAgentToolSchema>;
 export type ArtifactHistory = typeof artifactHistory.$inferSelect;
 export type InsertArtifactHistory = z.infer<typeof insertArtifactHistorySchema>;
+
+// Dashboard Widget Customization
+export const dashboardLayouts = pgTable("dashboard_layouts", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id").notNull(),
+  layoutName: text("layout_name").notNull().default("default"),
+  widgets: jsonb("widgets").notNull().default([]),
+  gridConfig: jsonb("grid_config").notNull().default({}),
+  isDefault: boolean("is_default").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const widgetPreferences = pgTable("widget_preferences", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id").notNull(),
+  widgetType: text("widget_type").notNull(),
+  preferences: jsonb("preferences").notNull().default({}),
+  isEnabled: boolean("is_enabled").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Dashboard widget relations
+export const dashboardLayoutsRelations = relations(dashboardLayouts, ({ one }) => ({
+  user: one(users, {
+    fields: [dashboardLayouts.userId],
+    references: [users.id],
+  }),
+}));
+
+export const widgetPreferencesRelations = relations(widgetPreferences, ({ one }) => ({
+  user: one(users, {
+    fields: [widgetPreferences.userId],
+    references: [users.id],
+  }),
+}));
+
+// Zod schemas for dashboard customization
+export const insertDashboardLayoutSchema = createInsertSchema(dashboardLayouts);
+export const selectDashboardLayoutSchema = createSelectSchema(dashboardLayouts);
+export const insertWidgetPreferencesSchema = createInsertSchema(widgetPreferences);
+export const selectWidgetPreferencesSchema = createSelectSchema(widgetPreferences);
+
+// Widget configuration types
+export const WidgetConfigSchema = z.object({
+  id: z.string(),
+  type: z.enum(['agent-status', 'recent-activity', 'compliance-summary', 'formulation-queue', 'cost-tracker', 'chat-quick-access', 'metrics-overview', 'calendar', 'notifications']),
+  position: z.object({
+    x: z.number(),
+    y: z.number(),
+    w: z.number(),
+    h: z.number(),
+  }),
+  title: z.string().optional(),
+  settings: z.record(z.any()).optional(),
+});
+
+export const DashboardLayoutSchema = z.object({
+  id: z.string().optional(),
+  userId: z.string(),
+  layoutName: z.string(),
+  widgets: z.array(WidgetConfigSchema),
+  gridConfig: z.object({
+    cols: z.number().default(12),
+    rows: z.number().default(20),
+    margin: z.array(z.number()).default([10, 10]),
+    compactType: z.enum(['vertical', 'horizontal', null]).default('vertical'),
+    preventCollision: z.boolean().default(false),
+  }),
+  isDefault: z.boolean().default(false),
+});
+
+// Dashboard widget types
+export type DashboardLayout = typeof dashboardLayouts.$inferSelect;
+export type InsertDashboardLayout = typeof dashboardLayouts.$inferInsert;
+export type WidgetPreferences = typeof widgetPreferences.$inferSelect;
+export type InsertWidgetPreferences = typeof widgetPreferences.$inferInsert;
+export type WidgetConfig = z.infer<typeof WidgetConfigSchema>;
+export type DashboardLayoutConfig = z.infer<typeof DashboardLayoutSchema>;

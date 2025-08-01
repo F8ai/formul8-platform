@@ -2059,6 +2059,116 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Dashboard widget customization routes
+  app.get('/api/dashboard/layouts/:userId', isAuthenticated, async (req: any, res) => {
+    try {
+      const { userId } = req.params;
+      
+      // Ensure user can only access their own layouts
+      if (req.user.claims.sub !== userId) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      const layouts = await storage.getUserDashboardLayouts(userId);
+      res.json(layouts);
+    } catch (error) {
+      console.error("Error fetching dashboard layouts:", error);
+      res.status(500).json({ message: "Failed to fetch dashboard layouts" });
+    }
+  });
+
+  app.post('/api/dashboard/layouts', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const layoutData = { ...req.body, userId };
+      
+      const layout = await storage.createDashboardLayout(layoutData);
+      res.status(201).json(layout);
+    } catch (error) {
+      console.error("Error creating dashboard layout:", error);
+      res.status(500).json({ message: "Failed to create dashboard layout" });
+    }
+  });
+
+  app.patch('/api/dashboard/layouts/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.user.claims.sub;
+      
+      // Verify ownership
+      const existing = await storage.getDashboardLayout(id);
+      if (!existing || existing.userId !== userId) {
+        return res.status(404).json({ message: "Layout not found" });
+      }
+      
+      const updated = await storage.updateDashboardLayout(id, req.body);
+      res.json(updated);
+    } catch (error) {
+      console.error("Error updating dashboard layout:", error);
+      res.status(500).json({ message: "Failed to update dashboard layout" });
+    }
+  });
+
+  app.delete('/api/dashboard/layouts/:id', isAuthenticated, async (req: any, res) => {
+    try {
+      const { id } = req.params;
+      const userId = req.user.claims.sub;
+      
+      // Verify ownership
+      const existing = await storage.getDashboardLayout(id);
+      if (!existing || existing.userId !== userId) {
+        return res.status(404).json({ message: "Layout not found" });
+      }
+      
+      const deleted = await storage.deleteDashboardLayout(id);
+      res.json({ success: deleted });
+    } catch (error) {
+      console.error("Error deleting dashboard layout:", error);
+      res.status(500).json({ message: "Failed to delete dashboard layout" });
+    }
+  });
+
+  app.get('/api/dashboard/preferences/:userId', isAuthenticated, async (req: any, res) => {
+    try {
+      const { userId } = req.params;
+      
+      // Ensure user can only access their own preferences
+      if (req.user.claims.sub !== userId) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      const preferences = await storage.getUserWidgetPreferences(userId);
+      res.json(preferences);
+    } catch (error) {
+      console.error("Error fetching widget preferences:", error);
+      res.status(500).json({ message: "Failed to fetch widget preferences" });
+    }
+  });
+
+  app.post('/api/dashboard/preferences', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const preferenceData = { ...req.body, userId };
+      
+      // Check if preference already exists for this widget type
+      const existing = await storage.getUserWidgetPreferences(userId);
+      const existingPref = existing.find(p => p.widgetType === preferenceData.widgetType);
+      
+      if (existingPref) {
+        // Update existing preference
+        const updated = await storage.updateWidgetPreference(existingPref.id, preferenceData);
+        res.json(updated);
+      } else {
+        // Create new preference
+        const preference = await storage.createWidgetPreference(preferenceData);
+        res.status(201).json(preference);
+      }
+    } catch (error) {
+      console.error("Error saving widget preference:", error);
+      res.status(500).json({ message: "Failed to save widget preference" });
+    }
+  });
+
   // Agent status routes
   app.get('/api/agents/status', isAuthenticated, async (req, res) => {
     try {

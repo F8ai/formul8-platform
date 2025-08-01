@@ -39,6 +39,12 @@ import {
   type InsertBaselineTestRun,
   type BaselineTestResult,
   type InsertBaselineTestResult,
+  dashboardLayouts,
+  widgetPreferences,
+  type DashboardLayout,
+  type InsertDashboardLayout,
+  type WidgetPreferences,
+  type InsertWidgetPreferences,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, or } from "drizzle-orm";
@@ -73,6 +79,19 @@ export interface IStorage {
   // Agent status operations
   updateAgentStatus(agentType: string, updates: Partial<AgentStatusType>): Promise<AgentStatusType>;
   getAllAgentStatus(): Promise<AgentStatusType[]>;
+  
+  // Dashboard widget operations
+  createDashboardLayout(layout: InsertDashboardLayout): Promise<DashboardLayout>;
+  getUserDashboardLayouts(userId: string): Promise<DashboardLayout[]>;
+  getDashboardLayout(id: string): Promise<DashboardLayout | undefined>;
+  updateDashboardLayout(id: string, updates: Partial<InsertDashboardLayout>): Promise<DashboardLayout | undefined>;
+  deleteDashboardLayout(id: string): Promise<boolean>;
+  
+  // Widget preferences operations
+  createWidgetPreference(preference: InsertWidgetPreferences): Promise<WidgetPreferences>;
+  getUserWidgetPreferences(userId: string): Promise<WidgetPreferences[]>;
+  updateWidgetPreference(id: string, updates: Partial<InsertWidgetPreferences>): Promise<WidgetPreferences | undefined>;
+  deleteWidgetPreference(id: string): Promise<boolean>;
   getAgentStatus(agentType: string): Promise<AgentStatusType | undefined>;
   
   // Conversation operations
@@ -634,6 +653,72 @@ export class DatabaseStorage implements IStorage {
       .where(eq(artifactHistory.artifactId, artifactId))
       .orderBy(desc(artifactHistory.createdAt));
     return history;
+  }
+
+  // Dashboard widget operations
+  async createDashboardLayout(layout: InsertDashboardLayout): Promise<DashboardLayout> {
+    const [created] = await db.insert(dashboardLayouts).values(layout).returning();
+    return created;
+  }
+
+  async getUserDashboardLayouts(userId: string): Promise<DashboardLayout[]> {
+    const layouts = await db
+      .select()
+      .from(dashboardLayouts)
+      .where(eq(dashboardLayouts.userId, userId))
+      .orderBy(desc(dashboardLayouts.isDefault), desc(dashboardLayouts.updatedAt));
+    return layouts;
+  }
+
+  async getDashboardLayout(id: string): Promise<DashboardLayout | undefined> {
+    const [layout] = await db
+      .select()
+      .from(dashboardLayouts)
+      .where(eq(dashboardLayouts.id, id));
+    return layout;
+  }
+
+  async updateDashboardLayout(id: string, updates: Partial<InsertDashboardLayout>): Promise<DashboardLayout | undefined> {
+    const [updated] = await db
+      .update(dashboardLayouts)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(dashboardLayouts.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteDashboardLayout(id: string): Promise<boolean> {
+    const result = await db.delete(dashboardLayouts).where(eq(dashboardLayouts.id, id));
+    return result.rowCount > 0;
+  }
+
+  // Widget preferences operations
+  async createWidgetPreference(preference: InsertWidgetPreferences): Promise<WidgetPreferences> {
+    const [created] = await db.insert(widgetPreferences).values(preference).returning();
+    return created;
+  }
+
+  async getUserWidgetPreferences(userId: string): Promise<WidgetPreferences[]> {
+    const preferences = await db
+      .select()
+      .from(widgetPreferences)
+      .where(eq(widgetPreferences.userId, userId))
+      .orderBy(widgetPreferences.widgetType);
+    return preferences;
+  }
+
+  async updateWidgetPreference(id: string, updates: Partial<InsertWidgetPreferences>): Promise<WidgetPreferences | undefined> {
+    const [updated] = await db
+      .update(widgetPreferences)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(widgetPreferences.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteWidgetPreference(id: string): Promise<boolean> {
+    const result = await db.delete(widgetPreferences).where(eq(widgetPreferences.id, id));
+    return result.rowCount > 0;
   }
 }
 
