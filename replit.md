@@ -33,6 +33,13 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Federated Architecture**: Designed for hybrid cloud deployments, allowing local agents to communicate with cloud agents via secure mTLS authentication, enabling data sovereignty and local intelligence.
 - **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
 
+### Deployment Architecture (Updated Aug 1, 2025)
+- **Container Optimization**: Multi-stage Docker build reducing image size from 8+ GB to under 2 GB
+- **Build System**: Optimized Vite builds with frontend-only compilation, no server compilation required
+- **Production Runtime**: tsx for TypeScript execution, eliminating binary compatibility issues
+- **Asset Management**: .dockerignore excludes 19M+ of assets, docs, and development files
+- **Security**: Non-root container execution with health checks and graceful shutdown handling
+
 ### Core Features and Design Patterns
 - **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory.
 - **Agent Ecosystem**: 12 specialized AI agents (Compliance, Formulation, Marketing, Operations, Sourcing, Patent, Science, Spectra, Customer Success, LMS, Metabolomics) designed for specific cannabis industry domains.
