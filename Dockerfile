@@ -1,59 +1,60 @@
-# Multi-stage Docker build to reduce final image size
-FROM node:20-alpine AS builder
+# Optimized multi-stage build for Replit deployment
+FROM node:20-alpine AS base
 
-# Install build dependencies
-WORKDIR /app
+# Install essential system packages only
+RUN apk add --no-cache curl dumb-init && \
+    rm -rf /var/cache/apk/* /tmp/*
+
+# Stage 1: Build frontend
+FROM base AS builder
+WORKDIR /build
+
+# Copy package files and install ALL dependencies for building
 COPY package*.json ./
-RUN npm ci --include=dev --prefer-offline --no-audit
+RUN npm ci --prefer-offline --no-audit --silent
 
-# Copy only essential source files for build
+# Copy source files needed for build
 COPY client/ ./client/
 COPY shared/ ./shared/
 COPY vite.config.ts ./
 COPY tsconfig.json ./
 COPY components.json ./
 
-# Build frontend with optimizations
-RUN npm run build:client || vite build --mode production --minify --sourcemap false
+# Build frontend with maximum optimization
+RUN npx vite build --mode production --outDir dist/public
 
-# Production stage - minimal image
-FROM node:20-alpine AS production
-
-# Install system dependencies
-RUN apk add --no-cache curl dumb-init && \
-    rm -rf /var/cache/apk/*
-
-# Install production packages
+# Stage 2: Production runtime (minimal)
+FROM base AS production
 WORKDIR /app
+
+# Install only production dependencies
 COPY package*.json ./
-RUN npm ci --only=production --prefer-offline --no-audit && \
+RUN npm ci --only=production --prefer-offline --no-audit --silent && \
     npm install tsx --no-save && \
     npm cache clean --force && \
-    rm -rf /tmp/* ~/.npm
+    rm -rf /tmp/* ~/.npm /root/.cache
 
-# Copy built frontend assets from builder stage
-COPY --from=builder /app/dist /app/dist
+# Copy built frontend from builder
+COPY --from=builder /build/dist/public ./server/public
 
-# Copy essential backend files only
+# Copy backend source
 COPY server/ ./server/
 COPY shared/ ./shared/
 COPY drizzle.config.ts ./
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001 -G nodejs && \
-    chown -R nextjs:nodejs /app && \
-    chmod +x /app/server/index.ts
+# Create non-root user
+RUN addgroup -g 1001 -S app && \
+    adduser -S app -u 1001 -G app && \
+    chown -R app:app /app
 
-# Switch to non-root user
-USER nextjs
+USER app
 
-# Health check with timeout
+# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:5000/api/health || exit 1
+  CMD curl -f http://localhost:${PORT:-5000}/api/health || exit 1
 
-EXPOSE 5000
+EXPOSE ${PORT:-5000}
 
-# Use dumb-init for proper signal handling
+# Start server
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["npx", "tsx", "server/index.ts"]

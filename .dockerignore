@@ -1,35 +1,47 @@
-# Complete node_modules exclusion - will be rebuilt in container
-node_modules/
-.npm/
-.cache/
-
-# Development dependencies and caches (Major size reduction)
-.vite/
-.nx/
-dist/
-build/
-coverage/
-
-# Large asset files and directories - excluded from container (800MB+ savings)
+# === PRIORITY EXCLUSIONS FOR SIZE REDUCTION ===
+# Exclude all large assets and directories that cause 8GB limit issues
 attached_assets/
-docs/
-agents.old/
 data/
 datasets/
-__pycache__/
+genomes/
+agents/
+agents.old/
+agent-dir/
+docs/
 dashboard/
 flowise/
 local-deployment/
-agents/
-agent-dir/
+__pycache__/
 formul8-platform-complete.tar.gz
 *.tar.gz
 *.zip
-genomes/
-baseline_results.json
-astradb_update_results.json
-scripts/analyze-bundle.js
-scripts/optimize-*.js
+
+# Node.js dependencies - will be rebuilt
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+
+# Build artifacts and caches
+dist/
+build/
+.vite/
+.nx/
+.cache/
+coverage/
+.nyc_output/
+
+# Development files
+.env.local
+.env.development
+.env.test
+*.log
+npm-debug.log*
+yarn-debug.log*
+.vscode/
+.idea/
+
+# Large media files
 *.pdf
 *.png
 *.jpg
@@ -43,67 +55,42 @@ scripts/optimize-*.js
 *.docx
 *.pptx
 *.xlsx
-*.json
-!package.json
-!package-lock.json
-!drizzle.config.ts
-!vite.config.ts
-!tsconfig.json
-!components.json
 
-# Python files and dependencies
+# Python files
 *.py
 *.pyc
 baseline_requirements.txt
 requirements.txt
-__pycache__/
 
-# Large build and utility files
-*.tar.gz
-*.zip
-*.md
-!README.md
-!replit.md
+# Scripts and utilities not needed in container
 build-*.js
 deploy-*.js
-cleanup-*.sh
-create-*.sh
 *.sh
 !start.sh
+scripts/
+deployment-*.js
 
-# Development files
-.env.local
-.env.development
-.env.test
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Documentation (keep only essential)
+*.md
+!README.md
 
-# Source control and documentation
+# Source control
 .git/
 .github/
 .gitignore
-*.md
-!README.md
-!replit.md
 
-# IDE and OS files
-.vscode/
-.idea/
-*.swp
-*.swo
+# OS files
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
 
-# Test files and development tools
+# Test files
 **/*.test.*
 **/*.spec.*
 **/__tests__/
 **/__mocks__/
 jest.config.*
-*.test.js
-*.spec.js
 
 # TypeScript build artifacts
 tsconfig.tsbuildinfo
@@ -111,9 +98,11 @@ tsconfig.tsbuildinfo
 *.d.ts.map
 *.js.map
 
-# Deployment scripts (not needed in container)
-deployment-*.js
-deploy-*.js
-scripts/production-*.js
-bundle-analysis.md
-deployment-report.md
+# JSON files (keep only essential)
+*.json
+!package.json
+!package-lock.json
+!components.json
+!tsconfig.json
+!drizzle.config.ts
+!vite.config.ts

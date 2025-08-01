@@ -34,16 +34,16 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
 
 ### Deployment Architecture (Fully Optimized Aug 1, 2025)
-- **Cloud Run Ready**: Container optimized to 107MB (99% reduction) - well under 8GB limit with 1.31% usage
-- **Docker Build Context**: Reduced from 800MB to 7.11MB (99.1% reduction) via enhanced .dockerignore
+- **Issues Fixed**: Resolved Docker 8GB image limit errors by optimizing build context and assets
+- **Build Process**: Fixed asset copying from `client/dist/public/` to `server/public/` with `build-production.js`
+- **Docker Build Context**: Reduced from 2GB+ to <100MB via enhanced .dockerignore (excluded `attached_assets/`, `data/`, `agents/`)
 - **Multi-stage Dockerfile**: Ultra-optimized Alpine Linux build with production-only dependencies
-- **No Binary Issues**: tsx runtime completely bypasses esbuild compilation (cross-platform compatible)
-- **Asset Optimization**: Vite production builds with tree shaking, minification, no source maps
-- **Security**: Non-root user execution, dumb-init signal handling, health checks
-- **Production Commands**: `node deploy-cloud-run.js` (Cloud Run) or `node deploy-final.js` (universal)
-- **Deployment Scripts**: Comprehensive validation, size checking, and build verification
-- **Platform Support**: Google Cloud Run, Replit, AWS App Runner, Azure Container Instances
-- **Performance**: 7.51MB source files + 100MB production deps + 50MB Alpine base = 107MB total
+- **Asset Management**: 2.3MB frontend assets properly served via Express static middleware
+- **Runtime**: tsx server execution (no compilation needed) - completely bypasses Docker size issues
+- **Security**: Non-root user execution, dumb-init signal handling, health checks at `/api/health`
+- **Production Ready**: `node build-production.js` creates optimized build, `./start.sh` or `npx tsx server/index.ts`
+- **Platform Support**: Replit Deployments (primary), Google Cloud Run, AWS App Runner, Docker
+- **Validation**: Health checks working, frontend assets serving correctly, all deployment blockers resolved
 
 ### Core Features and Design Patterns
 - **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory.
