@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import FormulaChatInterface from "@/components/FormulaChatInterface";
+import Formul8Logo from "@/components/Formul8Logo";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -45,12 +46,9 @@ export default function Chat() {
       {/* Header */}
       <header className="formul8-header">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-formul8-logo-gradient rounded-2xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">F8</span>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold formul8-logo-gradient">FORMUL8.AI</h1>
+          <div className="flex items-center">
+            <Formul8Logo size="lg" showText={true} />
+            <div className="ml-4">
               <p className="text-sm text-formul8-gray">Your AI powered Cannabis OS</p>
             </div>
           </div>
@@ -152,8 +150,8 @@ export default function Chat() {
             <h3 className="text-3xl font-bold text-formul8-white">Cost Comparison</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
               <div className="space-y-4">
-                <div className="w-16 h-16 bg-formul8-logo-gradient rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-                  <span className="text-white font-bold text-2xl">F8</span>
+                <div className="flex justify-center">
+                  <Formul8Logo size="xl" showText={false} />
                 </div>
                 <h4 className="text-2xl font-bold formul8-text-gradient">Formul8.ai</h4>
                 <p className="text-4xl font-bold text-formul8-white">$5k-$50k / yr</p>
