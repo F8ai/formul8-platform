@@ -1,124 +1,76 @@
-# Exclude large files and directories from Docker build context
+# Development dependencies and caches (Major size reduction)
+node_modules/.cache/
+node_modules/.vite/
+node_modules/.nx/
+node_modules/.esbuild/
+.vite/
+.nx/
+dist/
+build/
+coverage/
 
-# Development files
-node_modules
-.git
-.gitignore
-*.git
-.DS_Store
-.env
-.env.local
-.env.development
-.env.test
-
-# Build artifacts
-dist
-build
-coverage
-.nyc_output
-
-# Documentation and markdown files
-*.md
-docs/
-README*
-CHANGELOG*
-LICENSE*
-
-# Large asset directories
+# Large asset files - 19MB+ excluded from container
 attached_assets/
-agents.old/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-__pycache__
-*.py[cod]
-*$py.class
-
-# Development tools
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-
-# Temporary files
-tmp/
-temp/
-.tmp
-
-# Large data directories
-data/
-datasets/
-genomes/
-flowise/
-dashboard/
-
-# Compressed files
-*.tar.gz
-*.zip
-*.rar
-
-# Image files (keep only essential ones)
+docs/
+scripts/analyze-bundle.js
+scripts/optimize-*.js
+*.pdf
 *.png
 *.jpg
 *.jpeg
 *.gif
 *.svg
-*.ico
-*.webp
+*.mp4
+*.avi
+*.mov
+*.rtf
+*.docx
+*.pptx
+*.xlsx
 
-# Agent directories (development only)
-agents.old/
-agent-dir/
-github-tester-agent/
-local-deployment/
+# Development files
+.env.local
+.env.development
+.env.test
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Python cache and virtual environments
-venv/
-env/
-ENV/
-.venv/
-.ENV/
+# Source control and documentation
+.git/
+.github/
+.gitignore
+*.md
+!README.md
+!replit.md
 
-# Testing and deployment scripts
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Test files and development tools
+**/*.test.*
+**/*.spec.*
+**/__tests__/
+**/__mocks__/
+jest.config.*
 *.test.js
 *.spec.js
-test/
-tests/
-.coverage
-.pytest_cache/
 
-# Deployment and build scripts (keep only essential ones)
-build-*.js
+# TypeScript build artifacts
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+*.d.ts.map
+*.js.map
+
+# Deployment scripts (not needed in container)
+deployment-*.js
 deploy-*.js
-create-*.js
-enhance-*.js
-*.sh
-*.py
-
-# Large documentation files
-*.pdf
-*.rtf
-*.txt
-
-# Screenshots and demo files
-Screenshot_*
-IMG_*
-image_*
-Pasted-*
-
-# JSON data files
-*.json
-!package.json
-!package-lock.json
-!tsconfig.json
-!components.json
+scripts/production-*.js
+bundle-analysis.md
+deployment-report.md

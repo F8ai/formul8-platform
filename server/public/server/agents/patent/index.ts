@@ -1,1 +1,0 @@
-export { PatentAgent } from './agent.js';

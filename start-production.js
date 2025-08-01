@@ -1,64 +1,43 @@
 #!/usr/bin/env node
 
-/**
- * Production server startup script using tsx runtime
- * Replaces npm start to avoid esbuild binary compatibility issues
- * Use as start command: node start-production.js
- */
-
+// Optimized production startup for Replit deployment
 import { spawn } from 'child_process';
-import { existsSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-// Set production environment
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const rootDir = resolve(__dirname, '..');
+
+// Production environment setup
 process.env.NODE_ENV = 'production';
+process.env.REPLIT_DEPLOYMENT = 'true';
 
-console.log('🚀 Starting Formul8 Platform in production mode...');
-console.log(`📊 Environment: ${process.env.NODE_ENV}`);
-console.log(`🌐 Port: ${process.env.PORT || '5000'}`);
+console.log('🚀 Starting Formul8 Platform (Production)');
+console.log('📦 Optimized for deployment');
 
-// Verify server files exist
-if (!existsSync('server/index.ts')) {
-  console.error('❌ Server entry point not found: server/index.ts');
-  process.exit(1);
-}
-
-// Verify static assets
-const publicDir = 'server/public';
-if (!existsSync(publicDir)) {
-  console.warn('⚠️  Static assets not found in server/public/');
-  console.warn('    Run "node deployment-production.js" first to build assets');
-}
-
-console.log('🔧 Using tsx runtime for TypeScript execution');
-console.log('📁 Serving static assets from server/public/');
-console.log('');
-
-// Start server with tsx
+// Start with memory optimization
 const server = spawn('npx', ['tsx', 'server/index.ts'], {
+  cwd: rootDir,
   stdio: 'inherit',
   env: {
     ...process.env,
-    NODE_ENV: 'production'
+    NODE_OPTIONS: '--max-old-space-size=2048 --optimize-for-size'
   }
 });
 
-// Handle process signals for graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('🛑 Received SIGTERM, shutting down gracefully...');
-  server.kill('SIGTERM');
-});
+// Graceful shutdown handlers
+const shutdown = (signal) => {
+  console.log(`
+🛑 Received ${signal}, shutting down gracefully...`);
+  server.kill(signal);
+  setTimeout(() => process.exit(0), 5000);
+};
 
-process.on('SIGINT', () => {
-  console.log('🛑 Received SIGINT, shutting down gracefully...');
-  server.kill('SIGINT');
-});
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
 
-server.on('error', (error) => {
-  console.error('❌ Server startup failed:', error.message);
-  process.exit(1);
-});
-
-server.on('exit', (code, signal) => {
-  console.log(`📊 Server process exited with code ${code} and signal ${signal}`);
-  process.exit(code || 0);
+server.on('exit', (code) => {
+  console.log(`🏁 Server exited with code ${code}`);
+  process.exit(code);
 });

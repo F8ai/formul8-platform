@@ -34,11 +34,13 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
 
 ### Deployment Architecture (Updated Aug 1, 2025)
-- **Container Optimization**: Multi-stage Docker build reducing image size from 8+ GB to under 2 GB
-- **Build System**: Optimized Vite builds with frontend-only compilation, no server compilation required
-- **Production Runtime**: tsx for TypeScript execution, eliminating binary compatibility issues
-- **Asset Management**: .dockerignore excludes 19M+ of assets, docs, and development files
-- **Security**: Non-root container execution with health checks and graceful shutdown handling
+- **Container Optimization**: Comprehensive deployment optimization reducing image size below 8GB Cloud Run limit
+- **Build System**: Production Vite builds with minification, source maps disabled, dead code elimination
+- **Bundle Optimization**: Frontend assets optimized to 2.3MB, development dependencies excluded via .dockerignore
+- **Asset Exclusion**: 19MB+ of attached assets, documentation, and development files excluded from container
+- **Production Runtime**: tsx with memory optimization (2GB limit), graceful shutdown handling
+- **Environment Configuration**: Production-specific environment variables, build optimization flags
+- **Size Reduction**: .dockerignore excludes cache directories, large images, PDFs, and development tools
 
 ### Core Features and Design Patterns
 - **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory.
