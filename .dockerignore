@@ -9,9 +9,18 @@ dist/
 build/
 coverage/
 
-# Large asset files - 19MB+ excluded from container
+# Large asset files and directories - excluded from container
 attached_assets/
 docs/
+agents.old/
+data/
+datasets/
+__pycache__/
+dashboard/
+flowise/
+local-deployment/
+agents/
+formul8-platform-complete.tar.gz
 scripts/analyze-bundle.js
 scripts/optimize-*.js
 *.pdf
@@ -27,6 +36,33 @@ scripts/optimize-*.js
 *.docx
 *.pptx
 *.xlsx
+*.json
+!package.json
+!package-lock.json
+!drizzle.config.ts
+!vite.config.ts
+!tsconfig.json
+!components.json
+
+# Python files and dependencies
+*.py
+*.pyc
+baseline_requirements.txt
+requirements.txt
+__pycache__/
+
+# Large build and utility files
+*.tar.gz
+*.zip
+*.md
+!README.md
+!replit.md
+build-*.js
+deploy-*.js
+cleanup-*.sh
+create-*.sh
+*.sh
+!start.sh
 
 # Development files
 .env.local
