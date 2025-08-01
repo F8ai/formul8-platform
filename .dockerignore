@@ -1,15 +1,16 @@
+# Complete node_modules exclusion - will be rebuilt in container
+node_modules/
+.npm/
+.cache/
+
 # Development dependencies and caches (Major size reduction)
-node_modules/.cache/
-node_modules/.vite/
-node_modules/.nx/
-node_modules/.esbuild/
 .vite/
 .nx/
 dist/
 build/
 coverage/
 
-# Large asset files and directories - excluded from container
+# Large asset files and directories - excluded from container (800MB+ savings)
 attached_assets/
 docs/
 agents.old/
@@ -20,7 +21,13 @@ dashboard/
 flowise/
 local-deployment/
 agents/
+agent-dir/
 formul8-platform-complete.tar.gz
+*.tar.gz
+*.zip
+genomes/
+baseline_results.json
+astradb_update_results.json
 scripts/analyze-bundle.js
 scripts/optimize-*.js
 *.pdf
