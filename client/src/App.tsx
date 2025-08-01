@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
 import ChatLanding from "@/pages/chat-landing";
+import Chat from "@/pages/chat";
 import Dashboard from "@/pages/dashboard";
 import Design from "@/pages/design";
 import Agents from "@/pages/agents";
@@ -79,7 +80,8 @@ function Router() {
         </>
       ) : (
         <>
-          <Route path="/" component={Dashboard} />
+          <Route path="/" component={Chat} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="/science" component={Science} />
           <Route path="/development-agent" component={DevelopmentAgent} />
           <Route path="/agents-dashboard" component={AgentsDashboard} />
