@@ -25,6 +25,14 @@ import { useAuth } from "@/hooks/useAuth";
 
 const features = [
   { 
+    id: 'chat', 
+    name: 'Expert Chat', 
+    icon: MessageCircle, 
+    color: 'text-sky-400',
+    bgColor: 'bg-sky-500/20',
+    route: '/api/login'
+  },
+  { 
     id: 'compliance', 
     name: 'State Compliance Engine', 
     icon: Shield, 
@@ -112,14 +120,7 @@ const features = [
     bgColor: 'bg-violet-500/20',
     route: '/user-sop'
   },
-  { 
-    id: 'chat', 
-    name: 'Expert Chat', 
-    icon: Users, 
-    color: 'text-sky-400',
-    bgColor: 'bg-sky-500/20',
-    route: '/api/login'
-  }
+
 ];
 
 export default function Landing() {
