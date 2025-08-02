@@ -1,15 +1,15 @@
 # Replit Deployment Configuration
 # Optimized for size and performance
 
-# Use the optimized production build and create minimal context
-build = ["node", "build.js"]
+# Use working Node.js build script directly (bypasses Python/esbuild issues)
+build = ["node", "build-optimized.js"]
 
 # Use the minimal Docker context for deployment
 dockerfile = "docker-build-context/Dockerfile"
 context = "docker-build-context"
 
-# Start command  
-run = ["node", "start.js"]
+# Start command using working Node.js script (bypasses tsx issues)
+run = ["sh", "-c", "cd docker-build-context && node dist/index.js"]
 
 # Environment
 [env]

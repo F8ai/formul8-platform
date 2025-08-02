@@ -1,0 +1,10 @@
+# Alternative deployment config - Node.js only
+[build]
+command = "node build-optimized.js"
+
+[run]  
+command = "cd docker-build-context && node dist/index.js"
+
+[env]
+NODE_ENV = "production"
+PORT = "5000"
