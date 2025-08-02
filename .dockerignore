@@ -1,118 +1,158 @@
-# === PRIORITY EXCLUSIONS FOR SIZE REDUCTION ===
-# Exclude all large assets and directories that cause 8GB limit issues
-attached_assets/
-data/
-datasets/
-genomes/
-agents/
-agents.old/
-agent-dir/
-docs/
-dashboard/
-flowise/
-local-deployment/
-__pycache__/
-formul8-platform-complete.tar.gz
-formul8-frontend/
-operations-data/
-patent-data/
-science-data/
-sourcing-data/
-spectra-data/
-voiceflow/
-github-tester-agent/
-*.tar.gz
-*.zip
-*.rar
-*.7z
-
-# Node.js dependencies - will be rebuilt
+# Node modules and package management
 node_modules/
-.npm/
-.pnpm-store/
-.yarn/
-
-# Build artifacts and caches
-dist/
-build/
-.vite/
-.nx/
-.cache/
-coverage/
-.nyc_output/
-
-# Development files
-.env.local
-.env.development
-.env.test
-*.log
 npm-debug.log*
 yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs and cache
+dist/
+build/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.vite/
+
+# Environment and configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# Large media files
-*.pdf
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation and markdown files
+*.md
+!README.md
+docs/
+CHANGELOG.md
+LICENSE
+
+# Test files
+test/
+tests/
+__tests__/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+coverage/
+
+# Development tools and scripts
+scripts/
+.eslintrc*
+.prettierrc*
+jest.config.*
+webpack.config.*
+rollup.config.*
+
+# Large assets and attachments (these are causing size issues)
+attached_assets/
 *.png
 *.jpg
 *.jpeg
 *.gif
 *.svg
+*.ico
+*.pdf
+*.zip
+*.tar.gz
 *.mp4
-*.avi
 *.mov
-*.rtf
-*.docx
-*.pptx
-*.xlsx
+*.avi
 
-# Python files
-*.py
+# Agent directories and data (not needed in deployment)
+agents/
+agent-dir/
+data/
+datasets/
+genomes/
+dashboard/
+formul8-frontend/
+flowise/
+github-tester-agent/
+local-deployment/
+
+# Python cache and virtual environments
+__pycache__/
 *.pyc
-baseline_requirements.txt
-requirements.txt
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+ENV/
 
-# Scripts and utilities not needed in container
+# Development artifacts
+*.log
+logs/
+*.tmp
+*.temp
+.temp/
+.tmp/
+
+# Database files
+*.sqlite
+*.db
+*.sqlite3
+
+# Backup and old files
+*.backup
+*.bak
+*.old
+*.orig
+*~
+
+# Package lock files (use npm ci instead)
+package-lock.json
+yarn.lock
+
+# Development configuration
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile.federated
+Dockerfile.optimized
+
+# Build and deployment scripts
+build-*.sh
 build-*.js
 deploy-*.js
-*.sh
-!start.sh
-scripts/
-deployment-*.js
+deploy-*.sh
+create-*.sh
+setup-*.sh
+validate-*.js
+fix-*.sh
 
-# Documentation (keep only essential)
-*.md
-!README.md
-
-# Source control
-.git/
-.github/
-.gitignore
-
-# OS files
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-
-# Test files
-**/*.test.*
-**/*.spec.*
-**/__tests__/
-**/__mocks__/
-jest.config.*
-
-# TypeScript build artifacts
-tsconfig.tsbuildinfo
-*.tsbuildinfo
-*.d.ts.map
-*.js.map
-
-# JSON files (keep only essential)
+# Large JSON files and reports
 *.json
 !package.json
-!package-lock.json
-!components.json
 !tsconfig.json
+!components.json
 !drizzle.config.ts
-!vite.config.ts
+
+# Misc development files
+.replit
+replit.toml
+.gitmodules
