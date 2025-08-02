@@ -75,6 +75,7 @@ function Router() {
       </Route>
       <Route path="/chat-tool-simple" component={ChatToolSimple} />
       <Route path="/workspace" component={Workspace} />
+      <Route path="/desktop" component={Workspace} />
       <Route path="/chat-tool" component={ChatTool} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">

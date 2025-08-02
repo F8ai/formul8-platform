@@ -20,7 +20,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **UI Framework**: Shadcn/ui built on Radix UI
 - **Styling**: Tailwind CSS with custom Formul8 brand colors
 - **State Management**: TanStack Query
-- **Routing**: Wouter
+- **Routing**: Wouter with desktop workspace available at `/desktop` and `/workspace`
 - **Authentication**: Session-based with Replit Auth
 
 ### Backend Architecture
@@ -49,14 +49,17 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Documentation**: Complete deployment fixes documented in `DEPLOYMENT-FIXES-APPLIED.md`
 
 ### Core Features and Design Patterns
-- **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory.
-- **Agent Ecosystem**: 12 specialized AI agents (Compliance, Formulation, Marketing, Operations, Sourcing, Patent, Science, Spectra, Customer Success, LMS, Metabolomics) designed for specific cannabis industry domains.
-- **Baseline Testing System**: Comprehensive AI-powered system for evaluating agent performance with authentic question sets, multi-model comparison, and detailed metrics (accuracy, confidence, cost).
-- **Configuration Management**: Comprehensive agent configuration including model selection, RAG settings, and operational parameters via API.
-- **Data Management Platform**: Interface for corpus access, document upload, RAG generation, and SPARQL knowledge base management.
-- **Google Workspace Integration**: Automated document creation and management (SOPs, formulation sheets, compliance trackers) in Google Drive with service accounts and domain-wide delegation.
-- **Regulatory Data Service**: Automated daily collection and tracking of cannabis regulations from 24 states with change detection and vector search capabilities.
-- **Iterative Development**: Progressive enhancement approach starting with baseline AI, adding tools, knowledge bases, and RAG.
+- **Desktop Workspace**: Window-based multi-agent interface with floating, resizable widgets accessible at `/desktop` route
+- **PWA Support**: Full Progressive Web App with iOS "Add to Home Screen", desktop notifications, and offline capabilities
+- **Notification System**: Comprehensive notification menu with bell icon, unread badges, desktop/mobile PWA notifications
+- **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory
+- **Agent Ecosystem**: 12 specialized AI agents (Compliance, Formulation, Marketing, Operations, Sourcing, Patent, Science, Spectra, Customer Success, LMS, Metabolomics) designed for specific cannabis industry domains
+- **Baseline Testing System**: Comprehensive AI-powered system for evaluating agent performance with authentic question sets, multi-model comparison, and detailed metrics (accuracy, confidence, cost)
+- **Configuration Management**: Comprehensive agent configuration including model selection, RAG settings, and operational parameters via API
+- **Data Management Platform**: Interface for corpus access, document upload, RAG generation, and SPARQL knowledge base management
+- **Google Workspace Integration**: Automated document creation and management (SOPs, formulation sheets, compliance trackers) in Google Drive with service accounts and domain-wide delegation
+- **Regulatory Data Service**: Automated daily collection and tracking of cannabis regulations from 24 states with change detection and vector search capabilities
+- **Iterative Development**: Progressive enhancement approach starting with baseline AI, adding tools, knowledge bases, and RAG
 
 ## External Dependencies
 
