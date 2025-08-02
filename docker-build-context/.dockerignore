@@ -1,0 +1,8 @@
+# Minimal .dockerignore for pre-built context
+node_modules
+.git
+*.md
+*.log
+.env*
+*.tmp
+*.temp

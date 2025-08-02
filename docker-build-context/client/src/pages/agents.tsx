@@ -1,0 +1,1264 @@
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "wouter";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { MetricBadge } from "@/components/ui/metric-badge";
+import { TrendChart } from "@/components/ui/trend-chart";
+import { MarkdownEditor } from "@/components/ui/markdown-editor";
+import { AlertCircle, Bot, CheckCircle, Clock, Users, Zap, BarChart3, Settings, Play, Eye, Activity, PlayCircle } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+
+export default function AgentsPage() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
+  const [selectedAgent, setSelectedAgent] = useState<string>("");
+  const [testQuery, setTestQuery] = useState("");
+  const [threadId, setThreadId] = useState("demo-thread");
+
+  // Fetch agent status
+  const { data: agentStatus, isLoading: statusLoading } = useQuery({
+    queryKey: ["/api/agent-status"],
+    refetchInterval: 30000, // Refresh every 30 seconds
+  });
+
+  // Fetch agent performance metrics
+  const { data: metrics } = useQuery({
+    queryKey: ["/api/agent-management/dashboard"],
+  });
+
+  // Fetch conversation history
+  const { data: history } = useQuery({
+    queryKey: ["/api/langgraph/history", threadId],
+    enabled: !!threadId,
+  });
+
+  // Fetch baseline badges
+  const { data: baselineBadges } = useQuery({
+    queryKey: ["/api/baseline-exam/badges"],
+    refetchInterval: 60000, // Refresh every minute
+  });
+
+  // Fetch baseline summary status
+  const { data: baselineSummary } = useQuery({
+    queryKey: ["/api/baseline-summary"],
+    refetchInterval: 30000, // Refresh every 30 seconds
+  });
+
+  // Fetch baseline coverage analysis
+  const { data: coverageAnalysis } = useQuery({
+    queryKey: ["/api/baseline-coverage"],
+    refetchInterval: 300000, // Refresh every 5 minutes
+  });
+
+  // Get executive summary from baseline summary response
+  const executiveSummary = baselineSummary?.executiveSummary;
+  const summaryLoading = !baselineSummary;
+
+  // State for run all tests
+  const [selectedModels, setSelectedModels] = useState(['gpt-4o-mini']);
+  const [maxQuestions, setMaxQuestions] = useState(3);
+
+  // Fetch test progress
+  const { data: testProgress } = useQuery({
+    queryKey: ["/api/run-all-tests/progress"],
+    refetchInterval: 2000, // Check every 2 seconds when tests are running
+    enabled: true
+  });
+
+  // Run all tests mutation
+  const runAllTestsMutation = useMutation({
+    mutationFn: async ({ models, maxQuestions }: { models: string[], maxQuestions: number }) => {
+      return apiRequest('/api/run-all-tests', {
+        method: 'POST',
+        body: { models, maxQuestions }
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Tests Started",
+        description: "Baseline testing started for all agents"
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to start tests",
+        variant: "destructive"
+      });
+    }
+  });
+
+  // Stop tests mutation
+  const stopTestsMutation = useMutation({
+    mutationFn: async () => {
+      return apiRequest('/api/run-all-tests/stop', { method: 'POST' });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Tests Stopped",
+        description: "Testing has been stopped"
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/baseline-summary"] });
+    }
+  });
+
+  const handleRunAllTests = () => {
+    runAllTestsMutation.mutate({ models: selectedModels, maxQuestions });
+  };
+
+  // Test query mutation
+  const testQueryMutation = useMutation({
+    mutationFn: async ({ query, agent }: { query: string; agent?: string }) => {
+      if (agent) {
+        return await apiRequest(`/api/query`, {
+          method: "POST",
+          body: { content: query, agentType: agent }
+        });
+      } else {
+        return await apiRequest(`/api/langgraph/process`, {
+          method: "POST",
+          body: { query, threadId }
+        });
+      }
+    },
+    onSuccess: () => {
+      toast({
+        title: "Query Processed",
+        description: "Agent response generated successfully",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/langgraph/history"] });
+    },
+    onError: (error) => {
+      toast({
+        title: "Query Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Fetch discovered agents from repositories
+  const { data: discoveredAgents, isLoading: agentsLoading } = useQuery({
+    queryKey: ["/api/agents"],
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+
+  // Agent icon and color mapping
+  const agentMetadata = {
+    compliance: { icon: "🛡️", color: "bg-blue-500" },
+    formulation: { icon: "🧪", color: "bg-green-500" },
+    patent: { icon: "©️", color: "bg-purple-500" },
+    operations: { icon: "⚙️", color: "bg-orange-500" },
+    sourcing: { icon: "🛒", color: "bg-teal-500" },
+    marketing: { icon: "📢", color: "bg-pink-500" },
+    spectra: { icon: "📊", color: "bg-indigo-500" },
+    "customer-success": { icon: "👥", color: "bg-emerald-500" },
+    science: { icon: "🔬", color: "bg-cyan-500" }
+  };
+
+  // Transform discovered agents into display format
+  const agents = discoveredAgents?.map((agent: any) => ({
+    id: agent.id,
+    name: agent.displayName,
+    description: agent.description,
+    icon: agentMetadata[agent.id as keyof typeof agentMetadata]?.icon || "🤖",
+    color: agentMetadata[agent.id as keyof typeof agentMetadata]?.color || "bg-gray-500",
+    capabilities: agent.capabilities || [],
+    repositoryUrl: agent.repositoryUrl,
+    lastUpdated: agent.lastUpdated,
+    status: agent.status || 'inactive'
+  })) || [];
+
+  const getAgentStatus = (agentId: string) => {
+    if (!agentStatus) return { status: "unknown", confidence: 0, queries: 0, responseTime: 0 };
+    
+    const status = agentStatus.find((s: any) => s.agentType === agentId);
+    return status || { status: "unknown", confidence: 0, queries: 0, responseTime: 0 };
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-formul8-text-primary mb-2">
+          Agent Backend System
+        </h1>
+        <p className="text-formul8-text-secondary">
+          Explore and interact with Formul8's {agents.length} specialized cannabis industry AI agents from live GitHub repositories
+        </p>
+      </div>
+
+      <Tabs defaultValue="overview" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="agents">Agents</TabsTrigger>
+          <TabsTrigger value="baseline">Baseline</TabsTrigger>
+          <TabsTrigger value="testing">Testing</TabsTrigger>
+          <TabsTrigger value="metrics">Metrics</TabsTrigger>
+          <TabsTrigger value="history">History</TabsTrigger>
+        </TabsList>
+
+        {/* Overview Tab */}
+        <TabsContent value="overview" className="space-y-6">
+          {/* AI Executive Summary */}
+          {summaryLoading ? (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="h-5 w-5 animate-pulse" />
+                  Generating AI Executive Summary...
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="animate-pulse space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                </div>
+              </CardContent>
+            </Card>
+          ) : executiveSummary && (
+            <Card className="border-l-4 border-l-blue-500">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bot className="h-5 w-5 text-blue-600" />
+                  AI Executive Summary
+                  <Badge variant="outline" className="text-xs">
+                    Updated {new Date(executiveSummary.timestamp).toLocaleTimeString()}
+                  </Badge>
+                </CardTitle>
+                <CardDescription>
+                  Intelligent analysis of system performance and recommendations
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Performance Assessment */}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4" />
+                    {executiveSummary.performance.title}
+                  </h4>
+                  <p className="text-green-700 text-sm">{executiveSummary.performance.assessment}</p>
+                  {executiveSummary.performance.highlights && (
+                    <ul className="mt-2 text-sm text-green-600 list-disc list-inside">
+                      {executiveSummary.performance.highlights.map((highlight: string, index: number) => (
+                        <li key={index}>{highlight}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Areas Needing Work */}
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-yellow-800 mb-2 flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4" />
+                    {executiveSummary.concerns.title}
+                  </h4>
+                  <p className="text-yellow-700 text-sm">{executiveSummary.concerns.assessment}</p>
+                  {executiveSummary.concerns.recommendations && (
+                    <ul className="mt-2 text-sm text-yellow-600 list-disc list-inside">
+                      {executiveSummary.concerns.recommendations.map((rec: string, index: number) => (
+                        <li key={index}>{rec}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Strategic Recommendations */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                    <Zap className="h-4 w-4" />
+                    Strategic Recommendations
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {executiveSummary.recommendations.map((rec: any, index: number) => (
+                      <div key={index} className="text-sm">
+                        <div className="font-medium text-blue-800">{rec.priority} Priority:</div>
+                        <div className="text-blue-700">{rec.action}</div>
+                        {rec.impact && <div className="text-xs text-blue-600 mt-1">Impact: {rec.impact}</div>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Key Metrics Summary */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      {executiveSummary.metrics.readiness}%
+                    </div>
+                    <div className="text-xs text-gray-600">System Readiness</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      {executiveSummary.metrics.testCoverage}%
+                    </div>
+                    <div className="text-xs text-gray-600">Test Coverage</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      {executiveSummary.metrics.modelDiversity}
+                    </div>
+                    <div className="text-xs text-gray-600">AI Model Diversity</div>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div className="text-lg font-bold text-gray-900">
+                      ${executiveSummary.metrics.costEfficiency}
+                    </div>
+                    <div className="text-xs text-gray-600">Avg Cost/Test</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Baseline Coverage Analysis */}
+          {coverageAnalysis && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="h-5 w-5" />
+                  Baseline Coverage Analysis
+                </CardTitle>
+                <CardDescription>
+                  AI evaluation of how well baseline questions cover desired functionality
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600">
+                      {Math.round(Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.confidence || 0), 0) / Object.keys(coverageAnalysis).length)}%
+                    </div>
+                    <div className="text-xs text-gray-600">Avg Confidence</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-green-600">
+                      {Math.round(Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.coverage || 0), 0) / Object.keys(coverageAnalysis).length)}%
+                    </div>
+                    <div className="text-xs text-gray-600">Avg Coverage</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-red-600">
+                      {Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.gaps?.length || 0), 0)}
+                    </div>
+                    <div className="text-xs text-gray-600">Total Gaps</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-purple-600">
+                      {Object.values(coverageAnalysis).reduce((sum: number, analysis: any) => sum + (analysis.strengths?.length || 0), 0)}
+                    </div>
+                    <div className="text-xs text-gray-600">Strengths</div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="text-sm font-medium">Agent Coverage Summary:</div>
+                  {Object.entries(coverageAnalysis).map(([agentName, analysis]: [string, any]) => (
+                    <div key={agentName} className="flex items-center justify-between p-2 bg-gray-50 rounded hover:bg-gray-100 cursor-pointer"
+                         onClick={() => window.open(`/agent-detail/${agentName}`, '_blank')}>
+                      <span className="font-medium">{agentName}</span>
+                      <div className="flex items-center gap-2">
+                        <Badge variant={analysis.confidence >= 80 ? "default" : analysis.confidence >= 60 ? "secondary" : "destructive"}>
+                          {analysis.confidence}% confident
+                        </Badge>
+                        <Badge variant={analysis.coverage >= 80 ? "default" : analysis.coverage >= 60 ? "secondary" : "outline"}>
+                          {analysis.coverage}% coverage
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Run All Tests Control Panel */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Comprehensive Testing
+              </CardTitle>
+              <CardDescription>
+                Run baseline tests across all agents with multiple AI models
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {testProgress?.isRunning ? (
+                <div className="space-y-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium text-blue-800">Testing in Progress</span>
+                      <Button 
+                        onClick={() => stopTestsMutation.mutate()}
+                        variant="outline" 
+                        size="sm"
+                        disabled={stopTestsMutation.isPending}
+                      >
+                        <StopCircle className="h-4 w-4 mr-2" />
+                        Stop Tests
+                      </Button>
+                    </div>
+                    <div className="text-sm text-blue-700 mb-3">
+                      Agent: {testProgress.progress.agent} | Model: {testProgress.progress.model}
+                    </div>
+                    <div className="text-sm text-blue-600 mb-2">
+                      Question {testProgress.progress.questionIndex} of {testProgress.progress.totalQuestions} | 
+                      Completed Agents: {testProgress.progress.completedAgents} / {testProgress.progress.totalAgents}
+                    </div>
+                    <Progress value={testProgress.percentComplete} className="w-full" />
+                    <div className="text-xs text-blue-600 mt-1">
+                      {testProgress.percentComplete}% Complete
+                    </div>
+                  </div>
+                  {testProgress.progress.results.length > 0 && (
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <div className="text-sm font-medium mb-2">Recent Results:</div>
+                      <div className="space-y-1">
+                        {testProgress.progress.results.slice(-3).map((result: any, index: number) => (
+                          <div key={index} className="text-xs flex justify-between">
+                            <span>{result.agent}/{result.model}</span>
+                            <span className="font-medium">{result.avgGrade}% avg ({result.results} tests)</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="model-select">AI Models to Test</Label>
+                      <Select 
+                        value={selectedModels[0]} 
+                        onValueChange={(value) => setSelectedModels([value])}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select model" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="gpt-4o-mini">GPT-4o Mini (Fast & Cheap)</SelectItem>
+                          <SelectItem value="gpt-4o">GPT-4o (High Quality)</SelectItem>
+                          <SelectItem value="claude-3-5-sonnet-20241022">Claude-3.5-Sonnet</SelectItem>
+                          <SelectItem value="claude-3-haiku-20240307">Claude-3-Haiku</SelectItem>
+                          <SelectItem value="gemini-1.5-pro">Gemini-1.5-Pro</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label htmlFor="max-questions">Questions per Agent</Label>
+                      <Select 
+                        value={maxQuestions.toString()} 
+                        onValueChange={(value) => setMaxQuestions(parseInt(value))}
+                      >
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">1 Question (Quick Test)</SelectItem>
+                          <SelectItem value="3">3 Questions (Standard)</SelectItem>
+                          <SelectItem value="5">5 Questions (Comprehensive)</SelectItem>
+                          <SelectItem value="10">10 Questions (Full Test)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <div className="text-sm font-medium mb-2">Test Estimate:</div>
+                    <div className="text-xs text-gray-600 space-y-1">
+                      <div>• Total Tests: {11 * maxQuestions} questions across 11 agents</div>
+                      <div>• Estimated Time: {Math.ceil(11 * maxQuestions * 2 / 60)} minutes</div>
+                      <div>• Est. Cost: ${(11 * maxQuestions * 0.003).toFixed(3)} (for {selectedModels[0]})</div>
+                    </div>
+                  </div>
+
+                  <Button 
+                    onClick={handleRunAllTests}
+                    disabled={runAllTestsMutation.isPending}
+                    className="w-full"
+                  >
+                    {runAllTestsMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <PlayCircle className="h-4 w-4 mr-2" />
+                    )}
+                    Run All Tests ({selectedModels[0]})
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          {/* System Summary */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                System Summary Status
+              </CardTitle>
+              <CardDescription>
+                Real-time overview of agent performance and baseline testing results
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600">{agents.length}</div>
+                  <div className="text-sm text-muted-foreground">Total Agents</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-green-600">
+                    {baselineSummary?.modelsWithResults || 0}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Models Tested</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-purple-600">
+                    {baselineSummary?.totalTestResults || 0}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Test Results</div>
+                </div>
+                <div className="text-center p-4 border rounded-lg">
+                  <div className="text-2xl font-bold text-orange-600">
+                    {baselineSummary?.avgGrade ? `${baselineSummary.avgGrade}%` : 'N/A'}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Avg Performance</div>
+                </div>
+              </div>
+              
+              {baselineSummary?.recentTests && baselineSummary.recentTests.length > 0 && (
+                <div className="mt-6">
+                  <h4 className="font-semibold mb-3">Recent Test Results</h4>
+                  <div className="space-y-2">
+                    {baselineSummary.recentTests.slice(0, 5).map((test: any, index: number) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Badge variant="outline">{test.agent}</Badge>
+                          <span className="text-sm">{test.model}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge variant={test.grade >= 80 ? "default" : test.grade >= 60 ? "secondary" : "destructive"}>
+                            {test.grade}%
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">${test.cost?.toFixed(4)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Agents</CardTitle>
+                <Bot className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{agents.length}</div>
+                <p className="text-xs text-muted-foreground">
+                  Specialized cannabis agents
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Active Status</CardTitle>
+                <Activity className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-green-600">
+                  {agentStatus?.filter((s: any) => s.status === 'active').length || 0}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Currently active agents
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Avg Response Time</CardTitle>
+                <Clock className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {agentStatus ? 
+                    Math.round(agentStatus.reduce((acc: number, s: any) => acc + (s.averageResponseTime || 0), 0) / agentStatus.length) 
+                    : 0}ms
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Cross-agent average
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Queries</CardTitle>
+                <BarChart3 className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">
+                  {agentStatus?.reduce((acc: number, s: any) => acc + (s.totalQueries || 0), 0) || 0}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Processed this session
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Baseline Confidence Overview */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Baseline Quality Assessment
+              </CardTitle>
+              <CardDescription>
+                System-wide baseline test quality and agent performance metrics
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {baselineBadges && Object.keys(baselineBadges).length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {Object.entries(baselineBadges).slice(0, 8).map(([agentName, badges]: [string, any]) => (
+                    <div key={agentName} className="space-y-2">
+                      <Label className="text-sm font-medium capitalize">{agentName}</Label>
+                      <div className="flex flex-wrap gap-1">
+                        <MetricBadge 
+                          label="B" 
+                          value={badges.baseline || `0/10`} 
+                          type="tests" 
+                          className="text-xs"
+                        />
+                        <MetricBadge 
+                          label="A" 
+                          value={badges.accuracy || `0/10`} 
+                          type="tests" 
+                          className="text-xs"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-4 text-muted-foreground">
+                  Loading baseline metrics...
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                LangGraph Multi-Agent Orchestration
+              </CardTitle>
+              <CardDescription>
+                Production-ready multi-agent workflow with state management and consensus building
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Workflow Features</Label>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• Intelligent query routing</li>
+                    <li>• Agent-to-agent verification</li>
+                    <li>• Consensus building protocols</li>
+                    <li>• Human escalation handling</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">State Management</Label>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• Conversation persistence</li>
+                    <li>• Thread-based history</li>
+                    <li>• Context preservation</li>
+                    <li>• Multi-turn conversations</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Quality Assurance</Label>
+                  <ul className="text-sm text-muted-foreground space-y-1">
+                    <li>• Cross-verification matrix</li>
+                    <li>• Confidence scoring</li>
+                    <li>• Production-ready answers</li>
+                    <li>• Cannabis-specific validation</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Agents Tab */}
+        <TabsContent value="agents" className="space-y-6">
+          {agentsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, i) => (
+                <Card key={i} className="animate-pulse">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between">
+                      <div className="w-10 h-10 bg-gray-200 rounded-lg"></div>
+                      <div className="w-16 h-5 bg-gray-200 rounded"></div>
+                    </div>
+                    <div className="w-3/4 h-5 bg-gray-200 rounded"></div>
+                    <div className="w-full h-4 bg-gray-200 rounded"></div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="w-full h-8 bg-gray-200 rounded"></div>
+                      <div className="w-full h-12 bg-gray-200 rounded"></div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : agents.length === 0 ? (
+            <Card>
+              <CardContent className="text-center py-12">
+                <Bot className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-lg font-semibold mb-2">No Agents Found</h3>
+                <p className="text-muted-foreground mb-4">
+                  No agent repositories were discovered. Check your GitHub configuration.
+                </p>
+                <Button onClick={() => queryClient.invalidateQueries({ queryKey: ["/api/agents"] })}>
+                  Refresh Agents
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {agents.map((agent) => {
+                const status = getAgentStatus(agent.id);
+                return (
+                  <Card 
+                    key={agent.id} 
+                    className="relative overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                    onClick={() => {
+                      setLocation(`/agent/${agent.id}`);
+                    }}
+                  >
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center justify-between">
+                        <div className={`w-10 h-10 ${agent.color} rounded-lg flex items-center justify-center text-white text-lg`}>
+                          {agent.icon}
+                        </div>
+                        <div className="flex gap-2">
+                          <Badge 
+                            variant={agent.status === 'active' ? 'default' : 'secondary'}
+                            className="text-xs"
+                          >
+                            {agent.status}
+                          </Badge>
+                          <Badge variant="outline" className="text-xs">
+                            GitHub
+                          </Badge>
+                        </div>
+                      </div>
+                      <CardTitle className="text-lg">{agent.name}</CardTitle>
+                      <CardDescription className="text-sm">
+                        {agent.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* Performance Badges */}
+                      {baselineBadges?.[agent.id] && (
+                        <div className="space-y-2">
+                          <Label className="text-xs font-medium">Performance Metrics</Label>
+                          <div className="flex flex-wrap gap-1">
+                            <MetricBadge 
+                              label="Accuracy" 
+                              value={status.accuracy || 75} 
+                              type="accuracy" 
+                              className="text-xs"
+                            />
+                            <MetricBadge 
+                              label="Confidence" 
+                              value={status.confidence || 80} 
+                              type="confidence" 
+                              className="text-xs"
+                            />
+                            <MetricBadge 
+                              label="Baseline" 
+                              value={status.baselineConfidence || 70} 
+                              type="baseline" 
+                              className="text-xs"
+                            />
+                            <MetricBadge 
+                              label="Tests" 
+                              value={`${status.passed || 75}/${status.total || 100}`} 
+                              type="tests" 
+                              className="text-xs"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <Label className="text-xs text-muted-foreground">Queries</Label>
+                          <div className="font-medium">{status.totalQueries || 0}</div>
+                        </div>
+                        <div>
+                          <Label className="text-xs text-muted-foreground">Avg Time</Label>
+                          <div className="font-medium">{status.averageResponseTime || 0}ms</div>
+                        </div>
+                      </div>
+
+                      <Separator />
+
+                      <div className="space-y-2">
+                        <Label className="text-xs font-medium">Capabilities</Label>
+                        <div className="flex flex-wrap gap-1">
+                          {agent.capabilities.slice(0, 2).map((cap: string, idx: number) => (
+                            <Badge key={idx} variant="outline" className="text-xs">
+                              {cap}
+                            </Badge>
+                          ))}
+                          {agent.capabilities.length > 2 && (
+                            <Badge variant="outline" className="text-xs">
+                              +{agent.capabilities.length - 2} more
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+
+                      {agent.lastUpdated && (
+                        <div className="text-xs text-muted-foreground">
+                          Updated: {new Date(agent.lastUpdated).toLocaleDateString()}
+                        </div>
+                      )}
+
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setLocation(`/agent/${agent.id}`);
+                          }}
+                          className="flex-1"
+                        >
+                          Open Agent
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(`${agent.repositoryUrl}/issues`, '_blank');
+                          }}
+                          className="flex-1"
+                        >
+                          Issues
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
+        </TabsContent>
+
+        {/* Baseline Tab */}
+        <TabsContent value="baseline" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Agent Baseline Testing
+              </CardTitle>
+              <CardDescription>
+                Access individual agent baseline testing interfaces for comprehensive evaluation
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="text-sm text-muted-foreground mb-6">
+                Click on any agent below to access their dedicated baseline testing page with complete question sets, test results, and performance analytics.
+              </div>
+              
+              {agentsLoading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {[...Array(8)].map((_, i) => (
+                    <Card key={i} className="animate-pulse">
+                      <CardHeader className="pb-4">
+                        <div className="w-3/4 h-5 bg-gray-200 rounded"></div>
+                        <div className="w-full h-4 bg-gray-200 rounded"></div>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="w-full h-8 bg-gray-200 rounded"></div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : agents.length === 0 ? (
+                <div className="text-center py-12">
+                  <Bot className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="text-lg font-semibold mb-2">No Agents Available</h3>
+                  <p className="text-muted-foreground">
+                    No agents found for baseline testing.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {agents.map((agent) => {
+                    const status = getAgentStatus(agent.id);
+                    return (
+                      <Card 
+                        key={agent.id} 
+                        className="hover:shadow-lg transition-shadow cursor-pointer"
+                        onClick={() => setLocation(`/agent/${agent.id}/baseline`)}
+                      >
+                        <CardHeader className="pb-3">
+                          <div className="flex items-center justify-between">
+                            <div className={`w-8 h-8 ${agent.color} rounded-lg flex items-center justify-center text-white text-sm`}>
+                              {agent.icon}
+                            </div>
+                            <Badge variant="outline" className="text-xs">
+                              {status.total || 0} questions
+                            </Badge>
+                          </div>
+                          <CardTitle className="text-base">{agent.name}</CardTitle>
+                          <CardDescription className="text-xs line-clamp-2">
+                            {agent.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          {/* Baseline Metrics */}
+                          <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <div className="text-muted-foreground">Accuracy</div>
+                              <div className="font-medium">{status.accuracy || 75}%</div>
+                            </div>
+                            <div>
+                              <div className="text-muted-foreground">Confidence</div>
+                              <div className="font-medium">{status.confidence || 80}%</div>
+                            </div>
+                          </div>
+                          
+                          <Button
+                            size="sm"
+                            className="w-full"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLocation(`/agent/${agent.id}/baseline`);
+                            }}
+                          >
+                            <BarChart3 className="h-3 w-3 mr-2" />
+                            View Baseline Tests
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Testing Tab */}
+        <TabsContent value="testing" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Play className="h-5 w-5" />
+                Agent Testing Interface
+              </CardTitle>
+              <CardDescription>
+                Test individual agents or the full LangGraph orchestration system
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <Label>Test Query</Label>
+                  <Textarea
+                    placeholder="Enter your cannabis industry question..."
+                    value={testQuery}
+                    onChange={(e) => setTestQuery(e.target.value)}
+                    className="min-h-[100px]"
+                  />
+                </div>
+                
+                <div className="space-y-4">
+                  <Label>Agent Selection</Label>
+                  <Select value={selectedAgent} onValueChange={setSelectedAgent}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Auto-route (LangGraph)" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="auto-route">Auto-route (LangGraph)</SelectItem>
+                      {!agentsLoading && agents.map((agent) => (
+                        <SelectItem key={agent.id} value={agent.id}>
+                          {agent.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  <div className="space-y-2">
+                    <Label>Thread ID</Label>
+                    <Input
+                      value={threadId}
+                      onChange={(e) => setThreadId(e.target.value)}
+                      placeholder="demo-thread"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <Button
+                  onClick={() => testQueryMutation.mutate({ 
+                    query: testQuery, 
+                    agent: selectedAgent === "auto-route" ? undefined : selectedAgent || undefined 
+                  })}
+                  disabled={!testQuery || testQueryMutation.isPending}
+                  className="flex-1"
+                >
+                  {testQueryMutation.isPending ? "Processing..." : "Test Query"}
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setTestQuery("");
+                    setSelectedAgent("");
+                  }}
+                >
+                  Clear
+                </Button>
+              </div>
+
+              {selectedAgent && selectedAgent !== "auto-route" ? (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-sm text-blue-800">
+                    <strong>Single Agent Mode:</strong> Query will be processed by {agents.find(a => a.id === selectedAgent)?.name} only
+                  </p>
+                </div>
+              ) : (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <p className="text-sm text-green-800">
+                    <strong>LangGraph Mode:</strong> Query will be auto-routed to the best agent with cross-verification
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Metrics Tab */}
+        <TabsContent value="metrics" className="space-y-6">
+          {/* Overall System Trend Chart */}
+          <TrendChart
+            data={{
+              dates: ['7/1/2025', '7/7/2025', '7/14/2025'],
+              accuracy: [42, 45, 47],
+              confidence: [0.48, 0.52, 0.55],
+              baselineConfidence: [0.45, 0.50, 0.52],
+              testsPassed: [42, 45, 47],
+            }}
+            agentType={selectedAgent || "System Average"}
+            showProjections={true}
+          />
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>Agent Performance Metrics</CardTitle>
+              <CardDescription>
+                Real-time performance data and 90-day improvement projections
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {statusLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="text-sm text-muted-foreground">Loading metrics...</div>
+                </div>
+              ) : agentStatus && agentStatus.length > 0 ? (
+                <div className="space-y-4">
+                  {agentStatus.map((status: any) => {
+                    const agent = agents.find(a => a.id === status.agentType);
+                    return (
+                      <div key={status.agentType} className="border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-8 h-8 ${agent?.color || 'bg-gray-500'} rounded-lg flex items-center justify-center text-white text-sm`}>
+                              {agent?.icon || '🤖'}
+                            </div>
+                            <div>
+                              <h3 className="font-medium">{agent?.name || status.agentType}</h3>
+                              <Badge variant={status.status === 'active' ? 'default' : 'secondary'} className="text-xs">
+                                {status.status}
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-sm font-medium">{status.confidence || 0}% confidence</div>
+                            <div className="text-xs text-muted-foreground">{status.totalQueries || 0} queries</div>
+                          </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div>
+                            <Label className="text-xs text-muted-foreground">Response Time</Label>
+                            <div className="font-medium">{status.averageResponseTime || 0}ms</div>
+                          </div>
+                          <div>
+                            <Label className="text-xs text-muted-foreground">Success Rate</Label>
+                            <div className="font-medium">{status.successRate || 0}%</div>
+                          </div>
+                          <div>
+                            <Label className="text-xs text-muted-foreground">Last Active</Label>
+                            <div className="font-medium">{status.lastActive || 'Never'}</div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p>No agent metrics available</p>
+                  <p className="text-sm">Start testing agents to see performance data</p>
+                </div>
+              )}
+              
+              {/* 90-Day Progress Summary */}
+              {selectedAgent && (
+                <div className="mt-6 pt-6 border-t">
+                  <h3 className="text-lg font-semibold mb-4">90-Day Development Progress</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm">Current Phase</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold text-blue-600">Phase 1</div>
+                        <p className="text-xs text-muted-foreground">OpenAI Baseline Development</p>
+                        <Progress value={14} className="mt-2" />
+                        <p className="text-xs text-muted-foreground mt-1">Day 14/90</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm">Progress Target</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold text-orange-600">80%</div>
+                        <p className="text-xs text-muted-foreground">Via prompt engineering + tools</p>
+                        <div className="mt-2 text-xs">
+                          <div className="text-muted-foreground">Current: 47%</div>
+                          <div className="text-green-600">On track for target</div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm">Baseline Quality</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold text-purple-600">90%+</div>
+                        <p className="text-xs text-muted-foreground">Expected confidence by day 90</p>
+                        <div className="mt-2 text-xs">
+                          <div className="text-muted-foreground">Current: 52%</div>
+                          <div className="text-yellow-600">Improving baseline tests</div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* History Tab */}
+        <TabsContent value="history" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Conversation History</CardTitle>
+              <CardDescription>
+                LangGraph conversation threads and agent interactions
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <Input
+                    value={threadId}
+                    onChange={(e) => setThreadId(e.target.value)}
+                    placeholder="Thread ID"
+                    className="flex-1"
+                  />
+                  <Button
+                    variant="outline"
+                    onClick={() => queryClient.invalidateQueries({ queryKey: ["/api/langgraph/history"] })}
+                  >
+                    Refresh
+                  </Button>
+                </div>
+
+                <ScrollArea className="h-[400px] border rounded-lg p-4">
+                  {history && history.length > 0 ? (
+                    <div className="space-y-4">
+                      {history.map((entry: any, idx: number) => (
+                        <div key={idx} className="border-l-2 border-blue-200 pl-4 pb-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <Badge variant={entry.type === 'input' ? 'default' : 'secondary'}>
+                              {entry.type}
+                            </Badge>
+                            <span className="text-xs text-muted-foreground">
+                              {new Date(entry.timestamp).toLocaleString()}
+                            </span>
+                          </div>
+                          {entry.type === 'input' ? (
+                            <p className="text-sm">{entry.query}</p>
+                          ) : (
+                            <div className="text-sm space-y-2">
+                              <p><strong>Agent:</strong> {entry.result?.primaryAgent}</p>
+                              <p><strong>Response:</strong> {entry.result?.response || 'Processing...'}</p>
+                              <p><strong>Confidence:</strong> {entry.result?.confidence || 0}%</p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 text-muted-foreground">
+                      <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p>No conversation history found</p>
+                      <p className="text-sm">Start a conversation to see the history</p>
+                    </div>
+                  )}
+                </ScrollArea>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}

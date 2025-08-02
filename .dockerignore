@@ -1,5 +1,6 @@
-# Node modules and package management
+# Node modules and package management (MUST be first - most important exclusion)
 node_modules/
+node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -82,9 +83,10 @@ attached_assets/
 *.mov
 *.avi
 
-# Agent directories and data (not needed in deployment)
+# Large directories (biggest space savers - exclude ALL submodules and data)
 agents/
 agent-dir/
+agents.old/
 data/
 datasets/
 genomes/
@@ -93,6 +95,14 @@ formul8-frontend/
 flowise/
 github-tester-agent/
 local-deployment/
+operations-data/
+sourcing-data/
+spectra-data/
+patent-data/
+science-data/
+voiceflow/
+.cache/
+__pycache__/
 
 # Python cache and virtual environments
 __pycache__/

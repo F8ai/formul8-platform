@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mobile-friendly zoom and scaling */
+@media (max-width: 768px) {
+  html {
+    zoom: 0.85;
+    -webkit-text-size-adjust: 85%;
+    -moz-text-size-adjust: 85%;
+    -ms-text-size-adjust: 85%;
+  }
+  
+  body {
+    min-width: 320px;
+    overflow-x: auto;
+  }
+}
+
+/* Hide scrollbar for mobile tabs but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.75rem;
+
+  /* Formul8.ai Authentic Dark Theme - Matching actual formul8.ai */
+  --formul8-bg-dark: hsl(220, 13%, 8%);      /* Deep dark background #141416 */
+  --formul8-bg-card: hsl(220, 13%, 12%);     /* Card background slightly lighter */
+  --formul8-teal: hsl(180, 88%, 55%);        /* Bright teal #19E6CC */
+  --formul8-blue: hsl(195, 84%, 55%);        /* Bright blue #1AB7E6 */
+  --formul8-green: hsl(140, 88%, 55%);       /* Bright green #19E64A */
+  --formul8-text-white: hsl(0, 0%, 95%);     /* Primary text - off white */
+  --formul8-text-gray: hsl(220, 9%, 65%);    /* Secondary text - gray */
+  --formul8-text-muted: hsl(220, 7%, 50%);   /* Muted text */
+  --formul8-border: hsl(220, 13%, 18%);      /* Border color */
+  --formul8-button-green: hsl(140, 68%, 45%); /* Button green #4ADE80 */
+  --formul8-gradient-text: linear-gradient(135deg, hsl(180, 88%, 55%) 0%, hsl(195, 84%, 55%) 100%);
+  --formul8-gradient-card: linear-gradient(135deg, hsl(220, 13%, 12%) 0%, hsl(220, 13%, 15%) 100%);
+  --formul8-logo-gradient: linear-gradient(135deg, hsl(180, 88%, 55%) 0%, hsl(140, 88%, 55%) 30%, hsl(195, 84%, 55%) 100%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    background-color: var(--formul8-bg-dark);
+    color: var(--formul8-text-white);
+  }
+}
+
+@layer utilities {
+  /* Formul8.ai Dark Theme Colors */
+  .bg-formul8-dark { background-color: var(--formul8-bg-dark); }
+  .bg-formul8-card { background-color: var(--formul8-bg-card); }
+  .text-formul8-teal { color: var(--formul8-teal); }
+  .text-formul8-blue { color: var(--formul8-blue); }
+  .text-formul8-green { color: var(--formul8-green); }
+  .text-formul8-white { color: var(--formul8-text-white); }
+  .text-formul8-gray { color: var(--formul8-text-gray); }
+  .text-formul8-muted { color: var(--formul8-text-muted); }
+  .bg-formul8-teal { background-color: var(--formul8-teal); }
+  .bg-formul8-blue { background-color: var(--formul8-blue); }
+  .bg-formul8-green { background-color: var(--formul8-green); }
+  .bg-formul8-button-green { background-color: var(--formul8-button-green); }
+  .border-formul8-border { border-color: var(--formul8-border); }
+
+  /* Gradients */
+  .bg-formul8-gradient-text { background: var(--formul8-gradient-text); }
+  .bg-formul8-gradient-card { background: var(--formul8-gradient-card); }
+  .bg-formul8-logo-gradient { background: var(--formul8-logo-gradient); }
+
+  /* Hover States */
+  .hover\:bg-formul8-button-green:hover { background-color: var(--formul8-button-green); }
+  .hover\:scale-105:hover { transform: scale(1.05); }
+
+  /* Formul8.ai Dark Theme Components */
+  .formul8-card {
+    background: var(--formul8-gradient-card);
+    @apply border border-formul8-border rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  .formul8-button-primary {
+    @apply bg-formul8-button-green hover:bg-formul8-green text-white font-semibold px-8 py-4 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl;
+  }
+  
+  .formul8-text-gradient {
+    background: var(--formul8-gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .formul8-logo-gradient {
+    background: var(--formul8-logo-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Dark Theme Header */
+  .formul8-header {
+    background-color: var(--formul8-bg-dark);
+    @apply backdrop-blur-lg border-b border-formul8-border sticky top-0 z-50;
+  }
+
+  /* Hero Section */
+  .formul8-hero {
+    @apply text-center space-y-8 py-16;
+  }
+
+  .formul8-hero h1 {
+    color: var(--formul8-text-white);
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight;
+  }
+
+  .formul8-hero h2 {
+    color: var(--formul8-text-white);
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold leading-tight;
+  }
+
+  .formul8-hero p {
+    color: var(--formul8-text-gray);
+    @apply text-lg md:text-xl max-w-4xl mx-auto leading-relaxed;
+  }
+
+  /* Feature Icons */
+  .formul8-icon-teal {
+    @apply w-12 h-12 bg-formul8-teal rounded-xl flex items-center justify-center shadow-lg;
+  }
+
+  .formul8-icon-blue {
+    @apply w-12 h-12 bg-formul8-blue rounded-xl flex items-center justify-center shadow-lg;
+  }
+
+  .formul8-icon-green {
+    @apply w-12 h-12 bg-formul8-green rounded-xl flex items-center justify-center shadow-lg;
+  }
+
+  /* Smooth animations */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
