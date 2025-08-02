@@ -294,6 +294,175 @@ export default function Landing() {
             </div>
           </div>
         </section>
+
+        {/* Cost Comparison Section */}
+        <section className="px-4 sm:px-6 py-16 bg-formul8-bg-card/50">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold text-formul8-white mb-16">Cost Comparison</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {/* Formul8.ai Column */}
+              <Card className="bg-formul8-primary/10 border-formul8-primary p-8">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-formul8-primary mb-4">Formul8.ai</h3>
+                  <div className="text-4xl font-bold text-formul8-white mb-2">$5k-$50k</div>
+                  <div className="text-formul8-gray mb-6">/ yr</div>
+                  <ul className="text-left space-y-2 text-formul8-gray">
+                    <li>• AI-powered formulation</li>
+                    <li>• Instant compliance checking</li>
+                    <li>• 24/7 availability</li>
+                    <li>• Scalable processing</li>
+                    <li>• Real-time updates</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Traditional Staff Column */}
+              <Card className="bg-formul8-bg-card border-formul8-border p-8">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-formul8-white mb-4">Traditional Staff</h3>
+                  <div className="text-4xl font-bold text-formul8-white mb-2">$500k+</div>
+                  <div className="text-formul8-gray mb-6">/ yr</div>
+                  <ul className="text-left space-y-2 text-formul8-gray">
+                    <li>• Multiple specialists needed</li>
+                    <li>• Limited availability</li>
+                    <li>• Training requirements</li>
+                    <li>• Benefits and overhead</li>
+                    <li>• Slower turnaround</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-xl text-formul8-white font-semibold">
+              <span className="text-formul8-success">97% cost reduction</span>, <span className="text-formul8-primary">10× faster</span> go-to-market and production
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="px-4 sm:px-6 py-16">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-formul8-white text-center mb-16">Frequently Asked Questions</h2>
+            
+            <div className="space-y-8">
+              <Card className="bg-formul8-bg-card border-formul8-border p-6">
+                <CardContent className="p-0">
+                  <h3 className="text-xl font-semibold text-formul8-white mb-4">How accurate is the compliance checking?</h3>
+                  <p className="text-formul8-gray">
+                    Our compliance engine is updated daily with the latest regulations from all 50 states. 
+                    It achieves 99.9% accuracy in regulatory checks, verified by third-party auditors.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-formul8-bg-card border-formul8-border p-6">
+                <CardContent className="p-0">
+                  <h3 className="text-xl font-semibold text-formul8-white mb-4">What's included in the subscription?</h3>
+                  <p className="text-formul8-gray">
+                    Tiered subscriptions fit to client can include unlimited access to the AI assistant, 
+                    SOP generation, compliance checking, supplier network, and regular regulatory updates.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact & Signup Section */}
+        <section className="px-4 sm:px-6 py-16 bg-formul8-bg-card/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold text-formul8-white mb-4">Get Early Access</h2>
+              <p className="text-formul8-gray">Join the email list</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Contact Info */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-formul8-white mb-4">Contact Information</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-5 h-5 text-formul8-primary">📧</div>
+                      <a href="mailto:team@formul8.ai" className="text-formul8-primary hover:text-formul8-primary/80">
+                        team@formul8.ai
+                      </a>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-5 h-5 text-formul8-primary">📞</div>
+                      <a href="tel:+17202952016" className="text-formul8-primary hover:text-formul8-primary/80">
+                        +1 (720) 295-2016
+                      </a>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-5 h-5 text-formul8-primary">📍</div>
+                      <span className="text-formul8-gray">Denver, CO, United States</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Form */}
+              <Card className="bg-formul8-bg-card border-formul8-border p-6">
+                <CardContent className="p-0">
+                  <form className="space-y-4">
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="tel"
+                        placeholder="Phone"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Company"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <textarea
+                        placeholder="Message"
+                        rows={4}
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none resize-none"
+                      />
+                    </div>
+                    <Button 
+                      type="submit"
+                      className="w-full bg-formul8-primary hover:bg-formul8-primary/90 text-white font-semibold py-3"
+                    >
+                      Get Early Access
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="px-4 sm:px-6 py-8 border-t border-formul8-border">
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="text-formul8-gray">
+              All rights reserved © Phi Sciences LLC 2025
+            </p>
+          </div>
+        </footer>
       </div>
     </div>
   );
