@@ -151,17 +151,17 @@ export default function FormulaChatInterface() {
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto">
       {/* Chat Header */}
-      <div className="flex items-center justify-between p-4 border-b border-formul8-border bg-white/80 backdrop-blur-sm">
+      <div className="flex items-center justify-between p-4 border-b border-formul8-border bg-formul8-card">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-formul8-primary rounded-lg flex items-center justify-center">
             <MessageSquare className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-formul8-text-primary">Formul8 AI Assistant</h2>
-            <p className="text-sm text-formul8-text-secondary">Multi-agent cannabis intelligence</p>
+            <h2 className="text-lg font-semibold text-formul8-white">Formul8 AI Assistant</h2>
+            <p className="text-sm text-formul8-gray">Multi-agent cannabis intelligence</p>
           </div>
         </div>
-        <Badge variant="outline" className="border-formul8-primary text-formul8-primary">
+        <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-formul8-bg-card">
           Thread: {threadId.split('_')[1]}
         </Badge>
       </div>
@@ -180,11 +180,11 @@ export default function FormulaChatInterface() {
                     {message.role === 'user' ? 'U' : message.agent?.charAt(0).toUpperCase() || 'F'}
                   </AvatarFallback>
                 </Avatar>
-                <Card className={`${message.role === 'user' ? 'bg-formul8-primary text-white' : 'formul8-card'} shadow-sm`}>
+                <Card className={`${message.role === 'user' ? 'bg-formul8-primary text-white' : 'bg-formul8-card border-formul8-border'} shadow-sm`}>
                   <CardContent className="p-3">
                     {message.role !== 'user' && message.agent && (
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-medium text-formul8-text-secondary">
+                        <span className="text-xs font-medium text-formul8-gray">
                           {getAgentName(message.agent)}
                         </span>
                         {message.confidence !== undefined && (
@@ -196,26 +196,26 @@ export default function FormulaChatInterface() {
                             ) : (
                               <AlertCircle className="w-3 h-3 text-formul8-error" />
                             )}
-                            <span className="text-xs text-formul8-text-muted">
+                            <span className="text-xs text-formul8-muted">
                               {message.confidence}% confidence
                             </span>
                           </div>
                         )}
                       </div>
                     )}
-                    <div className={`text-sm ${message.role === 'user' ? 'text-white' : 'text-formul8-text-primary'}`}>
+                    <div className={`text-sm ${message.role === 'user' ? 'text-white' : 'text-formul8-white'}`}>
                       <ReactMarkdown>{message.content}</ReactMarkdown>
                     </div>
                     {message.verificationCount !== undefined && message.verificationCount > 0 && (
                       <div className="mt-2 pt-2 border-t border-formul8-border">
-                        <span className="text-xs text-formul8-text-muted">
+                        <span className="text-xs text-formul8-muted">
                           Verified with {message.verificationCount} additional agent{message.verificationCount > 1 ? 's' : ''}
                         </span>
                       </div>
                     )}
                     {message.requiresHumanReview && (
                       <div className="mt-2">
-                        <Badge variant="outline" className="text-xs border-formul8-warning text-formul8-warning">
+                        <Badge variant="outline" className="text-xs border-formul8-warning text-formul8-warning bg-formul8-bg-card">
                           Human Review Requested
                         </Badge>
                       </div>
@@ -233,11 +233,11 @@ export default function FormulaChatInterface() {
                     <Loader2 className="w-4 h-4 animate-spin" />
                   </AvatarFallback>
                 </Avatar>
-                <Card className="formul8-card shadow-sm">
+                <Card className="bg-formul8-card border-formul8-border shadow-sm">
                   <CardContent className="p-3">
                     <div className="flex items-center space-x-2">
                       <Loader2 className="w-4 h-4 animate-spin text-formul8-primary" />
-                      <span className="text-sm text-formul8-text-secondary">Processing with multi-agent system...</span>
+                      <span className="text-sm text-formul8-gray">Processing with multi-agent system...</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -249,20 +249,20 @@ export default function FormulaChatInterface() {
       </ScrollArea>
 
       {/* Input Form */}
-      <div className="p-4 border-t border-formul8-border bg-white/80 backdrop-blur-sm">
+      <div className="p-4 border-t border-formul8-border bg-formul8-card">
         <form onSubmit={handleSubmit} className="flex space-x-2">
           <Input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about compliance, formulation, patents, operations, or more..."
-            className="flex-1 border-formul8-border focus:border-formul8-primary"
+            className="flex-1 border-formul8-border focus:border-formul8-primary bg-formul8-bg-dark text-formul8-white placeholder:text-formul8-muted"
             disabled={chatMutation.isPending}
           />
           <Button
             type="submit"
             disabled={!input.trim() || chatMutation.isPending}
-            className="formul8-button-primary px-6"
+            className="bg-formul8-primary hover:bg-formul8-blue text-white px-6"
           >
             {chatMutation.isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -271,7 +271,7 @@ export default function FormulaChatInterface() {
             )}
           </Button>
         </form>
-        <p className="text-xs text-formul8-text-muted mt-2 text-center">
+        <p className="text-xs text-formul8-muted mt-2 text-center">
           Powered by multi-agent verification system with {messages.filter(m => m.agent && m.agent !== 'system').length > 0 ? 'active' : 'ready'} cannabis industry experts
         </p>
       </div>
