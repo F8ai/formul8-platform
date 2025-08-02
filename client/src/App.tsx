@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
-import TestLanding from "@/pages/test-landing";
+
 import ChatLanding from "@/pages/chat-landing";
 import Chat from "@/pages/chat";
 import Dashboard from "@/pages/dashboard";
@@ -41,6 +41,7 @@ import ComputePage from "@/pages/compute";
 import VoiceflowDashboard from "@/pages/voiceflow";
 import BaselineTableViewer from "@/pages/BaselineTableViewer";
 import ChatTool from "@/pages/chat-tool";
+import ChatToolSimple from "@/pages/chat-tool-simple";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -71,6 +72,7 @@ function Router() {
       <Route path="/agent/:agentType">
         {params => <AgentDashboard agentType={params.agentType} />}
       </Route>
+      <Route path="/chat-tool-simple" component={ChatToolSimple} />
       <Route path="/chat-tool" component={ChatTool} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">
