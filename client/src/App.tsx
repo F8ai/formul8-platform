@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
+import TestLanding from "@/pages/test-landing";
 import ChatLanding from "@/pages/chat-landing";
 import Chat from "@/pages/chat";
 import Dashboard from "@/pages/dashboard";
@@ -75,7 +76,8 @@ function Router() {
       </Route>
       {isLoading || !isAuthenticated ? (
         <>
-          <Route path="/" component={Landing} />
+          <Route path="/" component={TestLanding} />
+          <Route path="/landing" component={Landing} />
           <Route path="/chat-landing" component={ChatLanding} />
         </>
       ) : (
