@@ -1,5 +1,13 @@
 build = "bash simple-build.sh"
 run = "node simple-start.js"
+
+# Deployment ignores - exclude Python agents from main deployment
+[ignore]
+patterns = [
+  "agents/python-agents/**",
+  "archive-python/**",
+  "agents.old/**"
+]
 NODE_ENV = "production"
 PORT = "5000"
 
