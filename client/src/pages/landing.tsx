@@ -17,7 +17,8 @@ import {
   Menu,
   X,
   Home,
-  HelpCircle
+  HelpCircle,
+  MessageCircle
 } from "lucide-react";
 import { useState } from "react";
 
@@ -175,6 +176,21 @@ export default function Landing() {
             );
           })}
         </div>
+
+        {/* Submit Feedback */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => window.open('mailto:support@formul8.ai?subject=Formul8.ai Feedback', '_blank')}
+              className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group mb-2"
+            >
+              <MessageCircle className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+            <p className="text-sm font-medium">Submit Feedback</p>
+          </TooltipContent>
+        </Tooltip>
 
         {/* Help Icon at Bottom */}
         <Tooltip>
