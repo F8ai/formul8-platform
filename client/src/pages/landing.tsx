@@ -145,7 +145,7 @@ export default function Landing() {
           <TooltipTrigger asChild>
             <button
               onClick={() => window.location.href = '/'}
-              className="w-10 h-10 rounded-lg bg-formul8-primary/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group mb-4"
+              className="w-10 h-10 rounded-lg bg-formul8-primary/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group"
             >
               <Home className="w-5 h-5 text-formul8-primary group-hover:scale-110 transition-transform" />
             </button>
@@ -155,8 +155,8 @@ export default function Landing() {
           </TooltipContent>
         </Tooltip>
 
-        {/* Feature Icons */}
-        <div className="flex flex-col space-y-1 flex-1">
+        {/* Feature Icons - Vertically Centered */}
+        <div className="flex flex-col space-y-1 flex-1 justify-center">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
@@ -221,33 +221,13 @@ export default function Landing() {
         {/* Hero Section */}
         <section className="px-4 sm:px-6 py-16 sm:py-24">
           <div className="max-w-5xl mx-auto text-center">
-            {/* Logo - Formul8.ai Molecular Style Logo */}
-            <div className="mb-16">
-              <div className="w-24 h-24 mx-auto mb-8 relative">
-                <svg viewBox="0 0 80 80" className="w-full h-full">
-                  {/* Molecular structure inspired by the logo */}
-                  <defs>
-                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#19E6CC" />
-                      <stop offset="50%" stopColor="#1AB7E6" />
-                      <stop offset="100%" stopColor="#4A90E2" />
-                    </linearGradient>
-                  </defs>
-                  {/* Molecular nodes */}
-                  <circle cx="40" cy="20" r="8" fill="url(#logoGradient)" />
-                  <circle cx="25" cy="45" r="6" fill="url(#logoGradient)" />
-                  <circle cx="55" cy="45" r="6" fill="url(#logoGradient)" />
-                  <circle cx="40" cy="60" r="5" fill="url(#logoGradient)" />
-                  {/* Molecular bonds */}
-                  <line x1="40" y1="28" x2="31" y2="39" stroke="url(#logoGradient)" strokeWidth="2" />
-                  <line x1="40" y1="28" x2="49" y2="39" stroke="url(#logoGradient)" strokeWidth="2" />
-                  <line x1="31" y1="51" x2="43" y2="55" stroke="url(#logoGradient)" strokeWidth="2" />
-                  <line x1="49" y1="51" x2="43" y2="55" stroke="url(#logoGradient)" strokeWidth="2" />
-                </svg>
-              </div>
-              <div className="text-formul8-white text-3xl font-bold tracking-widest mb-2" style={{fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace'}}>
-                FORMUL8.AI
-              </div>
+            {/* Logo - Official Formul8.ai Logo */}
+            <div className="mb-16 flex flex-col items-center">
+              <img 
+                src="https://i.ibb.co/92Z73WP/no-Bg-Color.png" 
+                alt="Formul8.AI Logo" 
+                className="w-48 h-auto mb-4"
+              />
             </div>
 
             {/* Main Heading */}
