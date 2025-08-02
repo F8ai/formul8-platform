@@ -1,16 +1,12 @@
-# Node.js ONLY Deployment Configuration
-# Forces Node.js detection and prevents Python interference
-
-# Language specification
+# Force Node.js deployment - prevent Python detection
+modules = ["nodejs-20"]
 language = "nodejs"
 
-# Pure Node.js build (no Python dependencies)
-build = ["node", "build-optimized.js"]
+# Node.js commands only
+build = ["npm", "run", "build-deploy"]
+run = ["npm", "run", "start-deploy"]
 
-# Pure Node.js runtime (no tsx/Python dependencies) 
-run = ["node", "docker-build-context/dist/index.js"]
-
-# Use minimal Docker context
+# Docker context
 dockerfile = "docker-build-context/Dockerfile"
 context = "docker-build-context"
 

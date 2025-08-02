@@ -1,0 +1,19 @@
+{
+  "name": "formul8-platform-deploy",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Node.js deployment package for Formul8 Platform",
+  "main": "docker-build-context/dist/index.js",
+  "scripts": {
+    "build-deploy": "node build-optimized.js",
+    "start-deploy": "node docker-build-context/dist/index.js",
+    "dev": "NODE_ENV=development tsx server/index.ts"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": ["nodejs", "express", "deployment"],
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
