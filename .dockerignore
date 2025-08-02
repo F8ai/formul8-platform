@@ -6,6 +6,12 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# CRITICAL SIZE EXCLUSIONS - Environment cache and Python libraries
+.cache/
+.pythonlibs/
+.local/
+__pycache__/
+
 # Build outputs and cache
 dist/
 build/
@@ -144,8 +150,6 @@ yarn.lock
 # Development configuration
 docker-compose.yml
 docker-compose.*.yml
-Dockerfile.federated
-Dockerfile.optimized
 
 # Build and deployment scripts
 build-*.sh

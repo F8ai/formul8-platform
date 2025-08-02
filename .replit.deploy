@@ -4,7 +4,11 @@
 # Use the optimized production build and create minimal context
 build = ["node", "build-optimized.js", "&&", "./create-minimal-docker-context.sh"]
 
-# Start command
+# Use the minimal Docker context for deployment
+dockerfile = "docker-build-context/Dockerfile"
+context = "docker-build-context"
+
+# Start command  
 run = ["./start.sh"]
 
 # Environment
