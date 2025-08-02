@@ -40,6 +40,7 @@ import Federated from "@/pages/Federated";
 import ComputePage from "@/pages/compute";
 import VoiceflowDashboard from "@/pages/voiceflow";
 import BaselineTableViewer from "@/pages/BaselineTableViewer";
+import ChatTool from "@/pages/chat-tool";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -70,6 +71,7 @@ function Router() {
       <Route path="/agent/:agentType">
         {params => <AgentDashboard agentType={params.agentType} />}
       </Route>
+      <Route path="/chat-tool" component={ChatTool} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">
         {params => <TestResults agentId={params.agentId} />}

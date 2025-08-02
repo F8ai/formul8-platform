@@ -30,7 +30,7 @@ const features = [
     icon: MessageCircle, 
     color: 'text-sky-400',
     bgColor: 'bg-sky-500/20',
-    route: '/api/login'
+    route: '/chat-tool'
   },
   { 
     id: 'compliance', 
