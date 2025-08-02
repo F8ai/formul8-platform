@@ -1,59 +1,17 @@
+# Minimal Python configuration for Node.js-primary deployment
+# Full Python configuration backed up in pyproject.toml.backup
+
 [project]
-name = "formul8-agents"
-version = "0.1.0"
-description = "Python AI agents for Formul8 Platform"
+name = "formul8-platform"
+version = "1.0.0"
+description = "Formul8 Platform - Node.js primary deployment"
 requires-python = ">=3.11"
-dependencies = [
-    "langchain",
-    "openai",
-    "anthropic",
-    "fastapi",
-    "uvicorn",
-    "requests",
-    "python-dotenv"
-]
+dependencies = []
 
 [build-system]
 requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-# Explicitly specify packages instead of relying on automatic discovery
-packages = ["agents.python_agents"]
-# Exclude non-Python directories from package discovery
-exclude = [
-    "node_modules*",
-    "client*", 
-    "dist*",
-    "docker-build-context*",
-    "formul8-frontend*",
-    "attached_assets*",
-    "data*",
-    "dashboard*",
-    "docs*",
-    "genomes*",
-    "__pycache__*",
-    "*.egg-info*",
-    "*.js",
-    "*.ts",
-    "*.json",
-    "*.md",
-    "vite.config.*",
-    "tailwind.config.*",
-    "postcss.config.*",
-    "tsconfig.*"
-]
-
-[tool.setuptools.package-dir]
-"agents.python_agents" = "agents/python-agents"
-
-[tool.setuptools.packages.find]
-# Only include Python packages
-include = ["agents.python_agents*"]
-exclude = [
-    "node_modules*",
-    "client*",
-    "dist*", 
-    "docker-build-context*",
-    "formul8-frontend*"
-]
+# Minimal configuration to avoid conflicts with Node.js deployment
+py-modules = []
