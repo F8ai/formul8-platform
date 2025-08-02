@@ -75,8 +75,8 @@ function Router() {
       </Route>
       {isLoading || !isAuthenticated ? (
         <>
-          <Route path="/" component={ChatLanding} />
-          <Route path="/landing" component={Landing} />
+          <Route path="/" component={Landing} />
+          <Route path="/chat-landing" component={ChatLanding} />
         </>
       ) : (
         <>
