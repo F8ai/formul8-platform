@@ -78,8 +78,8 @@ export default function Landing() {
 
       {/* Features Grid - All 12 Features from Homepage */}
       <section className="px-4 sm:px-6 py-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {/* Row 1 */}
             <Card className="bg-formul8-bg-card border-formul8-border p-6 hover:border-formul8-primary/50 transition-colors">
               <CardContent className="p-0">
