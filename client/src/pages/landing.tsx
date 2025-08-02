@@ -21,6 +21,7 @@ import {
   MessageCircle
 } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 const features = [
   { 
@@ -123,6 +124,7 @@ const features = [
 
 export default function Landing() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { isAuthenticated, isLoading } = useAuth();
 
   const handleFeatureClick = (route: string) => {
     window.location.href = route;
@@ -130,16 +132,19 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-formul8-bg-dark relative">
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 bg-formul8-bg-card border border-formul8-border rounded-lg flex items-center justify-center text-formul8-white hover:bg-formul8-primary/20 transition-colors"
-      >
-        {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-      </button>
+      {/* Mobile Menu Button - Only for authenticated users */}
+      {!isLoading && isAuthenticated && (
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 bg-formul8-bg-card border border-formul8-border rounded-lg flex items-center justify-center text-formul8-white hover:bg-formul8-primary/20 transition-colors"
+        >
+          {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      )}
 
-      {/* Left Sidebar Toolbar - Replit Style */}
-      <div className={`fixed left-0 top-0 h-full w-14 bg-formul8-bg-card border-r border-formul8-border z-40 flex flex-col items-center py-3 transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+      {/* Left Sidebar Toolbar - Replit Style - Only for authenticated users */}
+      {!isLoading && isAuthenticated && (
+        <div className={`fixed left-0 top-0 h-full w-14 bg-formul8-bg-card border-r border-formul8-border z-40 flex flex-col items-center py-3 transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
         {/* Home Icon at Top */}
         <Tooltip>
           <TooltipTrigger asChild>
@@ -206,10 +211,11 @@ export default function Landing() {
             <p className="text-sm font-medium">Help & Documentation</p>
           </TooltipContent>
         </Tooltip>
-      </div>
+        </div>
+      )}
 
-      {/* Overlay for mobile */}
-      {sidebarOpen && (
+      {/* Overlay for mobile - Only for authenticated users */}
+      {!isLoading && isAuthenticated && sidebarOpen && (
         <div 
           className="fixed inset-0 bg-black/50 z-30 lg:hidden" 
           onClick={() => setSidebarOpen(false)}
@@ -217,7 +223,7 @@ export default function Landing() {
       )}
 
       {/* Main Content */}
-      <div className="lg:ml-14 transition-all duration-300">
+      <div className={`transition-all duration-300 ${!isLoading && isAuthenticated ? 'lg:ml-14' : ''}`}>
         {/* Hero Section */}
         <section className="px-4 sm:px-6 py-16 sm:py-24">
           <div className="max-w-5xl mx-auto text-center">
