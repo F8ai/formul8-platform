@@ -1,0 +1,50 @@
+# Replit Deployment Configuration - Node.js Only
+# This ensures Replit uses Node.js build commands instead of Python
+
+[build]
+# Use our working Node.js build script
+command = "node build.js"
+
+[run]
+# Use our working Node.js start script  
+command = "node start.js"
+
+# Environment variables
+[env]
+NODE_ENV = "production"
+PORT = "5000"
+
+# Deployment settings
+[deployment]
+deploymentTarget = "autoscale"
+memory = "512Mi"
+cpu = "0.5"
+
+# Health check
+[deployment.healthcheck]
+path = "/api/health"
+interval = "30s"
+timeout = "10s"
+
+# Critical: Exclude all large directories to prevent size issues
+[deployment.ignore]
+patterns = [
+  ".pythonlibs/**",
+  ".cache/**", 
+  ".local/**",
+  "attached_assets/**",
+  "agents/**",
+  "data/**",
+  "docs/**", 
+  "*.md",
+  "*.log",
+  "node_modules/.cache/**",
+  ".git/**",
+  "scripts/**",
+  "genomes/**",
+  "operations-data/**",
+  "sourcing-data/**", 
+  "spectra-data/**",
+  "patent-data/**",
+  "science-data/**"
+]
