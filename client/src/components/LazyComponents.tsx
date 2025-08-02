@@ -12,12 +12,10 @@ export const FormulaChatInterface = lazy(() => import('./FormulaChatInterface'))
 export const DataTable = lazy(() => import('./ui/data-table'));
 
 // Complex forms and editors
-export const BaselineQuestionsEditor = lazy(() => 
-  import('./agents/BaselineQuestionsEditor').then(module => ({ default: module.BaselineQuestionsEditor }))
-);
+export const BaselineQuestionsEditor = lazy(() => import('./ui/baseline-editor').then(module => ({ default: module.BaselineEditor })));
 
 export const AgentToolsManager = lazy(() => 
-  import('./agents/AgentToolsManager').then(module => ({ default: module.AgentToolsManager }))
+  import('./ui/agent-tools-manager').then(module => ({ default: module.AgentToolsManager }))
 );
 
 // Chart components
