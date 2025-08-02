@@ -1,31 +1,21 @@
 #!/bin/bash
-# Production start script for Replit deployment
-set -e
 
-echo "🚀 Starting Formul8 Frontend in production mode..."
+# Production startup script for Formul8 Platform
+echo "Starting Formul8 Platform in production mode..."
 
-# Check if built assets exist
-if [ ! -d "server/public" ]; then
-    echo "📦 Building frontend assets..."
-    npx vite build
-    
-    # Copy assets to server/public
-    mkdir -p server/public
-    if [ -d "dist/public" ]; then
-        cp -r dist/public/* server/public/
-    elif [ -d "client/dist" ]; then
-        cp -r client/dist/* server/public/
-    else
-        echo "❌ No build output found"
-        exit 1
-    fi
-    echo "✅ Assets copied to server/public/"
+# Set environment
+export NODE_ENV=production
+export PORT=${PORT:-5000}
+
+# Check if we're in the minimal context directory
+if [ -f "dist/index.js" ]; then
+    echo "Running from minimal context - starting pre-built application..."
+    cd dist && node index.js
+elif [ -f "build-optimized.js" ]; then
+    echo "Running from main directory - building and starting..."
+    node build-optimized.js
+    cd dist && node index.js
+else
+    echo "Error: Neither dist/index.js nor build script found"
+    exit 1
 fi
-
-# Check asset size
-ASSET_SIZE=$(du -sh server/public/ | cut -f1)
-echo "📊 Frontend assets size: $ASSET_SIZE"
-
-# Start the server
-echo "🌐 Starting Express server..."
-NODE_ENV=production npx tsx server/index.ts

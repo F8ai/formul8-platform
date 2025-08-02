@@ -33,18 +33,18 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Federated Architecture**: Designed for hybrid cloud deployments, allowing local agents to communicate with cloud agents via secure mTLS authentication, enabling data sovereignty and local intelligence.
 - **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
 
-### Deployment Architecture (Fully Optimized Aug 2, 2025)
-- **Issues Fixed**: Resolved Docker 8GB image limit errors by optimizing build context and assets
-- **Build Process**: Fixed asset copying with `build-production.js` using Node.js esbuild API (bypasses binary format errors)
-- **Size Optimization**: Reduced total build from 2.6MB+ to 2.4MB (removed 574KB image asset, optimized bundling)
-- **Docker Build Context**: Reduced from 2GB+ to <100MB via enhanced .dockerignore (excluded `attached_assets/`, `data/`, `agents/`)
-- **Multi-stage Dockerfile**: Ultra-optimized Alpine Linux build with production-only dependencies (`Dockerfile.optimized`)
-- **Asset Management**: 2.0MB frontend assets + 604KB backend bundle properly served via Express static middleware
+### Deployment Architecture (Docker Context Optimized Aug 2, 2025)
+- **Root Cause Identified**: Docker >8GB errors caused by 11GB Replit environment cache (3.7GB `.cache/` + 5.5GB `.pythonlibs/` + 122MB `.local/`)
+- **Solution**: Minimal Docker context approach - `docker-build-context/` directory contains only 8.0MB of essential files
+- **Build Process**: `build-optimized.js` creates production assets, `create-minimal-docker-context.sh` creates deployable context
+- **Size Optimization**: Frontend bundle split from 1.66MB to 734KB, total build 2.6MB (2.0MB frontend + 604KB backend)
+- **Docker Strategy**: Always build from `docker-build-context/` (8.0MB) instead of main directory (11GB)
+- **Multi-stage Dockerfile**: Ultra-optimized Alpine Linux with pre-built assets, npm ci for dependencies
+- **Asset Management**: Pre-built production assets eliminate build-time dependencies and size issues
 - **Runtime**: Node.js ESM execution with health checks, signal handling, non-root security
-- **Security**: Non-root user execution, dumb-init signal handling, health checks at `/api/health`
-- **Production Ready**: `node build-production.js` creates optimized build, `cd dist && node index.js`
-- **Platform Support**: Replit Deployments (primary), Google Cloud Run, AWS App Runner, Docker
-- **Validation**: Health checks working (379ms DB response), all 12 agents loaded, deployment blockers resolved
+- **Production Ready**: `cd docker-build-context && docker build -t formul8-platform .`
+- **Platform Support**: Replit Deployments (with enhanced ignore patterns), Docker, Cloud Run, App Runner
+- **Documentation**: Complete deployment instructions in `DOCKER-DEPLOYMENT-INSTRUCTIONS.md`
 
 ### Core Features and Design Patterns
 - **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory.

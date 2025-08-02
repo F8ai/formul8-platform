@@ -1,8 +1,8 @@
 # Replit Deployment Configuration
 # Optimized for size and performance
 
-# Use the optimized production build
-build = ["node", "build-production.js"]
+# Use the optimized production build and create minimal context
+build = ["node", "build-optimized.js", "&&", "./create-minimal-docker-context.sh"]
 
 # Start command
 run = ["./start.sh"]
@@ -24,7 +24,7 @@ path = "/api/health"
 interval = "30s"
 timeout = "10s"
 
-# Exclude large files from deployment
+# Exclude large files from deployment (CRITICAL for size limits)
 [deployment.ignore]
 patterns = [
   "attached_assets/**",
@@ -34,5 +34,15 @@ patterns = [
   "*.md",
   "*.log",
   "node_modules/.cache/**",
-  ".git/**"
+  ".git/**",
+  ".cache/**",
+  ".pythonlibs/**",
+  ".local/**",
+  "scripts/**",
+  "genomes/**",
+  "operations-data/**",
+  "sourcing-data/**",
+  "spectra-data/**",
+  "patent-data/**",
+  "science-data/**"
 ]
