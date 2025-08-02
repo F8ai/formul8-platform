@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +9,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Send, MessageSquare, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import remarkEmoji from "remark-emoji";
+import remarkGfm from "remark-gfm";
+import "katex/dist/katex.min.css";
+import { DocumentPreview } from "./DocumentPreview";
+import { WindowManagerContext } from "./WindowManager";
 
 interface Message {
   id: string;
@@ -37,7 +44,7 @@ export default function FormulaChatInterface() {
     {
       id: 'welcome',
       role: 'system',
-      content: "Welcome to Formul8.ai! I'm your AI cannabis consultant. Ask me anything about compliance, formulation, operations, sourcing, patents, marketing, testing, or customer success.",
+      content: "Welcome to Formul8.ai! 🌿 I'm your AI cannabis consultant. Ask me anything about compliance, formulation, operations, sourcing, patents, marketing, testing, or customer success.\n\n**Enhanced Features:**\n- 😊 Full emoji support\n- 🧪 Chemical formulas: $C_{21}H_{30}O_2$ (THC), $C_{21}H_{26}O_2$ (CBD)\n- 📄 Document previews that open in new tabs\n- 💬 Multi-agent verification system\n\nTry asking about THC extraction or compliance documents!",
       timestamp: new Date().toISOString(),
       agent: 'system',
       confidence: 100
@@ -48,6 +55,11 @@ export default function FormulaChatInterface() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
+  const windowManager = useContext(WindowManagerContext);
+  
+  if (!windowManager) {
+    console.warn('WindowManagerContext not found in FormulaChatInterface');
+  }
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -148,6 +160,64 @@ export default function FormulaChatInterface() {
     return names[agent] || 'AI Assistant';
   };
 
+  const handleOpenDocument = (url: string, title: string, type: string) => {
+    if (windowManager) {
+      windowManager.createWindow({
+        type: 'document',
+        title: title,
+        content: { 
+          mode: 'document-viewer',
+          url: url,
+          fileType: type,
+          fileName: title
+        }
+      });
+    }
+  };
+
+  // Custom markdown components to render document previews
+  const markdownComponents = {
+    a: ({ href, children, ...props }: any) => {
+      // Check if this is an external document link
+      const isDocument = href && (
+        href.includes('.pdf') || 
+        href.includes('.doc') || 
+        href.includes('.docx') || 
+        href.includes('.xls') || 
+        href.includes('.xlsx') || 
+        href.includes('.ppt') || 
+        href.includes('.pptx') ||
+        href.includes('docs.google.com') ||
+        href.includes('drive.google.com') ||
+        href.includes('sharepoint.com') ||
+        href.includes('onedrive.com')
+      );
+
+      if (isDocument) {
+        return (
+          <DocumentPreview
+            url={href}
+            title={children?.toString() || href.split('/').pop() || 'Document'}
+            onOpenDocument={handleOpenDocument}
+          />
+        );
+      }
+
+      // Regular link
+      return (
+        <a 
+          href={href} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-formul8-primary hover:text-formul8-blue underline"
+          {...props}
+        >
+          {children}
+        </a>
+      );
+    }
+  };
+
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto">
       {/* Chat Header */}
@@ -204,7 +274,13 @@ export default function FormulaChatInterface() {
                       </div>
                     )}
                     <div className={`text-sm ${message.role === 'user' ? 'text-white' : 'text-formul8-white'}`}>
-                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                      <ReactMarkdown 
+                        components={markdownComponents}
+                        remarkPlugins={[remarkMath, remarkEmoji, remarkGfm]}
+                        rehypePlugins={[rehypeKatex]}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
                     </div>
                     {message.verificationCount !== undefined && message.verificationCount > 0 && (
                       <div className="mt-2 pt-2 border-t border-formul8-border">
