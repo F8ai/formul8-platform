@@ -1,0 +1,22 @@
+# Replit configuration to force minimal Docker context usage
+[deployment]
+build = ["node", "build-optimized.js", "&&", "./create-minimal-docker-context.sh"]
+run = "cd docker-build-context && node dist/index.js"
+
+# Force Docker to use minimal context
+[deployment.docker]
+dockerfile = "docker-build-context/Dockerfile"
+context = "docker-build-context"
+
+# Ignore large directories completely
+[deployment.ignore]
+paths = [
+  ".pythonlibs/**",
+  ".cache/**", 
+  ".local/**",
+  "attached_assets/**",
+  "agents/**",
+  "data/**",
+  "node_modules/**",
+  ".git/**"
+]
