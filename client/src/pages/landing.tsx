@@ -233,7 +233,7 @@ export default function Landing() {
             {/* Main Heading */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8">
               <span className="text-formul8-white">Your AI powered </span>
-              <span className="bg-formul8-gradient-text bg-clip-text text-transparent">
+              <span className="bg-cyan-400 text-black px-4 py-2 rounded-lg inline-block">
                 Cannabis OS.
               </span>
             </h1>
