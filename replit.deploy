@@ -1,0 +1,7 @@
+# Clean Node.js deployment config
+build = "npx vite build client"
+run = "npx tsx server/index.ts"
+
+[env]
+NODE_ENV = "production"
+PORT = "5000"
