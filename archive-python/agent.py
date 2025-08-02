@@ -1,228 +1,239 @@
-#!/usr/bin/env python3
 """
-Metabolomics Agent for Formul8 Platform
-
-Specialized AI agent for metabolomics data analysis and interpretation.
+Base Agent Core Class
+Provides standardized agent functionality for all Formul8 specialized agents
 """
 
-import argparse
+import os
 import json
-import sys
-from typing import Dict, Any, Optional
-import pandas as pd
-import numpy as np
-from rdkit import Chem
-from rdkit.Chem import Descriptors, Lipinski
-import openai
-from langchain_openai import ChatOpenAI
-from langchain.schema import HumanMessage, SystemMessage
+import yaml
+import asyncio
+from datetime import datetime
+from typing import Dict, Any, Optional, List
+from dataclasses import dataclass
 
-class MetabolomicsAgent:
-    """AI agent specialized in metabolomics data analysis and interpretation."""
+# LangChain imports
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.schema import HumanMessage, SystemMessage
+from langchain.memory import ConversationBufferMemory
+
+
+@dataclass
+class AgentResponse:
+    """Standardized response format for all agents"""
+    agent_type: str
+    response: str
+    confidence: float
+    response_time: float
+    cost: float
+    model: str
+    sources: List[str] = None
+    metadata: Dict[str, Any] = None
+    requires_verification: bool = False
     
-    def __init__(self, api_key: Optional[str] = None):
-        """Initialize the metabolomics agent."""
-        self.agent_type = "metabolomics"
-        self.system_prompt = """You are a specialized AI agent for metabolomics data analysis and interpretation. 
-        You can analyze metabolomics datasets, perform pathway analysis, identify metabolites, and provide 
-        statistical insights. You have expertise in:
-        - Metabolite identification and annotation
-        - Pathway analysis and enrichment
-        - Statistical analysis of metabolomics data
-        - Integration with metabolomics databases
-        - Data visualization and interpretation
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "agent": self.agent_type,
+            "response": self.response,
+            "confidence": self.confidence,
+            "responseTime": self.response_time,
+            "cost": self.cost,
+            "model": self.model,
+            "sources": self.sources or [],
+            "metadata": self.metadata or {},
+            "requiresVerification": self.requires_verification
+        }
+
+
+class BaseAgent:
+    """Base class for all Formul8 specialized agents"""
+    
+    def __init__(self, agent_type: str, domain: str, description: str, 
+                 agent_path: str = ".", default_model: str = "gpt-4o"):
+        self.agent_type = agent_type
+        self.domain = domain
+        self.description = description
+        self.agent_path = agent_path
+        self.default_model = default_model
         
-        Always provide clear, scientific explanations and cite relevant databases or literature when possible."""
+        # Initialize components
+        self.memory = ConversationBufferMemory(memory_key="chat_history")
+        self.models = {}
+        self.baseline_questions = []
         
-        if api_key:
-            openai.api_key = api_key
-            self.llm = ChatOpenAI(api_key=api_key, model="gpt-4o", temperature=0.3)
+        # Load configuration
+        self._load_config()
+        self._initialize_models()
+        self._load_baseline_questions()
+    
+    def _load_config(self):
+        """Load agent configuration from YAML file"""
+        config_path = os.path.join(self.agent_path, "agent_config.yaml")
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                self.config = yaml.safe_load(f)
         else:
-            self.llm = None
+            self.config = self._default_config()
     
-    def process_query(self, query: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Process a metabolomics-related query."""
+    def _default_config(self) -> Dict[str, Any]:
+        """Default configuration for agents"""
+        return {
+            "models": {
+                "gpt-4o": {"provider": "openai", "temperature": 0.3},
+                "gpt-4o-mini": {"provider": "openai", "temperature": 0.3},
+                "claude-3-5-sonnet": {"provider": "anthropic", "temperature": 0.3},
+                "gemini-2.5-pro": {"provider": "google", "temperature": 0.3}
+            },
+            "system_prompt": f"You are a specialized {self.domain} AI agent providing expert guidance.",
+            "max_tokens": 1000,
+            "timeout": 30
+        }
+    
+    def _initialize_models(self):
+        """Initialize AI models based on configuration"""
         try:
-            if self.llm is None:
-                return {
-                    "agent": self.agent_type,
-                    "response": "OpenAI API key not configured. Please set OPENAI_API_KEY environment variable.",
-                    "confidence": 0,
-                    "sources": [],
-                    "metadata": {"error": "API key not configured"}
-                }
+            # OpenAI models
+            if os.getenv("OPENAI_API_KEY"):
+                for model_name, config in self.config["models"].items():
+                    if config["provider"] == "openai":
+                        self.models[model_name] = ChatOpenAI(
+                            model=model_name,
+                            temperature=config["temperature"],
+                            max_tokens=self.config["max_tokens"]
+                        )
             
-            # Prepare the prompt
+            # Anthropic models  
+            if os.getenv("ANTHROPIC_API_KEY"):
+                for model_name, config in self.config["models"].items():
+                    if config["provider"] == "anthropic":
+                        self.models[model_name] = ChatAnthropic(
+                            model=model_name,
+                            temperature=config["temperature"],
+                            max_tokens=self.config["max_tokens"]
+                        )
+            
+            # Google models
+            if os.getenv("GEMINI_API_KEY"):
+                for model_name, config in self.config["models"].items():
+                    if config["provider"] == "google":
+                        self.models[model_name] = ChatGoogleGenerativeAI(
+                            model=model_name,
+                            temperature=config["temperature"],
+                            max_tokens=self.config["max_tokens"]
+                        )
+                        
+        except Exception as e:
+            print(f"Warning: Could not initialize some models: {e}")
+    
+    def _load_baseline_questions(self):
+        """Load baseline questions from baseline.json"""
+        baseline_path = os.path.join(self.agent_path, "baseline.json")
+        if os.path.exists(baseline_path):
+            with open(baseline_path, 'r') as f:
+                data = json.load(f)
+                if isinstance(data, dict) and 'questions' in data:
+                    self.baseline_questions = data['questions']
+                elif isinstance(data, list):
+                    self.baseline_questions = data
+    
+    async def process_query(self, query: str, model: str = None, 
+                          context: Dict[str, Any] = None) -> AgentResponse:
+        """Process a user query with specified model"""
+        start_time = datetime.now()
+        model_name = model or self.default_model
+        
+        if model_name not in self.models:
+            return AgentResponse(
+                agent_type=self.agent_type,
+                response=f"Model {model_name} not available. Check API keys.",
+                confidence=0.0,
+                response_time=0.0,
+                cost=0.0,
+                model=model_name,
+                requires_verification=True
+            )
+        
+        try:
+            # Prepare messages
+            system_prompt = self.config.get("system_prompt", "")
+            if context:
+                system_prompt += f"\n\nContext: {json.dumps(context)}"
+            
             messages = [
-                SystemMessage(content=self.system_prompt),
+                SystemMessage(content=system_prompt),
                 HumanMessage(content=query)
             ]
             
-            # Get response from OpenAI
-            response = self.llm.invoke(messages)
+            # Get response from model
+            response = await self.models[model_name].ainvoke(messages)
             
-            # Parse and structure the response
-            result = {
-                "agent": self.agent_type,
-                "response": response.content,
-                "confidence": self._calculate_confidence(response.content),
-                "sources": self._extract_sources(response.content),
-                "metadata": {
-                    "query": query,
-                    "context": context,
-                    "model": "gpt-4o"
-                }
-            }
+            # Calculate metrics
+            end_time = datetime.now()
+            response_time = (end_time - start_time).total_seconds()
             
-            return result
+            # Estimate cost (simplified - real implementation would use token counting)
+            cost = self._estimate_cost(query, response.content, model_name)
             
-        except Exception as e:
-            return {
-                "agent": self.agent_type,
-                "response": f"Error processing query: {str(e)}",
-                "confidence": 0,
-                "sources": [],
-                "metadata": {"error": str(e)}
-            }
-    
-    def analyze_metabolomics_data(self, data_path: str) -> Dict[str, Any]:
-        """Analyze metabolomics data from a file."""
-        try:
-            # Read data based on file extension
-            if data_path.endswith('.csv'):
-                data = pd.read_csv(data_path)
-            elif data_path.endswith('.tsv'):
-                data = pd.read_csv(data_path, sep='\t')
-            elif data_path.endswith('.xlsx'):
-                data = pd.read_excel(data_path)
-            else:
-                raise ValueError(f"Unsupported file format: {data_path}")
+            # Calculate confidence (simplified heuristic)
+            confidence = min(0.95, max(0.3, len(response.content) / 500))
             
-            # Basic analysis
-            analysis = {
-                "data_shape": data.shape,
-                "columns": list(data.columns),
-                "missing_values": data.isnull().sum().to_dict(),
-                "data_types": data.dtypes.to_dict(),
-                "summary_stats": data.describe().to_dict()
-            }
-            
-            return analysis
+            return AgentResponse(
+                agent_type=self.agent_type,
+                response=response.content,
+                confidence=confidence,
+                response_time=response_time,
+                cost=cost,
+                model=model_name
+            )
             
         except Exception as e:
-            return {"error": f"Failed to analyze data: {str(e)}"}
+            return AgentResponse(
+                agent_type=self.agent_type,
+                response=f"Error processing query: {str(e)}",
+                confidence=0.0,
+                response_time=(datetime.now() - start_time).total_seconds(),
+                cost=0.0,
+                model=model_name,
+                requires_verification=True
+            )
     
-    def _calculate_confidence(self, response: str) -> float:
-        """Calculate confidence score for the response."""
-        if not response or len(response) < 10:
-            return 0.0
+    def _estimate_cost(self, input_text: str, output_text: str, model: str) -> float:
+        """Estimate API cost based on text length and model"""
+        # Simplified cost estimation (real implementation would use tiktoken)
+        input_tokens = len(input_text.split()) * 1.3  # Rough token estimate
+        output_tokens = len(output_text.split()) * 1.3
         
-        # Simple heuristic: longer, more detailed responses get higher confidence
-        confidence = min(95.0, max(50.0, len(response) / 10))
-        
-        # Boost confidence if response contains scientific terms
-        scientific_terms = ['metabolite', 'pathway', 'analysis', 'statistical', 'database', 'annotation']
-        term_count = sum(1 for term in scientific_terms if term.lower() in response.lower())
-        confidence += term_count * 5
-        
-        return min(95.0, confidence)
-    
-    def _extract_sources(self, response: str) -> list:
-        """Extract potential sources from the response."""
-        sources = []
-        
-        # Look for database mentions
-        databases = ['HMDB', 'KEGG', 'PubChem', 'ChEBI', 'MetaboLights', 'MassBank']
-        for db in databases:
-            if db.lower() in response.lower():
-                sources.append(db)
-        
-        return list(set(sources))
-    
-    def run_baseline_tests(self) -> Dict[str, Any]:
-        """Run baseline tests to evaluate agent performance."""
-        test_queries = [
-            "What is metabolomics and how is it used in cannabis research?",
-            "How do you identify metabolites in mass spectrometry data?",
-            "What are the key pathways involved in terpene biosynthesis?",
-            "How do you perform statistical analysis on metabolomics data?",
-            "What databases are commonly used for metabolite annotation?"
-        ]
-        
-        results = []
-        for query in test_queries:
-            result = self.process_query(query)
-            results.append({
-                "query": query,
-                "confidence": result["confidence"],
-                "response_length": len(result["response"])
-            })
-        
-        avg_confidence = sum(r["confidence"] for r in results) / len(results)
-        
-        return {
-            "total_tests": len(test_queries),
-            "average_confidence": avg_confidence,
-            "results": results
+        # Cost per 1K tokens (approximate)
+        costs = {
+            "gpt-4o": {"input": 0.005, "output": 0.015},
+            "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},
+            "claude-3-5-sonnet": {"input": 0.003, "output": 0.015},
+            "gemini-2.5-pro": {"input": 0.00125, "output": 0.005}
         }
-
-def main():
-    """Main entry point for the metabolomics agent."""
-    parser = argparse.ArgumentParser(description="Metabolomics Agent for Formul8 Platform")
-    parser.add_argument("--query", "-q", help="Query to process")
-    parser.add_argument("--interactive", "-i", action="store_true", help="Run in interactive mode")
-    parser.add_argument("--test", "-t", action="store_true", help="Run baseline tests")
-    parser.add_argument("--data", "-d", help="Path to metabolomics data file for analysis")
-    parser.add_argument("--api-key", help="OpenAI API key")
+        
+        if model in costs:
+            input_cost = (input_tokens / 1000) * costs[model]["input"]
+            output_cost = (output_tokens / 1000) * costs[model]["output"]
+            return round(input_cost + output_cost, 6)
+        
+        return 0.01  # Default estimate
     
-    args = parser.parse_args()
+    def get_available_models(self) -> List[str]:
+        """Get list of available models"""
+        return list(self.models.keys())
     
-    # Initialize agent
-    agent = MetabolomicsAgent(api_key=args.api_key)
+    def get_baseline_question_count(self) -> int:
+        """Get number of baseline questions"""
+        return len(self.baseline_questions)
     
-    if args.test:
-        print("Running baseline tests...")
-        results = agent.run_baseline_tests()
-        print(json.dumps(results, indent=2))
-        
-    elif args.data:
-        print(f"Analyzing data from: {args.data}")
-        results = agent.analyze_metabolomics_data(args.data)
-        print(json.dumps(results, indent=2))
-        
-    elif args.query:
-        print(f"Processing query: {args.query}")
-        result = agent.process_query(args.query)
-        print(json.dumps(result, indent=2))
-        
-    elif args.interactive:
-        print("Metabolomics Agent - Interactive Mode")
-        print("Type 'quit' to exit")
-        print("-" * 50)
-        
-        while True:
-            try:
-                query = input("\nEnter your query: ").strip()
-                if query.lower() in ['quit', 'exit', 'q']:
-                    break
-                
-                if query:
-                    result = agent.process_query(query)
-                    print(f"\nResponse (confidence: {result['confidence']:.1f}%):")
-                    print(result['response'])
-                    
-                    if result['sources']:
-                        print(f"\nSources: {', '.join(result['sources'])}")
-                        
-            except KeyboardInterrupt:
-                break
-            except Exception as e:
-                print(f"Error: {e}")
-        
-        print("\nGoodbye!")
-        
-    else:
-        parser.print_help()
-
-if __name__ == "__main__":
-    main() 
+    def get_agent_info(self) -> Dict[str, Any]:
+        """Get agent information"""
+        return {
+            "type": self.agent_type,
+            "domain": self.domain,
+            "description": self.description,
+            "available_models": self.get_available_models(),
+            "baseline_questions": self.get_baseline_question_count(),
+            "status": "operational" if self.models else "models_unavailable"
+        }

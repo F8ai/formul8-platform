@@ -1,10 +1,5 @@
-# Simple Node.js deployment - bypasses Python detection
-build = ["npx", "vite", "build", "client"]
-run = ["npx", "tsx", "server/index.ts"]
-
-[env]
-NODE_ENV = "production"
-PORT = "5000"
+build = "bash simple-build.sh"
+run = "node simple-start.js"
 NODE_ENV = "production"
 PORT = "5000"
 

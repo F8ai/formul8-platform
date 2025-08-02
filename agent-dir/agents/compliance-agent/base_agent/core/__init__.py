@@ -1,4 +1,0 @@
-
-"""
-Core agent functionality
-"""
