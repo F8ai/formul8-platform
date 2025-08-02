@@ -1,8 +1,8 @@
 import express from 'express';
 import OpenAI from 'openai';
 import { db } from '../db';
-import { toolSessions, fileStorage } from '@shared/schema';
-import { eq } from 'drizzle-orm';
+import { toolSessions, fileStorage, desktopFolders, desktopFiles, insertDesktopFolderSchema, insertDesktopFileSchema } from '@shared/schema';
+import { eq, and } from 'drizzle-orm';
 import { ObjectStorageService } from '../objectStorage';
 import multer from 'multer';
 
@@ -332,6 +332,231 @@ router.get('/files/:fileId/content', async (req, res) => {
   } catch (error) {
     console.error('File content error:', error);
     res.status(500).json({ error: 'Failed to get file content' });
+  }
+});
+
+// DESKTOP FOLDER MANAGEMENT ENDPOINTS
+
+// Get all folders for a user
+router.get('/folders', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    
+    const folders = await db
+      .select()
+      .from(desktopFolders)
+      .where(eq(desktopFolders.userId, userId))
+      .orderBy(desktopFolders.createdAt);
+    
+    res.json(folders);
+  } catch (error) {
+    console.error('Error fetching folders:', error);
+    res.status(500).json({ error: 'Failed to fetch folders' });
+  }
+});
+
+// Create a new folder
+router.post('/folders', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const folderData = insertDesktopFolderSchema.parse({
+      ...req.body,
+      userId,
+    });
+    
+    const [folder] = await db
+      .insert(desktopFolders)
+      .values(folderData)
+      .returning();
+    
+    res.json(folder);
+  } catch (error) {
+    console.error('Error creating folder:', error);
+    res.status(500).json({ error: 'Failed to create folder' });
+  }
+});
+
+// Update folder
+router.patch('/folders/:folderId', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const folderId = parseInt(req.params.folderId);
+    
+    const [folder] = await db
+      .update(desktopFolders)
+      .set({ ...req.body, updatedAt: new Date() })
+      .where(and(eq(desktopFolders.id, folderId), eq(desktopFolders.userId, userId)))
+      .returning();
+    
+    if (!folder) {
+      return res.status(404).json({ error: 'Folder not found' });
+    }
+    
+    res.json(folder);
+  } catch (error) {
+    console.error('Error updating folder:', error);
+    res.status(500).json({ error: 'Failed to update folder' });
+  }
+});
+
+// Delete folder
+router.delete('/folders/:folderId', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const folderId = parseInt(req.params.folderId);
+    
+    // Move files from this folder to desktop root (folderId = null)
+    await db
+      .update(desktopFiles)
+      .set({ folderId: null })
+      .where(eq(desktopFiles.folderId, folderId));
+    
+    // Delete the folder
+    const [deletedFolder] = await db
+      .delete(desktopFolders)
+      .where(and(eq(desktopFolders.id, folderId), eq(desktopFolders.userId, userId)))
+      .returning();
+    
+    if (!deletedFolder) {
+      return res.status(404).json({ error: 'Folder not found' });
+    }
+    
+    res.json({ success: true, folder: deletedFolder });
+  } catch (error) {
+    console.error('Error deleting folder:', error);
+    res.status(500).json({ error: 'Failed to delete folder' });
+  }
+});
+
+// Get files in a folder or on desktop root
+router.get('/desktop-files', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const folderId = req.query.folderId ? parseInt(req.query.folderId as string) : null;
+    
+    const files = await db
+      .select()
+      .from(desktopFiles)
+      .where(and(
+        eq(desktopFiles.userId, userId),
+        folderId ? eq(desktopFiles.folderId, folderId) : eq(desktopFiles.folderId, null)
+      ))
+      .orderBy(desktopFiles.createdAt);
+    
+    res.json(files);
+  } catch (error) {
+    console.error('Error fetching desktop files:', error);
+    res.status(500).json({ error: 'Failed to fetch desktop files' });
+  }
+});
+
+// Create a desktop file
+router.post('/desktop-files', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const fileData = insertDesktopFileSchema.parse({
+      ...req.body,
+      userId,
+    });
+    
+    const [file] = await db
+      .insert(desktopFiles)
+      .values(fileData)
+      .returning();
+    
+    res.json(file);
+  } catch (error) {
+    console.error('Error creating desktop file:', error);
+    res.status(500).json({ error: 'Failed to create desktop file' });
+  }
+});
+
+// Update desktop file position or move between folders
+router.patch('/desktop-files/:fileId', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const fileId = parseInt(req.params.fileId);
+    
+    const [file] = await db
+      .update(desktopFiles)
+      .set({ ...req.body, updatedAt: new Date() })
+      .where(and(eq(desktopFiles.id, fileId), eq(desktopFiles.userId, userId)))
+      .returning();
+    
+    if (!file) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+    
+    res.json(file);
+  } catch (error) {
+    console.error('Error updating desktop file:', error);
+    res.status(500).json({ error: 'Failed to update desktop file' });
+  }
+});
+
+// Delete desktop file
+router.delete('/desktop-files/:fileId', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const fileId = parseInt(req.params.fileId);
+    
+    const [deletedFile] = await db
+      .delete(desktopFiles)
+      .where(and(eq(desktopFiles.id, fileId), eq(desktopFiles.userId, userId)))
+      .returning();
+    
+    if (!deletedFile) {
+      return res.status(404).json({ error: 'File not found' });
+    }
+    
+    res.json({ success: true, file: deletedFile });
+  } catch (error) {
+    console.error('Error deleting desktop file:', error);
+    res.status(500).json({ error: 'Failed to delete desktop file' });
+  }
+});
+
+// Get folder context (all files and subfolders)
+router.get('/folders/:folderId/context', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const folderId = parseInt(req.params.folderId);
+    
+    // Get folder details
+    const [folder] = await db
+      .select()
+      .from(desktopFolders)
+      .where(and(eq(desktopFolders.id, folderId), eq(desktopFolders.userId, userId)));
+    
+    if (!folder) {
+      return res.status(404).json({ error: 'Folder not found' });
+    }
+    
+    // Get all files in the folder
+    const files = await db
+      .select()
+      .from(desktopFiles)
+      .where(eq(desktopFiles.folderId, folderId));
+    
+    // Get subfolders
+    const subfolders = await db
+      .select()
+      .from(desktopFolders)
+      .where(eq(desktopFolders.parentFolderId, folderId));
+    
+    res.json({
+      folder,
+      files,
+      subfolders,
+      context: {
+        totalFiles: files.length,
+        fileTypes: Array.from(new Set(files.map(f => f.fileType))),
+        lastModified: files.length > 0 ? Math.max(...files.map(f => new Date(f.updatedAt || f.createdAt).getTime())) : null,
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching folder context:', error);
+    res.status(500).json({ error: 'Failed to fetch folder context' });
   }
 });
 

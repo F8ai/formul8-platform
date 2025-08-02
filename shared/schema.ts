@@ -106,16 +106,53 @@ export const agentStatus = pgTable("agent_status", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Desktop folders table - for organizing files and chats
+export const desktopFolders = pgTable("desktop_folders", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  parentFolderId: integer("parent_folder_id").references(() => desktopFolders.id), // For nested folders
+  position: jsonb("position").default('{"x": 100, "y": 100}'), // Desktop position
+  color: varchar("color").default("#3b82f6"), // Folder color theme
+  permissions: jsonb("permissions").default('{}'), // Access permissions
+  isShared: boolean("is_shared").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Desktop files table - for files on the desktop
+export const desktopFiles = pgTable("desktop_files", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  folderId: integer("folder_id").references(() => desktopFolders.id), // null means on desktop root
+  fileName: varchar("file_name").notNull(),
+  fileType: varchar("file_type").notNull(), // document, spreadsheet, pdf, image, etc.
+  mimeType: varchar("mime_type"),
+  size: integer("size"), // File size in bytes
+  content: jsonb("content"), // For text files or metadata
+  fileUrl: varchar("file_url"), // URL to actual file storage
+  artifactId: integer("artifact_id").references(() => userArtifacts.id), // Link to artifact if applicable
+  position: jsonb("position").default('{"x": 50, "y": 50}'), // Desktop position
+  tags: jsonb("tags").default('[]'), // File tags
+  metadata: jsonb("metadata").default('{}'), // Additional metadata
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // User conversations table for chat history
 export const conversations = pgTable("conversations", {
   id: serial("id").primaryKey(),
   userId: varchar("user_id").notNull().references(() => users.id),
+  folderId: integer("folder_id").references(() => desktopFolders.id), // Link to folder for context
   agentType: varchar("agent_type").notNull(),
   title: varchar("title"),
   summary: text("summary"),
   messages: jsonb("messages").default('[]'), // Array of message objects
   context: jsonb("context").default('{}'), // Conversation-specific context
+  folderContext: jsonb("folder_context").default('{}'), // Context from folder contents
   isActive: boolean("is_active").default(true),
+  position: jsonb("position"), // Desktop position if displayed as window
   lastMessageAt: timestamp("last_message_at").defaultNow(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -323,6 +360,8 @@ export const usersRelations = relations(users, ({ many }) => ({
   costs: many(costs),
   budgets: many(budgets),
   artifacts: many(userArtifacts),
+  desktopFolders: many(desktopFolders),
+  desktopFiles: many(desktopFiles),
 }));
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
@@ -375,6 +414,42 @@ export const conversationsRelations = relations(conversations, ({ one }) => ({
   user: one(users, {
     fields: [conversations.userId],
     references: [users.id],
+  }),
+  folder: one(desktopFolders, {
+    fields: [conversations.folderId],
+    references: [desktopFolders.id],
+  }),
+}));
+
+export const desktopFoldersRelations = relations(desktopFolders, ({ one, many }) => ({
+  user: one(users, {
+    fields: [desktopFolders.userId],
+    references: [users.id],
+  }),
+  parentFolder: one(desktopFolders, {
+    fields: [desktopFolders.parentFolderId],
+    references: [desktopFolders.id],
+    relationName: "parent",
+  }),
+  subfolders: many(desktopFolders, {
+    relationName: "parent",
+  }),
+  files: many(desktopFiles),
+  conversations: many(conversations),
+}));
+
+export const desktopFilesRelations = relations(desktopFiles, ({ one }) => ({
+  user: one(users, {
+    fields: [desktopFiles.userId],
+    references: [users.id],
+  }),
+  folder: one(desktopFolders, {
+    fields: [desktopFiles.folderId],
+    references: [desktopFolders.id],
+  }),
+  artifact: one(userArtifacts, {
+    fields: [desktopFiles.artifactId],
+    references: [userArtifacts.id],
   }),
 }));
 
@@ -735,3 +810,22 @@ export type ToolSession = typeof toolSessions.$inferSelect;
 export type InsertToolSession = z.infer<typeof insertToolSessionSchema>;
 export type FileStorage = typeof fileStorage.$inferSelect;
 export type InsertFileStorage = z.infer<typeof insertFileStorageSchema>;
+
+// Desktop folder and file schemas
+export const insertDesktopFolderSchema = createInsertSchema(desktopFolders).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertDesktopFileSchema = createInsertSchema(desktopFiles).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Desktop folder and file types
+export type DesktopFolder = typeof desktopFolders.$inferSelect;
+export type InsertDesktopFolder = z.infer<typeof insertDesktopFolderSchema>;
+export type DesktopFile = typeof desktopFiles.$inferSelect;
+export type InsertDesktopFile = z.infer<typeof insertDesktopFileSchema>;
