@@ -6,7 +6,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -20,6 +19,20 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# Node.js (exclude from Python packaging)
+node_modules/
+client/
+formul8-frontend/
+docker-build-context/
+
+# Build artifacts (exclude from Python packaging)
+dist/
+
+# Documentation and assets (exclude from Python packaging)
+docs/
+attached_assets/
+dashboard/static/
 
 # Virtual environments
 venv/

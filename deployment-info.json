@@ -1,7 +1,15 @@
 {
-  "buildTime": "2025-07-31T18:40:36.302Z",
-  "frontend": "Vite build (static assets)",
-  "backend": "TypeScript source with tsx runtime",
-  "staticAssets": true,
-  "tsxAvailable": true
+  "deployment_mode": "nodejs",
+  "build_command": "node build.js",
+  "start_command": "node dist/index.js",
+  "port": 5000,
+  "has_nodejs": true,
+  "has_python": true,
+  "fixes_applied": [
+    "Configured setuptools to explicitly specify packages",
+    "Excluded non-Python directories from Python package discovery",
+    "Created Python server entry point for FastAPI application",
+    "Added deployment mode detection",
+    "Updated build commands for both environments"
+  ]
 }

@@ -33,18 +33,20 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Federated Architecture**: Designed for hybrid cloud deployments, allowing local agents to communicate with cloud agents via secure mTLS authentication, enabling data sovereignty and local intelligence.
 - **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
 
-### Deployment Architecture (Docker Context Optimized Aug 2, 2025)
-- **Root Cause Identified**: Docker >8GB errors caused by 11GB Replit environment cache (3.7GB `.cache/` + 5.5GB `.pythonlibs/` + 122MB `.local/`)
-- **Solution**: Minimal Docker context approach - `docker-build-context/` directory contains only 8.0MB of essential files
-- **Build Process**: `build-optimized.js` creates production assets, `create-minimal-docker-context.sh` creates deployable context
-- **Size Optimization**: Frontend bundle split from 1.66MB to 734KB, total build 2.6MB (2.0MB frontend + 604KB backend)
-- **Docker Strategy**: Always build from `docker-build-context/` (8.0MB) instead of main directory (11GB)
-- **Multi-stage Dockerfile**: Ultra-optimized Alpine Linux with pre-built assets, npm ci for dependencies
-- **Asset Management**: Pre-built production assets eliminate build-time dependencies and size issues
-- **Runtime**: Node.js ESM execution with health checks, signal handling, non-root security
-- **Production Ready**: `cd docker-build-context && docker build -t formul8-platform .`
-- **Platform Support**: Replit Deployments (with enhanced ignore patterns), Docker, Cloud Run, App Runner
-- **Documentation**: Complete deployment instructions in `DOCKER-DEPLOYMENT-INSTRUCTIONS.md`
+### Deployment Architecture (Mixed Runtime Support - Aug 2, 2025)
+- **Multi-Runtime Support**: Fixed deployment conflicts between Node.js and Python configurations
+- **Python Packaging Fixed**: Configured setuptools to explicitly specify packages, excluded Node.js directories from Python discovery
+- **Deployment Modes**: 
+  - Node.js (default): Full-stack Express/React application (`node build.js`, `node dist/index.js`)
+  - Python FastAPI: Alternative deployment with FastAPI serving pre-built assets (`python python_server.py`)
+- **Build Optimization**: Frontend bundle optimized to 734KB, total build 2.6MB (2.0MB frontend + 604KB backend)
+- **Docker Strategy**: Minimal Docker context (8.0MB) with pre-built production assets
+- **Configuration Files**: 
+  - `pyproject.toml`: Explicit package specification with comprehensive exclusions
+  - `python_server.py`: FastAPI entry point for Python deployments
+  - `deployment-config.py`: Automatic deployment mode detection
+- **Platform Support**: Replit Deployments, Docker, Cloud Run, App Runner (both Node.js and Python runtimes)
+- **Documentation**: Complete deployment fixes documented in `DEPLOYMENT-FIXES-APPLIED.md`
 
 ### Core Features and Design Patterns
 - **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory.
