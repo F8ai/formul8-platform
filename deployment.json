@@ -1,0 +1,25 @@
+{
+  "name": "formul8-platform",
+  "type": "nodejs",
+  "language": "javascript",
+  "runtime": "nodejs-20",
+  "buildCommand": "node build-optimized.js",
+  "startCommand": "node docker-build-context/dist/index.js",
+  "framework": "express",
+  "environment": {
+    "NODE_ENV": "production",
+    "PORT": "5000"
+  },
+  "ignore": [
+    "*.py",
+    "pyproject.toml",
+    "requirements.txt",
+    ".pythonlibs/**",
+    ".cache/**",
+    ".local/**",
+    "archive-python/**",
+    "attached_assets/**",
+    "agents/**",
+    "data/**"
+  ]
+}

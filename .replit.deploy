@@ -1,15 +1,18 @@
-# Replit Deployment Configuration
-# Optimized for size and performance
+# Node.js ONLY Deployment Configuration
+# Forces Node.js detection and prevents Python interference
 
-# Use working Node.js build script directly (bypasses Python/esbuild issues)
+# Language specification
+language = "nodejs"
+
+# Pure Node.js build (no Python dependencies)
 build = ["node", "build-optimized.js"]
 
-# Use the minimal Docker context for deployment
+# Pure Node.js runtime (no tsx/Python dependencies) 
+run = ["node", "docker-build-context/dist/index.js"]
+
+# Use minimal Docker context
 dockerfile = "docker-build-context/Dockerfile"
 context = "docker-build-context"
-
-# Start command using working Node.js script (bypasses tsx issues)
-run = ["sh", "-c", "cd docker-build-context && node dist/index.js"]
 
 # Environment
 [env]

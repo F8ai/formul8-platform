@@ -1,0 +1,29 @@
+# Node.js only deployment configuration
+# This file ensures Replit uses Node.js build system exclusively
+
+modules = ["nodejs-20", "web"]
+
+[deployment]
+deploymentTarget = "autoscale"
+build = ["node", "build-optimized.js"]
+run = ["sh", "-c", "cd docker-build-context && node dist/index.js"]
+
+[env]
+NODE_ENV = "production"
+PORT = "5000"
+
+# Exclude everything that could trigger Python detection
+[deployment.ignore]
+patterns = [
+  "*.py",
+  "pyproject.toml", 
+  "requirements.txt",
+  ".pythonlibs/**",
+  ".cache/**",
+  ".local/**",
+  "attached_assets/**",
+  "agents/**",
+  "data/**",
+  "docs/**",
+  "scripts/**"
+]
