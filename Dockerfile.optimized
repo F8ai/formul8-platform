@@ -1,53 +1,46 @@
-# Ultra-optimized multi-stage Docker build for Cloud Run
-# Target: Under 1GB final image size
-
+# Ultra-optimized multi-stage build for Replit deployment
 FROM node:20-alpine AS base
+
 # Install only essential system packages
 RUN apk add --no-cache curl dumb-init && \
-    rm -rf /var/cache/apk/* /tmp/*
+    rm -rf /var/cache/apk/* /tmp/* /var/lib/apk/lists/*
 
-# Stage 1: Build frontend only
-FROM base AS frontend-builder
+# Stage 1: Build stage (all dependencies)
+FROM base AS builder
 WORKDIR /build
 
-# Copy only package files for dependency installation
+# Copy package files
 COPY package*.json ./
-RUN npm ci --production=false --prefer-offline --no-audit --silent && \
-    npm cache clean --force
+RUN npm ci --prefer-offline --no-audit --silent --ignore-scripts
 
-# Copy frontend source files
+# Copy source files for build
 COPY client/ ./client/
 COPY shared/ ./shared/
 COPY vite.config.ts tsconfig.json components.json ./
 
-# Build frontend with maximum optimization
-RUN npx vite build --mode production --outDir dist/public && \
-    ls -la dist/public/ && \
-    du -sh dist/public/
+# Build frontend
+RUN npx vite build --mode production
 
 # Stage 2: Production runtime (minimal)
 FROM base AS production
-
 WORKDIR /app
 
-# Copy only package files and install production dependencies
-COPY package*.json ./
-RUN npm ci --only=production --prefer-offline --no-audit --silent && \
-    npm install tsx --no-save && \
+# Use production package.json
+COPY package.production.json ./package.json
+COPY package-lock.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production --prefer-offline --no-audit --silent --ignore-scripts && \
     npm cache clean --force && \
     rm -rf /tmp/* ~/.npm /root/.cache
 
-# Copy built frontend assets from builder
-COPY --from=frontend-builder /build/dist/public ./server/public
+# Copy built frontend from builder stage
+COPY --from=builder /build/dist/public ./server/public
 
-# Copy only essential backend files
+# Copy backend source
 COPY server/ ./server/
 COPY shared/ ./shared/
 COPY drizzle.config.ts ./
-
-# Create production startup script
-RUN echo '#!/bin/sh\nset -e\necho "🚀 Starting Formul8 Platform..."\nexec npx tsx server/index.ts' > start.sh && \
-    chmod +x start.sh
 
 # Create non-root user
 RUN addgroup -g 1001 -S app && \
@@ -62,6 +55,6 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 
 EXPOSE ${PORT:-5000}
 
-# Use exec form for proper signal handling
+# Start server with tsx
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["./start.sh"]
+CMD ["npx", "tsx", "server/index.ts"]

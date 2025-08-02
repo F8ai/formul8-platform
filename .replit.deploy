@@ -1,0 +1,38 @@
+# Replit Deployment Configuration
+# Optimized for size and performance
+
+# Use the optimized production build
+build = ["node", "build-production.js"]
+
+# Start command
+run = ["./start.sh"]
+
+# Environment
+[env]
+NODE_ENV = "production"
+PORT = "5000"
+
+# Deployment optimizations
+[deployment]
+# Use minimal resources
+memory = "512Mi"
+cpu = "0.5"
+
+# Health check
+[deployment.healthcheck]
+path = "/api/health"
+interval = "30s"
+timeout = "10s"
+
+# Exclude large files from deployment
+[deployment.ignore]
+patterns = [
+  "attached_assets/**",
+  "agents/**", 
+  "data/**",
+  "docs/**",
+  "*.md",
+  "*.log",
+  "node_modules/.cache/**",
+  ".git/**"
+]

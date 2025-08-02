@@ -13,8 +13,18 @@ flowise/
 local-deployment/
 __pycache__/
 formul8-platform-complete.tar.gz
+formul8-frontend/
+operations-data/
+patent-data/
+science-data/
+sourcing-data/
+spectra-data/
+voiceflow/
+github-tester-agent/
 *.tar.gz
 *.zip
+*.rar
+*.7z
 
 # Node.js dependencies - will be rebuilt
 node_modules/

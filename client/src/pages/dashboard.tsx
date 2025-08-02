@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery } from "@tanstack/react-query";
-import DashboardWidgetCustomizer from "@/components/dashboard/DashboardWidgetCustomizer";
-import DashboardWidget from "@/components/dashboard/DashboardWidget";
+import { Suspense } from "react";
+import { DashboardWidgetCustomizer, DashboardWidget } from "@/components/LazyComponents";
 import { 
   MessageSquare, 
   Shield, 
@@ -181,7 +181,14 @@ export default function Dashboard() {
             </div>
 
             {showCustomizer ? (
-              <DashboardWidgetCustomizer userId={user?.id || 'demo-user'} />
+              <Suspense fallback={<div className="flex items-center justify-center p-8">
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-formul8-primary rounded-full animate-pulse mx-auto mb-2"></div>
+                  <p className="text-sm text-gray-500">Loading customizer...</p>
+                </div>
+              </div>}>
+                <DashboardWidgetCustomizer userId={user?.id || 'demo-user'} />
+              </Suspense>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {defaultWidgets.map((widget) => (
@@ -189,14 +196,16 @@ export default function Dashboard() {
                     gridColumn: `span ${Math.min(widget.position.w / 3, 4)}`,
                     gridRow: `span ${Math.min(widget.position.h, 2)}`
                   }}>
-                    <DashboardWidget 
-                      type={widget.type}
-                      title={widget.title}
-                      settings={widget.settings}
-                      onResize={() => toast({ title: "Widget resized" })}
-                      onEdit={() => toast({ title: "Widget settings opened" })}
-                      onRemove={() => toast({ title: "Widget removed" })}
-                    />
+                    <Suspense fallback={<div className="h-32 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>}>
+                      <DashboardWidget 
+                        type={widget.type}
+                        title={widget.title}
+                        settings={widget.settings}
+                        onResize={() => toast({ title: "Widget resized" })}
+                        onEdit={() => toast({ title: "Widget settings opened" })}
+                        onRemove={() => toast({ title: "Widget removed" })}
+                      />
+                    </Suspense>
                   </div>
                 ))}
               </div>
