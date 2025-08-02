@@ -15,7 +15,9 @@ import {
   ShoppingCart,
   UserCheck,
   Menu,
-  X
+  X,
+  Home,
+  HelpCircle
 } from "lucide-react";
 import { useState } from "react";
 
@@ -136,25 +138,58 @@ export default function Landing() {
       </button>
 
       {/* Left Sidebar Toolbar - Replit Style */}
-      <div className={`fixed left-0 top-0 h-full w-16 bg-formul8-bg-card border-r border-formul8-border z-40 flex flex-col items-center py-4 space-y-2 transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
-        {features.map((feature) => {
-          const Icon = feature.icon;
-          return (
-            <Tooltip key={feature.id}>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={() => handleFeatureClick(feature.route)}
-                  className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group`}
-                >
-                  <Icon className={`w-6 h-6 ${feature.color} group-hover:scale-110 transition-transform`} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
-                <p className="text-sm font-medium">{feature.name}</p>
-              </TooltipContent>
-            </Tooltip>
-          );
-        })}
+      <div className={`fixed left-0 top-0 h-full w-14 bg-formul8-bg-card border-r border-formul8-border z-40 flex flex-col items-center py-3 transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+        {/* Home Icon at Top */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => window.location.href = '/'}
+              className="w-10 h-10 rounded-lg bg-formul8-primary/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group mb-4"
+            >
+              <Home className="w-5 h-5 text-formul8-primary group-hover:scale-110 transition-transform" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+            <p className="text-sm font-medium">Home</p>
+          </TooltipContent>
+        </Tooltip>
+
+        {/* Feature Icons */}
+        <div className="flex flex-col space-y-1 flex-1">
+          {features.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <Tooltip key={feature.id}>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleFeatureClick(feature.route)}
+                    className={`w-10 h-10 rounded-lg ${feature.bgColor} flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group`}
+                  >
+                    <Icon className={`w-4 h-4 ${feature.color} group-hover:scale-110 transition-transform`} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+                  <p className="text-sm font-medium">{feature.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            );
+          })}
+        </div>
+
+        {/* Help Icon at Bottom */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => window.open('https://docs.formul8.ai', '_blank')}
+              className="w-10 h-10 rounded-lg bg-gray-500/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group"
+            >
+              <HelpCircle className="w-5 h-5 text-gray-400 group-hover:scale-110 transition-transform" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+            <p className="text-sm font-medium">Help & Documentation</p>
+          </TooltipContent>
+        </Tooltip>
       </div>
 
       {/* Overlay for mobile */}
@@ -166,7 +201,7 @@ export default function Landing() {
       )}
 
       {/* Main Content */}
-      <div className="lg:ml-16 transition-all duration-300">
+      <div className="lg:ml-14 transition-all duration-300">
         {/* Hero Section */}
         <section className="px-4 sm:px-6 py-16 sm:py-24">
           <div className="max-w-5xl mx-auto text-center">
