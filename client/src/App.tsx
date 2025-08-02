@@ -76,13 +76,13 @@ function Router() {
       </Route>
       {isLoading || !isAuthenticated ? (
         <>
-          <Route path="/" component={TestLanding} />
-          <Route path="/landing" component={Landing} />
+          <Route path="/" component={Landing} />
           <Route path="/chat-landing" component={ChatLanding} />
         </>
       ) : (
         <>
-          <Route path="/" component={Chat} />
+          <Route path="/" component={Landing} />
+          <Route path="/chat" component={Chat} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/science" component={Science} />
           <Route path="/development-agent" component={DevelopmentAgent} />
