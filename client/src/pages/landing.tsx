@@ -19,11 +19,11 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-formul8-bg-dark">
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 py-20 sm:py-32">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="px-4 sm:px-6 py-16 sm:py-24">
+        <div className="max-w-5xl mx-auto text-center">
           {/* Logo - Formul8.ai Molecular Style Logo */}
-          <div className="mb-12">
-            <div className="w-20 h-20 mx-auto mb-6 relative">
+          <div className="mb-16">
+            <div className="w-24 h-24 mx-auto mb-8 relative">
               <svg viewBox="0 0 80 80" className="w-full h-full">
                 {/* Molecular structure inspired by the logo */}
                 <defs>
@@ -45,7 +45,7 @@ export default function Landing() {
                 <line x1="49" y1="51" x2="43" y2="55" stroke="url(#logoGradient)" strokeWidth="2" />
               </svg>
             </div>
-            <div className="text-formul8-white text-2xl font-bold tracking-wider font-mono">
+            <div className="text-formul8-white text-3xl font-bold tracking-widest mb-2" style={{fontFamily: 'ui-monospace, SFMono-Regular, Consolas, monospace'}}>
               FORMUL8.AI
             </div>
           </div>
