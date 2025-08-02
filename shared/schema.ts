@@ -660,3 +660,78 @@ export type WidgetPreferences = typeof widgetPreferences.$inferSelect;
 export type InsertWidgetPreferences = typeof widgetPreferences.$inferInsert;
 export type WidgetConfig = z.infer<typeof WidgetConfigSchema>;
 export type DashboardLayoutConfig = z.infer<typeof DashboardLayoutSchema>;
+
+// Tool Sessions table - for AI workspace tool management
+export const toolSessions = pgTable("tool_sessions", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  title: varchar("title").notNull(),
+  toolType: varchar("tool_type").notNull(), // chat, calculator, document
+  agentType: varchar("agent_type"), // compliance, formulation, etc. (for chat tools)
+  dataFile: varchar("data_file"), // path to data file (optional for chat tools)
+  data: jsonb("data").notNull().$type<{
+    type: string;
+    [key: string]: any;
+  }>(), // tool-specific data structure
+  isActive: boolean("is_active").default(true),
+  lastActive: timestamp("last_active").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// File Storage table - for generated documents and calculator data
+export const fileStorage = pgTable("file_storage", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  sessionId: text("session_id").notNull().references(() => toolSessions.id),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  fileName: varchar("file_name").notNull(),
+  fileType: varchar("file_type").notNull(), // json, html, csv, etc.
+  mimeType: varchar("mime_type"),
+  content: text("content"), // for text-based files
+  objectStoragePath: varchar("object_storage_path"), // path in object storage for uploaded files
+  binaryData: text("binary_data"), // base64 encoded for binary files
+  metadata: jsonb("metadata").default('{}'),
+  version: integer("version").default(1),
+  size: integer("size"), // file size in bytes
+  checksum: varchar("checksum"), // for integrity verification
+  isDeleted: boolean("is_deleted").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Tool Sessions relations
+export const toolSessionsRelations = relations(toolSessions, ({ one, many }) => ({
+  user: one(users, {
+    fields: [toolSessions.userId],
+    references: [users.id],
+  }),
+  files: many(fileStorage),
+}));
+
+export const fileStorageRelations = relations(fileStorage, ({ one }) => ({
+  session: one(toolSessions, {
+    fields: [fileStorage.sessionId],
+    references: [toolSessions.id],
+  }),
+  user: one(users, {
+    fields: [fileStorage.userId],
+    references: [users.id],
+  }),
+}));
+
+// Tool Sessions schemas
+export const insertToolSessionSchema = createInsertSchema(toolSessions).omit({
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertFileStorageSchema = createInsertSchema(fileStorage).omit({
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Tool Sessions types
+export type ToolSession = typeof toolSessions.$inferSelect;
+export type InsertToolSession = z.infer<typeof insertToolSessionSchema>;
+export type FileStorage = typeof fileStorage.$inferSelect;
+export type InsertFileStorage = z.infer<typeof insertFileStorageSchema>;

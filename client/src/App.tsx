@@ -42,6 +42,7 @@ import VoiceflowDashboard from "@/pages/voiceflow";
 import BaselineTableViewer from "@/pages/BaselineTableViewer";
 import ChatTool from "@/pages/chat-tool";
 import ChatToolSimple from "@/pages/chat-tool-simple";
+import Workspace from "@/pages/workspace";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -73,6 +74,7 @@ function Router() {
         {params => <AgentDashboard agentType={params.agentType} />}
       </Route>
       <Route path="/chat-tool-simple" component={ChatToolSimple} />
+      <Route path="/workspace" component={Workspace} />
       <Route path="/chat-tool" component={ChatTool} />
       <Route path="/agent/:agentId/chat" component={AgentChat} />
       <Route path="/test-results/:agentId">
