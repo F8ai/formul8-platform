@@ -1,15 +1,11 @@
-build = "bash simple-build.sh"
-run = "node simple-start.js"
+# Hybrid Node.js + Python deployment
+build = ["bash", "simple-build.sh"]
+run = ["node", "simple-start.js"]
 
-# Deployment ignores - exclude Python agents from main deployment
-[ignore]
-patterns = [
-  "agents/python-agents/**",
-  "archive-python/**",
-  "agents.old/**"
-]
+[env]
 NODE_ENV = "production"
 PORT = "5000"
+PYTHON_PATH = "/home/runner/workspace"
 
 # Deployment optimizations
 [deployment]

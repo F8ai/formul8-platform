@@ -1,0 +1,18 @@
+[project]
+name = "formul8-agents"
+version = "0.1.0"
+description = "Python AI agents for Formul8 Platform"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain",
+    "openai",
+    "anthropic",
+    "fastapi",
+    "uvicorn",
+    "requests",
+    "python-dotenv"
+]
+
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
