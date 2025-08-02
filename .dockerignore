@@ -102,9 +102,11 @@ patent-data/
 science-data/
 voiceflow/
 .cache/
+.pythonlibs/
 __pycache__/
 
-# Python cache and virtual environments
+# Python cache and virtual environments (CRITICAL SIZE EXCLUSIONS)
+.pythonlibs/
 __pycache__/
 *.pyc
 *.pyo
