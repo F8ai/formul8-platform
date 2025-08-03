@@ -460,7 +460,6 @@ export default function DesignPage() {
             </div>
           </CardContent>
         </Card>
-        </Tabs>
       </div>
       </div>
     </PageLayout>
