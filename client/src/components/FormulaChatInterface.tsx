@@ -259,21 +259,8 @@ export default function FormulaChatInterface() {
         route: '/design',
         icon: '🧪',
         action: () => {
-          if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '🧪 Formulation Wizard',
-              content: {
-                mode: 'formulation-wizard',
-                route: '/design'
-              },
-              size: { 
-                width: window.innerWidth - 40, 
-                height: window.innerHeight - 80 
-              },
-              position: { x: 20, y: 40 }
-            });
-          }
+          // Open in tabbed interface
+          window.open('/design', '_blank');
         }
       },
       {
@@ -283,21 +270,8 @@ export default function FormulaChatInterface() {
         route: '/roadmap',
         icon: '🐛',
         action: () => {
-          if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '🐛 Issue Tracker',
-              content: {
-                mode: 'issue-form',
-                route: '/roadmap'
-              },
-              size: { 
-                width: window.innerWidth - 40, 
-                height: window.innerHeight - 80 
-              },
-              position: { x: 20, y: 40 }
-            });
-          }
+          // Open in tabbed interface
+          window.open('/roadmap', '_blank');
         }
       },
       {
@@ -307,21 +281,8 @@ export default function FormulaChatInterface() {
         route: '/pages/ComplianceAgent',
         icon: '⚖️',
         action: () => {
-          if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '⚖️ Compliance Dashboard',
-              content: {
-                mode: 'compliance-agent',
-                route: '/ComplianceAgent'
-              },
-              size: { 
-                width: window.innerWidth - 40, 
-                height: window.innerHeight - 80 
-              },
-              position: { x: 20, y: 40 }
-            });
-          }
+          // Open in tabbed interface
+          window.open('/ComplianceAgent', '_blank');
         }
       },
       {
@@ -331,21 +292,8 @@ export default function FormulaChatInterface() {
         route: '/artifacts',
         icon: '📄',
         action: () => {
-          if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '📄 Document Manager',
-              content: {
-                mode: 'artifacts',
-                route: '/artifacts'
-              },
-              size: { 
-                width: window.innerWidth - 40, 
-                height: window.innerHeight - 80 
-              },
-              position: { x: 20, y: 40 }
-            });
-          }
+          // Open in tabbed interface
+          window.open('/artifacts', '_blank');
         }
       },
       {
@@ -355,21 +303,8 @@ export default function FormulaChatInterface() {
         route: '/baseline-testing',
         icon: '📊',
         action: () => {
-          if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '📊 Baseline Testing',
-              content: {
-                mode: 'baseline-testing',
-                route: '/BaselineAssessment'
-              },
-              size: { 
-                width: window.innerWidth - 40, 
-                height: window.innerHeight - 80 
-              },
-              position: { x: 20, y: 40 }
-            });
-          }
+          // Open in tabbed interface
+          window.open('/BaselineAssessment', '_blank');
         }
       },
       {
@@ -379,21 +314,8 @@ export default function FormulaChatInterface() {
         route: '/dashboard',
         icon: '📈',
         action: () => {
-          if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '📈 Main Dashboard',
-              content: {
-                mode: 'dashboard',
-                route: '/dashboard'
-              },
-              size: { 
-                width: window.innerWidth - 40, 
-                height: window.innerHeight - 80 
-              },
-              position: { x: 20, y: 40 }
-            });
-          }
+          // Open in tabbed interface
+          window.open('/dashboard', '_blank');
         }
       },
       {
@@ -403,21 +325,8 @@ export default function FormulaChatInterface() {
         route: '/workspace',
         icon: '💼',
         action: () => {
-          if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '💼 File Workspace',
-              content: {
-                mode: 'workspace',
-                route: '/workspace'
-              },
-              size: { 
-                width: window.innerWidth - 40, 
-                height: window.innerHeight - 80 
-              },
-              position: { x: 20, y: 40 }
-            });
-          }
+          // Open in tabbed interface
+          window.open('/workspace', '_blank');
         }
       }
     ];
@@ -612,28 +521,8 @@ export default function FormulaChatInterface() {
               size="sm"
               variant="outline"
               onClick={() => {
-                if (windowManager) {
-                  // Create full-size desktop window for document preview
-                  windowManager.createWindow({
-                    type: 'document',
-                    title: `📄 ${fileName}`,
-                    content: {
-                      mode: 'file-preview',
-                      fileName: fileName,
-                      fileContent: fileContent,
-                      fileType: defaultExtension,
-                      isGenerated: true
-                    },
-                    size: { 
-                      width: window.innerWidth - 40, 
-                      height: window.innerHeight - 80 
-                    },
-                    position: { 
-                      x: 20, 
-                      y: 40 
-                    }
-                  });
-                }
+                // Open in tabbed interface
+                window.open('/artifacts', '_blank');
               }}
               className="text-xs border-formul8-border text-formul8-white hover:bg-formul8-bg-light"
             >
