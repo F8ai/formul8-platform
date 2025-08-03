@@ -104,34 +104,37 @@ export default function FormulaChatInterface() {
       panels: [
         {
           id: 'chat',
-          title: 'Formulation Chat',
+          title: 'Formulation Assistant',
           position: 'left' as const,
           width: 'w-96',
           tabs: [
             { id: 'chat', label: 'Chat', icon: '💬', endpoint: '/api/chat/formulation' },
+            { id: 'wizard', label: 'Wizard', icon: '🧪', endpoint: '/design' },
             { id: 'history', label: 'History', icon: '📜', endpoint: '/formulation/history' }
           ]
         },
         {
           id: 'molecule',
-          title: 'Molecular Structure',
+          title: 'Molecular Analysis',
           position: 'top-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
             { id: 'structure', label: 'Structure', icon: '🧬', endpoint: '/formulation/molecule' },
-            { id: 'calculator', label: 'Calculator', icon: '🧮', endpoint: '/formulation/calculator' }
+            { id: 'properties', label: 'Properties', icon: '⚗️', endpoint: '/formulation/properties' },
+            { id: 'interactions', label: 'Interactions', icon: '🔗', endpoint: '/formulation/interactions' }
           ]
         },
         {
-          id: 'info',
-          title: 'Formulation Info',
+          id: 'calculator',
+          title: 'Dosage Calculator',
           position: 'bottom-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'details', label: 'Details', icon: 'ℹ️', endpoint: '/formulation/details' },
-            { id: 'wizard', label: 'Wizard', icon: '🧪', endpoint: '/design' }
+            { id: 'calculator', label: 'Calculator', icon: '🧮', endpoint: '/formulation/calculator' },
+            { id: 'batch', label: 'Batch Size', icon: '📏', endpoint: '/formulation/batch' },
+            { id: 'potency', label: 'Potency', icon: '💪', endpoint: '/formulation/potency' }
           ]
         }
       ]
@@ -139,35 +142,38 @@ export default function FormulaChatInterface() {
     compliance: {
       panels: [
         {
-          id: 'chat',
-          title: 'Compliance Chat',
+          id: 'assistant',
+          title: 'Compliance Assistant',
           position: 'left' as const,
           width: 'w-96',
           tabs: [
             { id: 'chat', label: 'Chat', icon: '💬', endpoint: '/api/chat/compliance' },
-            { id: 'assistant', label: 'Assistant', icon: '🤖', endpoint: '/ComplianceAgent' }
+            { id: 'dashboard', label: 'Dashboard', icon: '⚖️', endpoint: '/ComplianceAgent' },
+            { id: 'tracker', label: 'Tracker', icon: '📋', endpoint: '/compliance/tracker' }
           ]
         },
         {
           id: 'regulations',
-          title: 'Current Regulations',
+          title: 'Regulations Monitor',
           position: 'top-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'state-regs', label: 'State Rules', icon: '📋', endpoint: '/compliance/regulations' },
-            { id: 'federal', label: 'Federal', icon: '🏛️', endpoint: '/compliance/federal' }
+            { id: 'state-regs', label: 'State Rules', icon: '🏛️', endpoint: '/compliance/state' },
+            { id: 'federal', label: 'Federal', icon: '🇺🇸', endpoint: '/compliance/federal' },
+            { id: 'updates', label: 'Updates', icon: '🔄', endpoint: '/compliance/updates' }
           ]
         },
         {
-          id: 'checklist',
+          id: 'tools',
           title: 'Compliance Tools',
           position: 'bottom-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
             { id: 'checklist', label: 'Checklist', icon: '✅', endpoint: '/compliance/checklist' },
-            { id: 'documents', label: 'Documents', icon: '📄', endpoint: '/compliance/documents' }
+            { id: 'audit', label: 'Audit', icon: '🔍', endpoint: '/compliance/audit' },
+            { id: 'reports', label: 'Reports', icon: '📊', endpoint: '/compliance/reports' }
           ]
         }
       ]
@@ -180,8 +186,9 @@ export default function FormulaChatInterface() {
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'manager', label: 'Manager', icon: '📄', endpoint: '/artifacts' },
-            { id: 'search', label: 'Search', icon: '🔍', endpoint: '/artifacts/search' }
+            { id: 'browser', label: 'Browser', icon: '📁', endpoint: '/artifacts' },
+            { id: 'search', label: 'Search', icon: '🔍', endpoint: '/artifacts/search' },
+            { id: 'recent', label: 'Recent', icon: '🕒', endpoint: '/artifacts/recent' }
           ]
         },
         {
@@ -191,18 +198,20 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'preview', label: 'Preview', icon: '👁️', endpoint: '/artifacts/preview' }
+            { id: 'preview', label: 'Preview', icon: '👁️', endpoint: '/artifacts/preview' },
+            { id: 'metadata', label: 'Metadata', icon: 'ℹ️', endpoint: '/artifacts/metadata' }
           ]
         },
         {
-          id: 'templates',
-          title: 'Templates & Tools',
+          id: 'creation',
+          title: 'Document Creation',
           position: 'bottom-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
             { id: 'templates', label: 'Templates', icon: '📝', endpoint: '/artifacts/templates' },
-            { id: 'generator', label: 'Generator', icon: '⚡', endpoint: '/artifacts/generator' }
+            { id: 'generator', label: 'AI Generator', icon: '⚡', endpoint: '/artifacts/generator' },
+            { id: 'sops', label: 'SOPs', icon: '📋', endpoint: '/artifacts/sops' }
           ]
         }
       ]
@@ -210,12 +219,13 @@ export default function FormulaChatInterface() {
     baseline: {
       panels: [
         {
-          id: 'assessment',
+          id: 'testing',
           title: 'Baseline Testing',
           position: 'left' as const,
           width: 'w-96',
           tabs: [
             { id: 'assessment', label: 'Assessment', icon: '📊', endpoint: '/BaselineAssessment' },
+            { id: 'questions', label: 'Questions', icon: '❓', endpoint: '/baseline/questions' },
             { id: 'setup', label: 'Setup', icon: '⚙️', endpoint: '/baseline/setup' }
           ]
         },
@@ -226,19 +236,21 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'results', label: 'Results', icon: '📈', endpoint: '/baseline/results' },
-            { id: 'metrics', label: 'Metrics', icon: '📏', endpoint: '/baseline/metrics' }
+            { id: 'scores', label: 'Scores', icon: '📈', endpoint: '/baseline/scores' },
+            { id: 'comparison', label: 'Compare', icon: '⚖️', endpoint: '/baseline/comparison' },
+            { id: 'trends', label: 'Trends', icon: '📊', endpoint: '/baseline/trends' }
           ]
         },
         {
           id: 'analysis',
-          title: 'Analysis Tools',
+          title: 'Performance Analysis',
           position: 'bottom-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'analysis', label: 'Analysis', icon: '🔬', endpoint: '/baseline/analysis' },
-            { id: 'reports', label: 'Reports', icon: '📋', endpoint: '/baseline/reports' }
+            { id: 'metrics', label: 'Metrics', icon: '📏', endpoint: '/baseline/metrics' },
+            { id: 'insights', label: 'Insights', icon: '💡', endpoint: '/baseline/insights' },
+            { id: 'export', label: 'Export', icon: '💾', endpoint: '/baseline/export' }
           ]
         }
       ]
@@ -246,35 +258,38 @@ export default function FormulaChatInterface() {
     dashboard: {
       panels: [
         {
-          id: 'main',
-          title: 'Main Dashboard',
+          id: 'overview',
+          title: 'Business Overview',
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'overview', label: 'Overview', icon: '📈', endpoint: '/dashboard' },
-            { id: 'kpis', label: 'KPIs', icon: '🎯', endpoint: '/dashboard/kpis' }
+            { id: 'summary', label: 'Summary', icon: '📈', endpoint: '/dashboard' },
+            { id: 'kpis', label: 'KPIs', icon: '🎯', endpoint: '/dashboard/kpis' },
+            { id: 'alerts', label: 'Alerts', icon: '🚨', endpoint: '/dashboard/alerts' }
           ]
         },
         {
           id: 'analytics',
-          title: 'Analytics',
+          title: 'Advanced Analytics',
           position: 'top-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'analytics', label: 'Analytics', icon: '📊', endpoint: '/dashboard/analytics' },
-            { id: 'trends', label: 'Trends', icon: '📈', endpoint: '/dashboard/trends' }
+            { id: 'charts', label: 'Charts', icon: '📊', endpoint: '/dashboard/charts' },
+            { id: 'trends', label: 'Trends', icon: '📈', endpoint: '/dashboard/trends' },
+            { id: 'forecast', label: 'Forecast', icon: '🔮', endpoint: '/dashboard/forecast' }
           ]
         },
         {
-          id: 'reports',
-          title: 'Reports & Alerts',
+          id: 'operations',
+          title: 'Operations Monitor',
           position: 'bottom-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'reports', label: 'Reports', icon: '📋', endpoint: '/dashboard/reports' },
-            { id: 'alerts', label: 'Alerts', icon: '🚨', endpoint: '/dashboard/alerts' }
+            { id: 'production', label: 'Production', icon: '🏭', endpoint: '/dashboard/production' },
+            { id: 'inventory', label: 'Inventory', icon: '📦', endpoint: '/dashboard/inventory' },
+            { id: 'quality', label: 'Quality', icon: '✨', endpoint: '/dashboard/quality' }
           ]
         }
       ]
@@ -283,33 +298,36 @@ export default function FormulaChatInterface() {
       panels: [
         {
           id: 'files',
-          title: 'File Manager',
+          title: 'File Management',
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'files', label: 'Files', icon: '💼', endpoint: '/workspace' },
-            { id: 'uploads', label: 'Uploads', icon: '📤', endpoint: '/workspace/uploads' }
+            { id: 'explorer', label: 'Explorer', icon: '📁', endpoint: '/workspace' },
+            { id: 'uploads', label: 'Uploads', icon: '📤', endpoint: '/workspace/uploads' },
+            { id: 'shared', label: 'Shared', icon: '👥', endpoint: '/workspace/shared' }
           ]
         },
         {
           id: 'editor',
-          title: 'File Editor',
+          title: 'Code Editor',
           position: 'top-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'editor', label: 'Editor', icon: '✏️', endpoint: '/workspace/editor' }
+            { id: 'editor', label: 'Editor', icon: '✏️', endpoint: '/workspace/editor' },
+            { id: 'terminal', label: 'Terminal', icon: '💻', endpoint: '/workspace/terminal' }
           ]
         },
         {
-          id: 'projects',
-          title: 'Projects & Collaboration',
+          id: 'collaboration',
+          title: 'Project Collaboration',
           position: 'bottom-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'projects', label: 'Projects', icon: '📁', endpoint: '/workspace/projects' },
-            { id: 'shared', label: 'Shared', icon: '👥', endpoint: '/workspace/shared' }
+            { id: 'projects', label: 'Projects', icon: '📋', endpoint: '/workspace/projects' },
+            { id: 'git', label: 'Git', icon: '🌿', endpoint: '/workspace/git' },
+            { id: 'deploy', label: 'Deploy', icon: '🚀', endpoint: '/workspace/deploy' }
           ]
         }
       ]
@@ -318,34 +336,193 @@ export default function FormulaChatInterface() {
       panels: [
         {
           id: 'tracker',
-          title: 'Issue Tracker',
+          title: 'Issue Management',
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'tracker', label: 'Tracker', icon: '🐛', endpoint: '/roadmap' },
-            { id: 'create', label: 'Create', icon: '➕', endpoint: '/issues/create' }
+            { id: 'list', label: 'Issues', icon: '🐛', endpoint: '/roadmap' },
+            { id: 'create', label: 'Create', icon: '➕', endpoint: '/issues/create' },
+            { id: 'assign', label: 'Assign', icon: '👤', endpoint: '/issues/assign' }
           ]
         },
         {
-          id: 'roadmap',
-          title: 'Development Roadmap',
+          id: 'planning',
+          title: 'Project Planning',
           position: 'top-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
             { id: 'roadmap', label: 'Roadmap', icon: '🗺️', endpoint: '/issues/roadmap' },
-            { id: 'milestones', label: 'Milestones', icon: '🎯', endpoint: '/issues/milestones' }
+            { id: 'milestones', label: 'Milestones', icon: '🎯', endpoint: '/issues/milestones' },
+            { id: 'sprints', label: 'Sprints', icon: '🏃', endpoint: '/issues/sprints' }
           ]
         },
         {
-          id: 'activity',
-          title: 'Activity & Stats',
+          id: 'insights',
+          title: 'Development Insights',
           position: 'bottom-right' as const,
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'activity', label: 'Activity', icon: '📊', endpoint: '/issues/activity' },
-            { id: 'stats', label: 'Stats', icon: '📈', endpoint: '/issues/stats' }
+            { id: 'velocity', label: 'Velocity', icon: '⚡', endpoint: '/issues/velocity' },
+            { id: 'burndown', label: 'Burndown', icon: '📉', endpoint: '/issues/burndown' },
+            { id: 'reports', label: 'Reports', icon: '📊', endpoint: '/issues/reports' }
+          ]
+        }
+      ]
+    },
+    marketing: {
+      panels: [
+        {
+          id: 'campaigns',
+          title: 'Campaign Manager',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'active', label: 'Active', icon: '📢', endpoint: '/marketing/campaigns' },
+            { id: 'create', label: 'Create', icon: '✨', endpoint: '/marketing/create' },
+            { id: 'templates', label: 'Templates', icon: '📝', endpoint: '/marketing/templates' }
+          ]
+        },
+        {
+          id: 'analytics',
+          title: 'Marketing Analytics',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'performance', label: 'Performance', icon: '📊', endpoint: '/marketing/performance' },
+            { id: 'roi', label: 'ROI', icon: '💰', endpoint: '/marketing/roi' },
+            { id: 'attribution', label: 'Attribution', icon: '🎯', endpoint: '/marketing/attribution' }
+          ]
+        },
+        {
+          id: 'content',
+          title: 'Content Studio',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'library', label: 'Library', icon: '🎨', endpoint: '/marketing/library' },
+            { id: 'social', label: 'Social', icon: '📱', endpoint: '/marketing/social' },
+            { id: 'email', label: 'Email', icon: '📧', endpoint: '/marketing/email' }
+          ]
+        }
+      ]
+    },
+    operations: {
+      panels: [
+        {
+          id: 'overview',
+          title: 'Operations Center',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'dashboard', label: 'Dashboard', icon: '🏭', endpoint: '/operations/dashboard' },
+            { id: 'workflow', label: 'Workflow', icon: '🔄', endpoint: '/operations/workflow' },
+            { id: 'alerts', label: 'Alerts', icon: '🚨', endpoint: '/operations/alerts' }
+          ]
+        },
+        {
+          id: 'production',
+          title: 'Production Management',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'schedule', label: 'Schedule', icon: '📅', endpoint: '/operations/schedule' },
+            { id: 'capacity', label: 'Capacity', icon: '⚡', endpoint: '/operations/capacity' },
+            { id: 'batches', label: 'Batches', icon: '🧪', endpoint: '/operations/batches' }
+          ]
+        },
+        {
+          id: 'quality',
+          title: 'Quality Control',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'testing', label: 'Testing', icon: '🔬', endpoint: '/operations/testing' },
+            { id: 'lab-results', label: 'Lab Results', icon: '📋', endpoint: '/operations/lab' },
+            { id: 'certificates', label: 'Certificates', icon: '🏆', endpoint: '/operations/certs' }
+          ]
+        }
+      ]
+    },
+    sourcing: {
+      panels: [
+        {
+          id: 'suppliers',
+          title: 'Supplier Management',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'directory', label: 'Directory', icon: '🏢', endpoint: '/sourcing/suppliers' },
+            { id: 'evaluation', label: 'Evaluation', icon: '⭐', endpoint: '/sourcing/evaluation' },
+            { id: 'contracts', label: 'Contracts', icon: '📜', endpoint: '/sourcing/contracts' }
+          ]
+        },
+        {
+          id: 'procurement',
+          title: 'Procurement Hub',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'orders', label: 'Orders', icon: '📦', endpoint: '/sourcing/orders' },
+            { id: 'rfq', label: 'RFQ', icon: '💰', endpoint: '/sourcing/rfq' },
+            { id: 'approvals', label: 'Approvals', icon: '✅', endpoint: '/sourcing/approvals' }
+          ]
+        },
+        {
+          id: 'inventory',
+          title: 'Inventory Tracking',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'stock', label: 'Stock', icon: '📊', endpoint: '/sourcing/stock' },
+            { id: 'forecasting', label: 'Forecast', icon: '🔮', endpoint: '/sourcing/forecast' },
+            { id: 'logistics', label: 'Logistics', icon: '🚚', endpoint: '/sourcing/logistics' }
+          ]
+        }
+      ]
+    },
+    patent: {
+      panels: [
+        {
+          id: 'search',
+          title: 'Patent Research',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'search', label: 'Search', icon: '🔍', endpoint: '/patent/search' },
+            { id: 'prior-art', label: 'Prior Art', icon: '📚', endpoint: '/patent/prior-art' },
+            { id: 'landscape', label: 'Landscape', icon: '🗺️', endpoint: '/patent/landscape' }
+          ]
+        },
+        {
+          id: 'analysis',
+          title: 'Patent Analysis',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'fto', label: 'Freedom to Operate', icon: '🚦', endpoint: '/patent/fto' },
+            { id: 'claims', label: 'Claims', icon: '⚖️', endpoint: '/patent/claims' },
+            { id: 'novelty', label: 'Novelty', icon: '💡', endpoint: '/patent/novelty' }
+          ]
+        },
+        {
+          id: 'portfolio',
+          title: 'IP Portfolio',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'applications', label: 'Applications', icon: '📋', endpoint: '/patent/applications' },
+            { id: 'deadlines', label: 'Deadlines', icon: '⏰', endpoint: '/patent/deadlines' },
+            { id: 'strategy', label: 'Strategy', icon: '🎯', endpoint: '/patent/strategy' }
           ]
         }
       ]
@@ -423,6 +600,34 @@ export default function FormulaChatInterface() {
       icon: '🐛',
       color: 'border-red-500',
       route: '/roadmap'
+    },
+    {
+      id: 'marketing',
+      title: 'Marketing',
+      icon: '📢',
+      color: 'border-pink-500',
+      route: '/marketing'
+    },
+    {
+      id: 'operations',
+      title: 'Operations',
+      icon: '🏭',
+      color: 'border-yellow-500',
+      route: '/operations'
+    },
+    {
+      id: 'sourcing',
+      title: 'Sourcing',
+      icon: '🏢',
+      color: 'border-teal-500',
+      route: '/sourcing'
+    },
+    {
+      id: 'patent',
+      title: 'Patent',
+      icon: '💡',
+      color: 'border-amber-500',
+      route: '/patent'
     }
   ];
   const [threadId] = useState(() => `thread_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
