@@ -131,12 +131,15 @@ function Router() {
 }
 
 function App() {
-  // Remove initial loading screen when React mounts
+  // Remove initial loading screen when React mounts and ensure dark mode
   React.useEffect(() => {
     const loadingScreen = document.querySelector('.loading-screen');
     if (loadingScreen) {
       loadingScreen.remove();
     }
+    
+    // Ensure dark mode is always applied
+    document.documentElement.classList.add('dark');
   }, []);
 
   return (

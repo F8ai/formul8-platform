@@ -91,16 +91,16 @@
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
+  --background: hsl(220, 13%, 8%);
+  --foreground: hsl(0, 0%, 95%);
+  --muted: hsl(220, 13%, 18%);
+  --muted-foreground: hsl(220, 9%, 65%);
+  --popover: hsl(220, 13%, 12%);
+  --popover-foreground: hsl(0, 0%, 95%);
+  --card: hsl(220, 13%, 12%);
+  --card-foreground: hsl(0, 0%, 95%);
+  --border: hsl(220, 13%, 18%);
+  --input: hsl(220, 13%, 8%);
   --primary: hsl(207, 90%, 54%);
   --primary-foreground: hsl(211, 100%, 99%);
   --secondary: hsl(240, 3.7%, 15.9%);
@@ -121,6 +121,12 @@
     @apply font-sans antialiased;
     background-color: var(--formul8-bg-dark);
     color: var(--formul8-text-white);
+  }
+  
+  /* Force dark background for input elements */
+  .dark, [data-theme="dark"] {
+    --background: hsl(220, 13%, 8%);
+    --input: hsl(220, 13%, 8%);
   }
 }
 
