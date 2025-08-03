@@ -619,7 +619,7 @@ export default function FormulaChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-formul8-bg-dark">
+    <div className="flex flex-col h-full w-full bg-formul8-bg-dark">
       {/* Chat Header */}
       <div className="flex items-center justify-between p-4 border-b border-formul8-border bg-formul8-bg-card">
         <div className="flex items-center space-x-3">
@@ -637,7 +637,7 @@ export default function FormulaChatInterface() {
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1 p-4 bg-formul8-bg-dark">
+      <ScrollArea className="flex-1 px-4 py-4 bg-formul8-bg-dark">
         <div className="space-y-4">
           {messages.map((message) => (
             <div
@@ -765,7 +765,7 @@ export default function FormulaChatInterface() {
       </ScrollArea>
 
       {/* Input Form */}
-      <div className="p-4 border-t border-formul8-border bg-formul8-bg-dark">
+      <div className="px-4 py-4 border-t border-formul8-border bg-formul8-bg-dark">
         {/* Show pending attachments */}
         {attachments.length > 0 && (
           <div className="mb-3 space-y-2">
