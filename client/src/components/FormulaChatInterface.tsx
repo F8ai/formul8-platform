@@ -160,7 +160,7 @@ export default function FormulaChatInterface() {
             position: { x: topRightX, y: topRightY }
           });
 
-          // Save document to server
+          // Save document to server and refresh desktop
           fetch('/api/documents', {
             method: 'POST',
             headers: {
@@ -172,6 +172,11 @@ export default function FormulaChatInterface() {
               documentType: data.fileData.documentType || 'general',
               position: { x: topRightX, y: topRightY }
             })
+          }).then(response => {
+            if (response.ok) {
+              // Refresh desktop icons by invalidating documents cache
+              queryClient.invalidateQueries({ queryKey: ['/api/documents'] });
+            }
           }).catch(saveError => {
             console.error('Error saving document:', saveError);
           });
