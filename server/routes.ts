@@ -33,6 +33,7 @@ import shareRoutes from "./routes/share";
 import { createFeatureIssues, createAllFeatureIssues, getFeatureIssues, getRoadmapFeatures, addCommentsToAllIssues } from "./routes/roadmap";
 import { duplicatePreventionService } from "./services/duplicate-prevention";
 import { insertProjectSchema, insertQuerySchema } from "@shared/schema";
+import feedbackRoutes from "./routes/feedback";
 import { orchestrator } from "./services/orchestrator";
 import { registerBenchmarkRoutes } from "./routes/benchmarks";
 import { registerAgentManagementRoutes } from "./routes/agent-management";
@@ -1117,6 +1118,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // AstraDB vector search routes
   app.use('/api/astradb', astradbRouter);
+
+  // Feedback routes
+  app.use('/api/feedback', feedbackRoutes);
 
   // Federation routes
   app.use('/api/federation', federationRouter);
