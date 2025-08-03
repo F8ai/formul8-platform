@@ -3,9 +3,9 @@ const urlsToCache = [
   '/',
   '/workspace',
   '/manifest.json',
-  '/images/icon-192.svg',
-  '/images/icon-512.svg',
-  '/images/icon.svg'
+  '/images/formul8-logo.png',
+  '/images/icon-192.png',
+  '/images/icon-512.png'
 ];
 
 // Install event - cache resources

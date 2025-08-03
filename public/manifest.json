@@ -28,39 +28,27 @@
   ],
   "icons": [
     {
-      "src": "/images/icon-72.svg",
-      "sizes": "72x72",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "/images/icon-96.svg",
-      "sizes": "96x96", 
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "/images/icon-144.svg",
+      "src": "/images/icon-144.png",
       "sizes": "144x144",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/images/icon-192.svg",
+      "src": "/images/icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/images/icon-384.svg",
-      "sizes": "384x384",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "/images/formul8-logo.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/images/icon-512.svg",
+      "src": "/images/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
