@@ -1116,6 +1116,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // OpenAI Chat Integration with AsciiDoc support
+  app.post("/api/chat", async (req: any, res) => {
+    try {
+      const { message, conversationHistory = [] } = req.body;
+      
+      if (!message || typeof message !== 'string') {
+        return res.status(400).json({ error: "Message is required" });
+      }
+
+      // System prompt that encourages AsciiDoc generation
+      const systemPrompt = `You are an AI assistant that specializes in creating professional documents. 
+When generating structured documents, reports, or detailed content, please format your response using AsciiDoc markup language.
+
+AsciiDoc formatting guidelines:
+- Use = for document title (level 0)
+- Use == for major sections (level 1)  
+- Use === for subsections (level 2)
+- Use * for unordered lists
+- Use . for ordered lists
+- Use [source,language] for code blocks
+- Use *bold* and _italic_ for emphasis
+- Use tables with |=== delimiters
+
+For regular conversational responses, use plain text.
+When creating documents, reports, manuals, or structured content, use AsciiDoc format.`;
+
+      // Prepare messages for OpenAI
+      const messages = [
+        { role: "system", content: systemPrompt },
+        ...conversationHistory.map((msg: any) => ({
+          role: msg.role,
+          content: msg.content
+        })),
+        { role: "user", content: message }
+      ];
+
+      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: messages,
+        max_tokens: 4000,
+        temperature: 0.7,
+      });
+
+      const response = completion.choices[0]?.message?.content || "I'm sorry, I couldn't generate a response.";
+      
+      // Check if response contains AsciiDoc content
+      const isAsciiDoc = response.includes('=') && (
+        response.includes('==') || 
+        response.includes('===') || 
+        response.includes('[source,') ||
+        response.includes('|===')
+      );
+
+      res.json({ 
+        message: response,
+        isAsciiDoc,
+        usage: completion.usage
+      });
+    } catch (error) {
+      console.error("Error in chat:", error);
+      res.status(500).json({ error: "Failed to process chat message" });
+    }
+  });
+
   // User activity routes
   app.get("/api/user/activity", isAuthenticated, async (req: any, res) => {
     try {
