@@ -115,7 +115,7 @@ export const desktopFolders = pgTable("desktop_folders", {
   parentFolderId: integer("parent_folder_id").references(() => desktopFolders.id), // For nested folders
   position: jsonb("position").default('{"x": 100, "y": 100}'), // Desktop position
   color: varchar("color").default("#3b82f6"), // Folder color theme
-  permissions: jsonb("permissions").default('{}'), // Access permissions
+  isDefault: boolean("is_default").default(false), // Default folder flag
   isShared: boolean("is_shared").default(false),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -168,6 +168,20 @@ export const userActivity = pgTable("user_activity", {
   ipAddress: varchar("ip_address"),
   userAgent: text("user_agent"),
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+// User notifications table
+export const notifications = pgTable("notifications", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  title: varchar("title").notNull(),
+  message: text("message"),
+  type: varchar("type").default("info"), // info, success, warning, error
+  isRead: boolean("is_read").default(false),
+  actionUrl: varchar("action_url"), // Optional URL for notification action
+  metadata: jsonb("metadata").default('{}'), // Additional data
+  createdAt: timestamp("created_at").defaultNow(),
+  readAt: timestamp("read_at"),
 });
 
 // Baseline test runs table - captures each test run configuration
@@ -735,6 +749,15 @@ export type WidgetPreferences = typeof widgetPreferences.$inferSelect;
 export type InsertWidgetPreferences = typeof widgetPreferences.$inferInsert;
 export type WidgetConfig = z.infer<typeof WidgetConfigSchema>;
 export type DashboardLayoutConfig = z.infer<typeof DashboardLayoutSchema>;
+
+// Notification schema
+export const insertNotificationSchema = createInsertSchema(notifications).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type Notification = typeof notifications.$inferSelect;
+export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 
 // Tool Sessions table - for AI workspace tool management
 export const toolSessions = pgTable("tool_sessions", {

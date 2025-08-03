@@ -1,7 +1,17 @@
 import express from 'express';
 import OpenAI from 'openai';
 import { db } from '../db';
-import { toolSessions, fileStorage, desktopFolders, desktopFiles, insertDesktopFolderSchema, insertDesktopFileSchema } from '@shared/schema';
+import { 
+  toolSessions, 
+  fileStorage, 
+  desktopFolders, 
+  desktopFiles, 
+  notifications,
+  insertDesktopFolderSchema, 
+  insertDesktopFileSchema,
+  insertNotificationSchema,
+  type Notification
+} from '@shared/schema';
 import { eq, and } from 'drizzle-orm';
 import { ObjectStorageService } from '../objectStorage';
 import multer from 'multer';
@@ -557,6 +567,125 @@ router.get('/folders/:folderId/context', async (req, res) => {
   } catch (error) {
     console.error('Error fetching folder context:', error);
     res.status(500).json({ error: 'Failed to fetch folder context' });
+  }
+});
+
+// NOTIFICATION ENDPOINTS
+
+// Get all notifications for a user
+router.get('/notifications', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    
+    const userNotifications = await db
+      .select()
+      .from(notifications)
+      .where(eq(notifications.userId, userId))
+      .orderBy(notifications.createdAt);
+    
+    res.json(userNotifications);
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    res.status(500).json({ error: 'Failed to fetch notifications' });
+  }
+});
+
+// Create a new notification
+router.post('/notifications', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const notificationData = insertNotificationSchema.parse({
+      ...req.body,
+      userId,
+    });
+    
+    const [notification] = await db
+      .insert(notifications)
+      .values(notificationData)
+      .returning();
+    
+    res.json(notification);
+  } catch (error) {
+    console.error('Error creating notification:', error);
+    res.status(500).json({ error: 'Failed to create notification' });
+  }
+});
+
+// Mark notification as read
+router.patch('/notifications/:notificationId/read', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const notificationId = parseInt(req.params.notificationId);
+    
+    const [notification] = await db
+      .update(notifications)
+      .set({ 
+        isRead: true,
+        readAt: new Date()
+      })
+      .where(and(
+        eq(notifications.id, notificationId),
+        eq(notifications.userId, userId)
+      ))
+      .returning();
+      
+    if (!notification) {
+      return res.status(404).json({ error: 'Notification not found' });
+    }
+    
+    res.json(notification);
+  } catch (error) {
+    console.error('Error marking notification as read:', error);
+    res.status(500).json({ error: 'Failed to mark notification as read' });
+  }
+});
+
+// Mark all notifications as read
+router.patch('/notifications/mark-all-read', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    
+    const updatedNotifications = await db
+      .update(notifications)
+      .set({ 
+        isRead: true,
+        readAt: new Date()
+      })
+      .where(and(
+        eq(notifications.userId, userId),
+        eq(notifications.isRead, false)
+      ))
+      .returning();
+    
+    res.json({ message: `Marked ${updatedNotifications.length} notifications as read` });
+  } catch (error) {
+    console.error('Error marking all notifications as read:', error);
+    res.status(500).json({ error: 'Failed to mark all notifications as read' });
+  }
+});
+
+// Delete notification
+router.delete('/notifications/:notificationId', async (req, res) => {
+  try {
+    const userId = (req as any).user?.claims?.sub || 'demo-user';
+    const notificationId = parseInt(req.params.notificationId);
+    
+    const [notification] = await db
+      .delete(notifications)
+      .where(and(
+        eq(notifications.id, notificationId),
+        eq(notifications.userId, userId)
+      ))
+      .returning();
+      
+    if (!notification) {
+      return res.status(404).json({ error: 'Notification not found' });
+    }
+    
+    res.json({ message: 'Notification deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting notification:', error);
+    res.status(500).json({ error: 'Failed to delete notification' });
   }
 });
 
