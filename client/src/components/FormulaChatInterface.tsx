@@ -259,22 +259,20 @@ export default function FormulaChatInterface() {
         route: '/design',
         icon: '🧪',
         action: () => {
-          if (windowManager) {
-            if (isMobile) {
-              // On mobile: Navigate to full route
-              window.location.href = '/design';
-            } else {
-              windowManager.createWindow({
-                type: 'tool',
-                title: '🧪 Formulation Wizard',
-                content: {
-                  mode: 'formulation-wizard',
-                  route: '/design'
-                },
-                size: { width: 800, height: 600 },
-                position: { x: 100, y: 100 }
-              });
-            }
+          if (isMobile) {
+            // On mobile: Always navigate to full route
+            window.location.href = '/design';
+          } else if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '🧪 Formulation Wizard',
+              content: {
+                mode: 'formulation-wizard',
+                route: '/design'
+              },
+              size: { width: 800, height: 600 },
+              position: { x: 100, y: 100 }
+            });
           }
         }
       },
@@ -285,22 +283,20 @@ export default function FormulaChatInterface() {
         route: '/roadmap',
         icon: '🐛',
         action: () => {
-          if (windowManager) {
-            if (isMobile) {
-              // On mobile: Navigate to full roadmap route
-              window.location.href = '/roadmap';
-            } else {
-              windowManager.createWindow({
-                type: 'tool',
-                title: '🐛 Issue Tracker',
-                content: {
-                  mode: 'issue-form',
-                  route: '/roadmap'
-                },
-                size: { width: 700, height: 500 },
-                position: { x: 150, y: 150 }
-              });
-            }
+          if (isMobile) {
+            // On mobile: Always navigate to full roadmap route
+            window.location.href = '/roadmap';
+          } else if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '🐛 Issue Tracker',
+              content: {
+                mode: 'issue-form',
+                route: '/roadmap'
+              },
+              size: { width: 700, height: 500 },
+              position: { x: 150, y: 150 }
+            });
           }
         }
       },
@@ -311,22 +307,20 @@ export default function FormulaChatInterface() {
         route: '/pages/ComplianceAgent',
         icon: '⚖️',
         action: () => {
-          if (windowManager) {
-            if (isMobile) {
-              // On mobile: Navigate to full compliance route
-              window.location.href = '/agent/compliance';
-            } else {
-              windowManager.createWindow({
-                type: 'tool',
-                title: '⚖️ Compliance Dashboard',
-                content: {
-                  mode: 'compliance-agent',
-                  route: '/agent/compliance'
-                },
-                size: { width: 900, height: 700 },
-                position: { x: 50, y: 50 }
-              });
-            }
+          if (isMobile) {
+            // On mobile: Always navigate to full compliance route
+            window.location.href = '/ComplianceAgent';
+          } else if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '⚖️ Compliance Dashboard',
+              content: {
+                mode: 'compliance-agent',
+                route: '/ComplianceAgent'
+              },
+              size: { width: 900, height: 700 },
+              position: { x: 50, y: 50 }
+            });
           }
         }
       },
@@ -337,22 +331,20 @@ export default function FormulaChatInterface() {
         route: '/artifacts',
         icon: '📄',
         action: () => {
-          if (windowManager) {
-            if (isMobile) {
-              // On mobile: Navigate to full artifacts route
-              window.location.href = '/artifacts';
-            } else {
-              windowManager.createWindow({
-                type: 'tool',
-                title: '📄 Document Manager',
-                content: {
-                  mode: 'artifacts',
-                  route: '/artifacts'
-                },
-                size: { width: 800, height: 600 },
-                position: { x: 200, y: 100 }
-              });
-            }
+          if (isMobile) {
+            // On mobile: Always navigate to full artifacts route
+            window.location.href = '/artifacts';
+          } else if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '📄 Document Manager',
+              content: {
+                mode: 'artifacts',
+                route: '/artifacts'
+              },
+              size: { width: 800, height: 600 },
+              position: { x: 200, y: 100 }
+            });
           }
         }
       },
@@ -363,22 +355,20 @@ export default function FormulaChatInterface() {
         route: '/baseline-testing',
         icon: '📊',
         action: () => {
-          if (windowManager) {
-            if (isMobile) {
-              // On mobile: Navigate to full baseline route
-              window.location.href = '/baseline-assessment';
-            } else {
-              windowManager.createWindow({
-                type: 'tool',
-                title: '📊 Baseline Testing',
-                content: {
-                  mode: 'baseline-testing',
-                  route: '/baseline-assessment'
-                },
-                size: { width: 900, height: 700 },
-                position: { x: 100, y: 50 }
-              });
-            }
+          if (isMobile) {
+            // On mobile: Always navigate to full baseline route
+            window.location.href = '/BaselineAssessment';
+          } else if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '📊 Baseline Testing',
+              content: {
+                mode: 'baseline-testing',
+                route: '/BaselineAssessment'
+              },
+              size: { width: 900, height: 700 },
+              position: { x: 100, y: 50 }
+            });
           }
         }
       },
@@ -389,22 +379,20 @@ export default function FormulaChatInterface() {
         route: '/dashboard',
         icon: '📈',
         action: () => {
-          if (windowManager) {
-            if (isMobile) {
-              // On mobile: Navigate to full dashboard route
-              window.location.href = '/dashboard';
-            } else {
-              windowManager.createWindow({
-                type: 'tool',
-                title: '📈 Main Dashboard',
-                content: {
-                  mode: 'dashboard',
-                  route: '/dashboard'
-                },
-                size: { width: 1000, height: 800 },
-                position: { x: 50, y: 50 }
-              });
-            }
+          if (isMobile) {
+            // On mobile: Always navigate to full dashboard route
+            window.location.href = '/dashboard';
+          } else if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '📈 Main Dashboard',
+              content: {
+                mode: 'dashboard',
+                route: '/dashboard'
+              },
+              size: { width: 1000, height: 800 },
+              position: { x: 50, y: 50 }
+            });
           }
         }
       },
@@ -415,22 +403,20 @@ export default function FormulaChatInterface() {
         route: '/workspace',
         icon: '💼',
         action: () => {
-          if (windowManager) {
-            if (isMobile) {
-              // On mobile: Navigate to full workspace route
-              window.location.href = '/workspace';
-            } else {
-              windowManager.createWindow({
-                type: 'tool',
-                title: '💼 File Workspace',
-                content: {
-                  mode: 'workspace',
-                  route: '/workspace'
-                },
-                size: { width: 1000, height: 700 },
-                position: { x: 100, y: 100 }
-              });
-            }
+          if (isMobile) {
+            // On mobile: Always navigate to full workspace route
+            window.location.href = '/workspace';
+          } else if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '💼 File Workspace',
+              content: {
+                mode: 'workspace',
+                route: '/workspace'
+              },
+              size: { width: 800, height: 600 },
+              position: { x: 100, y: 100 }
+            });
           }
         }
       }
@@ -628,26 +614,8 @@ export default function FormulaChatInterface() {
               onClick={() => {
                 if (windowManager) {
                   if (isMobile) {
-                    // On mobile: Create fullscreen file preview
-                    windowManager.createWindow({
-                      type: 'document',
-                      title: `📄 ${fileName}`,
-                      content: {
-                        mode: 'file-preview',
-                        fileName: fileName,
-                        fileContent: fileContent,
-                        fileType: defaultExtension,
-                        isGenerated: true
-                      },
-                      size: { 
-                        width: window.innerWidth - 20, 
-                        height: window.innerHeight - 100 
-                      },
-                      position: { 
-                        x: 10, 
-                        y: 50 
-                      }
-                    });
+                    // On mobile: Navigate to full-screen document page
+                    window.location.href = '/artifacts';
                   } else {
                     // On desktop: Standard window size
                     windowManager.createWindow({
