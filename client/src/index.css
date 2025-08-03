@@ -51,6 +51,8 @@
   /* Formul8.ai Authentic Dark Theme - Matching actual formul8.ai */
   --formul8-bg-dark: hsl(220, 13%, 8%);      /* Deep dark background #141416 */
   --formul8-bg-card: hsl(220, 13%, 12%);     /* Card background slightly lighter */
+  --formul8-background: hsl(220, 13%, 8%);   /* Main background - dark */
+  --formul8-surface: hsl(220, 13%, 10%);     /* Surface color - slightly lighter */
   --formul8-teal: hsl(180, 88%, 55%);        /* Bright teal #19E6CC */
   --formul8-blue: hsl(195, 84%, 55%);        /* Bright blue #1AB7E6 */
   --formul8-green: hsl(140, 88%, 55%);       /* Bright green #19E64A */

@@ -7,7 +7,7 @@ import { BarChart3, Brain, Search, Shield, Users, Beaker } from "lucide-react";
 export default function DesignPage() {
   return (
     <PageLayout activeFeature="design">
-      <div className="min-h-full bg-gradient-to-br from-formul8-background via-white to-formul8-surface overflow-y-auto">
+      <div className="min-h-full bg-formul8-bg-dark text-formul8-text-white overflow-y-auto">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-formul8-text-primary mb-4">

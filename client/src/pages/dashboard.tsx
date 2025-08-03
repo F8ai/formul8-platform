@@ -79,12 +79,12 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
+      <div className="min-h-screen flex items-center justify-center bg-formul8-bg-dark">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
+          <div className="w-16 h-16 bg-gradient-to-r from-formul8-teal to-formul8-blue rounded-2xl flex items-center justify-center mx-auto mb-4 animate-pulse">
             <span className="text-white font-bold text-xl">F8</span>
           </div>
-          <p className="text-gray-600 font-medium">Loading your Cannabis OS...</p>
+          <p className="text-formul8-text-gray font-medium">Loading your Cannabis OS...</p>
         </div>
       </div>
     );
@@ -92,7 +92,7 @@ export default function Dashboard() {
 
   return (
     <PageLayout activeFeature="dashboard">
-      <div className="min-h-full bg-formul8-gradient-bg overflow-y-auto">
+      <div className="min-h-full bg-formul8-bg-dark text-formul8-text-white overflow-y-auto">
         {/* Header */}
         <header className="formul8-header">
           <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">

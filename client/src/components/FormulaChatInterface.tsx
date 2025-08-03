@@ -259,8 +259,9 @@ export default function FormulaChatInterface() {
         route: '/design',
         icon: '🧪',
         action: () => {
-          // Open in tabbed interface
-          window.open('/design', '_blank');
+          // Open in tabbed interface with proper base URL
+          const currentOrigin = window.location.origin;
+          window.open(`${currentOrigin}/design`, '_blank');
         }
       },
       {
@@ -270,8 +271,9 @@ export default function FormulaChatInterface() {
         route: '/roadmap',
         icon: '🐛',
         action: () => {
-          // Open in tabbed interface
-          window.open('/roadmap', '_blank');
+          // Open in tabbed interface with proper base URL
+          const currentOrigin = window.location.origin;
+          window.open(`${currentOrigin}/roadmap`, '_blank');
         }
       },
       {
@@ -281,8 +283,9 @@ export default function FormulaChatInterface() {
         route: '/pages/ComplianceAgent',
         icon: '⚖️',
         action: () => {
-          // Open in tabbed interface
-          window.open('/ComplianceAgent', '_blank');
+          // Open in tabbed interface with proper base URL
+          const currentOrigin = window.location.origin;
+          window.open(`${currentOrigin}/ComplianceAgent`, '_blank');
         }
       },
       {
@@ -292,8 +295,9 @@ export default function FormulaChatInterface() {
         route: '/artifacts',
         icon: '📄',
         action: () => {
-          // Open in tabbed interface
-          window.open('/artifacts', '_blank');
+          // Open in tabbed interface with proper base URL
+          const currentOrigin = window.location.origin;
+          window.open(`${currentOrigin}/artifacts`, '_blank');
         }
       },
       {
@@ -303,8 +307,9 @@ export default function FormulaChatInterface() {
         route: '/baseline-testing',
         icon: '📊',
         action: () => {
-          // Open in tabbed interface
-          window.open('/BaselineAssessment', '_blank');
+          // Open in tabbed interface with proper base URL
+          const currentOrigin = window.location.origin;
+          window.open(`${currentOrigin}/BaselineAssessment`, '_blank');
         }
       },
       {
@@ -314,8 +319,9 @@ export default function FormulaChatInterface() {
         route: '/dashboard',
         icon: '📈',
         action: () => {
-          // Open in tabbed interface
-          window.open('/dashboard', '_blank');
+          // Open in tabbed interface with proper base URL
+          const currentOrigin = window.location.origin;
+          window.open(`${currentOrigin}/dashboard`, '_blank');
         }
       },
       {
@@ -325,8 +331,9 @@ export default function FormulaChatInterface() {
         route: '/workspace',
         icon: '💼',
         action: () => {
-          // Open in tabbed interface
-          window.open('/workspace', '_blank');
+          // Open in tabbed interface with proper base URL
+          const currentOrigin = window.location.origin;
+          window.open(`${currentOrigin}/workspace`, '_blank');
         }
       }
     ];
