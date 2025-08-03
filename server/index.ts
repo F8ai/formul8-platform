@@ -1,8 +1,24 @@
 import express, { type Request, Response, NextFunction } from "express";
+import compression from "compression";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Enable gzip compression for better performance
+app.use(compression({
+  level: 6, // Good balance between compression and CPU usage
+  threshold: 1024, // Only compress files larger than 1KB
+  filter: (req, res) => {
+    // Don't compress if the request includes a cache-control header to not transform
+    if (req.headers['cache-control'] && req.headers['cache-control'].includes('no-transform')) {
+      return false;
+    }
+    // Use the default filter function
+    return compression.filter(req, res);
+  }
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
