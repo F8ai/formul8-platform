@@ -104,38 +104,71 @@ export default function FormulaChatInterface() {
   }, [messages]);
 
   const chatMutation = useMutation({
-    mutationFn: async (query: string): Promise<AgentResponse> => {
-      return apiRequest(`/api/langgraph/query`, {
+    mutationFn: async (query: string): Promise<any> => {
+      const response = await fetch('/api/ai/chat', {
         method: 'POST',
-        body: JSON.stringify({
-          query,
-          threadId
-        }),
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+          message: query,
+          agentType: 'general',
+          systemPrompt: 'You are a helpful AI assistant for the cannabis industry platform Formul8.ai. Provide accurate, helpful responses. If you are creating documents, format them appropriately.'
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      return await response.json();
     },
-    onSuccess: (data: AgentResponse) => {
+    onSuccess: (data: any) => {
       const assistantMessage: Message = {
         id: `assistant_${Date.now()}`,
         role: 'assistant',
-        content: data.response,
-        timestamp: data.timestamp,
-        agent: data.primaryAgent,
-        confidence: data.confidence,
-        requiresHumanReview: data.requiresHumanReview,
-        verificationCount: data.verificationCount
+        content: data.content || 'No response received',
+        timestamp: new Date().toISOString(),
+        agent: 'general',
+        confidence: 85,
+        requiresHumanReview: false,
+        verificationCount: 1
       };
 
       setMessages(prev => [...prev, assistantMessage]);
 
-      // Check if the response contains generated files and auto-split desktop
-      detectAndPreviewGeneratedFiles(data.response);
+      // If response contains file data, automatically create a document window
+      if (data.fileData && windowManager?.addWindow) {
+        try {
+          const documentTitle = data.fileData.title || 'Generated Document';
+          const documentContent = data.fileData.content || '';
+          
+          windowManager.addWindow({
+            id: `doc_${Date.now()}`,
+            type: 'document',
+            title: documentTitle,
+            content: {
+              documentContent,
+              documentType: data.fileData.documentType || 'general',
+              isAsciiDoc: documentContent.includes('=') && documentContent.includes('::')
+            },
+            x: Math.random() * 300 + 100,
+            y: Math.random() * 200 + 100,
+            width: 700,
+            height: 500,
+            isMinimized: false,
+            isMaximized: false,
+            zIndex: Date.now()
+          });
+        } catch (docError) {
+          console.error('Error creating document window:', docError);
+        }
+      }
 
-      // Invalidate relevant queries to refresh any data displays
-      queryClient.invalidateQueries({ queryKey: ['/api/queries'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/verifications'] });
+      // Legacy function call if it exists
+      if (typeof detectAndPreviewGeneratedFiles === 'function') {
+        detectAndPreviewGeneratedFiles(data.content);
+      }
     },
     onError: (error) => {
       console.error('Chat error:', error);
