@@ -219,25 +219,25 @@ export default function FormulaChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-full max-w-4xl mx-auto">
+    <div className="flex flex-col h-full bg-formul8-bg-dark">
       {/* Chat Header */}
-      <div className="flex items-center justify-between p-4 border-b border-formul8-border bg-formul8-card">
+      <div className="flex items-center justify-between p-4 border-b border-formul8-border bg-formul8-bg-card">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-formul8-primary rounded-lg flex items-center justify-center">
             <MessageSquare className="w-6 h-6 text-white" />
           </div>
           <div>
             <h2 className="text-lg font-semibold text-formul8-white">Formul8 AI Assistant</h2>
-            <p className="text-sm text-formul8-gray">Multi-agent cannabis intelligence</p>
+            <p className="text-sm text-formul8-muted">Multi-agent cannabis intelligence</p>
           </div>
         </div>
-        <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-formul8-bg-card">
+        <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-formul8-bg-dark">
           Thread: {threadId.split('_')[1]}
         </Badge>
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1 p-4">
+      <ScrollArea className="flex-1 p-4 bg-formul8-bg-dark">
         <div className="space-y-4">
           {messages.map((message) => (
             <div
@@ -250,11 +250,11 @@ export default function FormulaChatInterface() {
                     {message.role === 'user' ? 'U' : message.agent?.charAt(0).toUpperCase() || 'F'}
                   </AvatarFallback>
                 </Avatar>
-                <Card className={`${message.role === 'user' ? 'bg-formul8-primary text-white' : 'bg-formul8-card border-formul8-border'} shadow-sm`}>
+                <Card className={`${message.role === 'user' ? 'bg-formul8-primary text-white' : 'bg-formul8-bg-card border-formul8-border'} shadow-sm`}>
                   <CardContent className="p-3">
                     {message.role !== 'user' && message.agent && (
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-medium text-formul8-gray">
+                        <span className="text-xs font-medium text-formul8-muted">
                           {getAgentName(message.agent)}
                         </span>
                         {message.confidence !== undefined && (
