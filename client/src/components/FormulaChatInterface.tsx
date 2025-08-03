@@ -259,10 +259,7 @@ export default function FormulaChatInterface() {
         route: '/design',
         icon: '🧪',
         action: () => {
-          if (isMobile) {
-            // On mobile: Always navigate to full route
-            window.location.href = '/design';
-          } else if (windowManager) {
+          if (windowManager) {
             windowManager.createWindow({
               type: 'tool',
               title: '🧪 Formulation Wizard',
@@ -270,8 +267,11 @@ export default function FormulaChatInterface() {
                 mode: 'formulation-wizard',
                 route: '/design'
               },
-              size: { width: 800, height: 600 },
-              position: { x: 100, y: 100 }
+              size: { 
+                width: window.innerWidth - 40, 
+                height: window.innerHeight - 80 
+              },
+              position: { x: 20, y: 40 }
             });
           }
         }
@@ -283,10 +283,7 @@ export default function FormulaChatInterface() {
         route: '/roadmap',
         icon: '🐛',
         action: () => {
-          if (isMobile) {
-            // On mobile: Always navigate to full roadmap route
-            window.location.href = '/roadmap';
-          } else if (windowManager) {
+          if (windowManager) {
             windowManager.createWindow({
               type: 'tool',
               title: '🐛 Issue Tracker',
@@ -294,8 +291,11 @@ export default function FormulaChatInterface() {
                 mode: 'issue-form',
                 route: '/roadmap'
               },
-              size: { width: 700, height: 500 },
-              position: { x: 150, y: 150 }
+              size: { 
+                width: window.innerWidth - 40, 
+                height: window.innerHeight - 80 
+              },
+              position: { x: 20, y: 40 }
             });
           }
         }
@@ -307,10 +307,7 @@ export default function FormulaChatInterface() {
         route: '/pages/ComplianceAgent',
         icon: '⚖️',
         action: () => {
-          if (isMobile) {
-            // On mobile: Always navigate to full compliance route
-            window.location.href = '/ComplianceAgent';
-          } else if (windowManager) {
+          if (windowManager) {
             windowManager.createWindow({
               type: 'tool',
               title: '⚖️ Compliance Dashboard',
@@ -318,8 +315,11 @@ export default function FormulaChatInterface() {
                 mode: 'compliance-agent',
                 route: '/ComplianceAgent'
               },
-              size: { width: 900, height: 700 },
-              position: { x: 50, y: 50 }
+              size: { 
+                width: window.innerWidth - 40, 
+                height: window.innerHeight - 80 
+              },
+              position: { x: 20, y: 40 }
             });
           }
         }
@@ -331,10 +331,7 @@ export default function FormulaChatInterface() {
         route: '/artifacts',
         icon: '📄',
         action: () => {
-          if (isMobile) {
-            // On mobile: Always navigate to full artifacts route
-            window.location.href = '/artifacts';
-          } else if (windowManager) {
+          if (windowManager) {
             windowManager.createWindow({
               type: 'tool',
               title: '📄 Document Manager',
@@ -342,8 +339,11 @@ export default function FormulaChatInterface() {
                 mode: 'artifacts',
                 route: '/artifacts'
               },
-              size: { width: 800, height: 600 },
-              position: { x: 200, y: 100 }
+              size: { 
+                width: window.innerWidth - 40, 
+                height: window.innerHeight - 80 
+              },
+              position: { x: 20, y: 40 }
             });
           }
         }
@@ -355,10 +355,7 @@ export default function FormulaChatInterface() {
         route: '/baseline-testing',
         icon: '📊',
         action: () => {
-          if (isMobile) {
-            // On mobile: Always navigate to full baseline route
-            window.location.href = '/BaselineAssessment';
-          } else if (windowManager) {
+          if (windowManager) {
             windowManager.createWindow({
               type: 'tool',
               title: '📊 Baseline Testing',
@@ -366,8 +363,11 @@ export default function FormulaChatInterface() {
                 mode: 'baseline-testing',
                 route: '/BaselineAssessment'
               },
-              size: { width: 900, height: 700 },
-              position: { x: 100, y: 50 }
+              size: { 
+                width: window.innerWidth - 40, 
+                height: window.innerHeight - 80 
+              },
+              position: { x: 20, y: 40 }
             });
           }
         }
@@ -379,10 +379,7 @@ export default function FormulaChatInterface() {
         route: '/dashboard',
         icon: '📈',
         action: () => {
-          if (isMobile) {
-            // On mobile: Always navigate to full dashboard route
-            window.location.href = '/dashboard';
-          } else if (windowManager) {
+          if (windowManager) {
             windowManager.createWindow({
               type: 'tool',
               title: '📈 Main Dashboard',
@@ -390,8 +387,11 @@ export default function FormulaChatInterface() {
                 mode: 'dashboard',
                 route: '/dashboard'
               },
-              size: { width: 1000, height: 800 },
-              position: { x: 50, y: 50 }
+              size: { 
+                width: window.innerWidth - 40, 
+                height: window.innerHeight - 80 
+              },
+              position: { x: 20, y: 40 }
             });
           }
         }
@@ -403,10 +403,7 @@ export default function FormulaChatInterface() {
         route: '/workspace',
         icon: '💼',
         action: () => {
-          if (isMobile) {
-            // On mobile: Always navigate to full workspace route
-            window.location.href = '/workspace';
-          } else if (windowManager) {
+          if (windowManager) {
             windowManager.createWindow({
               type: 'tool',
               title: '💼 File Workspace',
@@ -414,8 +411,11 @@ export default function FormulaChatInterface() {
                 mode: 'workspace',
                 route: '/workspace'
               },
-              size: { width: 800, height: 600 },
-              position: { x: 100, y: 100 }
+              size: { 
+                width: window.innerWidth - 40, 
+                height: window.innerHeight - 80 
+              },
+              position: { x: 20, y: 40 }
             });
           }
         }
@@ -613,31 +613,26 @@ export default function FormulaChatInterface() {
               variant="outline"
               onClick={() => {
                 if (windowManager) {
-                  if (isMobile) {
-                    // On mobile: Navigate to full-screen document page
-                    window.location.href = '/artifacts';
-                  } else {
-                    // On desktop: Standard window size
-                    windowManager.createWindow({
-                      type: 'document',
-                      title: `📄 ${fileName}`,
-                      content: {
-                        mode: 'file-preview',
-                        fileName: fileName,
-                        fileContent: fileContent,
-                        fileType: defaultExtension,
-                        isGenerated: true
-                      },
-                      size: { 
-                        width: Math.floor(window.innerWidth * 0.6), 
-                        height: Math.floor(window.innerHeight * 0.8)
-                      },
-                      position: { 
-                        x: Math.floor(window.innerWidth * 0.2), 
-                        y: Math.floor(window.innerHeight * 0.1)
-                      }
-                    });
-                  }
+                  // Create full-size desktop window for document preview
+                  windowManager.createWindow({
+                    type: 'document',
+                    title: `📄 ${fileName}`,
+                    content: {
+                      mode: 'file-preview',
+                      fileName: fileName,
+                      fileContent: fileContent,
+                      fileType: defaultExtension,
+                      isGenerated: true
+                    },
+                    size: { 
+                      width: window.innerWidth - 40, 
+                      height: window.innerHeight - 80 
+                    },
+                    position: { 
+                      x: 20, 
+                      y: 40 
+                    }
+                  });
                 }
               }}
               className="text-xs border-formul8-border text-formul8-white hover:bg-formul8-bg-light"
