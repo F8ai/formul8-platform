@@ -903,6 +903,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
   
+  // File attachment endpoints
+  app.post('/api/attachments/upload-url', isAuthenticated, async (req, res) => {
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error('Error getting upload URL:', error);
+      res.status(500).json({ error: 'Failed to get upload URL' });
+    }
+  });
+
+  app.post('/api/attachments', isAuthenticated, async (req, res) => {
+    try {
+      const { fileName, fileUrl, fileType, fileSize } = req.body;
+      const userId = req.user?.claims?.sub;
+
+      if (!fileName || !fileUrl) {
+        return res.status(400).json({ error: 'fileName and fileUrl are required' });
+      }
+
+      const objectStorageService = new ObjectStorageService();
+      const objectPath = await objectStorageService.trySetObjectEntityAclPolicy(
+        fileUrl,
+        {
+          owner: userId,
+          visibility: "private", // Attachments are private by default
+        }
+      );
+
+      const attachment = {
+        id: `attachment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        fileName,
+        objectPath,
+        fileType: fileType || 'application/octet-stream',
+        fileSize: fileSize || 0,
+        uploadedAt: new Date().toISOString()
+      };
+
+      res.json(attachment);
+    } catch (error) {
+      console.error('Error processing attachment:', error);
+      res.status(500).json({ error: 'Failed to process attachment' });
+    }
+  });
+
   // Baseline testing routes (authenticated routes) - re-enabled with OpenAI
   app.use(baselineTestingRoutes);
 

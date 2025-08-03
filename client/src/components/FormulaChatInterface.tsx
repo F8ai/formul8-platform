@@ -52,13 +52,32 @@ interface AgentResponse {
   timestamp: string;
 }
 
+// Enhanced welcome message with tool suggestions
+const generateToolSuggestions = () => {
+  return `Welcome to Formul8.ai! 🌿 I'm your AI cannabis consultant with access to specialized tools and documents.
+
+**What I can help you with:**
+• 🧪 **Formulation** - Create recipes, calculate dosages, optimize extractions
+• ⚖️ **Compliance** - Navigate regulations, permits, and legal requirements  
+• 📄 **Documents** - Access SOPs, templates, and artifacts
+• 📊 **Testing** - Run baseline assessments and evaluations
+• 📈 **Analytics** - View dashboards and metrics
+• 🐛 **Issues** - Report problems or request features
+• 💼 **Workspace** - Manage files and folders
+
+**Smart Tool Detection:**
+Just mention what you need! I'll automatically suggest or open the right tool for you.
+
+Try asking: "Help me formulate a new product" or "I need compliance info for California"`;
+};
+
 export default function FormulaChatInterface() {
   const isMobile = useIsMobile();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       role: 'system',
-      content: "Welcome to Formul8.ai! 🌿 I'm your AI cannabis consultant. Ask me anything about compliance, formulation, operations, sourcing, patents, marketing, testing, or customer success.\n\n**Enhanced Features:**\n- 😊 Full emoji support\n- 🧪 Chemical formulas: $C_{21}H_{30}O_2$ (THC), $C_{21}H_{26}O_2$ (CBD)\n- 📄 Document previews that open in new tabs\n- 💬 Multi-agent verification system\n\nTry asking about THC extraction or compliance documents!",
+      content: generateToolSuggestions(),
       timestamp: new Date().toISOString(),
       agent: 'system',
       confidence: 100
@@ -146,6 +165,33 @@ export default function FormulaChatInterface() {
 
     setMessages(prev => [...prev, userMessage]);
     
+    // Detect intent and suggest/open tools
+    const detectedTools = detectIntentAndOpenTool(input);
+    
+    // If we detected relevant tools, show suggestions and optionally auto-open
+    if (detectedTools.length > 0 && input.trim()) {
+      const toolSuggestions = detectedTools.map(tool => tool.description).join(', ');
+      
+      // Add a system message with tool suggestions
+      setTimeout(() => {
+        const systemMessage: Message = {
+          id: `system_tools_${Date.now()}`,
+          role: 'system',
+          content: `I detected you might need: **${toolSuggestions}**\n\nI can open these tools for you or provide information. Would you like me to launch any of these tools?`,
+          timestamp: new Date().toISOString(),
+          agent: 'system',
+          confidence: 100
+        };
+        setMessages(prev => [...prev, systemMessage]);
+        
+        // Auto-open the most relevant tool (first match) for specific high-confidence cases
+        if (detectedTools.length === 1 && 
+            (input.includes('open') || input.includes('launch') || input.includes('start'))) {
+          detectedTools[0].action();
+        }
+      }, 1000);
+    }
+    
     // Include attachment info in the query if available
     const queryText = attachments.length > 0 
       ? `${input}\n\nAttached files: ${attachments.map(a => a.fileName).join(', ')}`
@@ -199,6 +245,171 @@ export default function FormulaChatInterface() {
   const removeAttachment = (attachmentId: string) => {
     setAttachments(prev => prev.filter(a => a.id !== attachmentId));
   };
+
+  // Tool routing based on user intent
+  const detectIntentAndOpenTool = (userInput: string) => {
+    const input = userInput.toLowerCase().trim();
+    
+    // Define intent patterns and corresponding tools
+    const intentMappings = [
+      {
+        patterns: ['formulation', 'formulate', 'recipe', 'formula', 'extract', 'concentration', 'dosage'],
+        tool: 'formulation',
+        description: 'Formulation Wizard',
+        route: '/design',
+        icon: '🧪',
+        action: () => {
+          if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '🧪 Formulation Wizard',
+              content: {
+                mode: 'formulation-wizard',
+                route: '/design'
+              },
+              size: { width: 800, height: 600 },
+              position: { x: 100, y: 100 }
+            });
+          }
+        }
+      },
+      {
+        patterns: ['issue', 'bug', 'problem', 'report', 'ticket', 'support'],
+        tool: 'issue',
+        description: 'Issue Tracker',
+        route: '/roadmap',
+        icon: '🐛',
+        action: () => {
+          if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '🐛 Issue Tracker',
+              content: {
+                mode: 'issue-form',
+                route: '/roadmap'
+              },
+              size: { width: 700, height: 500 },
+              position: { x: 150, y: 150 }
+            });
+          }
+        }
+      },
+      {
+        patterns: ['compliance', 'regulation', 'legal', 'law', 'permit', 'license'],
+        tool: 'compliance',
+        description: 'Compliance Dashboard',
+        route: '/pages/ComplianceAgent',
+        icon: '⚖️',
+        action: () => {
+          if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '⚖️ Compliance Dashboard',
+              content: {
+                mode: 'compliance-agent',
+                route: '/pages/ComplianceAgent'
+              },
+              size: { width: 900, height: 700 },
+              position: { x: 50, y: 50 }
+            });
+          }
+        }
+      },
+      {
+        patterns: ['artifact', 'document', 'template', 'form', 'sop', 'procedure'],
+        tool: 'artifacts',
+        description: 'Document Manager',
+        route: '/artifacts',
+        icon: '📄',
+        action: () => {
+          if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '📄 Document Manager',
+              content: {
+                mode: 'artifacts',
+                route: '/artifacts'
+              },
+              size: { width: 800, height: 600 },
+              position: { x: 200, y: 100 }
+            });
+          }
+        }
+      },
+      {
+        patterns: ['baseline', 'test', 'assessment', 'evaluation', 'metric'],
+        tool: 'baseline',
+        description: 'Baseline Testing',
+        route: '/baseline-testing',
+        icon: '📊',
+        action: () => {
+          if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '📊 Baseline Testing',
+              content: {
+                mode: 'baseline-testing',
+                route: '/baseline-testing'
+              },
+              size: { width: 900, height: 700 },
+              position: { x: 100, y: 50 }
+            });
+          }
+        }
+      },
+      {
+        patterns: ['dashboard', 'overview', 'analytics', 'metrics', 'stats'],
+        tool: 'dashboard',
+        description: 'Main Dashboard',
+        route: '/dashboard',
+        icon: '📈',
+        action: () => {
+          if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '📈 Main Dashboard',
+              content: {
+                mode: 'dashboard',
+                route: '/dashboard'
+              },
+              size: { width: 1000, height: 800 },
+              position: { x: 50, y: 50 }
+            });
+          }
+        }
+      },
+      {
+        patterns: ['workspace', 'desktop', 'file', 'folder', 'files'],
+        tool: 'workspace',
+        description: 'File Workspace',
+        route: '/workspace',
+        icon: '💼',
+        action: () => {
+          if (windowManager) {
+            windowManager.createWindow({
+              type: 'tool',
+              title: '💼 File Workspace',
+              content: {
+                mode: 'workspace',
+                route: '/workspace'
+              },
+              size: { width: 1000, height: 700 },
+              position: { x: 100, y: 100 }
+            });
+          }
+        }
+      }
+    ];
+
+    // Check for intent matches
+    const matchedTools = intentMappings.filter(mapping => 
+      mapping.patterns.some(pattern => input.includes(pattern))
+    );
+
+    return matchedTools;
+  };
+
+
 
   const getAgentColor = (agent: string) => {
     const colors: Record<string, string> = {
@@ -568,6 +779,23 @@ export default function FormulaChatInterface() {
                               {Math.round(attachment.fileSize / 1024)}KB
                             </Badge>
                           </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Tool suggestion buttons */}
+                    {message.role === 'system' && message.content.includes('I detected you might need') && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {detectIntentAndOpenTool(input).map((tool, index) => (
+                          <Button
+                            key={index}
+                            size="sm"
+                            variant="outline"
+                            onClick={() => tool.action()}
+                            className="text-xs bg-formul8-primary/10 border-formul8-primary/30 text-formul8-primary hover:bg-formul8-primary/20"
+                          >
+                            {tool.icon} {tool.description}
+                          </Button>
                         ))}
                       </div>
                     )}
