@@ -96,6 +96,8 @@ export default function FormulaChatInterface() {
     color: string;
     route: string;
   } | null>(null);
+  
+  const [isToolPanelOpen, setIsToolPanelOpen] = useState(false);
 
   // Function to create panels from tool configurations
   const createPanelsForTool = (toolId: string): Array<{
@@ -1165,6 +1167,23 @@ export default function FormulaChatInterface() {
     }
   };
 
+  const handleToolSelect = (tool: any) => {
+    // If same tool is clicked and panel is open, close it
+    if (activeTool?.id === tool.id && isToolPanelOpen) {
+      setIsToolPanelOpen(false);
+      setActiveTool(null);
+    } else {
+      // Open new tool or switch to different tool
+      setActiveTool(tool);
+      setIsToolPanelOpen(true);
+    }
+  };
+
+  const handleClosePanel = () => {
+    setIsToolPanelOpen(false);
+    setActiveTool(null);
+  };
+
   return (
     <div className="flex flex-col h-full bg-formul8-bg-dark">
       {/* Chat Header */}
@@ -1187,7 +1206,7 @@ export default function FormulaChatInterface() {
       <ToolToggleBar 
         tools={availableTools}
         activeTool={activeTool}
-        onToolToggle={setActiveTool}
+        onToolToggle={handleToolSelect}
       />
 
       {/* Messages */}
@@ -1391,8 +1410,8 @@ export default function FormulaChatInterface() {
       {activeTool && (
         <MultiPanelLayout
           panels={createPanelsForTool(activeTool.id)}
-          isOpen={!!activeTool}
-          onClose={() => setActiveTool(null)}
+          isOpen={isToolPanelOpen}
+          onClose={handleClosePanel}
           toolColor={activeTool.color}
         />
       )}
