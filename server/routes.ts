@@ -1125,6 +1125,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(baselineCoverageRoutes);
   app.use(agentConfigRoutes);
   app.use('/api/ai', aiRoutes);
+  // PWA Share handling routes
+  app.post("/workspace/share", express.urlencoded({ extended: true }), (req, res) => {
+    const { title, text, url } = req.body;
+    
+    // Redirect to workspace with shared content as query params
+    const params = new URLSearchParams();
+    if (title) params.set('title', title);
+    if (text) params.set('text', text);
+    if (url) params.set('url', url);
+    
+    res.redirect(`/workspace?${params.toString()}`);
+  });
+
+  // File handler for PWA
+  app.post("/workspace/file", express.raw({ limit: '50mb', type: '*/*' }), (req, res) => {
+    // Handle file uploads from PWA file handler
+    res.redirect('/workspace?fileShared=true');
+  });
+
+  // Protocol handler for PWA
+  app.get("/workspace/handle", (req, res) => {
+    const data = req.query.data as string;
+    if (data) {
+      try {
+        const decodedData = decodeURIComponent(data);
+        res.redirect(`/workspace?protocolData=${encodeURIComponent(decodedData)}`);
+      } catch (error) {
+        res.redirect('/workspace');
+      }
+    } else {
+      res.redirect('/workspace');
+    }
+  });
+
   app.use('/workspace', shareRoutes);
   app.use(dataManagementRoutes);
   app.use(healthCheckRoutes);
