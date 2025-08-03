@@ -63,6 +63,21 @@
   --formul8-gradient-card: linear-gradient(135deg, hsl(220, 13%, 12%) 0%, hsl(220, 13%, 15%) 100%);
   --formul8-logo-gradient: linear-gradient(135deg, hsl(180, 88%, 55%) 0%, hsl(140, 88%, 55%) 30%, hsl(195, 84%, 55%) 100%);
   
+  /* Formul8.ai Gradient Text Class */
+  .formul8-logo-gradient {
+    background: var(--formul8-logo-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+  
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
   /* Component-specific colors for proper dark mode */
   --formul8-text-primary: hsl(0, 0%, 95%);     /* Primary text - light */
   --formul8-text-secondary: hsl(220, 9%, 65%); /* Secondary text */
