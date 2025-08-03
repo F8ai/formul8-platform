@@ -19,10 +19,11 @@ import { WindowManagerContext } from "./WindowManager";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ObjectUploader } from "./ObjectUploader";
 import { SlidingToolPanel } from "./SlidingToolPanel";
+import { ToolToggleBar } from "./ToolToggleBar";
 import type { UploadResult } from '@uppy/core';
 
 // Tool content renderer component
-function ToolContent({ tool }: { tool: { type: string; route: string; title: string; icon: string; color: string } }) {
+function ToolContent({ tool }: { tool: { id: string; route: string; title: string; icon: string; color: string } }) {
   return (
     <div className="h-full">
       <iframe
@@ -101,12 +102,65 @@ export default function FormulaChatInterface() {
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [activeTool, setActiveTool] = useState<{
-    type: string;
+    id: string;
     title: string;
     icon: string;
     color: string;
     route: string;
   } | null>(null);
+
+  // Define available tools
+  const availableTools = [
+    {
+      id: 'formulation',
+      title: 'Formulation',
+      icon: '🧪',
+      color: 'border-purple-500',
+      route: '/design'
+    },
+    {
+      id: 'compliance',
+      title: 'Compliance',
+      icon: '⚖️',
+      color: 'border-green-500',
+      route: '/ComplianceAgent'
+    },
+    {
+      id: 'artifacts',
+      title: 'Documents',
+      icon: '📄',
+      color: 'border-blue-500',
+      route: '/artifacts'
+    },
+    {
+      id: 'baseline',
+      title: 'Testing',
+      icon: '📊',
+      color: 'border-cyan-500',
+      route: '/BaselineAssessment'
+    },
+    {
+      id: 'dashboard',
+      title: 'Dashboard',
+      icon: '📈',
+      color: 'border-orange-500',
+      route: '/dashboard'
+    },
+    {
+      id: 'workspace',
+      title: 'Workspace',
+      icon: '💼',
+      color: 'border-indigo-500',
+      route: '/workspace'
+    },
+    {
+      id: 'issues',
+      title: 'Issues',
+      icon: '🐛',
+      color: 'border-red-500',
+      route: '/roadmap'
+    }
+  ];
   const [threadId] = useState(() => `thread_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -283,13 +337,7 @@ export default function FormulaChatInterface() {
         color: 'border-purple-500',
         action: () => {
           // Open in sliding panel
-          setActiveTool({
-            type: 'formulation',
-            title: 'Formulation Wizard',
-            icon: '🧪',
-            color: 'border-purple-500',
-            route: '/design'
-          });
+          setActiveTool(availableTools.find(t => t.id === 'formulation') || null);
         }
       },
       {
@@ -301,13 +349,7 @@ export default function FormulaChatInterface() {
         color: 'border-red-500',
         action: () => {
           // Open in sliding panel
-          setActiveTool({
-            type: 'issue',
-            title: 'Issue Tracker',
-            icon: '🐛',
-            color: 'border-red-500',
-            route: '/roadmap'
-          });
+          setActiveTool(availableTools.find(t => t.id === 'issues') || null);
         }
       },
       {
@@ -319,13 +361,7 @@ export default function FormulaChatInterface() {
         color: 'border-green-500',
         action: () => {
           // Open in sliding panel
-          setActiveTool({
-            type: 'compliance',
-            title: 'Compliance Dashboard',
-            icon: '⚖️',
-            color: 'border-green-500',
-            route: '/ComplianceAgent'
-          });
+          setActiveTool(availableTools.find(t => t.id === 'compliance') || null);
         }
       },
       {
@@ -337,13 +373,7 @@ export default function FormulaChatInterface() {
         color: 'border-blue-500',
         action: () => {
           // Open in sliding panel
-          setActiveTool({
-            type: 'artifacts',
-            title: 'Document Manager',
-            icon: '📄',
-            color: 'border-blue-500',
-            route: '/artifacts'
-          });
+          setActiveTool(availableTools.find(t => t.id === 'artifacts') || null);
         }
       },
       {
@@ -355,13 +385,7 @@ export default function FormulaChatInterface() {
         color: 'border-cyan-500',
         action: () => {
           // Open in sliding panel
-          setActiveTool({
-            type: 'baseline',
-            title: 'Baseline Testing',
-            icon: '📊',
-            color: 'border-cyan-500',
-            route: '/BaselineAssessment'
-          });
+          setActiveTool(availableTools.find(t => t.id === 'baseline') || null);
         }
       },
       {
@@ -373,13 +397,7 @@ export default function FormulaChatInterface() {
         color: 'border-orange-500',
         action: () => {
           // Open in sliding panel
-          setActiveTool({
-            type: 'dashboard',
-            title: 'Main Dashboard',
-            icon: '📈',
-            color: 'border-orange-500',
-            route: '/dashboard'
-          });
+          setActiveTool(availableTools.find(t => t.id === 'dashboard') || null);
         }
       },
       {
@@ -391,13 +409,7 @@ export default function FormulaChatInterface() {
         color: 'border-indigo-500',
         action: () => {
           // Open in sliding panel
-          setActiveTool({
-            type: 'workspace',
-            title: 'File Workspace',
-            icon: '💼',
-            color: 'border-indigo-500',
-            route: '/workspace'
-          });
+          setActiveTool(availableTools.find(t => t.id === 'workspace') || null);
         }
       }
     ];
@@ -673,6 +685,13 @@ export default function FormulaChatInterface() {
           Thread: {threadId.split('_')[1]}
         </Badge>
       </div>
+
+      {/* Tool Toggle Bar */}
+      <ToolToggleBar 
+        tools={availableTools}
+        activeTool={activeTool}
+        onToolToggle={setActiveTool}
+      />
 
       {/* Messages */}
       <ScrollArea className="flex-1 p-4 bg-formul8-bg-dark">
