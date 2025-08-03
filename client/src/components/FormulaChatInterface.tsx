@@ -145,9 +145,9 @@ export default function FormulaChatInterface() {
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'chat', label: 'Chat', icon: '💬', endpoint: '/api/chat/formulation' },
+            { id: 'chat', label: 'Chat', icon: '🧪', endpoint: '/api/chat/formulation' },
             { id: 'wizard', label: 'Wizard', icon: '🧪', endpoint: '/design' },
-            { id: 'history', label: 'History', icon: '📜', endpoint: '/formulation/history' }
+            { id: 'history', label: 'History', icon: '🧪', endpoint: '/formulation/history' }
           ]
         },
         {
@@ -157,9 +157,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'structure', label: 'Structure', icon: '🧬', endpoint: '/formulation/molecule' },
-            { id: 'properties', label: 'Properties', icon: '⚗️', endpoint: '/formulation/properties' },
-            { id: 'interactions', label: 'Interactions', icon: '🔗', endpoint: '/formulation/interactions' }
+            { id: 'structure', label: 'Structure', icon: '🧪', endpoint: '/formulation/molecule' },
+            { id: 'properties', label: 'Properties', icon: '🧪', endpoint: '/formulation/properties' },
+            { id: 'interactions', label: 'Interactions', icon: '🧪', endpoint: '/formulation/interactions' }
           ]
         },
         {
@@ -169,9 +169,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'calculator', label: 'Calculator', icon: '🧮', endpoint: '/formulation/calculator' },
-            { id: 'batch', label: 'Batch Size', icon: '📏', endpoint: '/formulation/batch' },
-            { id: 'potency', label: 'Potency', icon: '💪', endpoint: '/formulation/potency' }
+            { id: 'calculator', label: 'Calculator', icon: '🧪', endpoint: '/formulation/calculator' },
+            { id: 'batch', label: 'Batch Size', icon: '🧪', endpoint: '/formulation/batch' },
+            { id: 'potency', label: 'Potency', icon: '🧪', endpoint: '/formulation/potency' }
           ]
         }
       ]
@@ -184,9 +184,9 @@ export default function FormulaChatInterface() {
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'chat', label: 'Chat', icon: '💬', endpoint: '/api/chat/compliance' },
+            { id: 'chat', label: 'Chat', icon: '⚖️', endpoint: '/api/chat/compliance' },
             { id: 'dashboard', label: 'Dashboard', icon: '⚖️', endpoint: '/ComplianceAgent' },
-            { id: 'tracker', label: 'Tracker', icon: '📋', endpoint: '/compliance/tracker' }
+            { id: 'tracker', label: 'Tracker', icon: '⚖️', endpoint: '/compliance/tracker' }
           ]
         },
         {
@@ -196,9 +196,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'state-regs', label: 'State Rules', icon: '🏛️', endpoint: '/compliance/state' },
-            { id: 'federal', label: 'Federal', icon: '🇺🇸', endpoint: '/compliance/federal' },
-            { id: 'updates', label: 'Updates', icon: '🔄', endpoint: '/compliance/updates' }
+            { id: 'state-regs', label: 'State Rules', icon: '⚖️', endpoint: '/compliance/state' },
+            { id: 'federal', label: 'Federal', icon: '⚖️', endpoint: '/compliance/federal' },
+            { id: 'updates', label: 'Updates', icon: '⚖️', endpoint: '/compliance/updates' }
           ]
         },
         {
@@ -208,9 +208,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'checklist', label: 'Checklist', icon: '✅', endpoint: '/compliance/checklist' },
-            { id: 'audit', label: 'Audit', icon: '🔍', endpoint: '/compliance/audit' },
-            { id: 'reports', label: 'Reports', icon: '📊', endpoint: '/compliance/reports' }
+            { id: 'checklist', label: 'Checklist', icon: '⚖️', endpoint: '/compliance/checklist' },
+            { id: 'audit', label: 'Audit', icon: '⚖️', endpoint: '/compliance/audit' },
+            { id: 'reports', label: 'Reports', icon: '⚖️', endpoint: '/compliance/reports' }
           ]
         }
       ]
@@ -224,8 +224,8 @@ export default function FormulaChatInterface() {
           width: 'w-96',
           tabs: [
             { id: 'browser', label: 'Browser', icon: '📁', endpoint: '/artifacts' },
-            { id: 'search', label: 'Search', icon: '🔍', endpoint: '/artifacts/search' },
-            { id: 'recent', label: 'Recent', icon: '🕒', endpoint: '/artifacts/recent' }
+            { id: 'search', label: 'Search', icon: '📁', endpoint: '/artifacts/search' },
+            { id: 'recent', label: 'Recent', icon: '📁', endpoint: '/artifacts/recent' }
           ]
         },
         {
@@ -235,8 +235,8 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'preview', label: 'Preview', icon: '👁️', endpoint: '/artifacts/preview' },
-            { id: 'metadata', label: 'Metadata', icon: 'ℹ️', endpoint: '/artifacts/metadata' }
+            { id: 'preview', label: 'Preview', icon: '📁', endpoint: '/artifacts/preview' },
+            { id: 'metadata', label: 'Metadata', icon: '📁', endpoint: '/artifacts/metadata' }
           ]
         },
         {
@@ -246,9 +246,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'templates', label: 'Templates', icon: '📝', endpoint: '/artifacts/templates' },
-            { id: 'generator', label: 'AI Generator', icon: '⚡', endpoint: '/artifacts/generator' },
-            { id: 'sops', label: 'SOPs', icon: '📋', endpoint: '/artifacts/sops' }
+            { id: 'templates', label: 'Templates', icon: '📁', endpoint: '/artifacts/templates' },
+            { id: 'generator', label: 'AI Generator', icon: '📁', endpoint: '/artifacts/generator' },
+            { id: 'sops', label: 'SOPs', icon: '📁', endpoint: '/artifacts/sops' }
           ]
         }
       ]
@@ -417,8 +417,8 @@ export default function FormulaChatInterface() {
           width: 'w-96',
           tabs: [
             { id: 'active', label: 'Active', icon: '📢', endpoint: '/marketing/campaigns' },
-            { id: 'create', label: 'Create', icon: '✨', endpoint: '/marketing/create' },
-            { id: 'templates', label: 'Templates', icon: '📝', endpoint: '/marketing/templates' }
+            { id: 'create', label: 'Create', icon: '📢', endpoint: '/marketing/create' },
+            { id: 'templates', label: 'Templates', icon: '📢', endpoint: '/marketing/templates' }
           ]
         },
         {
@@ -428,9 +428,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'performance', label: 'Performance', icon: '📊', endpoint: '/marketing/performance' },
-            { id: 'roi', label: 'ROI', icon: '💰', endpoint: '/marketing/roi' },
-            { id: 'attribution', label: 'Attribution', icon: '🎯', endpoint: '/marketing/attribution' }
+            { id: 'performance', label: 'Performance', icon: '📢', endpoint: '/marketing/performance' },
+            { id: 'roi', label: 'ROI', icon: '📢', endpoint: '/marketing/roi' },
+            { id: 'attribution', label: 'Attribution', icon: '📢', endpoint: '/marketing/attribution' }
           ]
         },
         {
@@ -440,9 +440,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'library', label: 'Library', icon: '🎨', endpoint: '/marketing/library' },
-            { id: 'social', label: 'Social', icon: '📱', endpoint: '/marketing/social' },
-            { id: 'email', label: 'Email', icon: '📧', endpoint: '/marketing/email' }
+            { id: 'library', label: 'Library', icon: '📢', endpoint: '/marketing/library' },
+            { id: 'social', label: 'Social', icon: '📢', endpoint: '/marketing/social' },
+            { id: 'email', label: 'Email', icon: '📢', endpoint: '/marketing/email' }
           ]
         }
       ]
@@ -456,8 +456,8 @@ export default function FormulaChatInterface() {
           width: 'w-96',
           tabs: [
             { id: 'dashboard', label: 'Dashboard', icon: '🏭', endpoint: '/operations/dashboard' },
-            { id: 'workflow', label: 'Workflow', icon: '🔄', endpoint: '/operations/workflow' },
-            { id: 'alerts', label: 'Alerts', icon: '🚨', endpoint: '/operations/alerts' }
+            { id: 'workflow', label: 'Workflow', icon: '🏭', endpoint: '/operations/workflow' },
+            { id: 'alerts', label: 'Alerts', icon: '🏭', endpoint: '/operations/alerts' }
           ]
         },
         {
@@ -467,9 +467,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'schedule', label: 'Schedule', icon: '📅', endpoint: '/operations/schedule' },
-            { id: 'capacity', label: 'Capacity', icon: '⚡', endpoint: '/operations/capacity' },
-            { id: 'batches', label: 'Batches', icon: '🧪', endpoint: '/operations/batches' }
+            { id: 'schedule', label: 'Schedule', icon: '🏭', endpoint: '/operations/schedule' },
+            { id: 'capacity', label: 'Capacity', icon: '🏭', endpoint: '/operations/capacity' },
+            { id: 'batches', label: 'Batches', icon: '🏭', endpoint: '/operations/batches' }
           ]
         },
         {
@@ -479,9 +479,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'testing', label: 'Testing', icon: '🔬', endpoint: '/operations/testing' },
-            { id: 'lab-results', label: 'Lab Results', icon: '📋', endpoint: '/operations/lab' },
-            { id: 'certificates', label: 'Certificates', icon: '🏆', endpoint: '/operations/certs' }
+            { id: 'testing', label: 'Testing', icon: '🏭', endpoint: '/operations/testing' },
+            { id: 'lab-results', label: 'Lab Results', icon: '🏭', endpoint: '/operations/lab' },
+            { id: 'certificates', label: 'Certificates', icon: '🏭', endpoint: '/operations/certs' }
           ]
         }
       ]
@@ -494,9 +494,9 @@ export default function FormulaChatInterface() {
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'directory', label: 'Directory', icon: '🏢', endpoint: '/sourcing/suppliers' },
-            { id: 'evaluation', label: 'Evaluation', icon: '⭐', endpoint: '/sourcing/evaluation' },
-            { id: 'contracts', label: 'Contracts', icon: '📜', endpoint: '/sourcing/contracts' }
+            { id: 'directory', label: 'Directory', icon: '🌱', endpoint: '/sourcing/suppliers' },
+            { id: 'evaluation', label: 'Evaluation', icon: '🌱', endpoint: '/sourcing/evaluation' },
+            { id: 'contracts', label: 'Contracts', icon: '🌱', endpoint: '/sourcing/contracts' }
           ]
         },
         {
@@ -506,9 +506,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'orders', label: 'Orders', icon: '📦', endpoint: '/sourcing/orders' },
-            { id: 'rfq', label: 'RFQ', icon: '💰', endpoint: '/sourcing/rfq' },
-            { id: 'approvals', label: 'Approvals', icon: '✅', endpoint: '/sourcing/approvals' }
+            { id: 'orders', label: 'Orders', icon: '🌱', endpoint: '/sourcing/orders' },
+            { id: 'rfq', label: 'RFQ', icon: '🌱', endpoint: '/sourcing/rfq' },
+            { id: 'approvals', label: 'Approvals', icon: '🌱', endpoint: '/sourcing/approvals' }
           ]
         },
         {
@@ -518,9 +518,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'stock', label: 'Stock', icon: '📊', endpoint: '/sourcing/stock' },
-            { id: 'forecasting', label: 'Forecast', icon: '🔮', endpoint: '/sourcing/forecast' },
-            { id: 'logistics', label: 'Logistics', icon: '🚚', endpoint: '/sourcing/logistics' }
+            { id: 'stock', label: 'Stock', icon: '🌱', endpoint: '/sourcing/stock' },
+            { id: 'forecasting', label: 'Forecast', icon: '🌱', endpoint: '/sourcing/forecast' },
+            { id: 'logistics', label: 'Logistics', icon: '🌱', endpoint: '/sourcing/logistics' }
           ]
         }
       ]
@@ -533,9 +533,9 @@ export default function FormulaChatInterface() {
           position: 'left' as const,
           width: 'w-96',
           tabs: [
-            { id: 'search', label: 'Search', icon: '🔍', endpoint: '/patent/search' },
-            { id: 'prior-art', label: 'Prior Art', icon: '📚', endpoint: '/patent/prior-art' },
-            { id: 'landscape', label: 'Landscape', icon: '🗺️', endpoint: '/patent/landscape' }
+            { id: 'search', label: 'Search', icon: '📋', endpoint: '/patent/search' },
+            { id: 'prior-art', label: 'Prior Art', icon: '📋', endpoint: '/patent/prior-art' },
+            { id: 'landscape', label: 'Landscape', icon: '📋', endpoint: '/patent/landscape' }
           ]
         },
         {
@@ -545,9 +545,9 @@ export default function FormulaChatInterface() {
           width: 'w-80',
           height: 'h-64',
           tabs: [
-            { id: 'fto', label: 'Freedom to Operate', icon: '🚦', endpoint: '/patent/fto' },
-            { id: 'claims', label: 'Claims', icon: '⚖️', endpoint: '/patent/claims' },
-            { id: 'novelty', label: 'Novelty', icon: '💡', endpoint: '/patent/novelty' }
+            { id: 'fto', label: 'Freedom to Operate', icon: '📋', endpoint: '/patent/fto' },
+            { id: 'claims', label: 'Claims', icon: '📋', endpoint: '/patent/claims' },
+            { id: 'novelty', label: 'Novelty', icon: '📋', endpoint: '/patent/novelty' }
           ]
         },
         {
@@ -558,8 +558,8 @@ export default function FormulaChatInterface() {
           height: 'h-64',
           tabs: [
             { id: 'applications', label: 'Applications', icon: '📋', endpoint: '/patent/applications' },
-            { id: 'deadlines', label: 'Deadlines', icon: '⏰', endpoint: '/patent/deadlines' },
-            { id: 'strategy', label: 'Strategy', icon: '🎯', endpoint: '/patent/strategy' }
+            { id: 'deadlines', label: 'Deadlines', icon: '📋', endpoint: '/patent/deadlines' },
+            { id: 'strategy', label: 'Strategy', icon: '📋', endpoint: '/patent/strategy' }
           ]
         }
       ]
