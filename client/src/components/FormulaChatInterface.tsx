@@ -436,12 +436,12 @@ export default function FormulaChatInterface() {
             isGenerated: true
           },
           size: { 
-            width: window.innerWidth - 20, 
-            height: window.innerHeight - 100 
+            width: window.innerWidth, 
+            height: window.innerHeight 
           },
           position: { 
-            x: 10, 
-            y: 50 
+            x: 0, 
+            y: 0 
           }
         });
       } else {
@@ -453,10 +453,10 @@ export default function FormulaChatInterface() {
           // Resize chat to left half
           windowManager.updateWindow({
             ...chatWindow,
-            width: Math.floor(window.innerWidth / 2) - 50,
-            height: window.innerHeight - 150,
-            x: 25,
-            y: 25
+            width: Math.floor(window.innerWidth / 2),
+            height: window.innerHeight,
+            x: 0,
+            y: 0
           });
         }
 
@@ -472,12 +472,12 @@ export default function FormulaChatInterface() {
             isGenerated: true
           },
           size: { 
-            width: Math.floor(window.innerWidth / 2) - 50, 
-            height: window.innerHeight - 150 
+            width: Math.floor(window.innerWidth / 2), 
+            height: window.innerHeight 
           },
           position: { 
-            x: Math.floor(window.innerWidth / 2) + 25, 
-            y: 25 
+            x: Math.floor(window.innerWidth / 2), 
+            y: 0 
           }
         });
       }
