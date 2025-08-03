@@ -6,7 +6,9 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 
 ## Recent Changes (Aug 3, 2025)
 
+- **Desktop Canvas Coordinate System**: Defined proper desktop workspace coordinate system where (0,0) starts below header (56px) and to the right of left navigation menu (56px), creating true desktop experience with DESKTOP_OFFSET_TOP and DESKTOP_OFFSET_LEFT constants
 - **UI Navigation Updates**: Replaced home icon with Formul8.ai site icon in left navigation, removed logo from header, aligned header to right
+- **Fixed Navigation Issues**: Corrected hardcoded '/workspace' link to '/' in LeftNavBar site icon
 - **Frontend Architecture**: Keeping `client/` directory as integrated part of monorepo (submodule plans deprecated)
 - **Enhanced Window Management**: Improved window positioning system with smart overlap detection and optimized layouts for different tool types
 
