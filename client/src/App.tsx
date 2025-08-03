@@ -64,6 +64,9 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
+        <Route path="/" component={Workspace} />
+        <Route path="/desktop" component={Workspace} />
+        <Route path="/workspace" component={Workspace} />
         <Route path="/design" component={Design} />
         <Route path="/agents" component={Agents} />
         <Route path="/agents-dynamic" component={AgentsDynamic} />
@@ -89,39 +92,30 @@ function Router() {
           {params => <AgentDashboard agentType={params.agentType} />}
         </Route>
         <Route path="/chat-tool-simple" component={ChatToolSimple} />
-        <Route path="/workspace" component={Workspace} />
-        <Route path="/desktop" component={Workspace} />
+
         <Route path="/chat-tool" component={ChatTool} />
         <Route path="/agent/:agentId/chat" component={AgentChat} />
         <Route path="/test-results/:agentId">
           {params => <TestResults agentId={params.agentId} />}
         </Route>
-        {isLoading || !isAuthenticated ? (
-          <>
-            <Route path="/" component={Landing} />
-            <Route path="/chat-landing" component={ChatLanding} />
-          </>
-        ) : (
-          <>
-            <Route path="/" component={Landing} />
-            <Route path="/chat" component={Chat} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/science" component={Science} />
-            <Route path="/development-agent" component={DevelopmentAgent} />
-            <Route path="/agents-dashboard" component={AgentsDashboard} />
-            <Route path="/baselines" component={BaselineManagement} />
-            <Route path="/baseline-assessment" component={BaselineAssessment} />
-            <Route path="/langgraph" component={LangGraphDashboard} />
-            <Route path="/corpus-qa" component={CorpusQA} />
-            <Route path="/mvp" component={MVP} />
-            <Route path="/plan-detail/:type" component={PlanDetail} />
-            <Route path="/artifacts" component={Artifacts} />
-            <Route path="/use" component={UseCasesIndex} />
-            <Route path="/use/dmso" component={DMSOUseCase} />
-            <Route path="/use/goodfor" component={GoodFORUseCase} />
-            <Route path="/profile" component={Profile} />
-          </>
-        )}
+        <Route path="/landing" component={Landing} />
+        <Route path="/chat-landing" component={ChatLanding} />
+        <Route path="/chat" component={Chat} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/science" component={Science} />
+        <Route path="/development-agent" component={DevelopmentAgent} />
+        <Route path="/agents-dashboard" component={AgentsDashboard} />
+        <Route path="/baselines" component={BaselineManagement} />
+        <Route path="/baseline-assessment" component={BaselineAssessment} />
+        <Route path="/langgraph" component={LangGraphDashboard} />
+        <Route path="/corpus-qa" component={CorpusQA} />
+        <Route path="/mvp" component={MVP} />
+        <Route path="/plan-detail/:type" component={PlanDetail} />
+        <Route path="/artifacts" component={Artifacts} />
+        <Route path="/use" component={UseCasesIndex} />
+        <Route path="/use/dmso" component={DMSOUseCase} />
+        <Route path="/use/goodfor" component={GoodFORUseCase} />
+        <Route path="/profile" component={Profile} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
