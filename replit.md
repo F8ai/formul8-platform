@@ -4,6 +4,12 @@
 
 The Formul8 Platform is a comprehensive AI-powered cannabis operations platform. It provides AI consultation services through a full-stack web application featuring a multi-agent AI orchestration system. This system includes specialized agents deployed across three phases: Phase 1 (Compliance, Formulation, Marketing, Operations, Sourcing, Patent), Phase 2 (Spectra, FTO), and Phase 3 (LMS Agent). The platform ensures high-quality, production-ready answers through agent-to-agent verification and offers extensive cannabis industry expertise to support business operations.
 
+## Recent Changes (Aug 3, 2025)
+
+- **Code Cleanup**: Removed legacy `client/` directory to simplify repository structure
+- **Frontend Consolidation**: All frontend development now centralized in `formul8-frontend/` directory
+- **Enhanced Window Management**: Improved window positioning system with smart overlap detection and optimized layouts for different tool types
+
 ## User Preferences
 
 - **Communication style**: Simple, everyday language
@@ -31,7 +37,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **AI Integration**: OpenAI GPT-4o for agent responses
 - **Agent System**: LangChain agents, RAG with FAISS vectorstores, SPARQL knowledge bases (TTL/RDF ontologies), multi-model support (OpenAI, Anthropic, Google), and agent-to-agent verification.
 - **Federated Architecture**: Designed for hybrid cloud deployments, allowing local agents to communicate with cloud agents via secure mTLS authentication, enabling data sovereignty and local intelligence.
-- **Repository Structure**: Monorepo (`formul8-platform`) with `formul8-frontend/` (React frontend for independent development), `client/` (legacy frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data). Main frontend development now occurs in the `formul8-frontend/` directory.
+- **Repository Structure**: Monorepo (`formul8-platform`) with `formul8-frontend/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
 
 ### Deployment Architecture (Mixed Runtime Support - Aug 2, 2025)
 - **Multi-Runtime Support**: Fixed deployment conflicts between Node.js and Python configurations

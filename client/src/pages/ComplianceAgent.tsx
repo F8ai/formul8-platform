@@ -238,11 +238,9 @@ export default function ComplianceAgent() {
 
   if (isDashboardLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-formul8-bg-dark">
-        <div className="text-center">
-          <Loader2 className="w-8 h-8 animate-spin text-formul8-teal mx-auto mb-2" />
-          <span className="text-formul8-text-white">Loading compliance dashboard...</span>
-        </div>
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+        <span className="ml-2">Loading compliance dashboard...</span>
       </div>
     );
   }
@@ -252,16 +250,16 @@ export default function ComplianceAgent() {
   // Show fallback if no data or if data has error
   if (!data || data.error) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-formul8-bg-dark">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <AlertCircle className="w-12 h-12 mx-auto mb-4 text-formul8-warning" />
-          <h2 className="text-xl font-semibold mb-2 text-formul8-text-white">Real Cannabis Regulatory Data Collection</h2>
-          <p className="text-formul8-text-gray mb-4">
+          <AlertCircle className="w-12 h-12 mx-auto mb-4 text-yellow-500" />
+          <h2 className="text-xl font-semibold mb-2">Real Cannabis Regulatory Data Collection</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
             Collecting live data from state cannabis regulatory websites including:<br/>
             California DCC, Colorado MED, Washington LCB, Oregon OLCC, and 21+ other states
           </p>
-          <div className="bg-formul8-bg-card p-4 rounded-lg border border-formul8-border">
-            <p className="text-sm text-formul8-text-white">
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+            <p className="text-sm text-blue-800 dark:text-blue-200">
               🌐 <strong>Real Data Sources:</strong> cannabis.ca.gov, colorado.gov, lcb.wa.gov, oregon.gov/olcc<br/>
               📊 <strong>No Mock Data:</strong> All metrics collected from actual regulatory websites<br/>
               🔄 <strong>Live Collection:</strong> Processing regulatory citations and compliance documents
@@ -273,7 +271,7 @@ export default function ComplianceAgent() {
   }
 
   return (
-    <div className="min-h-screen bg-formul8-bg-dark text-formul8-text-white">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center space-x-4 mb-8">
           <div className="bg-green-100 dark:bg-green-900 p-3 rounded-full">

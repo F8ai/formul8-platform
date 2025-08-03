@@ -51,8 +51,6 @@
   /* Formul8.ai Authentic Dark Theme - Matching actual formul8.ai */
   --formul8-bg-dark: hsl(220, 13%, 8%);      /* Deep dark background #141416 */
   --formul8-bg-card: hsl(220, 13%, 12%);     /* Card background slightly lighter */
-  --formul8-background: hsl(220, 13%, 8%);   /* Main background - dark */
-  --formul8-surface: hsl(220, 13%, 10%);     /* Surface color - slightly lighter */
   --formul8-teal: hsl(180, 88%, 55%);        /* Bright teal #19E6CC */
   --formul8-blue: hsl(195, 84%, 55%);        /* Bright blue #1AB7E6 */
   --formul8-green: hsl(140, 88%, 55%);       /* Bright green #19E64A */
@@ -104,20 +102,10 @@
     @apply border-border;
   }
 
-  html {
-    background-color: var(--formul8-bg-dark);
-    color: var(--formul8-text-white);
-  }
-
   body {
     @apply font-sans antialiased;
     background-color: var(--formul8-bg-dark);
     color: var(--formul8-text-white);
-  }
-
-  /* Ensure all elements inherit dark theme */
-  * {
-    border-color: var(--formul8-border);
   }
 }
 
@@ -158,22 +146,6 @@
     color: var(--formul8-text-primary);
   }
   
-  /* Window styling with emoji color borders */
-  .tool-window-border-purple { border: 2px solid var(--formul8-tertiary); }
-  .tool-window-border-red { border: 2px solid var(--formul8-error); }
-  .tool-window-border-green { border: 2px solid var(--formul8-success); }
-  .tool-window-border-blue { border: 2px solid var(--formul8-primary); }
-  .tool-window-border-cyan { border: 2px solid var(--formul8-secondary); }
-  .tool-window-border-orange { border: 2px solid var(--formul8-warning); }
-  .tool-window-border-indigo { border: 2px solid var(--formul8-info); }
-
-  /* Main content area dark theme enforcement */
-  .main-content-area {
-    background-color: var(--formul8-bg-dark) !important;
-    color: var(--formul8-text-white) !important;
-    min-height: 100vh;
-  }
-
   /* Button styles */
   .formul8-button-primary { 
     background-color: var(--formul8-primary); 

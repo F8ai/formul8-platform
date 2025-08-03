@@ -187,7 +187,7 @@ class ValidationSuite {
     this.results.files = [
       this.testFile('Package.json', 'package.json'),
       this.testFile('Server Index', 'server/index.ts'),
-      this.testFile('Client App', 'client/src/App.tsx'),
+      this.testFile('Frontend App', 'formul8-frontend/src/App.tsx'),
       this.testFile('Database Config', 'drizzle.config.ts'),
       this.testFile('Schema', 'shared/schema.ts'),
       this.testFile('Replit Config', 'replit.md'),
