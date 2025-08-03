@@ -61,6 +61,14 @@ const PageLoader = () => (
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
 
+  // Apply dark mode globally
+  React.useEffect(() => {
+    document.documentElement.classList.add('dark');
+    document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+    document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+    document.body.style.color = 'hsl(0, 0%, 95%)';
+  }, []);
+
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>

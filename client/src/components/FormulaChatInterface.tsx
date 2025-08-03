@@ -97,6 +97,41 @@ export default function FormulaChatInterface() {
     route: string;
   } | null>(null);
 
+  // Function to create panels from tool configurations
+  const createPanelsForTool = (toolId: string): Array<{
+    id: string;
+    title: string;
+    position: 'left' | 'top-right' | 'bottom-right';
+    width?: string;
+    height?: string;
+    tabs: Array<{
+      id: string;
+      label: string;
+      icon?: string;
+      content: React.ReactNode;
+    }>;
+    defaultTab?: string;
+  }> => {
+    const config = toolConfigurations[toolId as keyof typeof toolConfigurations];
+    if (!config) return [];
+
+    return config.panels.map(panel => ({
+      ...panel,
+      tabs: panel.tabs.map(tab => ({
+        id: tab.id,
+        label: tab.label,
+        icon: tab.icon,
+        content: (
+          <iframe
+            src={tab.endpoint}
+            className="w-full h-full border-0 bg-formul8-bg-dark"
+            title={`${panel.title} - ${tab.label}`}
+            style={{ minHeight: '200px' }}
+          />
+        )
+      }))
+    }));
+  };
 
   // Tool configurations - each tool specifies its panel layout and tab endpoints
   const toolConfigurations = {
@@ -1355,12 +1390,10 @@ export default function FormulaChatInterface() {
       {/* Multi-Panel Layout */}
       {activeTool && (
         <MultiPanelLayout
+          panels={createPanelsForTool(activeTool.id)}
           isOpen={!!activeTool}
           onClose={() => setActiveTool(null)}
-          toolTitle={activeTool.title}
-          toolIcon={activeTool.icon}
           toolColor={activeTool.color}
-          panels={getToolPanels(activeTool.id)}
         />
       )}
 
