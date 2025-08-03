@@ -383,6 +383,21 @@ export const artifactHistory = pgTable("artifact_history", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Generated documents table - for AI-created documents
+export const documents = pgTable("documents", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  content: text("content").notNull(),
+  documentType: varchar("document_type").default("general"), // sop, formulation, compliance, etc.
+  userId: varchar("user_id").notNull().references(() => users.id),
+  position: jsonb("position").default('{"x": 100, "y": 100}'), // Desktop position
+  size: jsonb("size").default('{"width": 700, "height": 500}'), // Window size
+  isAsciiDoc: boolean("is_ascii_doc").default(false),
+  metadata: jsonb("metadata").default('{}'), // Additional document metadata
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   projects: many(projects),
@@ -394,6 +409,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   artifacts: many(userArtifacts),
   desktopFolders: many(desktopFolders),
   desktopFiles: many(desktopFiles),
+  documents: many(documents),
 }));
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
@@ -558,6 +574,13 @@ export const artifactHistoryRelations = relations(artifactHistory, ({ one }) => 
   }),
   user: one(users, {
     fields: [artifactHistory.userId],
+    references: [users.id],
+  }),
+}));
+
+export const documentsRelations = relations(documents, ({ one }) => ({
+  user: one(users, {
+    fields: [documents.userId],
     references: [users.id],
   }),
 }));
@@ -865,11 +888,21 @@ export const insertDesktopFileSchema = createInsertSchema(desktopFiles).omit({
   updatedAt: true,
 });
 
+export const insertDocumentSchema = createInsertSchema(documents).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Desktop folder and file types
 export type DesktopFolder = typeof desktopFolders.$inferSelect;
 export type InsertDesktopFolder = z.infer<typeof insertDesktopFolderSchema>;
 export type DesktopFile = typeof desktopFiles.$inferSelect;
 export type InsertDesktopFile = z.infer<typeof insertDesktopFileSchema>;
+
+// Document types
+export type Document = typeof documents.$inferSelect;
+export type InsertDocument = z.infer<typeof insertDocumentSchema>;
 
 // Google credentials types
 export type UserGoogleCredentials = typeof userGoogleCredentials.$inferSelect;

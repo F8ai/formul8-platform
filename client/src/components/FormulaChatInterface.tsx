@@ -143,6 +143,11 @@ export default function FormulaChatInterface() {
           const documentTitle = data.fileData.title || 'Generated Document';
           const documentContent = data.fileData.content || '';
           
+          // Position in top-right area of desktop
+          const desktopWidth = window.innerWidth - 56; // Account for left nav
+          const topRightX = desktopWidth - 720; // 700px width + 20px margin
+          const topRightY = 80; // Below header with margin
+          
           windowManager.createWindow({
             type: 'document',
             title: documentTitle,
@@ -152,7 +157,23 @@ export default function FormulaChatInterface() {
               isAsciiDoc: documentContent.includes('=') && documentContent.includes('::')
             },
             size: { width: 700, height: 500 },
-            position: { x: Math.random() * 300 + 100, y: Math.random() * 200 + 100 }
+            position: { x: topRightX, y: topRightY }
+          });
+
+          // Save document to server
+          fetch('/api/documents', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              title: documentTitle,
+              content: documentContent,
+              documentType: data.fileData.documentType || 'general',
+              position: { x: topRightX, y: topRightY }
+            })
+          }).catch(saveError => {
+            console.error('Error saving document:', saveError);
           });
         } catch (docError) {
           console.error('Error creating document window:', docError);

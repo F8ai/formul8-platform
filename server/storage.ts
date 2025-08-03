@@ -14,6 +14,7 @@ import {
   baselineTestRuns,
   baselineTestResults,
   userGoogleCredentials,
+  documents,
   type User,
   type UpsertUser,
   type Project,
@@ -42,6 +43,8 @@ import {
   type InsertBaselineTestResult,
   type UserGoogleCredentials,
   type InsertUserGoogleCredentials,
+  type Document,
+  type InsertDocument,
   dashboardLayouts,
   widgetPreferences,
   type DashboardLayout,
@@ -160,6 +163,13 @@ export interface IStorage {
   // Artifact history operations
   logArtifactChange(change: InsertArtifactHistory): Promise<ArtifactHistory>;
   getArtifactHistory(artifactId: number): Promise<ArtifactHistory[]>;
+  
+  // Document operations
+  createDocument(document: InsertDocument): Promise<Document>;
+  getDocument(id: number): Promise<Document | undefined>;
+  getUserDocuments(userId: string): Promise<Document[]>;
+  updateDocument(id: number, updates: Partial<InsertDocument>): Promise<Document | undefined>;
+  deleteDocument(id: number): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -756,6 +766,39 @@ export class DatabaseStorage implements IStorage {
 
   async deleteWidgetPreference(id: string): Promise<boolean> {
     const result = await db.delete(widgetPreferences).where(eq(widgetPreferences.id, id));
+    return result.rowCount > 0;
+  }
+
+  // Document operations
+  async createDocument(document: InsertDocument): Promise<Document> {
+    const [newDocument] = await db.insert(documents).values(document).returning();
+    return newDocument;
+  }
+
+  async getDocument(id: number): Promise<Document | undefined> {
+    const [document] = await db.select().from(documents).where(eq(documents.id, id));
+    return document;
+  }
+
+  async getUserDocuments(userId: string): Promise<Document[]> {
+    return await db
+      .select()
+      .from(documents)
+      .where(eq(documents.userId, userId))
+      .orderBy(desc(documents.createdAt));
+  }
+
+  async updateDocument(id: number, updates: Partial<InsertDocument>): Promise<Document | undefined> {
+    const [updated] = await db
+      .update(documents)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(documents.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteDocument(id: number): Promise<boolean> {
+    const result = await db.delete(documents).where(eq(documents.id, id));
     return result.rowCount > 0;
   }
 }
