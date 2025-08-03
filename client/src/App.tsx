@@ -66,65 +66,15 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        {isLoading || !isAuthenticated ? (
-          <Route path="/" component={Landing} />
-        ) : (
-          <Route path="/" component={Workspace} />
-        )}
-        <Route path="/landing" component={Landing} />
-        <Route path="/design" component={Design} />
-        <Route path="/agents" component={Agents} />
-        <Route path="/agents-dynamic" component={AgentsDynamic} />
-        <Route path="/real-metrics" component={RealMetrics} />
-        <Route path="/roadmap" component={Roadmap} />
-        <Route path="/federated" component={Federated} />
-        <Route path="/compute" component={ComputePage} />
-        <Route path="/voiceflow" component={VoiceflowDashboard} />
-        <Route path="/agent-detail/:id">
-          {params => <AgentDetail agentId={params.id} />}
+        {/* Only the root route - everything happens here */}
+        <Route path="/" component={Workspace} />
+        {/* All other routes redirect to root */}
+        <Route>
+          {() => {
+            window.location.href = '/';
+            return null;
+          }}
         </Route>
-        <Route path="/repo/:id">
-          {params => <AgentRepo agentId={params.id} />}
-        </Route>
-        <Route path="/agent/compliance" component={ComplianceAgent} />
-        <Route path="/agent/:agentType/results">
-          {(params) => <BaselineTableViewer agentType={params.agentType} />}
-        </Route>
-        <Route path="/agent/:agentType/baseline">
-          {(params) => <BaselineEditor agentType={params.agentType} />}
-        </Route>
-        <Route path="/agent/:agentType">
-          {params => <AgentDashboard agentType={params.agentType} />}
-        </Route>
-        <Route path="/chat-tool-simple" component={ChatToolSimple} />
-
-        <Route path="/chat-tool" component={ChatTool} />
-        <Route path="/agent/:agentId/chat" component={AgentChat} />
-        <Route path="/test-results/:agentId">
-          {params => <TestResults agentId={params.agentId} />}
-        </Route>
-        <Route path="/landing" component={Landing} />
-        <Route path="/chat-landing" component={ChatLanding} />
-        <Route path="/chat" component={Chat} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/science" component={Science} />
-        <Route path="/development-agent" component={DevelopmentAgent} />
-        <Route path="/agents-dashboard" component={AgentsDashboard} />
-        <Route path="/baselines" component={BaselineManagement} />
-        <Route path="/baseline-assessment" component={BaselineAssessment} />
-        <Route path="/langgraph" component={LangGraphDashboard} />
-        <Route path="/corpus-qa" component={CorpusQA} />
-        <Route path="/mvp" component={MVP} />
-        <Route path="/plan-detail/:type" component={PlanDetail} />
-        <Route path="/artifacts" component={Artifacts} />
-        <Route path="/use" component={UseCasesIndex} />
-        <Route path="/use/dmso" component={DMSOUseCase} />
-        <Route path="/use/goodfor" component={GoodFORUseCase} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/desktop" component={Desktop} />
-        <Route path="/workspace" component={Workspace} />
-        <Route component={NotFound} />
       </Switch>
     </Suspense>
   );

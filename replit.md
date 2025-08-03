@@ -16,6 +16,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Desktop Layout Fixes (Aug 3, 2025)**: Fixed missing left navigation bar in desktop view, corrected footer height to match header (both 56px), restored proper desktop workspace structure with left navigation visible
 - **Duplicate Toolbar Fix (Aug 3, 2025)**: Resolved duplicate toolbar issue by expanding standalone desktop mode to cover all main routes (/, /workspace, /desktop), eliminating top header and providing clean desktop experience with only bottom taskbar
 - **Document Desktop Icons System (Aug 3, 2025)**: Implemented complete document management system with desktop icons that appear when AI creates documents, double-click functionality to open document windows, proper positioning within desktop canvas boundaries, and real-time cache invalidation for immediate updates
+- **File Deletion & Comprehensive Diagrams (Aug 3, 2025)**: Added file deletion functionality with hover-visible delete buttons (red X) on document icons, implemented comprehensive diagram support via Kroki.io API supporting PlantUML, Graphviz, Ditaa, Svgbob, BlockDiag, SeqDiag, ActDiag, NwDiag, C4PlantUML, ERD, Nomnoml, Structurizr in addition to Mermaid
 
 ## User Preferences
 
