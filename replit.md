@@ -53,6 +53,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **PWA Support**: Full Progressive Web App with iOS "Add to Home Screen", desktop notifications, and offline capabilities
 - **Notification System**: Comprehensive notification menu with bell icon, unread badges, desktop/mobile PWA notifications
 - **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory
+- **Brand Typography**: Consistent Formul8.ai font styling across all tab labels and UI components using Inter/SF Pro Display font stack with advanced typography features
 - **Agent Ecosystem**: 12 specialized AI agents (Compliance, Formulation, Marketing, Operations, Sourcing, Patent, Science, Spectra, Customer Success, LMS, Metabolomics) designed for specific cannabis industry domains
 - **Baseline Testing System**: Comprehensive AI-powered system for evaluating agent performance with authentic question sets, multi-model comparison, and detailed metrics (accuracy, confidence, cost)
 - **Configuration Management**: Comprehensive agent configuration including model selection, RAG settings, and operational parameters via API

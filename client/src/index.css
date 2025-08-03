@@ -164,6 +164,21 @@
   .hover\:bg-formul8-button-green:hover { background-color: var(--formul8-button-green); }
   .hover\:scale-105:hover { transform: scale(1.05); }
 
+  /* Formul8.ai Typography */
+  .formul8-tab-label { 
+    @apply font-formul8 font-medium text-sm tracking-wide;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+    text-rendering: optimizeLegibility;
+  }
+  
+  .formul8-tab-active { 
+    @apply formul8-tab-label text-formul8-teal font-semibold;
+  }
+  
+  .formul8-tab-inactive { 
+    @apply formul8-tab-label text-formul8-gray hover:text-formul8-white;
+  }
+
   /* Formul8.ai Dark Theme Components */
   .formul8-card {
     background: var(--formul8-gradient-card);
