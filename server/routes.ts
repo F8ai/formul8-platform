@@ -259,6 +259,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete document
+  app.delete("/api/documents/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      const success = await storage.deleteDocument(parseInt(id));
+      
+      if (!success) {
+        return res.status(404).json({ error: "Document not found" });
+      }
+
+      res.json({ success: true, message: "Document deleted successfully" });
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      res.status(500).json({ error: "Failed to delete document" });
+    }
+  });
+
   // GitHub routes
   app.use('/api/github', githubRouter);
   
