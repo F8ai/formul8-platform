@@ -122,6 +122,37 @@
     background-color: var(--formul8-bg-dark);
     color: var(--formul8-text-white);
   }
+}
+
+/* Custom Formul8 utility classes */
+@layer utilities {
+  .text-formul8-text-white {
+    color: var(--formul8-text-white);
+  }
+  
+  .text-formul8-text-gray {
+    color: var(--formul8-text-gray);
+  }
+  
+  .text-formul8-text-muted {
+    color: var(--formul8-text-muted);
+  }
+  
+  .text-formul8-primary {
+    color: var(--formul8-primary);
+  }
+  
+  .bg-formul8-bg-dark {
+    background-color: var(--formul8-bg-dark);
+  }
+  
+  .bg-formul8-bg-card {
+    background-color: var(--formul8-bg-card);
+  }
+  
+  .border-formul8-border {
+    border-color: var(--formul8-border);
+  }
   
   /* Force dark background for input elements */
   .dark, [data-theme="dark"] {
