@@ -19,7 +19,7 @@ import { WindowManagerContext } from "./WindowManager";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ObjectUploader } from "./ObjectUploader";
 import { ToolToggleBar } from "./ToolToggleBar";
-import { SlidingToolPanel } from "./SlidingToolPanel";
+import { MultiPanelLayout } from "./MultiPanelLayout";
 import type { UploadResult } from '@uppy/core';
 
 
@@ -98,211 +98,193 @@ export default function FormulaChatInterface() {
   } | null>(null);
 
 
-  // Function to get tabs for each tool
-  const getToolTabs = (toolId: string) => {
+  // Function to get panel layouts for each tool
+  const getToolPanels = (toolId: string) => {
     switch (toolId) {
       case 'formulation':
         return [
           {
-            id: 'wizard',
-            label: 'Wizard',
-            icon: '🧪',
-            content: (
-              <iframe
-                src="/design"
-                className="w-full h-full border-0"
-                title="Formulation Wizard"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-              />
-            )
+            id: 'chat',
+            title: 'Formulation Chat',
+            position: 'left' as const,
+            width: 'w-96',
+            tabs: [
+              {
+                id: 'chat',
+                label: 'Chat',
+                icon: '💬',
+                content: (
+                  <div className="p-4 h-full flex flex-col">
+                    <h3 className="text-sm font-semibold mb-3">Formulation Assistant</h3>
+                    <div className="flex-1 bg-formul8-bg-light rounded p-3 mb-3 text-xs">
+                      <p>Ask me about formulation techniques, dosage calculations, or ingredient compatibility...</p>
+                    </div>
+                    <input 
+                      type="text" 
+                      placeholder="Ask about formulations..." 
+                      className="w-full p-2 text-xs bg-formul8-bg-light border border-formul8-border rounded text-formul8-text-white placeholder-formul8-text-gray"
+                    />
+                  </div>
+                )
+              }
+            ]
           },
           {
-            id: 'calculator',
-            label: 'Calculator',
-            icon: '🧮',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Formulation Calculator</h3>
-                <p>Advanced dosage and concentration calculations coming soon...</p>
-              </div>
-            )
+            id: 'molecule',
+            title: 'Molecular Structure',
+            position: 'top-right' as const,
+            width: 'w-80',
+            height: 'h-64',
+            tabs: [
+              {
+                id: 'structure',
+                label: 'Structure',
+                icon: '🧬',
+                content: (
+                  <div className="p-4 h-full">
+                    <div className="w-full h-full bg-formul8-bg-light rounded flex items-center justify-center">
+                      <div className="text-center text-xs text-formul8-text-gray">
+                        <div className="text-2xl mb-2">🧬</div>
+                        <p>Molecular Viewer</p>
+                        <p>THC/CBD structures</p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            ]
           },
           {
-            id: 'history',
-            label: 'History',
-            icon: '📜',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Formulation History</h3>
-                <p>Previous formulations and saved recipes...</p>
-              </div>
-            )
+            id: 'info',
+            title: 'Formulation Info',
+            position: 'bottom-right' as const,
+            width: 'w-80',
+            height: 'h-64',
+            tabs: [
+              {
+                id: 'details',
+                label: 'Details',
+                icon: 'ℹ️',
+                content: (
+                  <div className="p-4 h-full text-xs">
+                    <h4 className="font-semibold mb-2">Current Formulation</h4>
+                    <div className="space-y-1 text-formul8-text-gray">
+                      <p>THC: 15mg/ml</p>
+                      <p>CBD: 5mg/ml</p>
+                      <p>Carrier: MCT Oil</p>
+                      <p>Volume: 30ml</p>
+                    </div>
+                  </div>
+                )
+              }
+            ]
           }
         ];
       case 'compliance':
         return [
           {
-            id: 'dashboard',
-            label: 'Dashboard',
-            icon: '⚖️',
-            content: (
-              <iframe
-                src="/ComplianceAgent"
-                className="w-full h-full border-0"
-                title="Compliance Dashboard"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-              />
-            )
+            id: 'chat',
+            title: 'Compliance Chat',
+            position: 'left' as const,
+            width: 'w-96',
+            tabs: [
+              {
+                id: 'chat',
+                label: 'Chat',
+                icon: '💬',
+                content: (
+                  <div className="p-4 h-full flex flex-col">
+                    <h3 className="text-sm font-semibold mb-3">Compliance Assistant</h3>
+                    <div className="flex-1 bg-formul8-bg-light rounded p-3 mb-3 text-xs">
+                      <p>Ask me about regulations, licensing requirements, or compliance procedures...</p>
+                    </div>
+                    <input 
+                      type="text" 
+                      placeholder="Ask about compliance..." 
+                      className="w-full p-2 text-xs bg-formul8-bg-light border border-formul8-border rounded text-formul8-text-white placeholder-formul8-text-gray"
+                    />
+                  </div>
+                )
+              }
+            ]
           },
           {
             id: 'regulations',
-            label: 'Regulations',
-            icon: '📋',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Current Regulations</h3>
-                <p>State-by-state compliance requirements...</p>
-              </div>
-            )
-          }
-        ];
-      case 'artifacts':
-        return [
-          {
-            id: 'manager',
-            label: 'Manager',
-            icon: '📄',
-            content: (
-              <iframe
-                src="/artifacts"
-                className="w-full h-full border-0"
-                title="Document Manager"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-              />
-            )
+            title: 'Current Regulations',
+            position: 'top-right' as const,
+            width: 'w-80',
+            height: 'h-64',
+            tabs: [
+              {
+                id: 'state-regs',
+                label: 'State Rules',
+                icon: '📋',
+                content: (
+                  <div className="p-4 h-full text-xs">
+                    <h4 className="font-semibold mb-2">California Cannabis Laws</h4>
+                    <div className="space-y-1 text-formul8-text-gray">
+                      <p>• Testing requirements updated</p>
+                      <p>• New packaging standards</p>
+                      <p>• License renewal dates</p>
+                    </div>
+                  </div>
+                )
+              }
+            ]
           },
           {
-            id: 'templates',
-            label: 'Templates',
-            icon: '📝',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Document Templates</h3>
-                <p>SOPs, forms, and compliance templates...</p>
-              </div>
-            )
-          }
-        ];
-      case 'baseline':
-        return [
-          {
-            id: 'assessment',
-            label: 'Assessment',
-            icon: '📊',
-            content: (
-              <iframe
-                src="/BaselineAssessment"
-                className="w-full h-full border-0"
-                title="Baseline Assessment"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-              />
-            )
-          },
-          {
-            id: 'results',
-            label: 'Results',
-            icon: '📈',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Test Results</h3>
-                <p>Historical testing data and analytics...</p>
-              </div>
-            )
-          }
-        ];
-      case 'dashboard':
-        return [
-          {
-            id: 'overview',
-            label: 'Overview',
-            icon: '📈',
-            content: (
-              <iframe
-                src="/dashboard"
-                className="w-full h-full border-0"
-                title="Main Dashboard"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-              />
-            )
-          },
-          {
-            id: 'analytics',
-            label: 'Analytics',
-            icon: '📊',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Advanced Analytics</h3>
-                <p>Detailed performance metrics and insights...</p>
-              </div>
-            )
-          }
-        ];
-      case 'workspace':
-        return [
-          {
-            id: 'files',
-            label: 'Files',
-            icon: '💼',
-            content: (
-              <iframe
-                src="/workspace"
-                className="w-full h-full border-0"
-                title="File Workspace"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-              />
-            )
-          },
-          {
-            id: 'projects',
-            label: 'Projects',
-            icon: '📁',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Projects</h3>
-                <p>Active projects and collaboration spaces...</p>
-              </div>
-            )
-          }
-        ];
-      case 'issues':
-        return [
-          {
-            id: 'tracker',
-            label: 'Tracker',
-            icon: '🐛',
-            content: (
-              <iframe
-                src="/roadmap"
-                className="w-full h-full border-0"
-                title="Issue Tracker"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-              />
-            )
-          },
-          {
-            id: 'roadmap',
-            label: 'Roadmap',
-            icon: '🗺️',
-            content: (
-              <div className="p-4 text-formul8-text-white">
-                <h3 className="text-lg font-semibold mb-4">Development Roadmap</h3>
-                <p>Upcoming features and improvements...</p>
-              </div>
-            )
+            id: 'checklist',
+            title: 'Compliance Checklist',
+            position: 'bottom-right' as const,
+            width: 'w-80',
+            height: 'h-64',
+            tabs: [
+              {
+                id: 'tasks',
+                label: 'Tasks',
+                icon: '✅',
+                content: (
+                  <div className="p-4 h-full text-xs">
+                    <h4 className="font-semibold mb-2">Daily Checklist</h4>
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <input type="checkbox" className="w-3 h-3" defaultChecked />
+                        <span className="text-formul8-text-gray">Inventory tracking</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <input type="checkbox" className="w-3 h-3" />
+                        <span className="text-formul8-text-gray">Security check</span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            ]
           }
         ];
       default:
-        return [];
+        return [
+          {
+            id: 'main',
+            title: 'Tool Interface',
+            position: 'left' as const,
+            width: 'w-96',
+            tabs: [
+              {
+                id: 'interface',
+                label: 'Interface',
+                content: (
+                  <iframe
+                    src={availableTools.find(t => t.id === toolId)?.route || '/'}
+                    className="w-full h-full border-0"
+                    title="Tool Interface"
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+                  />
+                )
+              }
+            ]
+          }
+        ];
     }
   };
 
@@ -1080,16 +1062,15 @@ export default function FormulaChatInterface() {
         </p>
       </div>
 
-      {/* Sliding Tool Panel */}
+      {/* Multi-Panel Layout */}
       {activeTool && (
-        <SlidingToolPanel
+        <MultiPanelLayout
           isOpen={!!activeTool}
           onClose={() => setActiveTool(null)}
-          title={activeTool.title}
-          icon={activeTool.icon}
-          color={activeTool.color}
-          width="w-1/2"
-          tabs={getToolTabs(activeTool.id)}
+          toolTitle={activeTool.title}
+          toolIcon={activeTool.icon}
+          toolColor={activeTool.color}
+          panels={getToolPanels(activeTool.id)}
         />
       )}
 
