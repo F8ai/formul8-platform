@@ -49,6 +49,7 @@ import {
   ObjectNotFoundError,
 } from "./objectStorage";
 import { ObjectPermission } from "./objectAcl";
+import { insertDocumentSchema } from "@shared/schema";
 
 // Initialize OpenAI client for baseline testing
 const openai = new OpenAI({
@@ -948,6 +949,112 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error processing attachment:', error);
       res.status(500).json({ error: 'Failed to process attachment' });
+    }
+  });
+
+  // Document management endpoints
+  app.post('/api/documents', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.user?.claims?.sub;
+      const documentData = insertDocumentSchema.parse({
+        ...req.body,
+        userId,
+      });
+
+      const document = await storage.createDocument(documentData);
+      res.status(201).json(document);
+    } catch (error) {
+      console.error('Error creating document:', error);
+      res.status(500).json({ error: 'Failed to create document' });
+    }
+  });
+
+  app.get('/api/documents', isAuthenticated, async (req, res) => {
+    try {
+      const userId = req.user?.claims?.sub;
+      const documents = await storage.getUserDocuments(userId);
+      res.json(documents);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      res.status(500).json({ error: 'Failed to fetch documents' });
+    }
+  });
+
+  app.get('/api/documents/:id', isAuthenticated, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const document = await storage.getDocument(id);
+      
+      if (!document) {
+        return res.status(404).json({ error: 'Document not found' });
+      }
+
+      // Check if user owns the document
+      const userId = req.user?.claims?.sub;
+      if (document.userId !== userId) {
+        return res.status(403).json({ error: 'Access denied' });
+      }
+
+      res.json(document);
+    } catch (error) {
+      console.error('Error fetching document:', error);
+      res.status(500).json({ error: 'Failed to fetch document' });
+    }
+  });
+
+  app.put('/api/documents/:id', isAuthenticated, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userId = req.user?.claims?.sub;
+      
+      // First check if document exists and user owns it
+      const existingDocument = await storage.getDocument(id);
+      if (!existingDocument) {
+        return res.status(404).json({ error: 'Document not found' });
+      }
+      if (existingDocument.userId !== userId) {
+        return res.status(403).json({ error: 'Access denied' });
+      }
+
+      const updateData = { ...req.body };
+      delete updateData.userId; // Don't allow changing userId
+      delete updateData.id; // Don't allow changing id
+
+      const document = await storage.updateDocument(id, updateData);
+      if (!document) {
+        return res.status(404).json({ error: 'Document not found' });
+      }
+
+      res.json(document);
+    } catch (error) {
+      console.error('Error updating document:', error);
+      res.status(500).json({ error: 'Failed to update document' });
+    }
+  });
+
+  app.delete('/api/documents/:id', isAuthenticated, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userId = req.user?.claims?.sub;
+      
+      // First check if document exists and user owns it
+      const existingDocument = await storage.getDocument(id);
+      if (!existingDocument) {
+        return res.status(404).json({ error: 'Document not found' });
+      }
+      if (existingDocument.userId !== userId) {
+        return res.status(403).json({ error: 'Access denied' });
+      }
+
+      const success = await storage.deleteDocument(id);
+      if (!success) {
+        return res.status(404).json({ error: 'Document not found' });
+      }
+
+      res.status(204).send();
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      res.status(500).json({ error: 'Failed to delete document' });
     }
   });
 
