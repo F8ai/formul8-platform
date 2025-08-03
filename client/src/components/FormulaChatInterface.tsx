@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { Send, MessageSquare, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Send, MessageSquare, Loader2, CheckCircle, AlertCircle, FileText, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -96,6 +96,9 @@ export default function FormulaChatInterface() {
 
       setMessages(prev => [...prev, assistantMessage]);
 
+      // Check if the response contains generated files and auto-split desktop
+      detectAndPreviewGeneratedFiles(data.response);
+
       // Invalidate relevant queries to refresh any data displays
       queryClient.invalidateQueries({ queryKey: ['/api/queries'] });
       queryClient.invalidateQueries({ queryKey: ['/api/verifications'] });
@@ -173,6 +176,158 @@ export default function FormulaChatInterface() {
         }
       });
     }
+  };
+
+  const detectAndPreviewGeneratedFiles = (content: string) => {
+    // Look for code blocks that might contain generated files
+    const codeBlockRegex = /```(\w*)\n([\s\S]*?)```/g;
+    const fileIndicators = [
+      'asciidoc', 'adoc', 'txt', 'md', 'markdown', 
+      'json', 'yaml', 'yml', 'csv', 'xml'
+    ];
+    
+    let match;
+    const detectedFiles = [];
+    
+    while ((match = codeBlockRegex.exec(content)) !== null) {
+      const [fullMatch, language, fileContent] = match;
+      
+      // If language indicates a file type or content looks like a document
+      if (fileIndicators.includes(language.toLowerCase()) || 
+          fileContent.includes('= ') || // AsciiDoc title
+          fileContent.includes('## ') || // Markdown title
+          fileContent.includes('title:') || // YAML frontmatter
+          fileContent.length > 200) { // Substantial content
+        
+        const defaultExtension = language.toLowerCase() || 'adoc';
+        const fileName = `Generated_${Date.now()}.${defaultExtension}`;
+        
+        detectedFiles.push({
+          fileName,
+          content: fileContent,
+          language: defaultExtension,
+          fullMatch
+        });
+      }
+    }
+
+    // If files detected, split desktop and open preview
+    if (detectedFiles.length > 0 && windowManager) {
+      const file = detectedFiles[0]; // Use first detected file
+      
+      // Split desktop horizontally - resize current chat to left half
+      const currentWindows = windowManager.windows || [];
+      const chatWindow = currentWindows.find(w => w.type === 'chat');
+      
+      if (chatWindow) {
+        // Resize chat to left half
+        windowManager.updateWindow({
+          ...chatWindow,
+          width: Math.floor(window.innerWidth / 2) - 50,
+          height: window.innerHeight - 150,
+          x: 25,
+          y: 25
+        });
+      }
+
+      // Open file preview in right half
+      windowManager.createWindow({
+        type: 'document',
+        title: `📄 ${file.fileName}`,
+        content: {
+          mode: 'file-preview',
+          fileName: file.fileName,
+          fileContent: file.content,
+          fileType: file.language,
+          isGenerated: true
+        },
+        size: { 
+          width: Math.floor(window.innerWidth / 2) - 50, 
+          height: window.innerHeight - 150 
+        },
+        position: { 
+          x: Math.floor(window.innerWidth / 2) + 25, 
+          y: 25 
+        }
+      });
+    }
+  };
+
+  const renderGeneratedFilePreview = (content: string) => {
+    // Look for code blocks that contain file content
+    const codeBlockRegex = /```(\w*)\n([\s\S]*?)```/g;
+    const fileIndicators = [
+      'asciidoc', 'adoc', 'txt', 'md', 'markdown', 
+      'json', 'yaml', 'yml', 'csv', 'xml'
+    ];
+    
+    const match = codeBlockRegex.exec(content);
+    if (!match) return null;
+    
+    const [fullMatch, language, fileContent] = match;
+    
+    // Check if this looks like a generated file
+    if (fileIndicators.includes(language.toLowerCase()) || 
+        fileContent.includes('= ') || // AsciiDoc title
+        fileContent.includes('## ') || // Markdown title
+        fileContent.includes('title:') || // YAML frontmatter
+        fileContent.length > 100) { // Substantial content
+      
+      const defaultExtension = language.toLowerCase() || 'adoc';
+      const fileName = `Preview.${defaultExtension}`;
+      
+      return (
+        <div className="mt-4 border border-formul8-border rounded-lg bg-formul8-bg-dark">
+          <div className="flex items-center justify-between p-3 border-b border-formul8-border bg-formul8-bg-card">
+            <div className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-formul8-primary" />
+              <span className="text-sm font-medium text-formul8-white">Generated File Preview</span>
+              <Badge variant="outline" className="text-xs border-formul8-primary text-formul8-primary">
+                {defaultExtension.toUpperCase()}
+              </Badge>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                if (windowManager) {
+                  windowManager.createWindow({
+                    type: 'document',
+                    title: `📄 ${fileName}`,
+                    content: {
+                      mode: 'file-preview',
+                      fileName: fileName,
+                      fileContent: fileContent,
+                      fileType: defaultExtension,
+                      isGenerated: true
+                    },
+                    size: { 
+                      width: Math.floor(window.innerWidth * 0.6), 
+                      height: Math.floor(window.innerHeight * 0.8)
+                    },
+                    position: { 
+                      x: Math.floor(window.innerWidth * 0.2), 
+                      y: Math.floor(window.innerHeight * 0.1)
+                    }
+                  });
+                }
+              }}
+              className="text-xs border-formul8-border text-formul8-white hover:bg-formul8-bg-light"
+            >
+              <ExternalLink className="w-3 h-3 mr-1" />
+              Open Full View
+            </Button>
+          </div>
+          <div className="p-3 max-h-40 overflow-y-auto">
+            <pre className="text-xs text-formul8-white font-mono whitespace-pre-wrap">
+              {fileContent.slice(0, 300)}{fileContent.length > 300 ? '...' : ''}
+            </pre>
+          </div>
+        </div>
+      );
+    }
+    
+    return null;
   };
 
   // Custom markdown components to render document previews
@@ -282,6 +437,9 @@ export default function FormulaChatInterface() {
                         {message.content}
                       </ReactMarkdown>
                     </div>
+                    
+                    {/* Inline File Preview for Generated Files */}
+                    {message.role === 'assistant' && renderGeneratedFilePreview(message.content)}
                     {message.verificationCount !== undefined && message.verificationCount > 0 && (
                       <div className="mt-2 pt-2 border-t border-formul8-border">
                         <span className="text-xs text-formul8-muted">
