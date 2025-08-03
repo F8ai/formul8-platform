@@ -109,6 +109,17 @@
     background-color: var(--formul8-bg-dark);
     color: var(--formul8-text-white);
   }
+
+  /* Global window styling for tabbed browser windows */
+  html {
+    background-color: var(--formul8-bg-dark);
+    color: var(--formul8-text-white);
+  }
+
+  /* Ensure all elements inherit dark theme */
+  * {
+    border-color: var(--formul8-border);
+  }
 }
 
 @layer utilities {
@@ -148,6 +159,22 @@
     color: var(--formul8-text-primary);
   }
   
+  /* Window styling with emoji color borders */
+  .tool-window-border-purple { border: 2px solid var(--formul8-tertiary); }
+  .tool-window-border-red { border: 2px solid var(--formul8-error); }
+  .tool-window-border-green { border: 2px solid var(--formul8-success); }
+  .tool-window-border-blue { border: 2px solid var(--formul8-primary); }
+  .tool-window-border-cyan { border: 2px solid var(--formul8-secondary); }
+  .tool-window-border-orange { border: 2px solid var(--formul8-warning); }
+  .tool-window-border-indigo { border: 2px solid var(--formul8-info); }
+
+  /* Main content area dark theme enforcement */
+  .main-content-area {
+    background-color: var(--formul8-bg-dark) !important;
+    color: var(--formul8-text-white) !important;
+    min-height: 100vh;
+  }
+
   /* Button styles */
   .formul8-button-primary { 
     background-color: var(--formul8-primary); 
