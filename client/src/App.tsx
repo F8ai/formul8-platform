@@ -70,6 +70,8 @@ function Router() {
           <Route path="/" component={Workspace} />
         )}
         <Route path="/landing" component={Landing} />
+        <Route path="/workspace" component={Workspace} />
+        <Route path="/desktop" component={Workspace} />
         <Route path="/design" component={Design} />
         <Route path="/agents" component={Agents} />
         <Route path="/agents-dynamic" component={AgentsDynamic} />
