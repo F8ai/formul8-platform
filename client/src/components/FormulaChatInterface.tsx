@@ -16,6 +16,7 @@ import remarkGfm from "remark-gfm";
 import "katex/dist/katex.min.css";
 import { DocumentPreview } from "./DocumentPreview";
 import { WindowManagerContext } from "./WindowManager";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Message {
   id: string;
@@ -40,6 +41,7 @@ interface AgentResponse {
 }
 
 export default function FormulaChatInterface() {
+  const isMobile = useIsMobile();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
@@ -211,45 +213,68 @@ export default function FormulaChatInterface() {
       }
     }
 
-    // If files detected, split desktop and open preview
+    // If files detected, handle mobile vs desktop layout
     if (detectedFiles.length > 0 && windowManager) {
       const file = detectedFiles[0]; // Use first detected file
       
-      // Split desktop horizontally - resize current chat to left half
-      const currentWindows = windowManager.windows || [];
-      const chatWindow = currentWindows.find(w => w.type === 'chat');
-      
-      if (chatWindow) {
-        // Resize chat to left half
-        windowManager.updateWindow({
-          ...chatWindow,
-          width: Math.floor(window.innerWidth / 2) - 50,
-          height: window.innerHeight - 150,
-          x: 25,
-          y: 25
+      if (isMobile) {
+        // On mobile: Create fullscreen file preview
+        windowManager.createWindow({
+          type: 'document',
+          title: `📄 ${file.fileName}`,
+          content: {
+            mode: 'file-preview',
+            fileName: file.fileName,
+            fileContent: file.content,
+            fileType: file.language,
+            isGenerated: true
+          },
+          size: { 
+            width: window.innerWidth - 20, 
+            height: window.innerHeight - 100 
+          },
+          position: { 
+            x: 10, 
+            y: 50 
+          }
+        });
+      } else {
+        // On desktop: Split horizontally - resize current chat to left half
+        const currentWindows = windowManager.windows || [];
+        const chatWindow = currentWindows.find(w => w.type === 'chat');
+        
+        if (chatWindow) {
+          // Resize chat to left half
+          windowManager.updateWindow({
+            ...chatWindow,
+            width: Math.floor(window.innerWidth / 2) - 50,
+            height: window.innerHeight - 150,
+            x: 25,
+            y: 25
+          });
+        }
+
+        // Open file preview in right half
+        windowManager.createWindow({
+          type: 'document',
+          title: `📄 ${file.fileName}`,
+          content: {
+            mode: 'file-preview',
+            fileName: file.fileName,
+            fileContent: file.content,
+            fileType: file.language,
+            isGenerated: true
+          },
+          size: { 
+            width: Math.floor(window.innerWidth / 2) - 50, 
+            height: window.innerHeight - 150 
+          },
+          position: { 
+            x: Math.floor(window.innerWidth / 2) + 25, 
+            y: 25 
+          }
         });
       }
-
-      // Open file preview in right half
-      windowManager.createWindow({
-        type: 'document',
-        title: `📄 ${file.fileName}`,
-        content: {
-          mode: 'file-preview',
-          fileName: file.fileName,
-          fileContent: file.content,
-          fileType: file.language,
-          isGenerated: true
-        },
-        size: { 
-          width: Math.floor(window.innerWidth / 2) - 50, 
-          height: window.innerHeight - 150 
-        },
-        position: { 
-          x: Math.floor(window.innerWidth / 2) + 25, 
-          y: 25 
-        }
-      });
     }
   };
 
@@ -291,25 +316,49 @@ export default function FormulaChatInterface() {
               variant="outline"
               onClick={() => {
                 if (windowManager) {
-                  windowManager.createWindow({
-                    type: 'document',
-                    title: `📄 ${fileName}`,
-                    content: {
-                      mode: 'file-preview',
-                      fileName: fileName,
-                      fileContent: fileContent,
-                      fileType: defaultExtension,
-                      isGenerated: true
-                    },
-                    size: { 
-                      width: Math.floor(window.innerWidth * 0.6), 
-                      height: Math.floor(window.innerHeight * 0.8)
-                    },
-                    position: { 
-                      x: Math.floor(window.innerWidth * 0.2), 
-                      y: Math.floor(window.innerHeight * 0.1)
-                    }
-                  });
+                  if (isMobile) {
+                    // On mobile: Create fullscreen file preview
+                    windowManager.createWindow({
+                      type: 'document',
+                      title: `📄 ${fileName}`,
+                      content: {
+                        mode: 'file-preview',
+                        fileName: fileName,
+                        fileContent: fileContent,
+                        fileType: defaultExtension,
+                        isGenerated: true
+                      },
+                      size: { 
+                        width: window.innerWidth - 20, 
+                        height: window.innerHeight - 100 
+                      },
+                      position: { 
+                        x: 10, 
+                        y: 50 
+                      }
+                    });
+                  } else {
+                    // On desktop: Standard window size
+                    windowManager.createWindow({
+                      type: 'document',
+                      title: `📄 ${fileName}`,
+                      content: {
+                        mode: 'file-preview',
+                        fileName: fileName,
+                        fileContent: fileContent,
+                        fileType: defaultExtension,
+                        isGenerated: true
+                      },
+                      size: { 
+                        width: Math.floor(window.innerWidth * 0.6), 
+                        height: Math.floor(window.innerHeight * 0.8)
+                      },
+                      position: { 
+                        x: Math.floor(window.innerWidth * 0.2), 
+                        y: Math.floor(window.innerHeight * 0.1)
+                      }
+                    });
+                  }
                 }
               }}
               className="text-xs border-formul8-border text-formul8-white hover:bg-formul8-bg-light"
