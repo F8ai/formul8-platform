@@ -18,23 +18,10 @@ import { DocumentPreview } from "./DocumentPreview";
 import { WindowManagerContext } from "./WindowManager";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ObjectUploader } from "./ObjectUploader";
-import { SlidingToolPanel } from "./SlidingToolPanel";
 import { ToolToggleBar } from "./ToolToggleBar";
 import type { UploadResult } from '@uppy/core';
 
-// Tool content renderer component
-function ToolContent({ tool }: { tool: { id: string; route: string; title: string; icon: string; color: string } }) {
-  return (
-    <div className="h-full">
-      <iframe
-        src={tool.route}
-        className="w-full h-full border-0"
-        title={tool.title}
-        sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-      />
-    </div>
-  );
-}
+
 
 interface Attachment {
   id: string;
@@ -101,13 +88,7 @@ export default function FormulaChatInterface() {
   ]);
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<Attachment[]>([]);
-  const [activeTool, setActiveTool] = useState<{
-    id: string;
-    title: string;
-    icon: string;
-    color: string;
-    route: string;
-  } | null>(null);
+
 
   // Define available tools
   const availableTools = [
@@ -336,8 +317,20 @@ export default function FormulaChatInterface() {
         icon: '🧪',
         color: 'border-purple-500',
         action: () => {
-          // Open in sliding panel
-          setActiveTool(availableTools.find(t => t.id === 'formulation') || null);
+          // Open in new tab with dark theme styling and purple emoji color border
+          const currentOrigin = window.location.origin;
+          const newWindow = window.open(`${currentOrigin}/design`, '_blank');
+          if (newWindow) {
+            newWindow.document.title = '🧪 Formulation Wizard - Formul8.ai';
+            setTimeout(() => {
+              if (newWindow.document.body) {
+                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
+                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.documentElement.style.border = '3px solid hsl(280, 84%, 55%)';
+              }
+            }, 100);
+          }
         }
       },
       {
@@ -348,8 +341,20 @@ export default function FormulaChatInterface() {
         icon: '🐛',
         color: 'border-red-500',
         action: () => {
-          // Open in sliding panel
-          setActiveTool(availableTools.find(t => t.id === 'issues') || null);
+          // Open in new tab with dark theme styling and red emoji color border
+          const currentOrigin = window.location.origin;
+          const newWindow = window.open(`${currentOrigin}/roadmap`, '_blank');
+          if (newWindow) {
+            newWindow.document.title = '🐛 Issue Tracker - Formul8.ai';
+            setTimeout(() => {
+              if (newWindow.document.body) {
+                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
+                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.documentElement.style.border = '3px solid hsl(0, 84%, 60%)';
+              }
+            }, 100);
+          }
         }
       },
       {
@@ -360,8 +365,20 @@ export default function FormulaChatInterface() {
         icon: '⚖️',
         color: 'border-green-500',
         action: () => {
-          // Open in sliding panel
-          setActiveTool(availableTools.find(t => t.id === 'compliance') || null);
+          // Open in new tab with dark theme styling and green emoji color border
+          const currentOrigin = window.location.origin;
+          const newWindow = window.open(`${currentOrigin}/ComplianceAgent`, '_blank');
+          if (newWindow) {
+            newWindow.document.title = '⚖️ Compliance Dashboard - Formul8.ai';
+            setTimeout(() => {
+              if (newWindow.document.body) {
+                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
+                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.documentElement.style.border = '3px solid hsl(140, 88%, 55%)';
+              }
+            }, 100);
+          }
         }
       },
       {
@@ -372,8 +389,20 @@ export default function FormulaChatInterface() {
         icon: '📄',
         color: 'border-blue-500',
         action: () => {
-          // Open in sliding panel
-          setActiveTool(availableTools.find(t => t.id === 'artifacts') || null);
+          // Open in new tab with dark theme styling and blue emoji color border
+          const currentOrigin = window.location.origin;
+          const newWindow = window.open(`${currentOrigin}/artifacts`, '_blank');
+          if (newWindow) {
+            newWindow.document.title = '📄 Document Manager - Formul8.ai';
+            setTimeout(() => {
+              if (newWindow.document.body) {
+                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
+                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.documentElement.style.border = '3px solid hsl(195, 84%, 55%)';
+              }
+            }, 100);
+          }
         }
       },
       {
@@ -384,8 +413,20 @@ export default function FormulaChatInterface() {
         icon: '📊',
         color: 'border-cyan-500',
         action: () => {
-          // Open in sliding panel
-          setActiveTool(availableTools.find(t => t.id === 'baseline') || null);
+          // Open in new tab with dark theme styling and cyan emoji color border
+          const currentOrigin = window.location.origin;
+          const newWindow = window.open(`${currentOrigin}/BaselineAssessment`, '_blank');
+          if (newWindow) {
+            newWindow.document.title = '📊 Baseline Testing - Formul8.ai';
+            setTimeout(() => {
+              if (newWindow.document.body) {
+                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
+                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.documentElement.style.border = '3px solid hsl(180, 88%, 55%)';
+              }
+            }, 100);
+          }
         }
       },
       {
@@ -396,8 +437,20 @@ export default function FormulaChatInterface() {
         icon: '📈',
         color: 'border-orange-500',
         action: () => {
-          // Open in sliding panel
-          setActiveTool(availableTools.find(t => t.id === 'dashboard') || null);
+          // Open in new tab with dark theme styling and orange emoji color border
+          const currentOrigin = window.location.origin;
+          const newWindow = window.open(`${currentOrigin}/dashboard`, '_blank');
+          if (newWindow) {
+            newWindow.document.title = '📈 Main Dashboard - Formul8.ai';
+            setTimeout(() => {
+              if (newWindow.document.body) {
+                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
+                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.documentElement.style.border = '3px solid hsl(45, 93%, 58%)';
+              }
+            }, 100);
+          }
         }
       },
       {
@@ -408,8 +461,20 @@ export default function FormulaChatInterface() {
         icon: '💼',
         color: 'border-indigo-500',
         action: () => {
-          // Open in sliding panel
-          setActiveTool(availableTools.find(t => t.id === 'workspace') || null);
+          // Open in new tab with dark theme styling and indigo emoji color border
+          const currentOrigin = window.location.origin;
+          const newWindow = window.open(`${currentOrigin}/workspace`, '_blank');
+          if (newWindow) {
+            newWindow.document.title = '💼 File Workspace - Formul8.ai';
+            setTimeout(() => {
+              if (newWindow.document.body) {
+                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
+                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
+                newWindow.document.documentElement.style.border = '3px solid hsl(263, 84%, 55%)';
+              }
+            }, 100);
+          }
         }
       }
     ];
@@ -689,8 +754,8 @@ export default function FormulaChatInterface() {
       {/* Tool Toggle Bar */}
       <ToolToggleBar 
         tools={availableTools}
-        activeTool={activeTool}
-        onToolToggle={setActiveTool}
+        activeTool={null}
+        onToolToggle={() => {}}
       />
 
       {/* Messages */}
@@ -890,19 +955,7 @@ export default function FormulaChatInterface() {
         </p>
       </div>
 
-      {/* Sliding Tool Panel */}
-      {activeTool && (
-        <SlidingToolPanel
-          isOpen={!!activeTool}
-          onClose={() => setActiveTool(null)}
-          title={activeTool.title}
-          icon={activeTool.icon}
-          color={activeTool.color}
-          width="w-1/2"
-        >
-          <ToolContent tool={activeTool} />
-        </SlidingToolPanel>
-      )}
+
     </div>
   );
 }
