@@ -64,8 +64,15 @@ export interface IStorage {
   getUserGoogleCredentials(userId: string): Promise<UserGoogleCredentials | undefined>;
   updateUserGoogleCredentials(userId: string, credentials: Omit<InsertUserGoogleCredentials, 'userId'>): Promise<UserGoogleCredentials>;
   removeUserGoogleCredentials(userId: string): Promise<void>;
-  updateUserActivity(userId: string): Promise<void>;
+  updateUserActivity(userId: string): Promise<void>;  
   updateUserContext(userId: string, context: Record<string, any>): Promise<User | undefined>;
+  
+  // Document operations
+  createDocument(document: InsertDocument): Promise<Document>;
+  getDocuments(userId: string): Promise<Document[]>;
+  getDocument(id: number): Promise<Document | undefined>;
+  updateDocument(id: number, updates: Partial<InsertDocument>): Promise<Document | undefined>;
+  deleteDocument(id: number): Promise<void>;
   
   // Project operations
   createProject(project: InsertProject): Promise<Project>;

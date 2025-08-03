@@ -201,6 +201,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
   await setupAuth(app);
   await setupGoogleAuth(app);
 
+  // Documents API for desktop icons
+  app.post("/api/documents", isAuthenticated, async (req, res) => {
+    try {
+      const { title, content, documentType, position } = req.body;
+      
+      if (!title || !content) {
+        return res.status(400).json({ error: "Title and content are required" });
+      }
+
+      const document = await storage.createDocument({
+        title,
+        content,
+        documentType: documentType || 'general',  
+        position: position || { x: 100, y: 100 },
+        userId: req.user?.id || 'demo-user'
+      });
+
+      res.json({ success: true, document });
+    } catch (error) {
+      console.error('Error saving document:', error);
+      res.status(500).json({ error: "Failed to save document" });
+    }
+  });
+
+  // Get documents for desktop display
+  app.get("/api/documents", isAuthenticated, async (req, res) => {
+    try {
+      const documents = await storage.getUserDocuments(req.user?.id || 'demo-user');
+      res.json(documents);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      res.status(500).json({ error: "Failed to fetch documents" });
+    }
+  });
+
   // GitHub routes
   app.use('/api/github', githubRouter);
   
