@@ -6,9 +6,8 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 
 ## Recent Changes (Aug 3, 2025)
 
-- **Frontend Architecture Decision**: Converting `client/` directory to Git submodule for independent frontend development
 - **UI Navigation Updates**: Replaced home icon with Formul8.ai site icon in left navigation, removed logo from header, aligned header to right
-- **Repository Structure**: Preparing to establish `formul8-frontend` as separate repository linked via submodule
+- **Frontend Architecture**: Keeping `client/` directory as integrated part of monorepo (submodule plans deprecated)
 - **Enhanced Window Management**: Improved window positioning system with smart overlap detection and optimized layouts for different tool types
 
 ## User Preferences
@@ -38,7 +37,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **AI Integration**: OpenAI GPT-4o for agent responses
 - **Agent System**: LangChain agents, RAG with FAISS vectorstores, SPARQL knowledge bases (TTL/RDF ontologies), multi-model support (OpenAI, Anthropic, Google), and agent-to-agent verification.
 - **Federated Architecture**: Designed for hybrid cloud deployments, allowing local agents to communicate with cloud agents via secure mTLS authentication, enabling data sovereignty and local intelligence.
-- **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend as Git submodule from `formul8-frontend` repo), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data). Frontend submodule enables independent development and deployment.
+- **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
 
 ### Deployment Architecture (Mixed Runtime Support - Aug 2, 2025)
 - **Multi-Runtime Support**: Fixed deployment conflicts between Node.js and Python configurations
