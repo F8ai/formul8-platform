@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { PageLayout } from "@/components/PageLayout";
 import FormulaChatInterface from "@/components/FormulaChatInterface";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -90,44 +91,46 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-formul8-gradient-bg">
-      {/* Header */}
-      <header className="formul8-header">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-formul8-gradient-primary rounded-2xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">F8</span>
+    <PageLayout activeFeature="dashboard">
+      <div className="min-h-full bg-formul8-gradient-bg overflow-y-auto">
+        {/* Header */}
+        <header className="formul8-header">
+          <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-formul8-gradient-primary rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-xl">F8</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold formul8-text-gradient">Formul8.ai Dashboard</h1>
+                <p className="text-sm text-formul8-text-secondary">Your AI powered Cannabis OS</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold formul8-text-gradient">Formul8.ai Dashboard</h1>
-              <p className="text-sm text-formul8-text-secondary">Your AI powered Cannabis OS</p>
+            <div className="flex items-center space-x-3">
+              <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-green-50">
+                <div className="w-2 h-2 bg-formul8-primary rounded-full mr-2"></div>
+                All Agents Online
+              </Badge>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => window.location.href = "/workspace"}
+                className="border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white"
+              >
+                <Layout className="w-4 h-4 mr-2" />
+                Workspace
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => window.location.href = "/chat-tool"}
+                className="border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white"
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Chat
+              </Button>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-green-50">
-              <div className="w-2 h-2 bg-formul8-primary rounded-full mr-2"></div>
-              All Agents Online
-            </Badge>
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => window.location.href = "/"}
-              className="border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white"
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Chat
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-formul8-secondary text-formul8-secondary hover:bg-formul8-secondary hover:text-white"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </Button>
-          </div>
-        </div>
-      </header>
+        </header>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -373,6 +376,6 @@ export default function Dashboard() {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+    </PageLayout>
   );
 }

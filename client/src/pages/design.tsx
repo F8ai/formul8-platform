@@ -1,11 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageLayout } from "@/components/PageLayout";
 import { BarChart3, Brain, Search, Shield, Users, Beaker } from "lucide-react";
 
 export default function DesignPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-formul8-background via-white to-formul8-surface">
+    <PageLayout activeFeature="design">
+      <div className="min-h-full bg-gradient-to-br from-formul8-background via-white to-formul8-surface overflow-y-auto">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-formul8-text-primary mb-4">
@@ -458,7 +460,9 @@ export default function DesignPage() {
             </div>
           </CardContent>
         </Card>
+        </Tabs>
       </div>
-    </div>
+      </div>
+    </PageLayout>
   );
 }
