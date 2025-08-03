@@ -1,4 +1,5 @@
 import React from 'react';
+import logoImage from '@assets/Formul8 Logo_1754237672124.png';
 
 interface Formul8LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -24,7 +25,7 @@ const Formul8Logo: React.FC<Formul8LogoProps> = ({
     <div className={`flex items-center space-x-3 ${className}`}>
       {/* Official Formul8.ai Logo */}
       <img 
-        src="https://i.ibb.co/92Z73WP/no-Bg-Color.png"
+        src={logoImage}
         alt="Formul8.ai Logo"
         width={logo}
         height={logo}
