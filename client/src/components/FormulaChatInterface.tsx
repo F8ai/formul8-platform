@@ -845,7 +845,7 @@ export default function FormulaChatInterface() {
       </ScrollArea>
 
       {/* Input Form */}
-      <div className="p-4 border-t border-formul8-border bg-formul8-card">
+      <div className="p-4 border-t border-formul8-border bg-formul8-bg-dark">
         {/* Show pending attachments */}
         {attachments.length > 0 && (
           <div className="mb-3 space-y-2">
@@ -908,7 +908,7 @@ export default function FormulaChatInterface() {
             )}
           </Button>
         </form>
-        <p className="text-xs text-formul8-muted mt-2 text-center">
+        <p className="text-xs text-formul8-text-gray mt-2 text-center">
           Powered by multi-agent verification system with {messages.filter(m => m.agent && m.agent !== 'system').length > 0 ? 'active' : 'ready'} cannabis industry experts
         </p>
       </div>
