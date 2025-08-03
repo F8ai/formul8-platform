@@ -43,6 +43,11 @@ import { z } from "zod";
 import fs from "fs";
 import OpenAI from "openai";
 import { modelIntegrationService } from "./services/model-integration";
+import {
+  ObjectStorageService,
+  ObjectNotFoundError,
+} from "./objectStorage";
+import { ObjectPermission } from "./objectAcl";
 
 // Initialize OpenAI client for baseline testing
 const openai = new OpenAI({
@@ -3047,6 +3052,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error fetching test results:', error);
       res.status(500).json({ error: 'Failed to fetch test results' });
+    }
+  });
+
+  // Object Storage routes for file attachments
+  const objectStorageService = new ObjectStorageService();
+
+  // Get upload URL for chat attachments
+  app.post("/api/attachments/upload-url", isAuthenticated, async (req, res) => {
+    try {
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ error: "Failed to get upload URL" });
+    }
+  });
+
+  // Handle attachment metadata after upload
+  app.post("/api/attachments", isAuthenticated, async (req, res) => {
+    const { fileName, fileUrl, fileType, fileSize } = req.body;
+    
+    if (!fileName || !fileUrl) {
+      return res.status(400).json({ error: "fileName and fileUrl are required" });
+    }
+
+    try {
+      const userId = req.user?.claims?.sub;
+      const objectPath = await objectStorageService.trySetObjectEntityAclPolicy(
+        fileUrl,
+        {
+          owner: userId,
+          visibility: "private", // Chat attachments should be private
+        }
+      );
+
+      // In a real app, you'd save this to the database
+      // For now, just return the attachment info
+      const attachment = {
+        id: `attachment_${Date.now()}`,
+        fileName,
+        objectPath,
+        fileType,
+        fileSize,
+        uploadedBy: userId,
+        uploadedAt: new Date().toISOString(),
+      };
+
+      res.json(attachment);
+    } catch (error) {
+      console.error("Error processing attachment:", error);
+      res.status(500).json({ error: "Failed to process attachment" });
+    }
+  });
+
+  // Serve attachments
+  app.get("/objects/:objectPath(*)", isAuthenticated, async (req, res) => {
+    const userId = req.user?.claims?.sub;
+    
+    try {
+      const objectFile = await objectStorageService.getObjectEntityFile(req.path);
+      const canAccess = await objectStorageService.canAccessObjectEntity({
+        objectFile,
+        userId: userId,
+        requestedPermission: ObjectPermission.READ,
+      });
+      
+      if (!canAccess) {
+        return res.sendStatus(401);
+      }
+      
+      objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error accessing attachment:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.sendStatus(404);
+      }
+      return res.sendStatus(500);
     }
   });
 

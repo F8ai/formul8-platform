@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { Send, MessageSquare, Loader2, CheckCircle, AlertCircle, FileText, ExternalLink } from "lucide-react";
+import { Send, MessageSquare, Loader2, CheckCircle, AlertCircle, FileText, ExternalLink, Plus, Paperclip, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -17,6 +17,17 @@ import "katex/dist/katex.min.css";
 import { DocumentPreview } from "./DocumentPreview";
 import { WindowManagerContext } from "./WindowManager";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ObjectUploader } from "./ObjectUploader";
+import type { UploadResult } from '@uppy/core';
+
+interface Attachment {
+  id: string;
+  fileName: string;
+  objectPath: string;
+  fileType: string;
+  fileSize: number;
+  uploadedAt: string;
+}
 
 interface Message {
   id: string;
@@ -27,6 +38,7 @@ interface Message {
   confidence?: number;
   requiresHumanReview?: boolean;
   verificationCount?: number;
+  attachments?: Attachment[];
 }
 
 interface AgentResponse {
@@ -53,6 +65,7 @@ export default function FormulaChatInterface() {
     }
   ]);
   const [input, setInput] = useState("");
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [threadId] = useState(() => `thread_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -121,18 +134,70 @@ export default function FormulaChatInterface() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || chatMutation.isPending) return;
+    if ((!input.trim() && attachments.length === 0) || chatMutation.isPending) return;
 
     const userMessage: Message = {
       id: `user_${Date.now()}`,
       role: 'user',
-      content: input,
-      timestamp: new Date().toISOString()
+      content: input || (attachments.length > 0 ? "📎 Shared files" : ""),
+      timestamp: new Date().toISOString(),
+      attachments: attachments.length > 0 ? [...attachments] : undefined
     };
 
     setMessages(prev => [...prev, userMessage]);
-    chatMutation.mutate(input);
+    
+    // Include attachment info in the query if available
+    const queryText = attachments.length > 0 
+      ? `${input}\n\nAttached files: ${attachments.map(a => a.fileName).join(', ')}`
+      : input;
+    
+    chatMutation.mutate(queryText);
     setInput("");
+    setAttachments([]);
+  };
+
+  const handleGetUploadParameters = async () => {
+    try {
+      const response = await apiRequest('/api/attachments/upload-url', {
+        method: 'POST'
+      });
+      return {
+        method: 'PUT' as const,
+        url: response.uploadURL
+      };
+    } catch (error) {
+      console.error('Failed to get upload parameters:', error);
+      throw error;
+    }
+  };
+
+  const handleUploadComplete = async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+    try {
+      for (const file of result.successful) {
+        if (file.uploadURL) {
+          const response = await apiRequest('/api/attachments', {
+            method: 'POST',
+            body: JSON.stringify({
+              fileName: file.name,
+              fileUrl: file.uploadURL,
+              fileType: file.type || 'application/octet-stream',
+              fileSize: file.size
+            }),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          setAttachments(prev => [...prev, response]);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to process attachment:', error);
+    }
+  };
+
+  const removeAttachment = (attachmentId: string) => {
+    setAttachments(prev => prev.filter(a => a.id !== attachmentId));
   };
 
   const getAgentColor = (agent: string) => {
@@ -487,6 +552,26 @@ export default function FormulaChatInterface() {
                       </ReactMarkdown>
                     </div>
                     
+                    {/* Show attachments if present */}
+                    {message.attachments && message.attachments.length > 0 && (
+                      <div className="mt-3 space-y-2">
+                        {message.attachments.map((attachment) => (
+                          <div 
+                            key={attachment.id} 
+                            className="flex items-center gap-2 p-2 bg-formul8-bg-dark rounded-lg border border-formul8-border"
+                          >
+                            <Paperclip className="w-4 h-4 text-formul8-muted" />
+                            <span className="text-xs text-formul8-white truncate flex-1">
+                              {attachment.fileName}
+                            </span>
+                            <Badge variant="outline" className="text-xs border-formul8-muted text-formul8-muted">
+                              {Math.round(attachment.fileSize / 1024)}KB
+                            </Badge>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
                     {/* Inline File Preview for Generated Files */}
                     {message.role === 'assistant' && renderGeneratedFilePreview(message.content)}
                     {message.verificationCount !== undefined && message.verificationCount > 0 && (
@@ -533,6 +618,35 @@ export default function FormulaChatInterface() {
 
       {/* Input Form */}
       <div className="p-4 border-t border-formul8-border bg-formul8-card">
+        {/* Show pending attachments */}
+        {attachments.length > 0 && (
+          <div className="mb-3 space-y-2">
+            <p className="text-xs text-formul8-muted">Attached files:</p>
+            {attachments.map((attachment) => (
+              <div 
+                key={attachment.id} 
+                className="flex items-center gap-2 p-2 bg-formul8-bg-dark rounded-lg border border-formul8-border"
+              >
+                <Paperclip className="w-4 h-4 text-formul8-primary" />
+                <span className="text-xs text-formul8-white truncate flex-1">
+                  {attachment.fileName}
+                </span>
+                <Badge variant="outline" className="text-xs border-formul8-primary text-formul8-primary">
+                  {Math.round(attachment.fileSize / 1024)}KB
+                </Badge>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => removeAttachment(attachment.id)}
+                  className="h-6 w-6 p-0 text-formul8-muted hover:text-formul8-white"
+                >
+                  <X className="w-3 h-3" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="flex space-x-2">
           <Input
             ref={inputRef}
@@ -542,9 +656,21 @@ export default function FormulaChatInterface() {
             className="flex-1 border-formul8-border focus:border-formul8-primary bg-formul8-bg-dark text-formul8-white placeholder:text-formul8-muted"
             disabled={chatMutation.isPending}
           />
+          
+          {/* Attachment Upload Button */}
+          <ObjectUploader
+            maxNumberOfFiles={3}
+            maxFileSize={10485760} // 10MB
+            onGetUploadParameters={handleGetUploadParameters}
+            onComplete={handleUploadComplete}
+            buttonClassName="bg-formul8-bg-dark border border-formul8-border hover:bg-formul8-bg-light text-formul8-white p-2 h-10 w-10"
+          >
+            <Plus className="w-4 h-4" />
+          </ObjectUploader>
+          
           <Button
             type="submit"
-            disabled={!input.trim() || chatMutation.isPending}
+            disabled={(!input.trim() && attachments.length === 0) || chatMutation.isPending}
             className="bg-formul8-primary hover:bg-formul8-blue text-white px-6"
           >
             {chatMutation.isPending ? (
