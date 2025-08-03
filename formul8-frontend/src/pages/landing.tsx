@@ -1,216 +1,476 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { 
+  Shield,
+  Beaker,
+  Calculator,
+  FlaskConical,
+  AlertTriangle,
+  FileText,
+  Scale,
+  DollarSign,
+  MessageSquareText,
+  Users,
+  ShoppingCart,
+  UserCheck,
+  Menu,
+  X,
+  Home,
+  HelpCircle,
+  MessageCircle
+} from "lucide-react";
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+
+const features = [
+  { 
+    id: 'chat', 
+    name: 'Expert Chat', 
+    icon: MessageCircle, 
+    color: 'text-sky-400',
+    bgColor: 'bg-sky-500/20',
+    route: '/chat-tool'
+  },
+  { 
+    id: 'compliance', 
+    name: 'State Compliance Engine', 
+    icon: Shield, 
+    color: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/20',
+    route: '/agent/compliance'
+  },
+  { 
+    id: 'calculator', 
+    name: 'QC Calculator Suite', 
+    icon: Calculator, 
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/20',
+    route: '/calculator'
+  },
+  { 
+    id: 'extraction', 
+    name: 'Extraction Optimizer', 
+    icon: FlaskConical, 
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/20',
+    route: '/extraction'
+  },
+  { 
+    id: 'formulation', 
+    name: 'Formulation Designer', 
+    icon: Beaker, 
+    color: 'text-cyan-400',
+    bgColor: 'bg-cyan-500/20',
+    route: '/agent/formulation'
+  },
+  { 
+    id: 'stability', 
+    name: 'Stability Predictor', 
+    icon: AlertTriangle, 
+    color: 'text-yellow-400',
+    bgColor: 'bg-yellow-500/20',
+    route: '/stability'
+  },
+  { 
+    id: 'sop', 
+    name: 'GMP SOP Library', 
+    icon: FileText, 
+    color: 'text-teal-400',
+    bgColor: 'bg-teal-500/20',
+    route: '/sop'
+  },
+  { 
+    id: 'margin', 
+    name: 'Margin Calculator', 
+    icon: DollarSign, 
+    color: 'text-green-400',
+    bgColor: 'bg-green-500/20',
+    route: '/margin'
+  },
+  { 
+    id: 'sourcing', 
+    name: 'Sourcing Marketplace', 
+    icon: ShoppingCart, 
+    color: 'text-red-400',
+    bgColor: 'bg-red-500/20',
+    route: '/agent/sourcing'
+  },
+  { 
+    id: 'copy', 
+    name: 'Compliant Copy', 
+    icon: MessageSquareText, 
+    color: 'text-pink-400',
+    bgColor: 'bg-pink-500/20',
+    route: '/copy'
+  },
+  { 
+    id: 'audit', 
+    name: 'Audit Trail Export', 
+    icon: Scale, 
+    color: 'text-orange-400',
+    bgColor: 'bg-orange-500/20',
+    route: '/audit'
+  },
+  { 
+    id: 'user-sop', 
+    name: 'User Generated SOPs', 
+    icon: UserCheck, 
+    color: 'text-violet-400',
+    bgColor: 'bg-violet-500/20',
+    route: '/user-sop'
+  },
+
+];
 
 export default function Landing() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { isAuthenticated, isLoading } = useAuth();
+
+  const handleFeatureClick = (route: string) => {
+    window.location.href = route;
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-formul8-surface to-white">
-      {/* Header */}
-      <header className="px-4 sm:px-6 py-4 border-b border-formul8-border bg-white/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-formul8-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm sm:text-lg">F8</span>
-            </div>
-            <div>
-              <h1 className="text-lg sm:text-xl font-bold text-formul8-text-primary">Formul8</h1>
-              <p className="text-xs text-formul8-text-secondary hidden sm:block">AI Cannabis Consultant</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <Button 
-              variant="outline"
-              size="sm"
-              onClick={() => window.location.href = '/design'}
-              className="border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white text-xs sm:text-sm px-2 sm:px-4"
-            >
-              <span className="hidden sm:inline">View Design</span>
-              <span className="sm:hidden">Design</span>
-            </Button>
-            <Button 
-              size="sm"
-              onClick={() => window.location.href = '/api/login'}
-              className="formul8-button-secondary text-xs sm:text-sm px-2 sm:px-4"
-            >
-              Sign In
-            </Button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-formul8-bg-dark relative">
+      {/* Mobile Menu Button - Only for authenticated users */}
+      {!isLoading && isAuthenticated && (
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 bg-formul8-bg-card border border-formul8-border rounded-lg flex items-center justify-center text-formul8-white hover:bg-formul8-primary/20 transition-colors"
+        >
+          {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      )}
 
-      {/* Hero Section */}
-      <section className="px-4 sm:px-6 py-12 sm:py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold formul8-text-gradient mb-4 sm:mb-6">
-            AI-Powered Cannabis Operations Platform
-          </h1>
-          <p className="text-base sm:text-lg lg:text-xl text-formul8-text-secondary mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
-            Leverage multi-agent AI orchestration with proprietary datasets and expert system logic. 
-            Our Agent-to-Agent Verification layer ensures production-ready answers for cannabis operators 
-            across cultivation, processing, manufacturing, and retail.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      {/* Left Sidebar Toolbar - Replit Style - Only for authenticated users */}
+      {!isLoading && isAuthenticated && (
+        <div className={`fixed left-0 top-0 h-full w-14 bg-formul8-bg-card border-r border-formul8-border z-40 flex flex-col items-center py-3 transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+        {/* Home Icon at Top */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => window.location.href = '/'}
+              className="w-10 h-10 rounded-lg bg-formul8-primary/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group"
+            >
+              <Home className="w-5 h-5 text-formul8-primary group-hover:scale-110 transition-transform" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+            <p className="text-sm font-medium">Home</p>
+          </TooltipContent>
+        </Tooltip>
+
+        {/* Feature Icons - Vertically Centered */}
+        <div className="flex flex-col space-y-1 flex-1 justify-center">
+          {features.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <Tooltip key={feature.id}>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => handleFeatureClick(feature.route)}
+                    className={`w-10 h-10 rounded-lg ${feature.bgColor} flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group`}
+                  >
+                    <Icon className={`w-4 h-4 ${feature.color} group-hover:scale-110 transition-transform`} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+                  <p className="text-sm font-medium">{feature.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            );
+          })}
+        </div>
+
+        {/* Submit Feedback */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => window.open('mailto:support@formul8.ai?subject=Formul8.ai Feedback', '_blank')}
+              className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group mb-2"
+            >
+              <MessageCircle className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+            <p className="text-sm font-medium">Submit Feedback</p>
+          </TooltipContent>
+        </Tooltip>
+
+        {/* Help Icon at Bottom */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={() => window.open('https://docs.formul8.ai', '_blank')}
+              className="w-10 h-10 rounded-lg bg-gray-500/20 flex items-center justify-center hover:scale-105 transition-all duration-200 hover:shadow-lg group"
+            >
+              <HelpCircle className="w-5 h-5 text-gray-400 group-hover:scale-110 transition-transform" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="right" className="bg-formul8-bg-dark border-formul8-border text-formul8-white">
+            <p className="text-sm font-medium">Help & Documentation</p>
+          </TooltipContent>
+        </Tooltip>
+        </div>
+      )}
+
+      {/* Overlay for mobile - Only for authenticated users */}
+      {!isLoading && isAuthenticated && sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden" 
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Content */}
+      <div className={`transition-all duration-300 ${!isLoading && isAuthenticated ? 'lg:ml-14' : ''}`}>
+        {/* Hero Section */}
+        <section className="px-4 sm:px-6 py-16 sm:py-24">
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Logo - Official Formul8.ai Logo */}
+            <div className="mb-16 flex flex-col items-center">
+              <img 
+                src="https://i.ibb.co/92Z73WP/no-Bg-Color.png" 
+                alt="Formul8.AI Logo" 
+                className="w-48 h-auto mb-4"
+              />
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8">
+              <span className="text-formul8-white">Your AI powered </span>
+              <span className="bg-cyan-400 text-black px-4 py-2 rounded-lg inline-block">
+                Cannabis OS.
+              </span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-lg sm:text-xl text-formul8-gray mb-12 max-w-3xl mx-auto leading-relaxed">
+              Formul8.ai puts a PhD formulator, extraction wizard, processing engineer, SOP writer,
+              compliance strategist, sourcing agent, analytical chemist, and marketer at your 
+              fingertips—launch and process products 10× faster.
+            </p>
+
+            {/* CTA Button */}
             <Button 
               size="lg"
               onClick={() => window.location.href = '/api/login'}
-              className="formul8-button-primary px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-formul8-button-green hover:bg-formul8-green text-white px-12 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              Get Started with Formul8
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              onClick={() => window.location.href = '/agents'}
-              className="px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg border-2 border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white transition-all duration-300"
-            >
-              Explore Agent Backend
+              Try the Formul8 Preview - Click Here
             </Button>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Features Section */}
-      <section className="px-4 sm:px-6 py-12 sm:py-16 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-formul8-text-primary mb-12">
-            Specialized AI Agents for Every Cannabis Operation
-          </h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            <Card className="formul8-card border-2 hover:border-formul8-primary hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-formul8-primary rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-shield-alt text-white text-xl"></i>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Compliance Agent</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">
-                  Up-to-date regulatory guidance across jurisdictions, SOP verification, and compliance risk alerts.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="formul8-card border-2 hover:border-formul8-info hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-formul8-info rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-copyright text-white text-xl"></i>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Patent/Trademark Agent</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">
-                  Freedom-to-operate searches, IP risk assessment, and infringement guidance.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="formul8-card border-2 hover:border-formul8-tertiary hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-formul8-tertiary rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-cogs text-white text-xl"></i>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Operations & Equipment</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">
-                  Yield calculations, equipment troubleshooting, and operational optimization.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="formul8-card border-2 hover:border-formul8-warning hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-formul8-warning rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-flask text-white text-xl"></i>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Formulation Agent</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">
-                  Chemistry-backed formulation recommendations, ratios, and product development.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="formul8-card border-2 hover:border-formul8-secondary hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-formul8-secondary rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-shopping-cart text-white text-xl"></i>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Sourcing Agent</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">
-                  Equipment and material sourcing with vendor recommendations and quality scoring.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="formul8-card border-2 hover:border-formul8-success hover:shadow-lg transition-all duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-formul8-success rounded-lg flex items-center justify-center mb-4">
-                  <i className="fas fa-bullhorn text-white text-xl"></i>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Marketing Agent</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">
-                  Compliant marketing content creation and market feasibility analysis.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Verification Section */}
-      <section className="px-6 py-16 bg-formul8-surface">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-formul8-text-primary mb-8">
-            Agent-to-Agent Verification System
-          </h2>
-          <p className="text-lg text-formul8-text-secondary mb-8 leading-relaxed">
-            Our unique verification layer has multiple specialized agents interact, validate each other's outputs, 
-            and generate refined, consensus-based answers. This minimizes hallucinations and ensures 
-            production-ready responses for critical business decisions.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <Card className="formul8-card">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-formul8-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">1</span>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Generate</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">Primary agent processes your query with expert knowledge</CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="formul8-card">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-formul8-secondary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">2</span>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Verify</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">Secondary agents cross-validate the response for accuracy</CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="formul8-card">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-formul8-success rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">3</span>
-                </div>
-                <CardTitle className="text-formul8-text-primary">Consensus</CardTitle>
-                <CardDescription className="text-formul8-text-secondary">Refined answer delivered with confidence scoring</CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="px-6 py-8 bg-formul8-surface-dark text-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <div className="w-8 h-8 bg-formul8-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">F8</span>
+        {/* Features Grid - All 12 Features from Homepage */}
+        <section className="px-4 sm:px-6 py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {features.map((feature) => {
+                const Icon = feature.icon;
+                return (
+                  <Card 
+                    key={feature.id}
+                    className="bg-formul8-bg-card border-formul8-border p-6 hover:border-formul8-primary/50 transition-colors cursor-pointer"
+                    onClick={() => handleFeatureClick(feature.route)}
+                  >
+                    <CardContent className="p-0">
+                      <div className={`w-12 h-12 rounded-lg ${feature.bgColor} flex items-center justify-center mb-4`}>
+                        <Icon className={`w-6 h-6 ${feature.color}`} />
+                      </div>
+                      <h3 className="text-formul8-white font-semibold mb-2">{feature.name}</h3>
+                      <p className="text-formul8-gray text-sm">
+                        {feature.id === 'compliance' && 'Expert Regulatory Assistance for all 50 states'}
+                        {feature.id === 'calculator' && 'Formulation, Yield, & More calculations'}
+                        {feature.id === 'extraction' && 'Maximize cannabinoid recovery'}
+                        {feature.id === 'formulation' && 'Rapid product iteration'}
+                        {feature.id === 'stability' && 'Shelf-life & aging models'}
+                        {feature.id === 'sop' && 'Auto-generated workflows'}
+                        {feature.id === 'margin' && 'Live COGS tracking'}
+                        {feature.id === 'sourcing' && 'Get ingredients, equipment, and services in an instant'}
+                        {feature.id === 'copy' && 'Regulatory checked marketing'}
+                        {feature.id === 'audit' && 'One-click compliance records'}
+                        {feature.id === 'user-sop' && 'SOPs from industry leaders'}
+                        {feature.id === 'chat' && 'Multi-agent assistance'}
+                      </p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
-            <span className="text-xl font-bold">Formul8</span>
           </div>
-          <p className="text-formul8-text-muted">
-            Transforming cannabis operations with AI-powered expertise
-          </p>
-        </div>
-      </footer>
+        </section>
+
+        {/* Cost Comparison Section */}
+        <section className="px-4 sm:px-6 py-16 bg-formul8-bg-card/50">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl sm:text-4xl font-bold text-formul8-white mb-16">Cost Comparison</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {/* Formul8.ai Column */}
+              <Card className="bg-formul8-primary/10 border-formul8-primary p-8">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-formul8-primary mb-4">Formul8.ai</h3>
+                  <div className="text-4xl font-bold text-formul8-white mb-2">$5k-$50k</div>
+                  <div className="text-formul8-gray mb-6">/ yr</div>
+                  <ul className="text-left space-y-2 text-formul8-gray">
+                    <li>• AI-powered formulation</li>
+                    <li>• Instant compliance checking</li>
+                    <li>• 24/7 availability</li>
+                    <li>• Scalable processing</li>
+                    <li>• Real-time updates</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              {/* Traditional Staff Column */}
+              <Card className="bg-formul8-bg-card border-formul8-border p-8">
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-formul8-white mb-4">Traditional Staff</h3>
+                  <div className="text-4xl font-bold text-formul8-white mb-2">$500k+</div>
+                  <div className="text-formul8-gray mb-6">/ yr</div>
+                  <ul className="text-left space-y-2 text-formul8-gray">
+                    <li>• Multiple specialists needed</li>
+                    <li>• Limited availability</li>
+                    <li>• Training requirements</li>
+                    <li>• Benefits and overhead</li>
+                    <li>• Slower turnaround</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-xl text-formul8-white font-semibold">
+              <span className="text-formul8-success">97% cost reduction</span>, <span className="text-formul8-primary">10× faster</span> go-to-market and production
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="px-4 sm:px-6 py-16">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-formul8-white text-center mb-16">Frequently Asked Questions</h2>
+            
+            <div className="space-y-8">
+              <Card className="bg-formul8-bg-card border-formul8-border p-6">
+                <CardContent className="p-0">
+                  <h3 className="text-xl font-semibold text-formul8-white mb-4">How accurate is the compliance checking?</h3>
+                  <p className="text-formul8-gray">
+                    Our compliance engine is updated daily with the latest regulations from all 50 states. 
+                    It achieves 99.9% accuracy in regulatory checks, verified by third-party auditors.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-formul8-bg-card border-formul8-border p-6">
+                <CardContent className="p-0">
+                  <h3 className="text-xl font-semibold text-formul8-white mb-4">What's included in the subscription?</h3>
+                  <p className="text-formul8-gray">
+                    Tiered subscriptions fit to client can include unlimited access to the AI assistant, 
+                    SOP generation, compliance checking, supplier network, and regular regulatory updates.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact & Signup Section */}
+        <section className="px-4 sm:px-6 py-16 bg-formul8-bg-card/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold text-formul8-white mb-4">Get Early Access</h2>
+              <p className="text-formul8-gray">Join the email list</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Contact Info */}
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-formul8-white mb-4">Contact Information</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-5 h-5 text-formul8-primary">📧</div>
+                      <a href="mailto:team@formul8.ai" className="text-formul8-primary hover:text-formul8-primary/80">
+                        team@formul8.ai
+                      </a>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-5 h-5 text-formul8-primary">📞</div>
+                      <a href="tel:+17202952016" className="text-formul8-primary hover:text-formul8-primary/80">
+                        +1 (720) 295-2016
+                      </a>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-5 h-5 text-formul8-primary">📍</div>
+                      <span className="text-formul8-gray">Denver, CO, United States</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Form */}
+              <Card className="bg-formul8-bg-card border-formul8-border p-6">
+                <CardContent className="p-0">
+                  <form className="space-y-4">
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Name"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="tel"
+                        placeholder="Phone"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Company"
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <textarea
+                        placeholder="Message"
+                        rows={4}
+                        className="w-full px-4 py-3 bg-formul8-bg-dark border border-formul8-border rounded-lg text-formul8-white placeholder-formul8-gray focus:border-formul8-primary focus:outline-none resize-none"
+                      />
+                    </div>
+                    <Button 
+                      type="submit"
+                      className="w-full bg-formul8-primary hover:bg-formul8-primary/90 text-white font-semibold py-3"
+                    >
+                      Get Early Access
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="px-4 sm:px-6 py-8 border-t border-formul8-border">
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="text-formul8-gray">
+              All rights reserved © Phi Sciences LLC 2025
+            </p>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }

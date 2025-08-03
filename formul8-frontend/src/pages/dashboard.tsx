@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { PageLayout } from "@/components/PageLayout";
 import FormulaChatInterface from "@/components/FormulaChatInterface";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
+import { DashboardWidgetCustomizer, DashboardWidget } from "@/components/LazyComponents";
 import { 
   MessageSquare, 
   Shield, 
@@ -19,7 +22,9 @@ import {
   Zap,
   ChevronRight,
   BarChart3,
-  Settings
+  Settings,
+  Layout,
+  Plus
 } from "lucide-react";
 
 const agents = [
@@ -34,7 +39,8 @@ const agents = [
 export default function Dashboard() {
   const { toast } = useToast();
   const { isAuthenticated, isLoading, user } = useAuth();
-  const [activeTab, setActiveTab] = useState("chat");
+  const [activeTab, setActiveTab] = useState("overview");
+  const [showCustomizer, setShowCustomizer] = useState(false);
 
   // Redirect to home if not authenticated
   useEffect(() => {
@@ -56,6 +62,21 @@ export default function Dashboard() {
     enabled: isAuthenticated,
   });
 
+  // Fetch user's dashboard layouts
+  const { data: layouts = [] } = useQuery({
+    queryKey: ['/api/dashboard/layouts', user?.id],
+    enabled: isAuthenticated && !!user?.id,
+  });
+
+  // Get default layout or first available layout
+  const currentLayout = layouts.find((l: any) => l.isDefault) || layouts[0];
+  const defaultWidgets = currentLayout?.widgets || [
+    { id: 'agent-status-1', type: 'agent-status', position: { x: 0, y: 0, w: 4, h: 3 } },
+    { id: 'recent-activity-1', type: 'recent-activity', position: { x: 4, y: 0, w: 8, h: 4 } },
+    { id: 'compliance-summary-1', type: 'compliance-summary', position: { x: 0, y: 3, w: 4, h: 3 } },
+    { id: 'cost-tracker-1', type: 'cost-tracker', position: { x: 8, y: 4, w: 4, h: 3 } },
+  ];
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50">
@@ -70,49 +91,55 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-formul8-gradient-bg">
-      {/* Header */}
-      <header className="formul8-header">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-formul8-gradient-primary rounded-2xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">F8</span>
+    <PageLayout activeFeature="dashboard">
+      <div className="min-h-full bg-formul8-gradient-bg overflow-y-auto">
+        {/* Header */}
+        <header className="formul8-header">
+          <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-formul8-gradient-primary rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-xl">F8</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold formul8-text-gradient">Formul8.ai Dashboard</h1>
+                <p className="text-sm text-formul8-text-secondary">Your AI powered Cannabis OS</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold formul8-text-gradient">Formul8.ai Dashboard</h1>
-              <p className="text-sm text-formul8-text-secondary">Your AI powered Cannabis OS</p>
+            <div className="flex items-center space-x-3">
+              <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-green-50">
+                <div className="w-2 h-2 bg-formul8-primary rounded-full mr-2"></div>
+                All Agents Online
+              </Badge>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => window.location.href = "/workspace"}
+                className="border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white"
+              >
+                <Layout className="w-4 h-4 mr-2" />
+                Workspace
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => window.location.href = "/chat-tool"}
+                className="border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white"
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Chat
+              </Button>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-green-50">
-              <div className="w-2 h-2 bg-formul8-primary rounded-full mr-2"></div>
-              All Agents Online
-            </Badge>
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => window.location.href = "/"}
-              className="border-formul8-primary text-formul8-primary hover:bg-formul8-primary hover:text-white"
-            >
-              <MessageSquare className="w-4 h-4 mr-2" />
-              Chat
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-formul8-secondary text-formul8-secondary hover:bg-formul8-secondary hover:text-white"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </Button>
-          </div>
-        </div>
-      </header>
+        </header>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:grid-cols-4">
+            <TabsTrigger value="overview" className="flex items-center space-x-2">
+              <Layout className="w-4 h-4" />
+              <span>Dashboard</span>
+            </TabsTrigger>
             <TabsTrigger value="chat" className="flex items-center space-x-2">
               <MessageSquare className="w-4 h-4" />
               <span>Expert Chat</span>
@@ -126,6 +153,97 @@ export default function Dashboard() {
               <span>Analytics</span>
             </TabsTrigger>
           </TabsList>
+
+          {/* Dashboard Overview Tab */}
+          <TabsContent value="overview" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Your Cannabis Intelligence Dashboard</h2>
+                <p className="text-gray-600 dark:text-gray-400">Personalized insights and real-time cannabis industry intelligence</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowCustomizer(!showCustomizer)}
+                  className="flex items-center gap-2"
+                >
+                  <Settings className="w-4 h-4" />
+                  {showCustomizer ? "Close Customizer" : "Customize"}
+                </Button>
+                <Button 
+                  onClick={() => {
+                    // Add new widget logic
+                    toast({ title: "Widget added", description: "New widget added to your dashboard" });
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add Widget
+                </Button>
+              </div>
+            </div>
+
+            {showCustomizer ? (
+              <Suspense fallback={<div className="flex items-center justify-center p-8">
+                <div className="text-center">
+                  <div className="w-8 h-8 bg-formul8-primary rounded-full animate-pulse mx-auto mb-2"></div>
+                  <p className="text-sm text-gray-500">Loading customizer...</p>
+                </div>
+              </div>}>
+                <DashboardWidgetCustomizer userId={user?.id || 'demo-user'} />
+              </Suspense>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {defaultWidgets.map((widget) => (
+                  <div key={widget.id} className="col-span-1" style={{
+                    gridColumn: `span ${Math.min(widget.position.w / 3, 4)}`,
+                    gridRow: `span ${Math.min(widget.position.h, 2)}`
+                  }}>
+                    <Suspense fallback={<div className="h-32 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>}>
+                      <DashboardWidget 
+                        type={widget.type}
+                        title={widget.title}
+                        settings={widget.settings}
+                        onResize={() => toast({ title: "Widget resized" })}
+                        onEdit={() => toast({ title: "Widget settings opened" })}
+                        onRemove={() => toast({ title: "Widget removed" })}
+                      />
+                    </Suspense>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Quick Stats Summary */}
+            {!showCustomizer && (
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+                <Card>
+                  <CardContent className="p-4 text-center">
+                    <div className="text-2xl font-bold text-formul8-primary">6</div>
+                    <div className="text-sm text-gray-500">Active Agents</div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4 text-center">
+                    <div className="text-2xl font-bold text-green-600">247</div>
+                    <div className="text-sm text-gray-500">Queries Today</div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4 text-center">
+                    <div className="text-2xl font-bold text-blue-600">94.2%</div>
+                    <div className="text-sm text-gray-500">Accuracy Rate</div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4 text-center">
+                    <div className="text-2xl font-bold text-purple-600">$1,247</div>
+                    <div className="text-sm text-gray-500">Monthly Cost</div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </TabsContent>
 
           <TabsContent value="chat" className="space-y-6">
             {/* Hero Section */}
@@ -258,6 +376,7 @@ export default function Dashboard() {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
+      </div>
+    </PageLayout>
   );
 }

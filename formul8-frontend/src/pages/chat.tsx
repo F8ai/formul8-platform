@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { PageLayout } from "@/components/PageLayout";
 import FormulaChatInterface from "@/components/FormulaChatInterface";
 import Formul8Logo from "@/components/Formul8Logo";
 import { Card } from "@/components/ui/card";
@@ -42,7 +43,8 @@ export default function Chat() {
   }
 
   return (
-    <div className="min-h-screen bg-formul8-dark">
+    <PageLayout activeFeature="chat">
+      <div className="min-h-full bg-formul8-dark overflow-y-auto">
       {/* Header */}
       <header className="formul8-header">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
@@ -187,6 +189,7 @@ export default function Chat() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </PageLayout>
   );
 }

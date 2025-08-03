@@ -2,10 +2,71 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=3.0, user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover" />
+    
+    <!-- Performance optimization hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preload" href="/manifest.json" as="fetch" crossorigin>
+    <link rel="modulepreload" href="/src/main.tsx">
+    
+    <!-- Critical CSS - Above the fold styles -->
+    <style>
+      /* Critical loading styles */
+      #root { min-height: 100vh; background: hsl(220, 13%, 8%); }
+      .loading-screen { 
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+        background: hsl(220, 13%, 8%); 
+        display: flex; align-items: center; justify-content: center; 
+        z-index: 9999;
+      }
+      .loading-spinner { 
+        width: 32px; height: 32px; 
+        border: 2px solid hsl(180, 88%, 55%); 
+        border-top-color: transparent; 
+        border-radius: 50%; 
+        animation: spin 1s linear infinite; 
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      /* Prevent FOUC */
+      body { margin: 0; background: hsl(220, 13%, 8%); }
+    </style>
+    
+    <!-- Meta tags -->
+    <meta name="theme-color" content="#059669" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Formul8" />
+    <meta name="application-name" content="Formul8" />
+    <meta name="description" content="Professional cannabis AI workspace with specialized agents and tools" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-TileColor" content="#059669" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Icons for iOS Safari - PNG required -->
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/icon-120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/icon-144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/icon-152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icon-180.png" />
+    <link rel="apple-touch-icon" href="/images/formul8-logo.png" />
+    
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/formul8-logo.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png" />
+    <link rel="shortcut icon" href="/images/formul8-logo.png" />
+    
+    <title>Formul8 Cannabis AI Workspace</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Initial loading screen to prevent flash -->
+      <div class="loading-screen">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>

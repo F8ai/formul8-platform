@@ -62,6 +62,17 @@
   --formul8-gradient-text: linear-gradient(135deg, hsl(180, 88%, 55%) 0%, hsl(195, 84%, 55%) 100%);
   --formul8-gradient-card: linear-gradient(135deg, hsl(220, 13%, 12%) 0%, hsl(220, 13%, 15%) 100%);
   --formul8-logo-gradient: linear-gradient(135deg, hsl(180, 88%, 55%) 0%, hsl(140, 88%, 55%) 30%, hsl(195, 84%, 55%) 100%);
+  
+  /* Component-specific colors for proper dark mode */
+  --formul8-text-primary: hsl(0, 0%, 95%);     /* Primary text - light */
+  --formul8-text-secondary: hsl(220, 9%, 65%); /* Secondary text */
+  --formul8-primary: hsl(195, 84%, 55%);       /* Primary brand color */
+  --formul8-secondary: hsl(180, 88%, 55%);     /* Secondary brand color */
+  --formul8-success: hsl(140, 88%, 55%);       /* Success color */
+  --formul8-warning: hsl(45, 93%, 58%);        /* Warning color */
+  --formul8-error: hsl(0, 84%, 60%);           /* Error color */
+  --formul8-info: hsl(195, 84%, 55%);          /* Info color */
+  --formul8-tertiary: hsl(280, 84%, 55%);      /* Tertiary color */
 }
 
 .dark {
@@ -114,6 +125,36 @@
   .bg-formul8-button-green { background-color: var(--formul8-button-green); }
   .border-formul8-border { border-color: var(--formul8-border); }
 
+  /* Component-specific text colors for proper readability */
+  .text-formul8-text-primary { color: var(--formul8-text-primary); }
+  .text-formul8-text-secondary { color: var(--formul8-text-secondary); }
+  .bg-formul8-primary { background-color: var(--formul8-primary); }
+  .bg-formul8-secondary { background-color: var(--formul8-secondary); }
+  .bg-formul8-success { background-color: var(--formul8-success); }
+  .bg-formul8-warning { background-color: var(--formul8-warning); }
+  .bg-formul8-error { background-color: var(--formul8-error); }
+  .bg-formul8-info { background-color: var(--formul8-info); }
+  .bg-formul8-tertiary { background-color: var(--formul8-tertiary); }
+  .text-formul8-success { color: var(--formul8-success); }
+  .text-formul8-warning { color: var(--formul8-warning); }
+  .text-formul8-error { color: var(--formul8-error); }
+
+  /* Card styles for proper dark mode */
+  .formul8-card { 
+    background-color: var(--formul8-bg-card); 
+    border: 1px solid var(--formul8-border);
+    color: var(--formul8-text-primary);
+  }
+  
+  /* Button styles */
+  .formul8-button-primary { 
+    background-color: var(--formul8-primary); 
+    color: white;
+  }
+  .formul8-button-primary:hover { 
+    background-color: var(--formul8-blue); 
+  }
+
   /* Gradients */
   .bg-formul8-gradient-text { background: var(--formul8-gradient-text); }
   .bg-formul8-gradient-card { background: var(--formul8-gradient-card); }
@@ -122,6 +163,21 @@
   /* Hover States */
   .hover\:bg-formul8-button-green:hover { background-color: var(--formul8-button-green); }
   .hover\:scale-105:hover { transform: scale(1.05); }
+
+  /* Formul8.ai Typography */
+  .formul8-tab-label { 
+    @apply font-formul8 font-medium text-sm tracking-wide;
+    font-feature-settings: 'ss01' on, 'cv01' on;
+    text-rendering: optimizeLegibility;
+  }
+  
+  .formul8-tab-active { 
+    @apply formul8-tab-label text-formul8-teal font-semibold;
+  }
+  
+  .formul8-tab-inactive { 
+    @apply formul8-tab-label text-formul8-gray hover:text-formul8-white;
+  }
 
   /* Formul8.ai Dark Theme Components */
   .formul8-card {

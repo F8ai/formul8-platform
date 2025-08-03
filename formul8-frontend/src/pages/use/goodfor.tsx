@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { apiRequest } from '@/lib/queryClient';
-import goodforImage from '@assets/IMG_0451_1752508833626.png';
+// Removed large image import to reduce bundle size
 
 interface AgentResponse {
   agent: string;
@@ -148,17 +148,15 @@ export default function GoodFORUseCase() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Product Image */}
             <div className="space-y-4">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                <img 
-                  src={goodforImage} 
-                  alt="GoodFOR Pain CBD Topical Label" 
-                  className="mx-auto max-h-96 object-contain rounded-lg shadow-lg"
-                />
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50">
+                <FileText className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+                <p className="text-gray-600 text-sm">Product label image placeholder</p>
+                <p className="text-xs text-gray-500 mt-2">Image removed to optimize build size</p>
               </div>
               <div className="text-center">
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
-                  <CheckCircle className="w-3 h-3 mr-1" />
-                  Label Uploaded
+                <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                  <FileText className="w-3 h-3 mr-1" />
+                  Label Data Available
                 </Badge>
               </div>
             </div>

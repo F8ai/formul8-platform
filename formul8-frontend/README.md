@@ -1,92 +1,84 @@
-# Formul8.ai Frontend
+# Formul8 Frontend
 
-A modern React-based frontend for the Formul8.ai cannabis industry AI platform.
-
-## Overview
-
-This is the standalone frontend application for Formul8.ai, designed to provide an authentic cannabis industry interface with dark theme aesthetics and comprehensive AI-powered tools.
+The complete React frontend for the Formul8 AI cannabis platform, featuring intelligent chat interfaces, tabbed tool navigation, and PWA capabilities.
 
 ## Features
 
-- **Dark Theme Design**: Authentic Formul8.ai branding with turquoise/teal gradients
-- **Official Logo Integration**: Real Formul8.ai logo from official website
-- **Chat Interface**: Primary AI consultation interface
-- **Cannabis OS Features**: State compliance, formulation design, extraction optimization
-- **Responsive Design**: Mobile-first approach with modern UI components
-- **Component Library**: Shadcn/ui with Radix UI primitives
+- **Intelligent Chat Interface**: AI-powered chat that automatically detects user intent and opens relevant tools in browser tabs
+- **Tabbed Navigation**: Browser tab-based interface for seamless multitasking between tools
+- **Progressive Web App**: Full PWA support with mobile optimization and offline capabilities
+- **Desktop Workspace**: Window-based workspace with floating widgets and file management
+- **Agent Integration**: Direct integration with 12+ specialized AI agents
+- **Real-time Notifications**: Comprehensive notification system with desktop/mobile support
+- **Formul8 Brand Styling**: Custom Tailwind CSS with Formul8.ai brand colors and typography
 
 ## Tech Stack
 
 - **React 18** with TypeScript
 - **Vite** for fast development and building
-- **Tailwind CSS** for styling
-- **Shadcn/ui** component library
-- **TanStack Query** for data fetching
-- **Wouter** for routing
-- **Framer Motion** for animations
+- **Tailwind CSS** with custom Formul8 brand styling
+- **Shadcn/ui** component library built on Radix UI
+- **TanStack Query** for data fetching and caching
+- **Wouter** for client-side routing
+- **PWA** capabilities with service worker support
 
 ## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
+```
 
-# Build for production
+## Building
+
+```bash
 npm run build
-
-# Preview production build
-npm run preview
 ```
 
-## Project Structure
+## Key Components
 
-```
-src/
-├── components/        # Reusable UI components
-│   ├── ui/           # Shadcn/ui components
-│   ├── Formul8Logo.tsx
-│   └── FormulaChatInterface.tsx
-├── pages/            # Route components
-│   ├── chat.tsx
-│   └── dashboard.tsx
-├── hooks/            # Custom React hooks
-├── lib/              # Utilities and configurations
-└── assets/           # Static assets
-```
+### Chat Interface
+- `FormulaChatInterface.tsx` - Main chat component with intelligent tool routing
+- Intent detection automatically opens relevant tools based on conversation context
+- Supports file attachments, document generation, and real-time responses
 
-## Environment Variables
+### Tool Integration
+- Formulation Wizard (`/design`)
+- Compliance Dashboard (`/ComplianceAgent`)
+- Issue Tracker (`/roadmap`)
+- Document Manager (`/artifacts`)
+- Baseline Testing (`/BaselineAssessment`)
+- Main Dashboard (`/dashboard`)
+- File Workspace (`/workspace`)
 
-Create a `.env` file:
+### Desktop Experience
+- `DesktopWorkspace.tsx` - Window-based workspace management
+- `WindowManager.tsx` - Floating window system with drag/resize
+- `LeftNavBar.tsx` - Navigation with Formul8 branding
 
-```env
-VITE_API_URL=http://localhost:5000
-VITE_APP_TITLE=Formul8.ai
-```
+## Architecture
 
-## Backend Integration
+This frontend is designed as an independent repository that integrates with the main Formul8 platform backend. Key architectural decisions:
 
-This frontend is designed to work with the Formul8.ai backend API. When running in development, it proxies API requests to `localhost:5000`.
+- **Tabbed Interface**: Tools open in new browser tabs for better multitasking
+- **Mobile-First**: Responsive design optimized for both desktop and mobile
+- **PWA Ready**: Service worker, manifest, and offline support
+- **Brand Consistency**: Custom CSS variables for Formul8 brand colors and fonts
+- **Agent Communication**: REST API integration with specialized AI agents
+
+## Integration Points
+
+### Backend Communication
+- REST APIs for agent interactions
+- WebSocket connections for real-time features
+- Session-based authentication via Replit Auth
+- Notification system with real-time updates
+
+### Shared Resources
+- TypeScript types shared with backend
+- Brand assets and styling guidelines
+- PWA configuration and service worker
 
 ## Deployment
 
-The frontend can be deployed independently to:
-- Vercel
-- Netlify
-- AWS S3 + CloudFront
-- Any static hosting service
-
-Build the project and deploy the `dist` folder.
-
-## Contributing
-
-1. Follow the existing code style
-2. Use TypeScript for all new components
-3. Maintain responsive design principles
-4. Keep components modular and reusable
-
-## License
-
-MIT License - see LICENSE file for details.
+The frontend builds to a `dist/` directory and can be served statically or integrated with the main platform's Express server.

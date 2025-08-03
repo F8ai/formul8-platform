@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import { PageLayout } from "@/components/PageLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -189,7 +190,8 @@ export default function AgentsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <PageLayout activeFeature="agents">
+      <div className="container mx-auto px-4 py-8 max-w-7xl overflow-y-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-formul8-text-primary mb-2">
           Agent Backend System
@@ -1259,6 +1261,7 @@ export default function AgentsPage() {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+      </div>
+    </PageLayout>
   );
 }
