@@ -1388,6 +1388,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Serve agent data files (for JSON result files)
   app.use('/agents', express.static(path.resolve(import.meta.dirname, '..', 'agents')));
+  
+  // Test share functionality
+  app.get('/test-share', (req, res) => {
+    res.sendFile('test_share.html', { root: '.' });
+  });
 
   // Agent dashboard route
   app.get('/api/agents/dashboard', isAuthenticated, async (req, res) => {

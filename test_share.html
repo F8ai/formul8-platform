@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Share to Formul8</title>
+</head>
+<body>
+    <h1>Test Share Functionality</h1>
+    
+    <h2>Method 1: URL Parameters Test</h2>
+    <p>Click this link to test share with URL parameters:</p>
+    <a href="/workspace?title=Test%20Share&text=This%20is%20a%20test%20of%20the%20share%20functionality&url=https://example.com" target="_blank">
+        Test Share with URL Parameters
+    </a>
+    
+    <h2>Method 2: Post Form Test</h2>
+    <form action="/workspace/share" method="POST">
+        <label>Title: <input type="text" name="title" value="Form Test Share" /></label><br><br>
+        <label>Text: <textarea name="text">This is content shared via form post</textarea></label><br><br>
+        <label>URL: <input type="url" name="url" value="https://formul8.ai" /></label><br><br>
+        <button type="submit">Test Share via POST</button>
+    </form>
+    
+    <h2>Method 3: Web Share API Test</h2>
+    <button onclick="testWebShare()">Test Web Share API</button>
+    
+    <script>
+        async function testWebShare() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Web Share API Test',
+                        text: 'Testing the Web Share API functionality',
+                        url: 'https://formul8.ai'
+                    });
+                } catch (error) {
+                    console.log('Share failed:', error);
+                }
+            } else {
+                alert('Web Share API not supported in this browser');
+            }
+        }
+    </script>
+</body>
+</html>
