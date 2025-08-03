@@ -236,6 +236,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update document content
+  app.put("/api/documents/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { content } = req.body;
+      
+      if (!content) {
+        return res.status(400).json({ error: "Content is required" });
+      }
+
+      const document = await storage.updateDocument(parseInt(id), { content });
+      
+      if (!document) {
+        return res.status(404).json({ error: "Document not found" });
+      }
+
+      res.json({ success: true, document });
+    } catch (error) {
+      console.error('Error updating document:', error);
+      res.status(500).json({ error: "Failed to update document" });
+    }
+  });
+
   // GitHub routes
   app.use('/api/github', githubRouter);
   

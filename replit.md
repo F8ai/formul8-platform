@@ -15,6 +15,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Enhanced Window Management**: Improved window positioning system with smart overlap detection and optimized layouts for different tool types
 - **Desktop Layout Fixes (Aug 3, 2025)**: Fixed missing left navigation bar in desktop view, corrected footer height to match header (both 56px), restored proper desktop workspace structure with left navigation visible
 - **Duplicate Toolbar Fix (Aug 3, 2025)**: Resolved duplicate toolbar issue by expanding standalone desktop mode to cover all main routes (/, /workspace, /desktop), eliminating top header and providing clean desktop experience with only bottom taskbar
+- **Document Desktop Icons System (Aug 3, 2025)**: Implemented complete document management system with desktop icons that appear when AI creates documents, double-click functionality to open document windows, proper positioning within desktop canvas boundaries, and real-time cache invalidation for immediate updates
 
 ## User Preferences
 
