@@ -416,16 +416,21 @@ export default function FormulaChatInterface() {
         icon: '💼',
         action: () => {
           if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '💼 File Workspace',
-              content: {
-                mode: 'workspace',
-                route: '/workspace'
-              },
-              size: { width: 1000, height: 700 },
-              position: { x: 100, y: 100 }
-            });
+            if (isMobile) {
+              // On mobile: Navigate to full workspace route
+              window.location.href = '/workspace';
+            } else {
+              windowManager.createWindow({
+                type: 'tool',
+                title: '💼 File Workspace',
+                content: {
+                  mode: 'workspace',
+                  route: '/workspace'
+                },
+                size: { width: 1000, height: 700 },
+                position: { x: 100, y: 100 }
+              });
+            }
           }
         }
       }
