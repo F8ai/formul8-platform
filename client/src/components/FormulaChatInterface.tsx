@@ -19,7 +19,7 @@ import { WindowManagerContext } from "./WindowManager";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ObjectUploader } from "./ObjectUploader";
 import { ToolToggleBar } from "./ToolToggleBar";
-import { MultiPanelLayout } from "./MultiPanelLayout";
+import { DesktopPanelLayout } from "./DesktopPanelLayout";
 import type { UploadResult } from '@uppy/core';
 
 
@@ -1194,7 +1194,7 @@ export default function FormulaChatInterface() {
           </div>
           <div>
             <h2 className="text-lg font-semibold text-formul8-white">Formul8 AI Assistant</h2>
-            <p className="text-sm text-formul8-muted">Multi-agent cannabis intelligence</p>
+            <p className="text-sm text-formul8-muted">Advanced cannabis intelligence platform</p>
           </div>
         </div>
         <Badge variant="outline" className="border-formul8-primary text-formul8-primary bg-formul8-bg-dark">
@@ -1298,7 +1298,7 @@ export default function FormulaChatInterface() {
                     {message.verificationCount !== undefined && message.verificationCount > 0 && (
                       <div className="mt-2 pt-2 border-t border-formul8-border">
                         <span className="text-xs text-formul8-muted">
-                          Verified with {message.verificationCount} additional agent{message.verificationCount > 1 ? 's' : ''}
+                          Verified with {message.verificationCount} additional expert{message.verificationCount > 1 ? 's' : ''}
                         </span>
                       </div>
                     )}
@@ -1326,7 +1326,7 @@ export default function FormulaChatInterface() {
                   <CardContent className="p-3">
                     <div className="flex items-center space-x-2">
                       <Loader2 className="w-4 h-4 animate-spin text-formul8-primary" />
-                      <span className="text-sm text-formul8-gray">Processing with multi-agent system...</span>
+                      <span className="text-sm text-formul8-gray">Processing with intelligent system...</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -1402,13 +1402,13 @@ export default function FormulaChatInterface() {
           </Button>
         </form>
         <p className="text-xs text-formul8-text-gray mt-2 text-center">
-          Powered by multi-agent verification system with {messages.filter(m => m.agent && m.agent !== 'system').length > 0 ? 'active' : 'ready'} cannabis industry experts
+          Powered by intelligent verification system with {messages.filter(m => m.agent && m.agent !== 'system').length > 0 ? 'active' : 'ready'} cannabis industry experts
         </p>
       </div>
 
       {/* Multi-Panel Layout */}
       {activeTool && (
-        <MultiPanelLayout
+        <DesktopPanelLayout
           panels={createPanelsForTool(activeTool.id)}
           isOpen={isToolPanelOpen}
           onClose={handleClosePanel}
