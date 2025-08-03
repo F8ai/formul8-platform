@@ -138,13 +138,12 @@ export default function FormulaChatInterface() {
       setMessages(prev => [...prev, assistantMessage]);
 
       // If response contains file data, automatically create a document window
-      if (data.fileData && windowManager?.addWindow) {
+      if (data.fileData && windowManager?.createWindow) {
         try {
           const documentTitle = data.fileData.title || 'Generated Document';
           const documentContent = data.fileData.content || '';
           
-          windowManager.addWindow({
-            id: `doc_${Date.now()}`,
+          windowManager.createWindow({
             type: 'document',
             title: documentTitle,
             content: {
@@ -152,13 +151,8 @@ export default function FormulaChatInterface() {
               documentType: data.fileData.documentType || 'general',
               isAsciiDoc: documentContent.includes('=') && documentContent.includes('::')
             },
-            x: Math.random() * 300 + 100,
-            y: Math.random() * 200 + 100,
-            width: 700,
-            height: 500,
-            isMinimized: false,
-            isMaximized: false,
-            zIndex: Date.now()
+            size: { width: 700, height: 500 },
+            position: { x: Math.random() * 300 + 100, y: Math.random() * 200 + 100 }
           });
         } catch (docError) {
           console.error('Error creating document window:', docError);
