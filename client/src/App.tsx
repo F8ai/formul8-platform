@@ -47,6 +47,7 @@ const VoiceflowDashboard = lazy(() => import("@/pages/voiceflow"));
 const BaselineTableViewer = lazy(() => import("@/pages/BaselineTableViewer"));
 const ChatTool = lazy(() => import("@/pages/chat-tool"));
 const ChatToolSimple = lazy(() => import("@/pages/chat-tool-simple"));
+const Settings = lazy(() => import("@/pages/Settings"));
 
 // Fast, minimal loading component for lazy routes
 const PageLoader = () => (
@@ -119,6 +120,7 @@ function Router() {
         <Route path="/use/dmso" component={DMSOUseCase} />
         <Route path="/use/goodfor" component={GoodFORUseCase} />
         <Route path="/profile" component={Profile} />
+        <Route path="/settings" component={Settings} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

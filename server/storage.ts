@@ -13,6 +13,7 @@ import {
   baselineExamResults,
   baselineTestRuns,
   baselineTestResults,
+  userGoogleCredentials,
   type User,
   type UpsertUser,
   type Project,
@@ -39,6 +40,8 @@ import {
   type InsertBaselineTestRun,
   type BaselineTestResult,
   type InsertBaselineTestResult,
+  type UserGoogleCredentials,
+  type InsertUserGoogleCredentials,
   dashboardLayouts,
   widgetPreferences,
   type DashboardLayout,
@@ -53,6 +56,11 @@ export interface IStorage {
   // User operations - mandatory for Replit Auth
   getUser(id: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
+  
+  // Google credentials operations - per-user Google OAuth
+  getUserGoogleCredentials(userId: string): Promise<UserGoogleCredentials | undefined>;
+  updateUserGoogleCredentials(userId: string, credentials: Omit<InsertUserGoogleCredentials, 'userId'>): Promise<UserGoogleCredentials>;
+  removeUserGoogleCredentials(userId: string): Promise<void>;
   updateUserActivity(userId: string): Promise<void>;
   updateUserContext(userId: string, context: Record<string, any>): Promise<User | undefined>;
   
@@ -197,6 +205,36 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId))
       .returning();
     return user;
+  }
+
+  // Google credentials operations - per-user Google OAuth
+  async getUserGoogleCredentials(userId: string): Promise<UserGoogleCredentials | undefined> {
+    const [credentials] = await db
+      .select()
+      .from(userGoogleCredentials)
+      .where(eq(userGoogleCredentials.userId, userId));
+    return credentials;
+  }
+
+  async updateUserGoogleCredentials(userId: string, credentials: Omit<InsertUserGoogleCredentials, 'userId'>): Promise<UserGoogleCredentials> {
+    const [result] = await db
+      .insert(userGoogleCredentials)
+      .values({ ...credentials, userId })
+      .onConflictDoUpdate({
+        target: userGoogleCredentials.userId,
+        set: {
+          ...credentials,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return result;
+  }
+
+  async removeUserGoogleCredentials(userId: string): Promise<void> {
+    await db
+      .delete(userGoogleCredentials)
+      .where(eq(userGoogleCredentials.userId, userId));
   }
 
   // Project operations

@@ -4,6 +4,7 @@ import { createServer, type Server } from "http";
 import path from "path";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupGoogleAuth } from "./googleAuth";
 import { baselineAutomation } from "./services/baseline-automation";
 import { githubRouter } from "./routes/github";
 import developmentAgentRoutes from "./routes/development-agent";
@@ -197,6 +198,7 @@ async function processBaselineTest(runId: number, agentType: string, model: stri
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
+  await setupGoogleAuth(app);
 
   // GitHub routes
   app.use('/api/github', githubRouter);

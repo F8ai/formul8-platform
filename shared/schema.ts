@@ -10,6 +10,7 @@ import {
   boolean,
   decimal,
 } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
@@ -41,6 +42,23 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
+
+// User Google credentials table - for per-user Google OAuth
+export const userGoogleCredentials = pgTable("user_google_credentials", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id, { onDelete: 'cascade' }),
+  googleId: varchar("google_id").notNull(),
+  accessToken: varchar("access_token").notNull(),
+  refreshToken: varchar("refresh_token"),
+  email: varchar("email"),
+  name: varchar("name"),
+  picture: varchar("picture"),
+  connectedAt: timestamp("connected_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => [
+  index("user_google_credentials_user_id_idx").on(table.userId),
+  index("user_google_credentials_google_id_idx").on(table.googleId),
+]);
 
 // Projects table
 export const projects = pgTable("projects", {
@@ -852,3 +870,7 @@ export type DesktopFolder = typeof desktopFolders.$inferSelect;
 export type InsertDesktopFolder = z.infer<typeof insertDesktopFolderSchema>;
 export type DesktopFile = typeof desktopFiles.$inferSelect;
 export type InsertDesktopFile = z.infer<typeof insertDesktopFileSchema>;
+
+// Google credentials types
+export type UserGoogleCredentials = typeof userGoogleCredentials.$inferSelect;
+export type InsertUserGoogleCredentials = typeof userGoogleCredentials.$inferInsert;
