@@ -214,7 +214,72 @@ router.get('/files/:sessionId', async (req, res) => {
   }
 });
 
-// File upload endpoint
+// Multiple file upload endpoint for desktop drag and drop
+router.post('/files', upload.array('files', 10), async (req, res) => {
+  try {
+    if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
+      return res.status(400).json({ error: 'No files uploaded' });
+    }
+
+    const userId = (req as any).user?.id || 'demo-user';
+    const uploadedFiles = [];
+
+    for (const file of req.files) {
+      // Generate upload URL
+      const uploadUrl = await objectStorage.getFileUploadURL(file.originalname, file.mimetype);
+      
+      // Upload file to object storage
+      const uploadResponse = await fetch(uploadUrl, {
+        method: 'PUT',
+        body: file.buffer,
+        headers: {
+          'Content-Type': file.mimetype,
+        },
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error(`Failed to upload file ${file.originalname} to object storage`);
+      }
+
+      // Extract object path from upload URL
+      const url = new URL(uploadUrl);
+      const objectPath = url.pathname;
+
+      // Create desktop file record
+      const fileData = {
+        userId,
+        fileName: file.originalname,
+        fileType: file.originalname.split('.').pop() || 'unknown',
+        mimeType: file.mimetype,
+        folderId: req.body.folderId ? parseInt(req.body.folderId) : null,
+        position: { 
+          x: 100 + Math.random() * 200, 
+          y: 150 + Math.random() * 200 
+        },
+        objectStoragePath: objectPath,
+        size: file.size,
+      };
+
+      const [fileRecord] = await db
+        .insert(desktopFiles)
+        .values(fileData)
+        .returning();
+
+      uploadedFiles.push(fileRecord);
+    }
+
+    res.json({
+      success: true,
+      files: uploadedFiles,
+      message: `Successfully uploaded ${uploadedFiles.length} file(s)`
+    });
+  } catch (error) {
+    console.error('Multiple file upload error:', error);
+    res.status(500).json({ error: 'Failed to upload files' });
+  }
+});
+
+// Single file upload endpoint (legacy)
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {

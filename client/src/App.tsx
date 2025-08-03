@@ -48,6 +48,7 @@ const BaselineTableViewer = lazy(() => import("@/pages/BaselineTableViewer"));
 const ChatTool = lazy(() => import("@/pages/chat-tool"));
 const ChatToolSimple = lazy(() => import("@/pages/chat-tool-simple"));
 const Settings = lazy(() => import("@/pages/Settings"));
+const Desktop = lazy(() => import("@/pages/desktop"));
 
 // Fast, minimal loading component for lazy routes
 const PageLoader = () => (
@@ -121,6 +122,8 @@ function Router() {
         <Route path="/use/goodfor" component={GoodFORUseCase} />
         <Route path="/profile" component={Profile} />
         <Route path="/settings" component={Settings} />
+        <Route path="/desktop" component={Desktop} />
+        <Route path="/workspace" component={Workspace} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>
