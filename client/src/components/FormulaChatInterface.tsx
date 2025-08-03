@@ -19,6 +19,7 @@ import { WindowManagerContext } from "./WindowManager";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ObjectUploader } from "./ObjectUploader";
 import { ToolToggleBar } from "./ToolToggleBar";
+import { SlidingToolPanel } from "./SlidingToolPanel";
 import type { UploadResult } from '@uppy/core';
 
 
@@ -88,7 +89,222 @@ export default function FormulaChatInterface() {
   ]);
   const [input, setInput] = useState("");
   const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const [activeTool, setActiveTool] = useState<{
+    id: string;
+    title: string;
+    icon: string;
+    color: string;
+    route: string;
+  } | null>(null);
 
+
+  // Function to get tabs for each tool
+  const getToolTabs = (toolId: string) => {
+    switch (toolId) {
+      case 'formulation':
+        return [
+          {
+            id: 'wizard',
+            label: 'Wizard',
+            icon: '🧪',
+            content: (
+              <iframe
+                src="/design"
+                className="w-full h-full border-0"
+                title="Formulation Wizard"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+              />
+            )
+          },
+          {
+            id: 'calculator',
+            label: 'Calculator',
+            icon: '🧮',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Formulation Calculator</h3>
+                <p>Advanced dosage and concentration calculations coming soon...</p>
+              </div>
+            )
+          },
+          {
+            id: 'history',
+            label: 'History',
+            icon: '📜',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Formulation History</h3>
+                <p>Previous formulations and saved recipes...</p>
+              </div>
+            )
+          }
+        ];
+      case 'compliance':
+        return [
+          {
+            id: 'dashboard',
+            label: 'Dashboard',
+            icon: '⚖️',
+            content: (
+              <iframe
+                src="/ComplianceAgent"
+                className="w-full h-full border-0"
+                title="Compliance Dashboard"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+              />
+            )
+          },
+          {
+            id: 'regulations',
+            label: 'Regulations',
+            icon: '📋',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Current Regulations</h3>
+                <p>State-by-state compliance requirements...</p>
+              </div>
+            )
+          }
+        ];
+      case 'artifacts':
+        return [
+          {
+            id: 'manager',
+            label: 'Manager',
+            icon: '📄',
+            content: (
+              <iframe
+                src="/artifacts"
+                className="w-full h-full border-0"
+                title="Document Manager"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+              />
+            )
+          },
+          {
+            id: 'templates',
+            label: 'Templates',
+            icon: '📝',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Document Templates</h3>
+                <p>SOPs, forms, and compliance templates...</p>
+              </div>
+            )
+          }
+        ];
+      case 'baseline':
+        return [
+          {
+            id: 'assessment',
+            label: 'Assessment',
+            icon: '📊',
+            content: (
+              <iframe
+                src="/BaselineAssessment"
+                className="w-full h-full border-0"
+                title="Baseline Assessment"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+              />
+            )
+          },
+          {
+            id: 'results',
+            label: 'Results',
+            icon: '📈',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Test Results</h3>
+                <p>Historical testing data and analytics...</p>
+              </div>
+            )
+          }
+        ];
+      case 'dashboard':
+        return [
+          {
+            id: 'overview',
+            label: 'Overview',
+            icon: '📈',
+            content: (
+              <iframe
+                src="/dashboard"
+                className="w-full h-full border-0"
+                title="Main Dashboard"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+              />
+            )
+          },
+          {
+            id: 'analytics',
+            label: 'Analytics',
+            icon: '📊',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Advanced Analytics</h3>
+                <p>Detailed performance metrics and insights...</p>
+              </div>
+            )
+          }
+        ];
+      case 'workspace':
+        return [
+          {
+            id: 'files',
+            label: 'Files',
+            icon: '💼',
+            content: (
+              <iframe
+                src="/workspace"
+                className="w-full h-full border-0"
+                title="File Workspace"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+              />
+            )
+          },
+          {
+            id: 'projects',
+            label: 'Projects',
+            icon: '📁',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Projects</h3>
+                <p>Active projects and collaboration spaces...</p>
+              </div>
+            )
+          }
+        ];
+      case 'issues':
+        return [
+          {
+            id: 'tracker',
+            label: 'Tracker',
+            icon: '🐛',
+            content: (
+              <iframe
+                src="/roadmap"
+                className="w-full h-full border-0"
+                title="Issue Tracker"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+              />
+            )
+          },
+          {
+            id: 'roadmap',
+            label: 'Roadmap',
+            icon: '🗺️',
+            content: (
+              <div className="p-4 text-formul8-text-white">
+                <h3 className="text-lg font-semibold mb-4">Development Roadmap</h3>
+                <p>Upcoming features and improvements...</p>
+              </div>
+            )
+          }
+        ];
+      default:
+        return [];
+    }
+  };
 
   // Define available tools
   const availableTools = [
@@ -317,20 +533,7 @@ export default function FormulaChatInterface() {
         icon: '🧪',
         color: 'border-purple-500',
         action: () => {
-          // Open in new tab with dark theme styling and purple emoji color border
-          const currentOrigin = window.location.origin;
-          const newWindow = window.open(`${currentOrigin}/design`, '_blank');
-          if (newWindow) {
-            newWindow.document.title = '🧪 Formulation Wizard - Formul8.ai';
-            setTimeout(() => {
-              if (newWindow.document.body) {
-                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
-                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.documentElement.style.border = '3px solid hsl(280, 84%, 55%)';
-              }
-            }, 100);
-          }
+          setActiveTool(availableTools.find(t => t.id === 'formulation') || null);
         }
       },
       {
@@ -341,20 +544,7 @@ export default function FormulaChatInterface() {
         icon: '🐛',
         color: 'border-red-500',
         action: () => {
-          // Open in new tab with dark theme styling and red emoji color border
-          const currentOrigin = window.location.origin;
-          const newWindow = window.open(`${currentOrigin}/roadmap`, '_blank');
-          if (newWindow) {
-            newWindow.document.title = '🐛 Issue Tracker - Formul8.ai';
-            setTimeout(() => {
-              if (newWindow.document.body) {
-                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
-                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.documentElement.style.border = '3px solid hsl(0, 84%, 60%)';
-              }
-            }, 100);
-          }
+          setActiveTool(availableTools.find(t => t.id === 'issues') || null);
         }
       },
       {
@@ -365,20 +555,7 @@ export default function FormulaChatInterface() {
         icon: '⚖️',
         color: 'border-green-500',
         action: () => {
-          // Open in new tab with dark theme styling and green emoji color border
-          const currentOrigin = window.location.origin;
-          const newWindow = window.open(`${currentOrigin}/ComplianceAgent`, '_blank');
-          if (newWindow) {
-            newWindow.document.title = '⚖️ Compliance Dashboard - Formul8.ai';
-            setTimeout(() => {
-              if (newWindow.document.body) {
-                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
-                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.documentElement.style.border = '3px solid hsl(140, 88%, 55%)';
-              }
-            }, 100);
-          }
+          setActiveTool(availableTools.find(t => t.id === 'compliance') || null);
         }
       },
       {
@@ -389,20 +566,7 @@ export default function FormulaChatInterface() {
         icon: '📄',
         color: 'border-blue-500',
         action: () => {
-          // Open in new tab with dark theme styling and blue emoji color border
-          const currentOrigin = window.location.origin;
-          const newWindow = window.open(`${currentOrigin}/artifacts`, '_blank');
-          if (newWindow) {
-            newWindow.document.title = '📄 Document Manager - Formul8.ai';
-            setTimeout(() => {
-              if (newWindow.document.body) {
-                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
-                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.documentElement.style.border = '3px solid hsl(195, 84%, 55%)';
-              }
-            }, 100);
-          }
+          setActiveTool(availableTools.find(t => t.id === 'artifacts') || null);
         }
       },
       {
@@ -413,20 +577,7 @@ export default function FormulaChatInterface() {
         icon: '📊',
         color: 'border-cyan-500',
         action: () => {
-          // Open in new tab with dark theme styling and cyan emoji color border
-          const currentOrigin = window.location.origin;
-          const newWindow = window.open(`${currentOrigin}/BaselineAssessment`, '_blank');
-          if (newWindow) {
-            newWindow.document.title = '📊 Baseline Testing - Formul8.ai';
-            setTimeout(() => {
-              if (newWindow.document.body) {
-                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
-                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.documentElement.style.border = '3px solid hsl(180, 88%, 55%)';
-              }
-            }, 100);
-          }
+          setActiveTool(availableTools.find(t => t.id === 'baseline') || null);
         }
       },
       {
@@ -437,20 +588,7 @@ export default function FormulaChatInterface() {
         icon: '📈',
         color: 'border-orange-500',
         action: () => {
-          // Open in new tab with dark theme styling and orange emoji color border
-          const currentOrigin = window.location.origin;
-          const newWindow = window.open(`${currentOrigin}/dashboard`, '_blank');
-          if (newWindow) {
-            newWindow.document.title = '📈 Main Dashboard - Formul8.ai';
-            setTimeout(() => {
-              if (newWindow.document.body) {
-                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
-                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.documentElement.style.border = '3px solid hsl(45, 93%, 58%)';
-              }
-            }, 100);
-          }
+          setActiveTool(availableTools.find(t => t.id === 'dashboard') || null);
         }
       },
       {
@@ -461,20 +599,7 @@ export default function FormulaChatInterface() {
         icon: '💼',
         color: 'border-indigo-500',
         action: () => {
-          // Open in new tab with dark theme styling and indigo emoji color border
-          const currentOrigin = window.location.origin;
-          const newWindow = window.open(`${currentOrigin}/workspace`, '_blank');
-          if (newWindow) {
-            newWindow.document.title = '💼 File Workspace - Formul8.ai';
-            setTimeout(() => {
-              if (newWindow.document.body) {
-                newWindow.document.body.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.body.style.color = 'hsl(0, 0%, 95%)';
-                newWindow.document.documentElement.style.backgroundColor = 'hsl(220, 13%, 8%)';
-                newWindow.document.documentElement.style.border = '3px solid hsl(263, 84%, 55%)';
-              }
-            }, 100);
-          }
+          setActiveTool(availableTools.find(t => t.id === 'workspace') || null);
         }
       }
     ];
@@ -754,8 +879,8 @@ export default function FormulaChatInterface() {
       {/* Tool Toggle Bar */}
       <ToolToggleBar 
         tools={availableTools}
-        activeTool={null}
-        onToolToggle={() => {}}
+        activeTool={activeTool}
+        onToolToggle={setActiveTool}
       />
 
       {/* Messages */}
@@ -955,6 +1080,18 @@ export default function FormulaChatInterface() {
         </p>
       </div>
 
+      {/* Sliding Tool Panel */}
+      {activeTool && (
+        <SlidingToolPanel
+          isOpen={!!activeTool}
+          onClose={() => setActiveTool(null)}
+          title={activeTool.title}
+          icon={activeTool.icon}
+          color={activeTool.color}
+          width="w-1/2"
+          tabs={getToolTabs(activeTool.id)}
+        />
+      )}
 
     </div>
   );
