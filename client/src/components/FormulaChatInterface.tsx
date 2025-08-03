@@ -260,16 +260,21 @@ export default function FormulaChatInterface() {
         icon: '🧪',
         action: () => {
           if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '🧪 Formulation Wizard',
-              content: {
-                mode: 'formulation-wizard',
-                route: '/design'
-              },
-              size: { width: 800, height: 600 },
-              position: { x: 100, y: 100 }
-            });
+            if (isMobile) {
+              // On mobile: Navigate to full route
+              window.location.href = '/design';
+            } else {
+              windowManager.createWindow({
+                type: 'tool',
+                title: '🧪 Formulation Wizard',
+                content: {
+                  mode: 'formulation-wizard',
+                  route: '/design'
+                },
+                size: { width: 800, height: 600 },
+                position: { x: 100, y: 100 }
+              });
+            }
           }
         }
       },
@@ -281,16 +286,21 @@ export default function FormulaChatInterface() {
         icon: '🐛',
         action: () => {
           if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '🐛 Issue Tracker',
-              content: {
-                mode: 'issue-form',
-                route: '/roadmap'
-              },
-              size: { width: 700, height: 500 },
-              position: { x: 150, y: 150 }
-            });
+            if (isMobile) {
+              // On mobile: Navigate to full roadmap route
+              window.location.href = '/roadmap';
+            } else {
+              windowManager.createWindow({
+                type: 'tool',
+                title: '🐛 Issue Tracker',
+                content: {
+                  mode: 'issue-form',
+                  route: '/roadmap'
+                },
+                size: { width: 700, height: 500 },
+                position: { x: 150, y: 150 }
+              });
+            }
           }
         }
       },
@@ -302,16 +312,21 @@ export default function FormulaChatInterface() {
         icon: '⚖️',
         action: () => {
           if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '⚖️ Compliance Dashboard',
-              content: {
-                mode: 'compliance-agent',
-                route: '/pages/ComplianceAgent'
-              },
-              size: { width: 900, height: 700 },
-              position: { x: 50, y: 50 }
-            });
+            if (isMobile) {
+              // On mobile: Navigate to full compliance route
+              window.location.href = '/agent/compliance';
+            } else {
+              windowManager.createWindow({
+                type: 'tool',
+                title: '⚖️ Compliance Dashboard',
+                content: {
+                  mode: 'compliance-agent',
+                  route: '/agent/compliance'
+                },
+                size: { width: 900, height: 700 },
+                position: { x: 50, y: 50 }
+              });
+            }
           }
         }
       },
@@ -323,16 +338,21 @@ export default function FormulaChatInterface() {
         icon: '📄',
         action: () => {
           if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '📄 Document Manager',
-              content: {
-                mode: 'artifacts',
-                route: '/artifacts'
-              },
-              size: { width: 800, height: 600 },
-              position: { x: 200, y: 100 }
-            });
+            if (isMobile) {
+              // On mobile: Navigate to full artifacts route
+              window.location.href = '/artifacts';
+            } else {
+              windowManager.createWindow({
+                type: 'tool',
+                title: '📄 Document Manager',
+                content: {
+                  mode: 'artifacts',
+                  route: '/artifacts'
+                },
+                size: { width: 800, height: 600 },
+                position: { x: 200, y: 100 }
+              });
+            }
           }
         }
       },
@@ -344,16 +364,21 @@ export default function FormulaChatInterface() {
         icon: '📊',
         action: () => {
           if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '📊 Baseline Testing',
-              content: {
-                mode: 'baseline-testing',
-                route: '/baseline-testing'
-              },
-              size: { width: 900, height: 700 },
-              position: { x: 100, y: 50 }
-            });
+            if (isMobile) {
+              // On mobile: Navigate to full baseline route
+              window.location.href = '/baseline-assessment';
+            } else {
+              windowManager.createWindow({
+                type: 'tool',
+                title: '📊 Baseline Testing',
+                content: {
+                  mode: 'baseline-testing',
+                  route: '/baseline-assessment'
+                },
+                size: { width: 900, height: 700 },
+                position: { x: 100, y: 50 }
+              });
+            }
           }
         }
       },
@@ -365,16 +390,21 @@ export default function FormulaChatInterface() {
         icon: '📈',
         action: () => {
           if (windowManager) {
-            windowManager.createWindow({
-              type: 'tool',
-              title: '📈 Main Dashboard',
-              content: {
-                mode: 'dashboard',
-                route: '/dashboard'
-              },
-              size: { width: 1000, height: 800 },
-              position: { x: 50, y: 50 }
-            });
+            if (isMobile) {
+              // On mobile: Navigate to full dashboard route
+              window.location.href = '/dashboard';
+            } else {
+              windowManager.createWindow({
+                type: 'tool',
+                title: '📈 Main Dashboard',
+                content: {
+                  mode: 'dashboard',
+                  route: '/dashboard'
+                },
+                size: { width: 1000, height: 800 },
+                position: { x: 50, y: 50 }
+              });
+            }
           }
         }
       },
