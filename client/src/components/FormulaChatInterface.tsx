@@ -98,194 +98,279 @@ export default function FormulaChatInterface() {
   } | null>(null);
 
 
+  // Tool configurations - each tool specifies its panel layout and tab endpoints
+  const toolConfigurations = {
+    formulation: {
+      panels: [
+        {
+          id: 'chat',
+          title: 'Formulation Chat',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'chat', label: 'Chat', icon: '💬', endpoint: '/api/chat/formulation' },
+            { id: 'history', label: 'History', icon: '📜', endpoint: '/formulation/history' }
+          ]
+        },
+        {
+          id: 'molecule',
+          title: 'Molecular Structure',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'structure', label: 'Structure', icon: '🧬', endpoint: '/formulation/molecule' },
+            { id: 'calculator', label: 'Calculator', icon: '🧮', endpoint: '/formulation/calculator' }
+          ]
+        },
+        {
+          id: 'info',
+          title: 'Formulation Info',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'details', label: 'Details', icon: 'ℹ️', endpoint: '/formulation/details' },
+            { id: 'wizard', label: 'Wizard', icon: '🧪', endpoint: '/design' }
+          ]
+        }
+      ]
+    },
+    compliance: {
+      panels: [
+        {
+          id: 'chat',
+          title: 'Compliance Chat',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'chat', label: 'Chat', icon: '💬', endpoint: '/api/chat/compliance' },
+            { id: 'assistant', label: 'Assistant', icon: '🤖', endpoint: '/ComplianceAgent' }
+          ]
+        },
+        {
+          id: 'regulations',
+          title: 'Current Regulations',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'state-regs', label: 'State Rules', icon: '📋', endpoint: '/compliance/regulations' },
+            { id: 'federal', label: 'Federal', icon: '🏛️', endpoint: '/compliance/federal' }
+          ]
+        },
+        {
+          id: 'checklist',
+          title: 'Compliance Tools',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'checklist', label: 'Checklist', icon: '✅', endpoint: '/compliance/checklist' },
+            { id: 'documents', label: 'Documents', icon: '📄', endpoint: '/compliance/documents' }
+          ]
+        }
+      ]
+    },
+    artifacts: {
+      panels: [
+        {
+          id: 'manager',
+          title: 'Document Manager',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'manager', label: 'Manager', icon: '📄', endpoint: '/artifacts' },
+            { id: 'search', label: 'Search', icon: '🔍', endpoint: '/artifacts/search' }
+          ]
+        },
+        {
+          id: 'preview',
+          title: 'Document Preview',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'preview', label: 'Preview', icon: '👁️', endpoint: '/artifacts/preview' }
+          ]
+        },
+        {
+          id: 'templates',
+          title: 'Templates & Tools',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'templates', label: 'Templates', icon: '📝', endpoint: '/artifacts/templates' },
+            { id: 'generator', label: 'Generator', icon: '⚡', endpoint: '/artifacts/generator' }
+          ]
+        }
+      ]
+    },
+    baseline: {
+      panels: [
+        {
+          id: 'assessment',
+          title: 'Baseline Testing',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'assessment', label: 'Assessment', icon: '📊', endpoint: '/BaselineAssessment' },
+            { id: 'setup', label: 'Setup', icon: '⚙️', endpoint: '/baseline/setup' }
+          ]
+        },
+        {
+          id: 'results',
+          title: 'Test Results',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'results', label: 'Results', icon: '📈', endpoint: '/baseline/results' },
+            { id: 'metrics', label: 'Metrics', icon: '📏', endpoint: '/baseline/metrics' }
+          ]
+        },
+        {
+          id: 'analysis',
+          title: 'Analysis Tools',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'analysis', label: 'Analysis', icon: '🔬', endpoint: '/baseline/analysis' },
+            { id: 'reports', label: 'Reports', icon: '📋', endpoint: '/baseline/reports' }
+          ]
+        }
+      ]
+    },
+    dashboard: {
+      panels: [
+        {
+          id: 'main',
+          title: 'Main Dashboard',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'overview', label: 'Overview', icon: '📈', endpoint: '/dashboard' },
+            { id: 'kpis', label: 'KPIs', icon: '🎯', endpoint: '/dashboard/kpis' }
+          ]
+        },
+        {
+          id: 'analytics',
+          title: 'Analytics',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'analytics', label: 'Analytics', icon: '📊', endpoint: '/dashboard/analytics' },
+            { id: 'trends', label: 'Trends', icon: '📈', endpoint: '/dashboard/trends' }
+          ]
+        },
+        {
+          id: 'reports',
+          title: 'Reports & Alerts',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'reports', label: 'Reports', icon: '📋', endpoint: '/dashboard/reports' },
+            { id: 'alerts', label: 'Alerts', icon: '🚨', endpoint: '/dashboard/alerts' }
+          ]
+        }
+      ]
+    },
+    workspace: {
+      panels: [
+        {
+          id: 'files',
+          title: 'File Manager',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'files', label: 'Files', icon: '💼', endpoint: '/workspace' },
+            { id: 'uploads', label: 'Uploads', icon: '📤', endpoint: '/workspace/uploads' }
+          ]
+        },
+        {
+          id: 'editor',
+          title: 'File Editor',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'editor', label: 'Editor', icon: '✏️', endpoint: '/workspace/editor' }
+          ]
+        },
+        {
+          id: 'projects',
+          title: 'Projects & Collaboration',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'projects', label: 'Projects', icon: '📁', endpoint: '/workspace/projects' },
+            { id: 'shared', label: 'Shared', icon: '👥', endpoint: '/workspace/shared' }
+          ]
+        }
+      ]
+    },
+    issues: {
+      panels: [
+        {
+          id: 'tracker',
+          title: 'Issue Tracker',
+          position: 'left' as const,
+          width: 'w-96',
+          tabs: [
+            { id: 'tracker', label: 'Tracker', icon: '🐛', endpoint: '/roadmap' },
+            { id: 'create', label: 'Create', icon: '➕', endpoint: '/issues/create' }
+          ]
+        },
+        {
+          id: 'roadmap',
+          title: 'Development Roadmap',
+          position: 'top-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'roadmap', label: 'Roadmap', icon: '🗺️', endpoint: '/issues/roadmap' },
+            { id: 'milestones', label: 'Milestones', icon: '🎯', endpoint: '/issues/milestones' }
+          ]
+        },
+        {
+          id: 'activity',
+          title: 'Activity & Stats',
+          position: 'bottom-right' as const,
+          width: 'w-80',
+          height: 'h-64',
+          tabs: [
+            { id: 'activity', label: 'Activity', icon: '📊', endpoint: '/issues/activity' },
+            { id: 'stats', label: 'Stats', icon: '📈', endpoint: '/issues/stats' }
+          ]
+        }
+      ]
+    }
+  };
+
   // Function to get panel layouts for each tool
   const getToolPanels = (toolId: string) => {
-    switch (toolId) {
-      case 'formulation':
-        return [
-          {
-            id: 'chat',
-            title: 'Formulation Chat',
-            position: 'left' as const,
-            width: 'w-96',
-            tabs: [
-              {
-                id: 'chat',
-                label: 'Chat',
-                icon: '💬',
-                content: (
-                  <div className="p-4 h-full flex flex-col">
-                    <h3 className="text-sm font-semibold mb-3">Formulation Assistant</h3>
-                    <div className="flex-1 bg-formul8-bg-light rounded p-3 mb-3 text-xs">
-                      <p>Ask me about formulation techniques, dosage calculations, or ingredient compatibility...</p>
-                    </div>
-                    <input 
-                      type="text" 
-                      placeholder="Ask about formulations..." 
-                      className="w-full p-2 text-xs bg-formul8-bg-light border border-formul8-border rounded text-formul8-text-white placeholder-formul8-text-gray"
-                    />
-                  </div>
-                )
-              }
-            ]
-          },
-          {
-            id: 'molecule',
-            title: 'Molecular Structure',
-            position: 'top-right' as const,
-            width: 'w-80',
-            height: 'h-64',
-            tabs: [
-              {
-                id: 'structure',
-                label: 'Structure',
-                icon: '🧬',
-                content: (
-                  <div className="p-4 h-full">
-                    <div className="w-full h-full bg-formul8-bg-light rounded flex items-center justify-center">
-                      <div className="text-center text-xs text-formul8-text-gray">
-                        <div className="text-2xl mb-2">🧬</div>
-                        <p>Molecular Viewer</p>
-                        <p>THC/CBD structures</p>
-                      </div>
-                    </div>
-                  </div>
-                )
-              }
-            ]
-          },
-          {
-            id: 'info',
-            title: 'Formulation Info',
-            position: 'bottom-right' as const,
-            width: 'w-80',
-            height: 'h-64',
-            tabs: [
-              {
-                id: 'details',
-                label: 'Details',
-                icon: 'ℹ️',
-                content: (
-                  <div className="p-4 h-full text-xs">
-                    <h4 className="font-semibold mb-2">Current Formulation</h4>
-                    <div className="space-y-1 text-formul8-text-gray">
-                      <p>THC: 15mg/ml</p>
-                      <p>CBD: 5mg/ml</p>
-                      <p>Carrier: MCT Oil</p>
-                      <p>Volume: 30ml</p>
-                    </div>
-                  </div>
-                )
-              }
-            ]
-          }
-        ];
-      case 'compliance':
-        return [
-          {
-            id: 'chat',
-            title: 'Compliance Chat',
-            position: 'left' as const,
-            width: 'w-96',
-            tabs: [
-              {
-                id: 'chat',
-                label: 'Chat',
-                icon: '💬',
-                content: (
-                  <div className="p-4 h-full flex flex-col">
-                    <h3 className="text-sm font-semibold mb-3">Compliance Assistant</h3>
-                    <div className="flex-1 bg-formul8-bg-light rounded p-3 mb-3 text-xs">
-                      <p>Ask me about regulations, licensing requirements, or compliance procedures...</p>
-                    </div>
-                    <input 
-                      type="text" 
-                      placeholder="Ask about compliance..." 
-                      className="w-full p-2 text-xs bg-formul8-bg-light border border-formul8-border rounded text-formul8-text-white placeholder-formul8-text-gray"
-                    />
-                  </div>
-                )
-              }
-            ]
-          },
-          {
-            id: 'regulations',
-            title: 'Current Regulations',
-            position: 'top-right' as const,
-            width: 'w-80',
-            height: 'h-64',
-            tabs: [
-              {
-                id: 'state-regs',
-                label: 'State Rules',
-                icon: '📋',
-                content: (
-                  <div className="p-4 h-full text-xs">
-                    <h4 className="font-semibold mb-2">California Cannabis Laws</h4>
-                    <div className="space-y-1 text-formul8-text-gray">
-                      <p>• Testing requirements updated</p>
-                      <p>• New packaging standards</p>
-                      <p>• License renewal dates</p>
-                    </div>
-                  </div>
-                )
-              }
-            ]
-          },
-          {
-            id: 'checklist',
-            title: 'Compliance Checklist',
-            position: 'bottom-right' as const,
-            width: 'w-80',
-            height: 'h-64',
-            tabs: [
-              {
-                id: 'tasks',
-                label: 'Tasks',
-                icon: '✅',
-                content: (
-                  <div className="p-4 h-full text-xs">
-                    <h4 className="font-semibold mb-2">Daily Checklist</h4>
-                    <div className="space-y-1">
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" className="w-3 h-3" defaultChecked />
-                        <span className="text-formul8-text-gray">Inventory tracking</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <input type="checkbox" className="w-3 h-3" />
-                        <span className="text-formul8-text-gray">Security check</span>
-                      </div>
-                    </div>
-                  </div>
-                )
-              }
-            ]
-          }
-        ];
-      default:
-        return [
-          {
-            id: 'main',
-            title: 'Tool Interface',
-            position: 'left' as const,
-            width: 'w-96',
-            tabs: [
-              {
-                id: 'interface',
-                label: 'Interface',
-                content: (
-                  <iframe
-                    src={availableTools.find(t => t.id === toolId)?.route || '/'}
-                    className="w-full h-full border-0"
-                    title="Tool Interface"
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-                  />
-                )
-              }
-            ]
-          }
-        ];
-    }
+    const config = toolConfigurations[toolId as keyof typeof toolConfigurations];
+    if (!config) return [];
+
+    return config.panels.map(panel => ({
+      ...panel,
+      tabs: panel.tabs.map(tab => ({
+        ...tab,
+        content: (
+          <iframe
+            src={tab.endpoint}
+            className="w-full h-full border-0"
+            title={`${tab.label} - ${panel.title}`}
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+          />
+        )
+      }))
+    }));
   };
 
   // Define available tools

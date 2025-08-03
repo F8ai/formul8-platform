@@ -50,6 +50,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 
 ### Core Features and Design Patterns
 - **Desktop Workspace**: Window-based multi-agent interface with floating, resizable widgets accessible at `/desktop` route
+- **Multi-Panel Layout System**: Advanced tool interface where each tool opens multiple panels that slide simultaneously from different directions (left from left, top-right from top, bottom-right from right). Tools are configuration-driven specifications defining panel layouts and tab endpoints.
 - **PWA Support**: Full Progressive Web App with iOS "Add to Home Screen", desktop notifications, and offline capabilities
 - **Notification System**: Comprehensive notification menu with bell icon, unread badges, desktop/mobile PWA notifications
 - **User Interface**: Chat-focused interface with Google Drive integration for document artifacts, responsive design (mobile-first), and persistent conversation memory
