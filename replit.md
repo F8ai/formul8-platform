@@ -31,7 +31,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **AI Integration**: OpenAI GPT-4o for agent responses
 - **Agent System**: LangChain agents, RAG with FAISS vectorstores, SPARQL knowledge bases (TTL/RDF ontologies), multi-model support (OpenAI, Anthropic, Google), and agent-to-agent verification.
 - **Federated Architecture**: Designed for hybrid cloud deployments, allowing local agents to communicate with cloud agents via secure mTLS authentication, enabling data sovereignty and local intelligence.
-- **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data).
+- **Repository Structure**: Monorepo (`formul8-platform`) with `client/` (React frontend - prepared as independent submodule), `server/` (Express backend), `agents/` (specialized AI agents as Git submodules), `shared/` (utilities/schemas), `scripts/`, `docs/`, and `migrations/`. Each agent has a dedicated data repository as a submodule with Git LFS for large files (vector stores, models, training data). Frontend is being extracted to enable independent development.
 
 ### Deployment Architecture (Mixed Runtime Support - Aug 2, 2025)
 - **Multi-Runtime Support**: Fixed deployment conflicts between Node.js and Python configurations
