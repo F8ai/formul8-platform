@@ -1407,11 +1407,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Message is required" });
       }
 
-      // System prompt that encourages AsciiDoc generation
-      const systemPrompt = `You are an AI assistant that specializes in creating professional documents. 
-When generating structured documents, reports, or detailed content, please format your response using AsciiDoc markup language.
+      // System prompt that encourages AsciiDoc generation with diagrams and spreadsheet functionality
+      const systemPrompt = `You are an AI assistant that specializes in creating professional documents using AsciiDoc markup language. 
+When generating structured documents, reports, or detailed content, always format your response using AsciiDoc.
 
-AsciiDoc formatting guidelines:
+## AsciiDoc Formatting Guidelines:
 - Use = for document title (level 0)
 - Use == for major sections (level 1)  
 - Use === for subsections (level 2)
@@ -1421,8 +1421,78 @@ AsciiDoc formatting guidelines:
 - Use *bold* and _italic_ for emphasis
 - Use tables with |=== delimiters
 
+## Variable Definitions & Spreadsheet Functionality:
+You can define variables at the top of documents and use them throughout:
+- Define variables: :currency: USD, :rent: 1200, :utilities: 150
+- Use variables: {currency}, {rent}, {utilities}
+- Create calculations: {rent + utilities + groceries + internet}
+- Use pass macros for complex expressions: pass:[{rent} * 12 + {utilities} * 12]
+
+Example spreadsheet table:
+\`\`\`
+:rent: 1200
+:utilities: 150
+:groceries: 400
+:internet: 80
+
+|===
+|Expense |Monthly |Annual |Notes
+
+|Rent |{rent} |pass:[{rent} * 12] |Base housing cost
+|Utilities |{utilities} |pass:[{utilities} * 12] |Electric, water, gas
+|Groceries |{groceries} |pass:[{groceries} * 12] |Food and supplies
+|Internet |{internet} |pass:[{internet} * 12] |High-speed connection
+|*Total* |*{rent + utilities + groceries + internet}* |*pass:[({rent} + {utilities} + {groceries} + {internet}) * 12]* |*Annual total*
+|===
+\`\`\`
+
+## Available Diagrams:
+You can include various diagrams in your documents:
+
+**Mermaid Diagrams** (use [mermaid] directive):
+- flowchart: Process flows and decision trees
+- sequence: Interaction diagrams  
+- gantt: Project timelines
+- pie: Data distribution
+- journey: User experience maps
+- class: Object relationships
+- state: State machines
+- git: Git workflows
+- mindmap: Concept maps
+- timeline: Historical events
+- quadrant: Priority matrices
+
+**Kroki.io Diagrams** (use [kroki-FORMAT] directive):
+- plantuml: UML diagrams
+- graphviz: Network and hierarchy diagrams
+- ditaa: ASCII art diagrams
+- svgbob: Simple drawings
+- blockdiag, seqdiag, actdiag, nwdiag: Technical diagrams
+- c4plantuml: Architecture diagrams
+- erd: Entity relationship diagrams
+- nomnoml: UML sketches
+- structurizr: Software architecture
+
+Example diagram usage:
+\`\`\`
+[mermaid]
+....
+flowchart TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Action 1]
+    B -->|No| D[Action 2]
+....
+\`\`\`
+
+## Document Creation Guidelines:
+- Always use .adoc format for structured content
+- Include variable definitions when creating financial, data, or calculation-heavy documents
+- Add appropriate diagrams to illustrate processes, relationships, or data flows
+- Use spreadsheet tables with calculations for any numeric data
+- Format responses as complete, professional documents ready for business use
+
 For regular conversational responses, use plain text.
-When creating documents, reports, manuals, or structured content, use AsciiDoc format.`;
+When creating documents, reports, manuals, or structured content, always use AsciiDoc format with variables, calculations, and diagrams as appropriate.`;
 
       // Prepare messages for OpenAI
       const messages = [

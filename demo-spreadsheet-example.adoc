@@ -1,0 +1,112 @@
+= Cannabis Business Financial Model
+:author: Formul8 AI Assistant
+:currency: USD
+:monthly_rent: 5000
+:utilities: 800
+:insurance: 1200
+:licenses: 2500
+:inventory_cost: 15000
+:staff_salaries: 12000
+:marketing: 2000
+:equipment_depreciation: 1500
+:miscellaneous: 1000
+:tax_rate: 0.28
+:profit_margin: 0.35
+
+== Executive Summary
+
+This financial model demonstrates the power of AsciiDoc spreadsheet functionality with variable definitions and dynamic calculations for a cannabis dispensary business.
+
+== Monthly Operating Expenses
+
+|===
+|Category |Monthly Cost |Annual Cost |Percentage of Total
+
+|Rent |{currency} {monthly_rent} |{currency} pass:[{monthly_rent} * 12] |pass:[Math.round(({monthly_rent} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Utilities |{currency} {utilities} |{currency} pass:[{utilities} * 12] |pass:[Math.round(({utilities} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Insurance |{currency} {insurance} |{currency} pass:[{insurance} * 12] |pass:[Math.round(({insurance} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Licenses & Compliance |{currency} {licenses} |{currency} pass:[{licenses} * 12] |pass:[Math.round(({licenses} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Inventory Cost |{currency} {inventory_cost} |{currency} pass:[{inventory_cost} * 12] |pass:[Math.round(({inventory_cost} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Staff Salaries |{currency} {staff_salaries} |{currency} pass:[{staff_salaries} * 12] |pass:[Math.round(({staff_salaries} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Marketing |{currency} {marketing} |{currency} pass:[{marketing} * 12] |pass:[Math.round(({marketing} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Equipment Depreciation |{currency} {equipment_depreciation} |{currency} pass:[{equipment_depreciation} * 12] |pass:[Math.round(({equipment_depreciation} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+|Miscellaneous |{currency} {miscellaneous} |{currency} pass:[{miscellaneous} * 12] |pass:[Math.round(({miscellaneous} / ({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous})) * 100)]%
+
+|*Total Monthly Expenses* |*{currency} {monthly_rent + utilities + insurance + licenses + inventory_cost + staff_salaries + marketing + equipment_depreciation + miscellaneous}* |*{currency} pass:[({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) * 12]* |*100%*
+|===
+
+== Revenue Projections
+
+Based on industry standards and our profit margin of {profit_margin * 100}%:
+
+|===
+|Metric |Monthly |Annual
+
+|Required Revenue (Break-even) |{currency} {monthly_rent + utilities + insurance + licenses + inventory_cost + staff_salaries + marketing + equipment_depreciation + miscellaneous} |{currency} pass:[({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) * 12]
+|Target Revenue (with {profit_margin * 100}% margin) |{currency} pass:[Math.round(({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) / (1 - {profit_margin}))] |{currency} pass:[Math.round((({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) / (1 - {profit_margin})) * 12)]
+|Gross Profit |{currency} pass:[Math.round((({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) / (1 - {profit_margin})) * {profit_margin})] |{currency} pass:[Math.round(((({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) / (1 - {profit_margin})) * {profit_margin}) * 12)]
+|After-tax Profit |{currency} pass:[Math.round((({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) / (1 - {profit_margin})) * {profit_margin} * (1 - {tax_rate}))] |{currency} pass:[Math.round(((({monthly_rent} + {utilities} + {insurance} + {licenses} + {inventory_cost} + {staff_salaries} + {marketing} + {equipment_depreciation} + {miscellaneous}) / (1 - {profit_margin})) * {profit_margin} * (1 - {tax_rate})) * 12)]
+|===
+
+== Business Flow Diagram
+
+[mermaid]
+....
+flowchart TD
+    A[Customer Inquiry] --> B{Age Verification}
+    B -->|21+| C[Product Selection]
+    B -->|Under 21| D[Exit]
+    C --> E[Budtender Consultation]
+    E --> F[Product Education]
+    F --> G[Purchase Decision]
+    G -->|Yes| H[Payment Processing]
+    G -->|No| I[Follow-up Marketing]
+    H --> J[Compliance Check]
+    J --> K[Package & Label]
+    K --> L[Customer Exit]
+    L --> M[Inventory Update]
+    M --> N[Sales Analytics]
+    I --> O[CRM Update]
+....
+
+== Compliance Process
+
+[mermaid]
+....
+gantt
+    title Cannabis Compliance Timeline
+    dateFormat  YYYY-MM-DD
+    section Licensing
+    Initial Application    :2024-01-01, 30d
+    Background Check      :2024-01-15, 45d
+    Facility Inspection   :2024-02-15, 14d
+    License Approval      :2024-03-01, 7d
+    section Operations
+    Staff Training        :2024-03-01, 21d
+    Inventory Setup       :2024-03-15, 14d
+    Soft Opening         :2024-04-01, 7d
+    Grand Opening        :2024-04-08, 1d
+....
+
+== Market Analysis
+
+[mermaid]
+....
+pie title Market Share by Product Category
+    "Flower" : 45
+    "Edibles" : 25
+    "Concentrates" : 15
+    "Topicals" : 8
+    "Accessories" : 7
+....
+
+== Financial Summary
+
+This model demonstrates how to create dynamic, calculation-driven documents that automatically update when variables change. Key benefits:
+
+* *Automated Calculations*: All totals and percentages update automatically
+* *Scenario Planning*: Change variables to test different scenarios
+* *Professional Presentation*: Clean, formatted output ready for stakeholders
+* *Visual Integration*: Diagrams complement financial data
+
+To modify this model, simply update the variable definitions at the top of the document and all calculations will automatically recalculate.

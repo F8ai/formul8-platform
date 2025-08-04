@@ -21,6 +21,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Production Deployment Fixed (Aug 4, 2025)**: Resolved black screen issue on f8.syzygyx.com by fixing deployment configuration - changed from static-only build to full-stack deployment with backend APIs, added proper health check endpoint, configured REPLIT_DOMAINS environment variable for production authentication
 - **Header Restored (Aug 4, 2025)**: Fixed missing header in deployed site by adding TopHeader component back to standalone desktop mode in DesktopWorkspace.tsx, adjusted layout to use flex-1 for proper height distribution
 - **Safari Compatibility Added (Aug 4, 2025)**: Added automatic Safari browser detection with fallback to simplified interface, resolved white screen issues with error handling and browser-specific rendering modes
+- **Enhanced Chat Prompt (Aug 4, 2025)**: Updated system prompt with comprehensive AsciiDoc, diagram, and spreadsheet instructions including 13+ Mermaid diagram types, Kroki.io diagram support, variable definitions, calculations, and spreadsheet table functionality
 
 ## User Preferences
 
