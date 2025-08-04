@@ -44,11 +44,9 @@ try {
     throw new Error("Root element not found");
   }
   
-  console.log("Creating React root...");
   const root = createRoot(rootElement);
-  console.log("Rendering App...");
   
-  // Use SimpleApp for debugging Safari issues
+  // Use SimpleApp for Safari compatibility or when explicitly requested
   const isSafari = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome');
   if (isSafari || window.location.search.includes('simple=true')) {
     console.log("Using Safari-compatible SimpleApp");
@@ -56,7 +54,7 @@ try {
   } else {
     root.render(<App />);
   }
-  console.log("App rendered successfully");
+
 } catch (error) {
   console.error("Failed to mount React app:", error);
   document.body.innerHTML = `

@@ -10,7 +10,7 @@ import React, { Suspense, lazy } from "react";
 import NotFound from "@/pages/not-found";
 import Landing from "@/pages/landing";
 import Workspace from "@/pages/workspace";
-import TestPage from "./test-page";
+
 
 // Lazy load all other pages for better performance
 const ChatLanding = lazy(() => import("@/pages/chat-landing"));
@@ -68,10 +68,9 @@ function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
-        {/* Test route for debugging */}
-        <Route path="/test" component={TestPage} />
+
         {/* Only the root route - everything happens here */}
-        <Route path="/" component={TestPage} />
+        <Route path="/" component={Workspace} />
         {/* All other routes redirect to root */}
         <Route>
           {() => {
