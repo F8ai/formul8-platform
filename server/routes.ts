@@ -3733,6 +3733,10 @@ When creating documents, reports, manuals, or structured content, always use Asc
   const { default: formulationRoutes } = await import("./formulation-api.js");
   app.use("/api/formulation", formulationRoutes);
 
+  // Add LangChain routing system
+  const { default: langchainRouter } = await import("./langchain-router.js");
+  app.use("/api/agents", langchainRouter);
+
   const httpServer = createServer(app);
   return httpServer;
 }
