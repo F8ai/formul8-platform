@@ -65,13 +65,12 @@ const PageLoader = () => (
 
 function Router() {
   try {
-    const { isAuthenticated, isLoading } = useAuth();
 
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
 
-        {/* Only the root route - everything happens here */}
+        {/* Main routes */}
         <Route path="/" component={Workspace} />
         <Route path="/formulation-chat" component={FormulationChatPage} />
         {/* All other routes redirect to root */}
