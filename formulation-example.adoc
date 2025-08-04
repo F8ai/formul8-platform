@@ -1,0 +1,164 @@
+= Cannabis Tincture Formulation Recipe
+:doctype: article
+:toc: left
+:sectnums:
+:icons: font
+
+// Formulation Variables
+:batch_size: 1000
+:target_thc_mg: 25
+:target_cbd_mg: 5
+:carrier_oil_ml: 950
+:ethanol_extract_thc_percent: 85
+:ethanol_extract_cbd_percent: 70
+:extract_thc_potency: 650
+:extract_cbd_potency: 420
+:safety_factor: 1.1
+:cost_extract_per_gram: 12.50
+:cost_carrier_oil_per_ml: 0.08
+:cost_packaging: 2.25
+
+== Formulation Overview
+
+This document provides a comprehensive formulation for a {batch_size}ml batch of cannabis tincture with targeted cannabinoid concentrations.
+
+=== Target Specifications
+
+[cols="2,1,3", options="header"]
+|===
+| Parameter | Value | Notes
+
+| Batch Size | {batch_size} ml | Production volume
+| Target THC | {target_thc_mg} mg/ml | Primary psychoactive compound
+| Target CBD | {target_cbd_mg} mg/ml | Non-psychoactive therapeutic compound
+| Carrier Oil | {carrier_oil_ml} ml | MCT or olive oil base
+| Safety Factor | {safety_factor} | Overformulation buffer
+|===
+
+== Raw Material Calculations
+
+=== THC Extract Requirements
+
+[cols="2,1,1,3", options="header"]
+|===
+| Component | Amount | Unit | Calculation Method
+
+| Required THC (total) | pass:[{batch_size} * {target_thc_mg}] | mg | Batch size × concentration
+| Extract THC potency | {extract_thc_potency} | mg/g | Certificate of Analysis
+| Extraction efficiency | {ethanol_extract_thc_percent} | % | Process validation
+| Raw extract needed | pass:[({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100)] | g | With safety factor
+|===
+
+=== CBD Extract Requirements
+
+[cols="2,1,1,3", options="header"]
+|===
+| Component | Amount | Unit | Calculation Method
+
+| Required CBD (total) | pass:[{batch_size} * {target_cbd_mg}] | mg | Batch size × concentration
+| Extract CBD potency | {extract_cbd_potency} | mg/g | Certificate of Analysis
+| Extraction efficiency | {ethanol_extract_cbd_percent} | % | Process validation
+| Raw extract needed | pass:[({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100)] | g | With safety factor
+|===
+
+== Material Requirements Summary
+
+[cols="2,1,1,1", options="header"]
+|===
+| Material | Quantity | Unit | Cost (USD)
+
+| THC Extract | pass:[({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100)] | g | pass:[({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram}]
+| CBD Extract | pass:[({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100)] | g | pass:[({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram}]
+| Carrier Oil (MCT) | {carrier_oil_ml} | ml | pass:[{carrier_oil_ml} * {cost_carrier_oil_per_ml}]
+| Packaging | 1 | unit | {cost_packaging}
+| **Total Cost** | | | pass:[({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram} + ({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram} + {carrier_oil_ml} * {cost_carrier_oil_per_ml} + {cost_packaging}]
+|===
+
+== Manufacturing Process
+
+=== Equipment Required
+* Precision scale (0.001g accuracy)
+* Magnetic hot plate stirrer
+* Glass beakers (1L, 500ml)
+* Stir bars
+* Thermometer
+* pH meter
+* Filtration system
+
+=== Process Steps
+
+1. **Preparation**
+   - Verify all materials are at room temperature
+   - Calibrate equipment
+   - Document lot numbers
+
+2. **Extract Dissolution**
+   - Heat carrier oil to 60°C
+   - Slowly add THC extract while stirring
+   - Add CBD extract and continue stirring
+   - Maintain temperature for 30 minutes
+
+3. **Homogenization**
+   - Cool to 40°C
+   - High-speed mixing for 15 minutes
+   - Filter through 0.22μm filter
+
+4. **Quality Control**
+   - Sample for potency testing
+   - pH measurement
+   - Visual inspection
+
+== Quality Control Specifications
+
+[cols="2,1,1,3", options="header"]
+|===
+| Parameter | Target | Tolerance | Test Method
+
+| THC Content | {target_thc_mg} mg/ml | ±10% | HPLC-UV
+| CBD Content | {target_cbd_mg} mg/ml | ±10% | HPLC-UV
+| pH | 6.0-7.0 | ±0.5 | pH meter
+| Appearance | Clear, amber | Visual | Visual inspection
+| Microbiological | <10 CFU/ml | N/A | USP <61>
+|===
+
+== Stability and Storage
+
+* **Storage Temperature**: 15-25°C
+* **Light Protection**: Amber glass containers
+* **Shelf Life**: 24 months (preliminary)
+* **Stability Study**: Ongoing at 0, 3, 6, 12, 24 months
+
+== Cost Analysis
+
+[cols="2,1,1", options="header"]
+|===
+| Cost Component | Amount (USD) | Percentage
+
+| Raw Materials | pass:[({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram} + ({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram} + {carrier_oil_ml} * {cost_carrier_oil_per_ml}] | pass:[100 * (({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram} + ({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram} + {carrier_oil_ml} * {cost_carrier_oil_per_ml}) / (({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram} + ({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram} + {carrier_oil_ml} * {cost_carrier_oil_per_ml} + {cost_packaging})]%
+| Packaging | {cost_packaging} | pass:[100 * {cost_packaging} / (({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram} + ({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram} + {carrier_oil_ml} * {cost_carrier_oil_per_ml} + {cost_packaging})]%
+| **Total** | pass:[({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram} + ({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram} + {carrier_oil_ml} * {cost_carrier_oil_per_ml} + {cost_packaging}] | 100%
+|===
+
+Cost per ml: $pass:[({batch_size} * {target_thc_mg} * {safety_factor}) / ({extract_thc_potency} * {ethanol_extract_thc_percent} / 100) * {cost_extract_per_gram} + ({batch_size} * {target_cbd_mg} * {safety_factor}) / ({extract_cbd_potency} * {ethanol_extract_cbd_percent} / 100) * {cost_extract_per_gram} + {carrier_oil_ml} * {cost_carrier_oil_per_ml} + {cost_packaging}) / {batch_size}]
+
+== Regulatory Compliance
+
+=== Required Documentation
+* Certificate of Analysis for all extracts
+* Material Safety Data Sheets
+* Standard Operating Procedures
+* Batch production records
+* Quality control test results
+
+=== Labeling Requirements
+* Product name and description
+* Cannabinoid content per serving
+* Batch/lot identification
+* Manufacturing and expiration dates
+* Required regulatory warnings
+
+---
+
+*Document Version*: 1.0 +
+*Created*: {localdatetime} +
+*Formulation*: THC/CBD Tincture {target_thc_mg}mg/{target_cbd_mg}mg per ml
