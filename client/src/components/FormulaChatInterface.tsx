@@ -15,7 +15,7 @@ import remarkEmoji from "remark-emoji";
 import remarkGfm from "remark-gfm";
 import "katex/dist/katex.min.css";
 import { DocumentPreview } from "./DocumentPreview";
-import { WindowManagerContext } from "./WindowManager";
+import { WindowManagerContext } from "../contexts/WindowManagerContext";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ObjectUploader } from "./ObjectUploader";
 import type { UploadResult } from '@uppy/core';
