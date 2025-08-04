@@ -62,7 +62,8 @@ const PageLoader = () => (
 );
 
 function Router() {
-  const { isAuthenticated, isLoading } = useAuth();
+  try {
+    const { isAuthenticated, isLoading } = useAuth();
 
   return (
     <Suspense fallback={<PageLoader />}>
@@ -81,6 +82,21 @@ function Router() {
       </Switch>
     </Suspense>
   );
+  } catch (error) {
+    console.error('Router error:', error);
+    return (
+      <div style={{ 
+        background: '#1a1a1a', 
+        color: 'white', 
+        minHeight: '100vh', 
+        padding: '20px',
+        fontFamily: 'Arial, sans-serif'
+      }}>
+        <h1>Router Error</h1>
+        <p>Error: {error instanceof Error ? error.message : String(error)}</p>
+      </div>
+    );
+  }
 }
 
 function App() {
@@ -95,14 +111,30 @@ function App() {
     document.documentElement.classList.add('dark');
   }, []);
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
+  try {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </QueryClientProvider>
+    );
+  } catch (error) {
+    console.error('App render error:', error);
+    return (
+      <div style={{ 
+        background: '#1a1a1a', 
+        color: 'white', 
+        minHeight: '100vh', 
+        padding: '20px',
+        fontFamily: 'Arial, sans-serif'
+      }}>
+        <h1>App Error</h1>
+        <p>Error: {error instanceof Error ? error.message : String(error)}</p>
+      </div>
+    );
+  }
 }
 
 export default App;
