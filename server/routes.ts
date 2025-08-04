@@ -43,6 +43,8 @@ import agentModesRouter from "./routes/agent-modes";
 import { z } from "zod";
 import fs from "fs";
 import OpenAI from "openai";
+import { renderDiagram, precomputeDocumentDiagrams } from "./diagramRenderer";
+import { getCacheStats, clearDiagramCache } from "./diagramCache";
 import { modelIntegrationService } from "./services/model-integration";
 import {
   ObjectStorageService,
@@ -256,6 +258,94 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error updating document:', error);
       res.status(500).json({ error: "Failed to update document" });
+    }
+  });
+
+  // Precompute document diagrams
+  app.post("/api/documents/:id/precompute", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const document = await storage.getDocument(parseInt(id));
+      
+      if (!document) {
+        return res.status(404).json({ error: "Document not found" });
+      }
+
+      console.log(`Precomputing diagrams for document ${id}: ${document.title}`);
+      const result = await precomputeDocumentDiagrams(document.content);
+      
+      // Update document with precomputed content if any diagrams were processed
+      if (result.diagramCount > 0) {
+        await storage.updateDocument(parseInt(id), { 
+          content: result.processedContent,
+          metadata: { 
+            ...document.metadata,
+            precomputed: true,
+            diagramCount: result.diagramCount,
+            cacheHits: result.cacheHits,
+            lastPrecomputed: new Date().toISOString()
+          }
+        });
+      }
+
+      res.json({ 
+        success: true, 
+        diagramCount: result.diagramCount,
+        cacheHits: result.cacheHits,
+        precomputed: result.diagramCount > 0
+      });
+    } catch (error) {
+      console.error('Error precomputing diagrams:', error);
+      res.status(500).json({ error: "Failed to precompute diagrams" });
+    }
+  });
+
+  // Render single diagram
+  app.post("/api/diagrams/render", isAuthenticated, async (req, res) => {
+    try {
+      const { content, forceRecompute = false } = req.body;
+      
+      if (!content) {
+        return res.status(400).json({ error: "Diagram content is required" });
+      }
+
+      const result = await renderDiagram(content, forceRecompute);
+      
+      if (!result) {
+        return res.status(400).json({ error: "Invalid diagram content or unsupported diagram type" });
+      }
+
+      res.json({ 
+        success: true, 
+        svg: result.svg,
+        type: result.type,
+        cached: result.cached
+      });
+    } catch (error) {
+      console.error('Error rendering diagram:', error);
+      res.status(500).json({ error: "Failed to render diagram" });
+    }
+  });
+
+  // Get cache statistics
+  app.get("/api/diagrams/cache/stats", isAuthenticated, async (req, res) => {
+    try {
+      const stats = await getCacheStats();
+      res.json(stats);
+    } catch (error) {
+      console.error('Error getting cache stats:', error);
+      res.status(500).json({ error: "Failed to get cache statistics" });
+    }
+  });
+
+  // Clear diagram cache
+  app.delete("/api/diagrams/cache", isAuthenticated, async (req, res) => {
+    try {
+      await clearDiagramCache();
+      res.json({ success: true, message: "Diagram cache cleared" });
+    } catch (error) {
+      console.error('Error clearing cache:', error);
+      res.status(500).json({ error: "Failed to clear cache" });
     }
   });
 
