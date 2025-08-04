@@ -51,6 +51,7 @@ const ChatToolSimple = lazy(() => import("@/pages/chat-tool-simple"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Desktop = lazy(() => import("@/pages/desktop"));
 const FormulationPage = lazy(() => import("@/pages/FormulationPage"));
+const FormulationChatPage = lazy(() => import("@/pages/FormulationChatPage"));
 
 // Fast, minimal loading component for lazy routes
 const PageLoader = () => (
@@ -72,6 +73,7 @@ function Router() {
 
         {/* Only the root route - everything happens here */}
         <Route path="/" component={Workspace} />
+        <Route path="/formulation-chat" component={FormulationChatPage} />
         {/* All other routes redirect to root */}
         <Route>
           {() => {

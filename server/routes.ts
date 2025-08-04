@@ -3729,6 +3729,10 @@ When creating documents, reports, manuals, or structured content, always use Asc
     }
   });
 
+  // Add formulation API routes
+  const { default: formulationRoutes } = await import("./formulation-api.js");
+  app.use("/api/formulation", formulationRoutes);
+
   const httpServer = createServer(app);
   return httpServer;
 }
