@@ -51,7 +51,7 @@ import {
   ObjectNotFoundError,
 } from "./objectStorage";
 import { ObjectPermission } from "./objectAcl";
-import { insertDocumentSchema } from "@shared/schema";
+import { insertDocumentSchema, insertIngredientSchema, insertFormulationSchema } from "@shared/schema";
 
 // Initialize OpenAI client for baseline testing
 const openai = new OpenAI({
@@ -358,16 +358,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Cannabis ingredients API routes
+  app.get("/api/ingredients", async (req, res) => {
+    try {
+      const category = req.query.category as string | undefined;
+      const ingredients = await storage.getIngredients(category);
+      res.json(ingredients);
+    } catch (error) {
+      console.error("Error fetching ingredients:", error);
+      res.status(500).json({ error: "Failed to fetch ingredients" });
+    }
+  });
+
+  app.post("/api/ingredients", async (req, res) => {
+    try {
+      const result = insertIngredientSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: "Invalid ingredient data", details: result.error.errors });
+      }
+      const ingredient = await storage.createIngredient(result.data);
+      res.status(201).json(ingredient);
+    } catch (error) {
+      console.error("Error creating ingredient:", error);
+      res.status(500).json({ error: "Failed to create ingredient" });
+    }
+  });
+
+  app.get("/api/ingredients/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const ingredient = await storage.getIngredient(id);
+      if (!ingredient) {
+        return res.status(404).json({ error: "Ingredient not found" });
+      }
+      res.json(ingredient);
+    } catch (error) {
+      console.error("Error fetching ingredient:", error);
+      res.status(500).json({ error: "Failed to fetch ingredient" });
+    }
+  });
+
+  // Cannabis formulations API routes
+  app.get("/api/formulations", async (req, res) => {
+    try {
+      const userId = req.user?.id || "demo-user";
+      const formulations = await storage.getFormulations(userId);
+      res.json(formulations);
+    } catch (error) {
+      console.error("Error fetching formulations:", error);
+      res.status(500).json({ error: "Failed to fetch formulations" });
+    }
+  });
+
+  app.post("/api/formulations", async (req, res) => {
+    try {
+      const userId = req.user?.id || "demo-user";
+      const result = insertFormulationSchema.safeParse({ ...req.body, userId });
+      if (!result.success) {
+        return res.status(400).json({ error: "Invalid formulation data", details: result.error.errors });
+      }
+      const formulation = await storage.createFormulation(result.data);
+      res.status(201).json(formulation);
+    } catch (error) {
+      console.error("Error creating formulation:", error);
+      res.status(500).json({ error: "Failed to create formulation" });
+    }
+  });
+
   // Delete document
   app.delete("/api/documents/:id", isAuthenticated, async (req, res) => {
     try {
       const { id } = req.params;
       
-      const success = await storage.deleteDocument(parseInt(id));
-      
-      if (!success) {
-        return res.status(404).json({ error: "Document not found" });
-      }
+      await storage.deleteDocument(parseInt(id));
 
       res.json({ success: true, message: "Document deleted successfully" });
     } catch (error) {

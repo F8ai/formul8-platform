@@ -50,6 +50,7 @@ const ChatTool = lazy(() => import("@/pages/chat-tool"));
 const ChatToolSimple = lazy(() => import("@/pages/chat-tool-simple"));
 const Settings = lazy(() => import("@/pages/Settings"));
 const Desktop = lazy(() => import("@/pages/desktop"));
+const FormulationPage = lazy(() => import("@/pages/FormulationPage"));
 
 // Fast, minimal loading component for lazy routes
 const PageLoader = () => (

@@ -1,0 +1,231 @@
+= Cannabis Tincture Formulation Template (Read-Only)
+:toc: left
+:toclevels: 3
+:sectanchors:
+:sectlinks:
+:sectnums:
+:source-highlighter: highlight.js
+:icons: font
+:doctype: article
+:category: formulation-template
+:industry: cannabis
+:complexity: intermediate
+:features: template, read-only, calculations
+:tags: formulation, tincture, template, reference
+:department: formulation
+:status: template
+
+[.lead]
+*Master Template for Cannabis Tincture Formulation Sheets*
+
+This is a read-only template for creating interactive cannabis tincture formulation sheets. Copy this template to create new formulations.
+
+[WARNING]
+====
+*Template File - Read Only*
+
+This is a master template. Do not modify this file directly. Create a copy for your specific formulation projects.
+====
+
+== Template Structure
+
+=== Basic Information Section
+```
+Product Name: {product-name:Enter Product Name}
+Product Type: {product-type:tincture}
+Batch Size: {batch-size:100} ml
+Target THC: {target-thc:5.0} mg per serving
+Target CBD: {target-cbd:25.0} mg per serving
+Serving Size: {serving-size:1.0} ml
+```
+
+=== Interactive Ingredient Selection
+
+==== Primary Cannabinoid Source
+```
+Cannabinoid Extract: {cannabinoid-ingredient:dropdown:category=cannabinoid}
+Selected: {cannabinoid-ingredient:THC Distillate}
+Potency: {cannabinoid-potency:85.0}% THC
+Density: {cannabinoid-density:0.95} g/ml
+Manufacturer: {cannabinoid-manufacturer:dropdown:source=cannabinoid-ingredient}
+Cost per Unit: ${cannabinoid-cost:12.50}/gram
+```
+
+==== Carrier Oil Selection
+```
+Carrier Oil: {carrier-oil:dropdown:category=carrier-oil}
+Selected: {carrier-oil:MCT Oil}
+Density: {carrier-oil-density:0.915} g/ml
+Manufacturer: {carrier-oil-manufacturer:dropdown:source=carrier-oil}
+Cost per Unit: ${carrier-oil-cost:0.25}/ml
+```
+
+==== Terpene Profile
+```
+Primary Terpene: {terpene-ingredient:dropdown:category=terpene}
+Selected: {terpene-ingredient:Limonene}
+Density: {terpene-density:0.841} g/ml
+Manufacturer: {terpene-manufacturer:dropdown:source=terpene-ingredient}
+Concentration: {terpene-concentration:2.0}% of total volume
+Cost per Unit: ${terpene-cost:45.00}/ml
+```
+
+==== Flavor Enhancement
+```
+Natural Flavoring: {flavoring:dropdown:category=flavoring}
+Selected: {flavoring:Natural Orange Flavor}
+Manufacturer: {flavoring-manufacturer:dropdown:source=flavoring}
+Concentration: {flavoring-concentration:1.0}% of total volume
+Cost per Unit: ${flavoring-cost:2.25}/ml
+```
+
+=== Automatic Calculations
+
+==== Volume Calculations
+```
+|===
+|Component |Volume (ml) |Mass (g) |Calculation
+
+|Cannabinoid Extract
+|{cannabinoid-volume:calc}
+|{cannabinoid-mass:calc}
+|Based on potency and target dose
+
+|Carrier Oil
+|{carrier-oil-volume:{batch-size}*0.95}
+|{carrier-oil-mass:calc}
+|95% of total batch
+
+|Terpene
+|{terpene-volume:{batch-size}*{terpene-concentration}/100}
+|{terpene-mass:calc}
+|{terpene-concentration}% of batch
+
+|Flavoring
+|{flavoring-volume:{batch-size}*{flavoring-concentration}/100}
+|{flavoring-mass:calc}
+|{flavoring-concentration}% of batch
+|===
+```
+
+==== Cost Analysis
+```
+|===
+|Component |Quantity |Unit Cost |Total Cost
+
+|{cannabinoid-ingredient}
+|{cannabinoid-mass} g
+|${cannabinoid-cost}/g
+|${cannabinoid-total-cost:calc}
+
+|{carrier-oil}
+|{carrier-oil-volume} ml
+|${carrier-oil-cost}/ml
+|${carrier-oil-total-cost:calc}
+
+|{terpene-ingredient}
+|{terpene-volume} ml
+|${terpene-cost}/ml
+|${terpene-total-cost:calc}
+
+|{flavoring}
+|{flavoring-volume} ml
+|${flavoring-cost}/ml
+|${flavoring-total-cost:calc}
+
+|*Total Batch Cost*
+|—
+|—
+|*${total-batch-cost:calc}*
+
+|*Cost per Serving*
+|—
+|—
+|*${cost-per-serving:calc}*
+|===
+```
+
+==== Dosage Verification
+```
+|===
+|Parameter |Target |Actual |Variance
+
+|THC per Serving
+|{target-thc} mg
+|{actual-thc:calc} mg
+|{thc-variance:calc}%
+
+|CBD per Serving
+|{target-cbd} mg
+|{actual-cbd:calc} mg
+|{cbd-variance:calc}%
+
+|Total Cannabinoids
+|{total-target-cannabinoids:calc} mg
+|{total-actual-cannabinoids:calc} mg
+|{total-variance:calc}%
+|===
+```
+
+== Template Usage Instructions
+
+. **Copy Template**: Create a new document from this template
+. **Customize Basic Info**: Update product name, batch size, and target doses
+. **Select Ingredients**: Use dropdown menus to select specific ingredients
+. **Review Calculations**: Verify all automatic calculations are correct
+. **Adjust Formulation**: Modify concentrations to meet targets
+. **Validate Compliance**: Ensure formulation meets regulatory requirements
+
+== Calculation Formulas
+
+=== Volume to Mass Conversion
+```
+Mass (g) = Volume (ml) × Density (g/ml)
+```
+
+=== Cannabinoid Dosing
+```
+Required Extract (g) = (Target Dose × Servings) / (Potency % / 100)
+```
+
+=== Cost Calculations
+```
+Component Cost = Quantity × Unit Cost
+Total Batch Cost = Sum of all component costs
+Cost per Serving = Total Batch Cost / Number of Servings
+```
+
+=== Dosage Verification
+```
+Actual Dose = (Extract Mass × Potency %) / Number of Servings
+Variance % = ((Actual - Target) / Target) × 100
+```
+
+== Compliance Notes
+
+[IMPORTANT]
+====
+*Regulatory Requirements*
+
+- All ingredients must be food-grade or cannabis-approved
+- Verify state regulations for maximum THC/CBD limits
+- Maintain detailed batch records for traceability
+- Follow Good Manufacturing Practices (GMP)
+- Label products with accurate cannabinoid content
+====
+
+== Quality Control Checklist
+
+- [ ] All ingredients sourced from approved suppliers
+- [ ] Potency calculations verified
+- [ ] Cost analysis completed
+- [ ] Regulatory compliance confirmed
+- [ ] Batch documentation prepared
+- [ ] Quality testing scheduled
+
+---
+
+*Template Version:* 2.0 +
+*Last Updated:* 2025-08-04 +
+*Created By:* Formul8 AI Cannabis Expert +
+*Template Status:* Read-Only Master Template

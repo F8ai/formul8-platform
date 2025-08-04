@@ -15,6 +15,9 @@ import {
   baselineTestResults,
   userGoogleCredentials,
   documents,
+  ingredients,
+  formulations,
+  formulationIngredients,
   type User,
   type UpsertUser,
   type Project,
@@ -45,6 +48,12 @@ import {
   type InsertUserGoogleCredentials,
   type Document,
   type InsertDocument,
+  type Ingredient,
+  type InsertIngredient,
+  type Formulation,
+  type InsertFormulation,
+  type FormulationIngredient,
+  type InsertFormulationIngredient,
   dashboardLayouts,
   widgetPreferences,
   type DashboardLayout,
@@ -73,6 +82,26 @@ export interface IStorage {
   getDocument(id: number): Promise<Document | undefined>;
   updateDocument(id: number, updates: Partial<InsertDocument>): Promise<Document | undefined>;
   deleteDocument(id: number): Promise<void>;
+  
+  // Cannabis ingredients operations
+  createIngredient(ingredient: InsertIngredient): Promise<Ingredient>;
+  getIngredients(category?: string): Promise<Ingredient[]>;
+  getIngredient(id: number): Promise<Ingredient | undefined>;
+  updateIngredient(id: number, updates: Partial<InsertIngredient>): Promise<Ingredient | undefined>;
+  deleteIngredient(id: number): Promise<void>;
+  
+  // Cannabis formulations operations
+  createFormulation(formulation: InsertFormulation): Promise<Formulation>;
+  getFormulations(userId: string): Promise<Formulation[]>;
+  getFormulation(id: number): Promise<Formulation | undefined>;
+  updateFormulation(id: number, updates: Partial<InsertFormulation>): Promise<Formulation | undefined>;
+  deleteFormulation(id: number): Promise<void>;
+  
+  // Formulation ingredients operations
+  addFormulationIngredient(formulationIngredient: InsertFormulationIngredient): Promise<FormulationIngredient>;
+  getFormulationIngredients(formulationId: number): Promise<FormulationIngredient[]>;
+  updateFormulationIngredient(id: number, updates: Partial<InsertFormulationIngredient>): Promise<FormulationIngredient | undefined>;
+  removeFormulationIngredient(id: number): Promise<void>;
   
   // Project operations
   createProject(project: InsertProject): Promise<Project>;
@@ -804,9 +833,78 @@ export class DatabaseStorage implements IStorage {
     return updated;
   }
 
-  async deleteDocument(id: number): Promise<boolean> {
-    const result = await db.delete(documents).where(eq(documents.id, id));
-    return result.rowCount > 0;
+  async deleteDocument(id: number): Promise<void> {
+    await db.delete(documents).where(eq(documents.id, id));
+  }
+
+  // Cannabis ingredients operations
+  async createIngredient(ingredient: InsertIngredient): Promise<Ingredient> {
+    const [created] = await db.insert(ingredients).values(ingredient).returning();
+    return created;
+  }
+
+  async getIngredients(category?: string): Promise<Ingredient[]> {
+    if (category) {
+      return db.select().from(ingredients).where(and(eq(ingredients.category, category), eq(ingredients.isActive, true))).orderBy(ingredients.name);
+    }
+    return db.select().from(ingredients).where(eq(ingredients.isActive, true)).orderBy(ingredients.category, ingredients.name);
+  }
+
+  async getIngredient(id: number): Promise<Ingredient | undefined> {
+    const result = await db.select().from(ingredients).where(eq(ingredients.id, id));
+    return result[0];
+  }
+
+  async updateIngredient(id: number, updates: Partial<InsertIngredient>): Promise<Ingredient | undefined> {
+    const [updated] = await db.update(ingredients).set(updates).where(eq(ingredients.id, id)).returning();
+    return updated;
+  }
+
+  async deleteIngredient(id: number): Promise<void> {
+    await db.update(ingredients).set({ isActive: false }).where(eq(ingredients.id, id));
+  }
+
+  // Cannabis formulations operations
+  async createFormulation(formulation: InsertFormulation): Promise<Formulation> {
+    const [created] = await db.insert(formulations).values(formulation).returning();
+    return created;
+  }
+
+  async getFormulations(userId: string): Promise<Formulation[]> {
+    return db.select().from(formulations).where(and(eq(formulations.userId, userId), eq(formulations.isActive, true))).orderBy(desc(formulations.createdAt));
+  }
+
+  async getFormulation(id: number): Promise<Formulation | undefined> {
+    const result = await db.select().from(formulations).where(eq(formulations.id, id));
+    return result[0];
+  }
+
+  async updateFormulation(id: number, updates: Partial<InsertFormulation>): Promise<Formulation | undefined> {
+    const [updated] = await db.update(formulations).set(updates).where(eq(formulations.id, id)).returning();
+    return updated;
+  }
+
+  async deleteFormulation(id: number): Promise<void> {
+    await db.update(formulations).set({ isActive: false }).where(eq(formulations.id, id));
+  }
+
+  // Formulation ingredients operations
+  async addFormulationIngredient(formulationIngredient: InsertFormulationIngredient): Promise<FormulationIngredient> {
+    const [created] = await db.insert(formulationIngredients).values(formulationIngredient).returning();
+    return created;
+  }
+
+  async getFormulationIngredients(formulationId: number): Promise<FormulationIngredient[]> {
+    return db.select().from(formulationIngredients).where(eq(formulationIngredients.formulationId, formulationId));
+  }
+
+  async updateFormulationIngredient(id: number, updates: Partial<InsertFormulationIngredient>): Promise<FormulationIngredient | undefined> {
+    const [updated] = await db.update(formulationIngredients).set(updates).where(eq(formulationIngredients.id, id)).returning();
+    return updated;
+  }
+
+  async removeFormulationIngredient(id: number): Promise<void> {
+    await db.delete(formulationIngredients).where(eq(formulationIngredients.id, id));
   }
 }
 

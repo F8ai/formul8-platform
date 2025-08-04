@@ -1,0 +1,241 @@
+= Cannabis Tincture Formulation Sheet
+:toc: left
+:toclevels: 3
+:sectanchors:
+:sectlinks:
+:sectnums:
+:source-highlighter: highlight.js
+:icons: font
+:doctype: article
+:category: formulation-sheet
+:industry: cannabis
+:complexity: intermediate
+:features: interactive-dropdowns, calculations, cost-analysis
+:tags: formulation, tincture, dosage, compliance
+:department: formulation
+:status: active
+
+[.lead]
+*Interactive Cannabis Tincture Formulation Sheet with Dynamic Calculations*
+
+This professional formulation sheet provides real-time ingredient selection, dosage calculations, and cost analysis for cannabis tincture production.
+
+== Formulation Overview
+
+[%header,cols="2,3"]
+|===
+|Parameter |Value
+
+|*Product Name*
+|{product-name:Premium CBD Tincture}
+
+|*Product Type*
+|{product-type:tincture}
+
+|*Batch Size*
+|{batch-size:100} {batch-unit:ml}
+
+|*Target THC*
+|{target-thc:5.0} mg per serving
+
+|*Target CBD*
+|{target-cbd:25.0} mg per serving
+
+|*Serving Size*
+|{serving-size:1.0} ml
+
+|*Servings per Batch*
+|{servings-per-batch:{batch-size}/{serving-size}}
+|===
+
+== Interactive Ingredient Selection
+
+=== Primary Cannabinoid Source
+
+[.formulation-dropdown]
+--
+*Cannabinoid Extract:* {cannabinoid-ingredient:dropdown:category=cannabinoid}
+
+Selected: {cannabinoid-ingredient:THC Distillate}
+
+- **Potency:** {cannabinoid-potency:85.0}% THC
+- **Quantity Needed:** {cannabinoid-quantity:calc} mg
+- **Cost per Unit:** ${cannabinoid-cost:12.50}/gram
+--
+
+=== Carrier Oil Selection
+
+[.formulation-dropdown]
+--
+*Carrier Oil:* {carrier-oil:dropdown:category=carrier-oil}
+
+Selected: {carrier-oil:MCT Oil}
+
+- **Quantity:** {carrier-oil-quantity:{batch-size}*0.95} ml (95% of batch)
+- **Cost per Unit:** ${carrier-oil-cost:0.25}/ml
+--
+
+=== Terpene Profile (Optional)
+
+[.formulation-dropdown]
+--
+*Primary Terpene:* {terpene-ingredient:dropdown:category=terpene}
+
+Selected: {terpene-ingredient:Limonene}
+
+- **Concentration:** {terpene-concentration:2.0}% of total volume
+- **Quantity:** {terpene-quantity:{batch-size}*{terpene-concentration}/100} ml
+- **Cost per Unit:** ${terpene-cost:45.00}/ml
+--
+
+=== Flavor Enhancement
+
+[.formulation-dropdown]
+--
+*Natural Flavoring:* {flavoring:dropdown:category=flavoring}
+
+Selected: {flavoring:Natural Orange Flavor}
+
+- **Concentration:** {flavoring-concentration:1.0}% of total volume
+- **Quantity:** {flavoring-quantity:{batch-size}*{flavoring-concentration}/100} ml
+- **Cost per Unit:** ${flavoring-cost:2.25}/ml
+--
+
+== Dosage Calculations
+
+[%header,cols="2,2,2,2"]
+|===
+|Component |Per Serving |Per Batch |Calculation
+
+|*THC Content*
+|{thc-per-serving:{target-thc}} mg
+|{thc-per-batch:{target-thc}*{servings-per-batch}} mg
+|Target × Servings
+
+|*CBD Content*
+|{cbd-per-serving:{target-cbd}} mg
+|{cbd-per-batch:{target-cbd}*{servings-per-batch}} mg
+|Target × Servings
+
+|*Total Cannabinoids*
+|{total-cannabinoids-serving:{thc-per-serving}+{cbd-per-serving}} mg
+|{total-cannabinoids-batch:{thc-per-batch}+{cbd-per-batch}} mg
+|THC + CBD
+
+|*Extract Required*
+|{extract-per-serving:calc} mg
+|{extract-per-batch:{total-cannabinoids-batch}/{cannabinoid-potency}*100} mg
+|Total ÷ Potency × 100
+|===
+
+== Cost Analysis
+
+[%header,cols="2,2,2,2"]
+|===
+|Ingredient |Quantity |Unit Cost |Total Cost
+
+|*{cannabinoid-ingredient}*
+|{extract-per-batch} mg
+|${cannabinoid-cost}/g
+|${cannabinoid-total-cost:{extract-per-batch}/1000*{cannabinoid-cost}}
+
+|*{carrier-oil}*
+|{carrier-oil-quantity} ml
+|${carrier-oil-cost}/ml
+|${carrier-oil-total-cost:{carrier-oil-quantity}*{carrier-oil-cost}}
+
+|*{terpene-ingredient}*
+|{terpene-quantity} ml
+|${terpene-cost}/ml
+|${terpene-total-cost:{terpene-quantity}*{terpene-cost}}
+
+|*{flavoring}*
+|{flavoring-quantity} ml
+|${flavoring-cost}/ml
+|${flavoring-total-cost:{flavoring-quantity}*{flavoring-cost}}
+
+|*Total Batch Cost*
+|—
+|—
+|*${total-batch-cost:{cannabinoid-total-cost}+{carrier-oil-total-cost}+{terpene-total-cost}+{flavoring-total-cost}}*
+
+|*Cost per Serving*
+|—
+|—
+|*${cost-per-serving:{total-batch-cost}/{servings-per-batch}}*
+|===
+
+== Production Instructions
+
+. **Preparation**
+  - Sanitize all equipment with 70% isopropyl alcohol
+  - Weigh {extract-per-batch} mg of {cannabinoid-ingredient}
+  - Measure {carrier-oil-quantity} ml of {carrier-oil}
+
+. **Mixing Process**
+  - Gently heat {carrier-oil} to 60°C (140°F)
+  - Add {cannabinoid-ingredient} and stir until completely dissolved
+  - Cool to 40°C (104°F)
+  - Add {terpene-quantity} ml of {terpene-ingredient}
+  - Add {flavoring-quantity} ml of {flavoring}
+
+. **Homogenization**
+  - Mix thoroughly for 5 minutes
+  - Allow to cool to room temperature
+  - Test for homogeneity
+
+. **Quality Control**
+  - Sample for potency testing
+  - Verify color and clarity
+  - Check for proper viscosity
+
+== Compliance Notes
+
+[WARNING]
+====
+*Regulatory Compliance Required*
+
+- Verify all ingredients are compliant with local cannabis regulations
+- Ensure proper labeling with cannabinoid content
+- Maintain batch records for traceability
+- Follow Good Manufacturing Practices (GMP)
+====
+
+== Batch Record
+
+[%header,cols="2,2,2,2"]
+|===
+|Parameter |Target |Actual |Variance
+
+|*Batch ID*
+|{batch-id:auto-generate}
+|{actual-batch-id:input}
+|—
+
+|*Production Date*
+|{production-date:today}
+|{actual-production-date:input}
+|—
+
+|*THC Potency*
+|{target-thc} mg/ml
+|{actual-thc:input} mg/ml
+|{thc-variance:calc}%
+
+|*CBD Potency*
+|{target-cbd} mg/ml
+|{actual-cbd:input} mg/ml
+|{cbd-variance:calc}%
+
+|*Total Volume*
+|{batch-size} ml
+|{actual-volume:input} ml
+|{volume-variance:calc}%
+|===
+
+---
+
+*Document Version:* 1.0 +
+*Last Updated:* {last-updated:auto} +
+*Created By:* Formul8 AI Cannabis Expert +
+*Review Status:* {review-status:Pending QC Review}

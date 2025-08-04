@@ -393,9 +393,68 @@ export const documents = pgTable("documents", {
   position: jsonb("position").default('{"x": 100, "y": 100}'), // Desktop position
   size: jsonb("size").default('{"width": 700, "height": 500}'), // Window size
   isAsciiDoc: boolean("is_ascii_doc").default(false),
-  metadata: jsonb("metadata").default('{}'), // Additional document metadata
+  metadata: jsonb("metadata").default('{}'), // Additional document metadata including AsciiDoc variables
+  category: varchar("category", { length: 100 }), // metadata from :category:
+  industry: varchar("industry", { length: 100 }), // metadata from :industry:
+  complexity: varchar("complexity", { length: 50 }), // metadata from :complexity:
+  features: text("features"), // metadata from :features: (comma-separated)
+  tags: text("tags"), // metadata from :tags: (comma-separated)
+  department: varchar("department", { length: 100 }), // metadata from :department:
+  status: varchar("status", { length: 50 }), // metadata from :status:
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Cannabis ingredients database for formulation dropdown menus
+export const ingredients = pgTable("ingredients", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  category: varchar("category", { length: 100 }).notNull(), // cannabinoid, terpene, carrier-oil, flavoring, preservative, etc.
+  subcategory: varchar("subcategory", { length: 100 }), // thc-distillate, cbd-isolate, mct-oil, natural-flavoring, etc.
+  potency: decimal("potency", { precision: 10, scale: 4 }), // mg/g or percentage
+  potencyUnit: varchar("potency_unit", { length: 20 }), // mg/g, %, ppm
+  supplier: varchar("supplier", { length: 255 }),
+  costPerUnit: decimal("cost_per_unit", { precision: 10, scale: 4 }),
+  costUnit: varchar("cost_unit", { length: 20 }), // per gram, per ml, per kg
+  description: text("description"),
+  safetyNotes: text("safety_notes"),
+  regulatoryNotes: text("regulatory_notes"),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Cannabis formulations table for saved formulation recipes
+export const formulations = pgTable("formulations", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  productType: varchar("product_type", { length: 100 }).notNull(), // tincture, edible, topical, concentrate
+  targetThc: decimal("target_thc", { precision: 10, scale: 4 }), // mg THC per serving
+  targetCbd: decimal("target_cbd", { precision: 10, scale: 4 }), // mg CBD per serving
+  batchSize: decimal("batch_size", { precision: 10, scale: 2 }), // ml or grams
+  batchUnit: varchar("batch_unit", { length: 20 }), // ml, g, kg
+  description: text("description"),
+  instructions: text("instructions"),
+  totalCost: decimal("total_cost", { precision: 10, scale: 2 }), // calculated total cost
+  userId: varchar("user_id").notNull().references(() => users.id),
+  documentId: integer("document_id").references(() => documents.id), // Link to generated document
+  isTemplate: boolean("is_template").default(false),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Formulation ingredients junction table for ingredient quantities
+export const formulationIngredients = pgTable("formulation_ingredients", {
+  id: serial("id").primaryKey(),
+  formulationId: integer("formulation_id").notNull().references(() => formulations.id, { onDelete: 'cascade' }),
+  ingredientId: integer("ingredient_id").notNull().references(() => ingredients.id),
+  quantity: decimal("quantity", { precision: 10, scale: 4 }).notNull(),
+  unit: varchar("unit", { length: 20 }).notNull(), // g, ml, mg
+  percentage: decimal("percentage", { precision: 5, scale: 2 }), // percentage of total formulation
+  calculatedCost: decimal("calculated_cost", { precision: 10, scale: 4 }), // cost for this ingredient in formulation
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 // Relations
@@ -410,6 +469,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   desktopFolders: many(desktopFolders),
   desktopFiles: many(desktopFiles),
   documents: many(documents),
+  formulations: many(formulations),
 }));
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
@@ -663,6 +723,31 @@ export type UserActivity = typeof userActivity.$inferSelect;
 export type InsertUserActivity = z.infer<typeof insertUserActivitySchema>;
 export type BaselineExamResult = typeof baselineExamResults.$inferSelect;
 export type InsertBaselineExamResult = z.infer<typeof insertBaselineExamResultSchema>;
+
+// Cannabis formulation types and schemas
+export const insertIngredientSchema = createInsertSchema(ingredients).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertFormulationSchema = createInsertSchema(formulations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertFormulationIngredientSchema = createInsertSchema(formulationIngredients).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type Ingredient = typeof ingredients.$inferSelect;
+export type InsertIngredient = z.infer<typeof insertIngredientSchema>;
+export type Formulation = typeof formulations.$inferSelect;
+export type InsertFormulation = z.infer<typeof insertFormulationSchema>;
+export type FormulationIngredient = typeof formulationIngredients.$inferSelect;
+export type InsertFormulationIngredient = z.infer<typeof insertFormulationIngredientSchema>;
 export type BaselineTestRun = typeof baselineTestRuns.$inferSelect;
 export type InsertBaselineTestRun = z.infer<typeof insertBaselineTestRunSchema>;
 export type BaselineTestResult = typeof baselineTestResults.$inferSelect;
