@@ -19,6 +19,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **File Deletion & Comprehensive Diagrams (Aug 3, 2025)**: Added file deletion functionality with hover-visible delete buttons (red X) on document icons, implemented comprehensive diagram support via Kroki.io API supporting PlantUML, Graphviz, Ditaa, Svgbob, BlockDiag, SeqDiag, ActDiag, NwDiag, C4PlantUML, ERD, Nomnoml, Structurizr in addition to Mermaid
 - **Diagram Rendering Fixed (Aug 4, 2025)**: Resolved critical Mermaid "UnknownDiagramError" by fixing undefined variable bug, enhanced detection for 13+ diagram types (flowchart, sequence, gantt, pie, journey, class, state, git, mindmap, timeline, quadrant), improved initialization with Formul8 brand colors, documents now positioned at 0,0 coordinates covering full desktop canvas
 - **Production Deployment Fixed (Aug 4, 2025)**: Resolved black screen issue on f8.syzygyx.com by fixing deployment configuration - changed from static-only build to full-stack deployment with backend APIs, added proper health check endpoint, configured REPLIT_DOMAINS environment variable for production authentication
+- **Header Restored (Aug 4, 2025)**: Fixed missing header in deployed site by adding TopHeader component back to standalone desktop mode in DesktopWorkspace.tsx, adjusted layout to use flex-1 for proper height distribution
 
 ## User Preferences
 
