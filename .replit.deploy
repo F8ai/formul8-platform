@@ -1,10 +1,14 @@
-# Hybrid Node.js + Python deployment
-build = ["bash", "simple-build.sh"]
-run = ["node", "simple-start.js"]
+# Full-stack deployment with backend APIs
+build = ["npm", "run", "build"]
+run = ["npm", "start"]
 
 [env]
 NODE_ENV = "production"
 PORT = "5000"
+# Required for Replit auth to work in production
+REPLIT_DOMAINS = "f8.syzygyx.com"
+# Database will be provided by Replit
+# SESSION_SECRET will be auto-generated
 PYTHON_PATH = "/home/runner/workspace"
 
 # Deployment optimizations

@@ -199,6 +199,15 @@ async function processBaselineTest(runId: number, agentType: string, model: stri
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check endpoint for deployment monitoring
+  app.get('/api/health', (req, res) => {
+    res.status(200).json({ 
+      status: 'healthy', 
+      timestamp: new Date().toISOString(),
+      version: '1.0.0'
+    });
+  });
+
   // Auth middleware
   await setupAuth(app);
   await setupGoogleAuth(app);
