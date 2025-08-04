@@ -1,0 +1,84 @@
+= Cannabis Inventory Management SOP
+:author: Formul8 AI Assistant
+:doctype: article
+:document_type: sop
+:category: operations
+:industry: cannabis
+:created_date: 2025-08-04
+:version: 1.0
+:complexity: beginner
+:features: diagrams,checklists
+:tags: inventory,cannabis,compliance,tracking
+:department: operations
+:status: draft
+
+== Purpose
+
+This Standard Operating Procedure (SOP) outlines the requirements and processes for managing cannabis inventory in compliance with state regulations.
+
+== Scope
+
+This SOP applies to all staff members involved in receiving, storing, tracking, and dispensing cannabis products.
+
+== Inventory Receiving Process
+
+[mermaid]
+....
+flowchart TD
+    A[Product Delivery] --> B[Verify Manifest]
+    B --> C{Manifest Accurate?}
+    C -->|No| D[Document Discrepancy]
+    C -->|Yes| E[Physical Inspection]
+    E --> F[Update Tracking System]
+    F --> G[Store Products]
+    G --> H[Complete Receiving Log]
+    D --> I[Contact Supplier]
+    I --> J[Regulatory Notification]
+....
+
+== Daily Inventory Procedures
+
+=== Morning Checklist
+* [ ] Verify overnight security logs
+* [ ] Check temperature and humidity levels
+* [ ] Review previous day's sales reconciliation
+* [ ] Inspect storage areas for compliance
+
+=== End-of-Day Checklist
+* [ ] Complete physical inventory count
+* [ ] Reconcile sales with tracking system
+* [ ] Secure all products in designated areas
+* [ ] Update regulatory reporting system
+
+== Compliance Requirements
+
+|===
+|Requirement |Frequency |Responsible Party |Documentation
+
+|Physical Inventory Count |Daily |Inventory Manager |Inventory Log
+|System Reconciliation |Daily |Operations Staff |Tracking Report
+|Regulatory Reporting |Monthly |Compliance Officer |State Reports
+|Audit Preparation |Quarterly |Management Team |Audit Package
+|===
+
+== Emergency Procedures
+
+In case of inventory discrepancies exceeding tolerance levels:
+
+. Immediately cease all sales activities
+. Conduct thorough recount with witness
+. Document findings in incident report
+. Notify regulatory authorities within 24 hours
+. Implement corrective actions
+
+== Training Requirements
+
+All staff must complete:
+
+* Initial inventory management training (8 hours)
+* Quarterly compliance updates (2 hours)
+* Annual regulatory refresher (4 hours)
+
+== Record Retention
+
+Maintain all inventory records for minimum 3 years as required by state regulations.

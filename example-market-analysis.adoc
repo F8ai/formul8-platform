@@ -1,0 +1,137 @@
+= Cannabis Market Analysis Q3 2025
+:author: Formul8 AI Assistant
+:doctype: article
+:document_type: market-analysis
+:category: business-intelligence
+:industry: cannabis
+:created_date: 2025-08-04
+:version: 1.0
+:complexity: advanced
+:features: diagrams,calculations,spreadsheet
+:tags: market-research,cannabis,competitive-analysis,trends
+:department: strategy
+:status: draft
+:target_market: california
+:analysis_period: Q3-2025
+
+== Executive Summary
+
+This market analysis examines the California cannabis market for Q3 2025, focusing on pricing trends, competitive landscape, and growth opportunities.
+
+== Market Size & Growth
+
+:total_market_size: 6200000000
+:yoy_growth: 0.15
+:flower_percentage: 0.45
+:edibles_percentage: 0.25
+:concentrates_percentage: 0.20
+:other_percentage: 0.10
+
+|===
+|Product Category |Market Share |Q3 Revenue |YoY Growth
+
+|Flower |{flower_percentage * 100}% |${total_market_size * flower_percentage / 1000000}M |+12%
+|Edibles |{edibles_percentage * 100}% |${total_market_size * edibles_percentage / 1000000}M |+18%
+|Concentrates |{concentrates_percentage * 100}% |${total_market_size * concentrates_percentage / 1000000}M |+22%
+|Other Products |{other_percentage * 100}% |${total_market_size * other_percentage / 1000000}M |+8%
+|*Total Market* |*100%* |*${total_market_size / 1000000}M* |*+{yoy_growth * 100}%*
+|===
+
+== Market Share Distribution
+
+[mermaid]
+....
+pie title California Cannabis Market by Product Category
+    "Flower" : 45
+    "Edibles" : 25
+    "Concentrates" : 20
+    "Other Products" : 10
+....
+
+== Competitive Landscape
+
+[mermaid]
+....
+quadrant-chart
+    title Competitive Position Analysis
+    x-axis Low Market Share --> High Market Share
+    y-axis Low Growth --> High Growth
+    
+    Company A: [0.8, 0.9]
+    Company B: [0.6, 0.7]
+    Our Position: [0.3, 0.8]
+    Company C: [0.9, 0.4]
+    Company D: [0.2, 0.3]
+....
+
+== Price Analysis
+
+:flower_avg_price: 45.50
+:edibles_avg_price: 28.75
+:concentrates_avg_price: 65.00
+:price_variance: 0.12
+
+|===
+|Product Type |Average Price |Price Range |Market Position
+
+|Flower (1/8 oz) |${flower_avg_price} |${flower_avg_price * (1 - price_variance)} - ${flower_avg_price * (1 + price_variance)} |Competitive
+|Edibles (100mg) |${edibles_avg_price} |${edibles_avg_price * (1 - price_variance)} - ${edibles_avg_price * (1 + price_variance)} |Premium
+|Concentrates (1g) |${concentrates_avg_price} |${concentrates_avg_price * (1 - price_variance)} - ${concentrates_avg_price * (1 + price_variance)} |Mid-tier
+|===
+
+== Growth Trends
+
+[mermaid]
+....
+timeline
+    title Cannabis Market Evolution
+    section 2023
+        Q1 : Regulatory changes
+        Q2 : Market expansion
+        Q3 : Price stabilization
+        Q4 : Holiday surge
+    section 2024
+        Q1 : New product launches
+        Q2 : Increased competition
+        Q3 : Market maturation
+        Q4 : Consolidation phase
+    section 2025
+        Q1 : Technology adoption
+        Q2 : Premium segment growth
+        Q3 : Current analysis period
+        Q4 : Projected expansion
+....
+
+== Key Insights
+
+=== Market Opportunities
+* Premium edibles segment showing 18% growth
+* Concentrates market expanding rapidly (+22% YoY)
+* Technology-driven customer experience gaining traction
+
+=== Competitive Threats
+* Large MSOs increasing market share
+* Price competition in flower segment
+* Regulatory compliance costs rising
+
+=== Strategic Recommendations
+. Focus on high-growth segments (edibles, concentrates)
+. Invest in premium product development
+. Enhance customer experience through technology
+. Optimize operational efficiency to maintain margins
+
+== Market Forecast
+
+Based on current trends and regulatory environment, we project:
+
+* Total market growth of 12-15% through 2026
+* Continued shift toward premium products
+* Increased importance of brand differentiation
+* Technology adoption accelerating customer engagement
+
+== Data Sources
+
+* California Cannabis Industry Association reports
+* State regulatory tracking data
+* Competitive intelligence research
+* Industry analyst projections

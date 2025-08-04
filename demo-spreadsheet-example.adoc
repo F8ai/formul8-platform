@@ -1,5 +1,14 @@
 = Cannabis Business Financial Model
 :author: Formul8 AI Assistant
+:doctype: article
+:document_type: financial-model
+:category: business-planning
+:industry: cannabis
+:created_date: 2025-08-04
+:version: 1.0
+:complexity: intermediate
+:features: spreadsheet,calculations,diagrams
+:tags: financial-planning,cannabis,dispensary,revenue-model
 :currency: USD
 :monthly_rent: 5000
 :utilities: 800

@@ -1,0 +1,156 @@
+= Cannabis Tincture Formulation Spreadsheet
+:author: Formul8 AI Assistant
+:doctype: article
+:document_type: formulation-sheet
+:category: product-development
+:industry: cannabis
+:created_date: 2025-08-04
+:version: 1.0
+:complexity: intermediate
+:features: spreadsheet,calculations,formulations
+:tags: cannabis,tincture,formulation,dosage,cannabinoids
+:department: manufacturing
+:status: draft
+:product_type: tincture
+:dosage_form: liquid
+
+== Product Overview
+
+This formulation sheet provides calculations for a cannabis tincture with precise cannabinoid content and dosage control.
+
+== Base Formulation Parameters
+
+:target_thc_mg_per_ml: 10
+:target_cbd_mg_per_ml: 5
+:batch_size_ml: 1000
+:carrier_oil: MCT Oil
+:starting_flower_thc_percent: 20
+:starting_flower_cbd_percent: 8
+:extraction_efficiency: 0.85
+:safety_buffer: 1.10
+
+== Cannabinoid Calculations
+
+|===
+|Parameter |Value |Unit |Notes
+
+|Target THC per mL |{target_thc_mg_per_ml} |mg |Desired potency
+|Target CBD per mL |{target_cbd_mg_per_ml} |mg |Desired potency
+|Batch Size |{batch_size_ml} |mL |Total volume
+|Total THC Needed |{target_thc_mg_per_ml * batch_size_ml} |mg |pass:[{target_thc_mg_per_ml} × {batch_size_ml}]
+|Total CBD Needed |{target_cbd_mg_per_ml * batch_size_ml} |mg |pass:[{target_cbd_mg_per_ml} × {batch_size_ml}]
+|===
+
+== Raw Material Requirements
+
+:flower_thc_mg_per_g: 200
+:flower_cbd_mg_per_g: 80
+:thc_needed_with_buffer: 11000
+:cbd_needed_with_buffer: 5500
+
+|===
+|Material |Amount Required |Calculation |Notes
+
+|Cannabis Flower (20% THC) |pass:[Math.ceil(({thc_needed_with_buffer} / ({flower_thc_mg_per_g} * {extraction_efficiency})) * 10) / 10] g |THC requirement ÷ (flower potency × efficiency) |High-quality indoor flower
+|Cannabis Flower (8% CBD) |pass:[Math.ceil(({cbd_needed_with_buffer} / ({flower_cbd_mg_per_g} * {extraction_efficiency})) * 10) / 10] g |CBD requirement ÷ (flower potency × efficiency) |Hemp-derived or high-CBD strain
+|{carrier_oil} |pass:[{batch_size_ml} * 0.95] mL |95% of final volume |Food-grade carrier oil
+|Natural Flavoring |pass:[{batch_size_ml} * 0.02] mL |2% of final volume |Optional flavoring
+|Vitamin E (preservative) |pass:[{batch_size_ml} * 0.001] mL |0.1% of final volume |Antioxidant preservative
+|===
+
+== Extraction Process
+
+[mermaid]
+....
+flowchart TD
+    A[Decarboxylate Flower<br/>240°F, 45 min] --> B[Grind to Fine Consistency]
+    B --> C[Combine with Carrier Oil]
+    C --> D[Heat Extraction<br/>160°F, 4 hours]
+    D --> E[Strain Through Cheesecloth]
+    E --> F[Fine Filter<br/>25-micron filter]
+    F --> G[Add Preservatives]
+    G --> H[Mix Thoroughly]
+    H --> I[Quality Testing]
+    I --> J{Potency Correct?}
+    J -->|Yes| K[Fill Containers]
+    J -->|No| L[Adjust Concentration]
+    L --> I
+    K --> M[Label & Package]
+....
+
+== Dosage Guidelines
+
+:standard_dose_ml: 1
+:microdose_ml: 0.25
+:strong_dose_ml: 2
+
+|===
+|Dose Level |Volume |THC Content |CBD Content |Onset Time |Duration
+
+|Microdose |{microdose_ml} mL |{target_thc_mg_per_ml * microdose_ml} mg |{target_cbd_mg_per_ml * microdose_ml} mg |15-45 min |2-4 hours
+|Standard Dose |{standard_dose_ml} mL |{target_thc_mg_per_ml * standard_dose_ml} mg |{target_cbd_mg_per_ml * standard_dose_ml} mg |15-45 min |4-6 hours
+|Strong Dose |{strong_dose_ml} mL |{target_thc_mg_per_ml * strong_dose_ml} mg |{target_cbd_mg_per_ml * strong_dose_ml} mg |15-45 min |6-8 hours
+|===
+
+== Quality Control Testing
+
+|===
+|Test Type |Specification |Method |Frequency
+
+|Cannabinoid Potency |±10% of target |HPLC analysis |Every batch
+|Residual Solvents |<5000 ppm total |GC-MS analysis |Every batch
+|Pesticides |Pass/Fail per state regs |LC-MS/MS analysis |Every batch
+|Heavy Metals |<0.5 ppm each |ICP-MS analysis |Monthly
+|Microbials |<100 CFU/g total |Plate count method |Every batch
+|Water Activity |<0.65 aw |Water activity meter |Every batch
+|===
+
+== Cost Analysis
+
+:flower_cost_per_g: 4.50
+:oil_cost_per_ml: 0.02
+:flavoring_cost_per_ml: 0.50
+:packaging_cost_per_unit: 1.25
+:labor_cost_per_batch: 45.00
+
+|===
+|Cost Component |Amount |Unit Cost |Total Cost
+
+|THC Flower |pass:[Math.ceil(({thc_needed_with_buffer} / ({flower_thc_mg_per_g} * {extraction_efficiency})) * 10) / 10] g |${flower_cost_per_g}/g |$pass:[Math.round((Math.ceil(({thc_needed_with_buffer} / ({flower_thc_mg_per_g} * {extraction_efficiency})) * 10) / 10) * {flower_cost_per_g} * 100) / 100]
+|CBD Flower |pass:[Math.ceil(({cbd_needed_with_buffer} / ({flower_cbd_mg_per_g} * {extraction_efficiency})) * 10) / 10] g |${flower_cost_per_g}/g |$pass:[Math.round((Math.ceil(({cbd_needed_with_buffer} / ({flower_cbd_mg_per_g} * {extraction_efficiency})) * 10) / 10) * {flower_cost_per_g} * 100) / 100]
+|{carrier_oil} |pass:[{batch_size_ml} * 0.95] mL |${oil_cost_per_ml}/mL |$pass:[Math.round(({batch_size_ml} * 0.95) * {oil_cost_per_ml} * 100) / 100]
+|Flavoring |pass:[{batch_size_ml} * 0.02] mL |${flavoring_cost_per_ml}/mL |$pass:[Math.round(({batch_size_ml} * 0.02) * {flavoring_cost_per_ml} * 100) / 100]
+|Labor |1 batch |${labor_cost_per_batch}/batch |${labor_cost_per_batch}
+|*Total Material Cost* |*-* |*-* |*$pass:[Math.round(((Math.ceil(({thc_needed_with_buffer} / ({flower_thc_mg_per_g} * {extraction_efficiency})) * 10) / 10) * {flower_cost_per_g} + (Math.ceil(({cbd_needed_with_buffer} / ({flower_cbd_mg_per_g} * {extraction_efficiency})) * 10) / 10) * {flower_cost_per_g} + ({batch_size_ml} * 0.95) * {oil_cost_per_ml} + ({batch_size_ml} * 0.02) * {flavoring_cost_per_ml} + {labor_cost_per_batch}) * 100) / 100]*
+|===
+
+== Batch Production Record
+
+|===
+|Step |Time |Temperature |Duration |Operator Initials |Notes
+
+|Decarboxylation |Start: _____ |240°F |45 min |_____ |Oven temp verified
+|Grinding |Start: _____ |Room temp |15 min |_____ |Fine, even consistency
+|Oil Infusion |Start: _____ |160°F |4 hours |_____ |Stir every 30 min
+|Straining |Start: _____ |Room temp |30 min |_____ |Remove all plant matter
+|Fine Filtering |Start: _____ |Room temp |15 min |_____ |25-micron filter used
+|Final Mixing |Start: _____ |Room temp |10 min |_____ |Homogeneous blend
+|===
+
+== Regulatory Compliance Notes
+
+* All cannabis flower must be sourced from licensed cultivators
+* Batch tracking required per state seed-to-sale regulations
+* Product labeling must include cannabinoid content and serving size
+* Child-resistant packaging required
+* Maximum THC per serving must comply with state limits
+* COA (Certificate of Analysis) required for each batch
+
+== Storage & Stability
+
+* Store in dark, cool environment (60-70°F)
+* Expected shelf life: 12-18 months when properly stored
+* Protect from light and heat to prevent degradation
+* Monitor for changes in color, odor, or consistency
+
+This formulation provides a professional framework for consistent, high-quality tincture production with precise dosing and regulatory compliance.

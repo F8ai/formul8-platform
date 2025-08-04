@@ -22,6 +22,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Header Restored (Aug 4, 2025)**: Fixed missing header in deployed site by adding TopHeader component back to standalone desktop mode in DesktopWorkspace.tsx, adjusted layout to use flex-1 for proper height distribution
 - **Safari Compatibility Added (Aug 4, 2025)**: Added automatic Safari browser detection with fallback to simplified interface, resolved white screen issues with error handling and browser-specific rendering modes
 - **Enhanced Chat Prompt (Aug 4, 2025)**: Updated system prompt with comprehensive AsciiDoc, diagram, and spreadsheet instructions including 13+ Mermaid diagram types, Kroki.io diagram support, variable definitions, calculations, and spreadsheet table functionality
+- **Cannabis Expert AI (Aug 4, 2025)**: Enhanced chat assistant with comprehensive cannabis industry expertise including cultivation, product formulation, cannabinoid profiles, extraction methods, compliance, testing, business operations, and dosage calculations - now generates professional cannabis documents automatically
 
 ## User Preferences
 
