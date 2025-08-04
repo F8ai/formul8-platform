@@ -46,9 +46,8 @@ try {
   
   const root = createRoot(rootElement);
   
-  // Use SimpleApp for Safari compatibility or when explicitly requested
-  const isSafari = navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome');
-  if (isSafari || window.location.search.includes('simple=true')) {
+  // Only use SimpleApp when explicitly requested via URL parameter
+  if (window.location.search.includes('simple=true')) {
     console.log("Using Safari-compatible SimpleApp");
     root.render(<SimpleApp />);
   } else {
