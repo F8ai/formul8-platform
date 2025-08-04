@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsciiDoc Offline Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0e1a;
+            color: #e2e8f0;
+        }
+        .test-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            background: #1e293b;
+        }
+        .test-title {
+            color: #10b981;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .content {
+            line-height: 1.6;
+        }
+        h1 { color: #10b981; font-size: 2em; border-bottom: 2px solid #334155; padding-bottom: 10px; }
+        h2 { color: #e2e8f0; font-size: 1.5em; margin-top: 30px; }
+        h3 { color: #e2e8f0; font-size: 1.2em; margin-top: 25px; }
+        pre { background: #0f172a; border: 1px solid #334155; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { font-family: 'Monaco', 'Menlo', monospace; color: #10b981; }
+        .diagram-container { margin: 20px 0; text-align: center; padding: 20px; background: #0f172a; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>AsciiDoc Offline Rendering Test</h1>
+    
+    <div class="test-section">
+        <div class="test-title">Test 1: Basic Markdown-style Rendering</div>
+        <div class="content" id="test1"></div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 2: Simple Mermaid Diagram</div>
+        <div class="content" id="test2"></div>
+    </div>
+
+    <div class="test-section">
+        <div class="test-title">Test 3: Mixed Content with Diagram</div>
+        <div class="content" id="test3"></div>
+    </div>
+
+    <script type="module">
+        // Test content samples
+        const test1Content = `# Test Document
+
+## Overview
+This is a test document to verify AsciiDoc rendering works offline.
+
+### Features
+- Basic text formatting
+- Headers and subheaders  
+- Code blocks
+
+\`\`\`javascript
+console.log("Hello World");
+\`\`\`
+
+Normal paragraph text here.`;
+
+        const test2Content = `# Simple Diagram Test
+
+Here's a basic Mermaid flowchart:
+
+\`\`\`mermaid
+graph TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Action 1]
+    B -->|No| D[Action 2]
+    C --> E[End]
+    D --> E
+\`\`\`
+
+This should render as a diagram.`;
+
+        const test3Content = `# Complete Diagram Types Reference Guide
+
+This document provides a comprehensive overview of various diagram types supported by different diagramming tools, including examples of each.
+
+## 1. Mermaid Diagrams
+
+### Flowchart
+
+\`\`\`mermaid
+graph TD
+    A[Start] --> B{Is it?}
+    B -->|Yes| C[OK]
+    B -->|No| D[End]
+\`\`\`
+
+### Sequence Diagram
+
+\`\`\`mermaid
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    A->>B: Hello Bob, how are you?
+    B-->>A: Great!
+\`\`\`
+
+## 2. PlantUML Diagrams
+
+### Class Diagram
+
+\`\`\`plantuml
+@startuml
+class User {
+    +String name
+    +String email
+    +login()
+    +logout()
+}
+
+class Admin {
+    +manageUsers()
+}
+
+User <|-- Admin
+@enduml
+\`\`\``;
+
+        // Simple markdown-style renderer (fallback simulation)
+        function renderContent(content) {
+            return content
+                .replace(/^#\s+(.+)$/gm, '<h1 style="color: #10b981; font-size: 2em; border-bottom: 2px solid #334155; padding-bottom: 10px; margin: 20px 0;">$1</h1>')
+                .replace(/^##\s+(.+)$/gm, '<h2 style="color: #e2e8f0; font-size: 1.5em; margin-top: 30px;">$1</h2>')
+                .replace(/^###\s+(.+)$/gm, '<h3 style="color: #e2e8f0; font-size: 1.2em; margin-top: 25px;">$1</h3>')
+                .replace(/\n\n/g, '</p><p style="margin: 15px 0; line-height: 1.6;">')
+                .replace(/^([^<\n].*)$/gm, '<p style="margin: 15px 0; line-height: 1.6;">$1</p>')
+                .replace(/```([^`\n]*)\n([\s\S]*?)```/g, function(match, lang, code) {
+                    if (lang === 'mermaid') {
+                        return `<div class="diagram-container">
+                            <div style="color: #64748b; font-size: 0.8em; margin-bottom: 10px;">Mermaid Diagram (Offline Test)</div>
+                            <div style="background: #1e293b; padding: 20px; border-radius: 5px; color: #10b981;">
+                                <pre style="margin: 0; white-space: pre-wrap;">${code.trim()}</pre>
+                            </div>
+                        </div>`;
+                    } else if (lang === 'plantuml') {
+                        return `<div class="diagram-container">
+                            <div style="color: #64748b; font-size: 0.8em; margin-bottom: 10px;">PlantUML Diagram (Offline Test)</div>
+                            <div style="background: #1e293b; padding: 20px; border-radius: 5px; color: #10b981;">
+                                <pre style="margin: 0; white-space: pre-wrap;">${code.trim()}</pre>
+                            </div>
+                        </div>`;
+                    } else {
+                        return `<pre style="background: #0f172a; border: 1px solid #334155; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 15px 0;"><code style="color: #10b981;">${code}</code></pre>`;
+                    }
+                });
+        }
+
+        // Test rendering
+        document.getElementById('test1').innerHTML = renderContent(test1Content);
+        document.getElementById('test2').innerHTML = renderContent(test2Content);
+        document.getElementById('test3').innerHTML = renderContent(test3Content);
+
+        console.log('AsciiDoc offline test completed');
+        console.log('All content rendered using fallback markdown-style processing');
+    </script>
+</body>
+</html>
