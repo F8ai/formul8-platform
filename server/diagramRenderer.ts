@@ -26,7 +26,10 @@ function detectDiagramType(content: string): string | null {
     return 'ditaa';
   } else if (cleanContent.includes('svgbob')) {
     return 'svgbob';
-  } else if (cleanContent.includes('erd')) {
+  } else if (cleanContent.includes('erd') || 
+             (cleanContent.includes('[') && cleanContent.includes(']') && 
+              (cleanContent.includes('1--*') || cleanContent.includes('*--1') || 
+               cleanContent.includes('1--1') || cleanContent.includes('*--*')))) {
     return 'erd';
   } else if (cleanContent.includes('nomnoml')) {
     return 'nomnoml';
