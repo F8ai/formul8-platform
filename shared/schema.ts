@@ -645,6 +645,68 @@ export const documentsRelations = relations(documents, ({ one }) => ({
   }),
 }));
 
+// Spreadsheet tables for Excel-compatible spreadsheet functionality
+export const spreadsheets = pgTable("spreadsheets", {
+  id: serial("id").primaryKey(),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  artifactId: integer("artifact_id").references(() => userArtifacts.id, { onDelete: 'cascade' }),
+  title: varchar("title").notNull(),
+  description: text("description"),
+  sheetData: jsonb("sheet_data").notNull().default('[]'), // Array of worksheet data
+  columns: jsonb("columns").notNull().default('[]'), // Column definitions with types, formulas, etc.
+  rows: integer("rows").default(100), // Number of rows
+  cols: integer("cols").default(26), // Number of columns (A-Z by default)
+  metadata: jsonb("metadata").default('{}'), // Spreadsheet-specific metadata (formulas, styles, etc.)
+  permissions: jsonb("permissions").default('{"read": true, "write": true, "share": false}'),
+  template: varchar("template"), // Optional template reference
+  fileUrl: varchar("file_url"), // URL to stored Excel file if uploaded  
+  originalFileName: varchar("original_file_name"), // Original Excel filename
+  agentGenerated: boolean("agent_generated").default(false),
+  version: integer("version").default(1),
+  position: jsonb("position").default('{"x": 100, "y": 100}'), // Desktop position
+  size: jsonb("size").default('{"width": 1000, "height": 700}'), // Window size
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Spreadsheet templates for common use cases (cannabis industry focused)
+export const spreadsheetTemplates = pgTable("spreadsheet_templates", {
+  id: serial("id").primaryKey(),
+  name: varchar("name").notNull(),
+  category: varchar("category").notNull(), // formulation, compliance, inventory, finance, testing, etc.
+  description: text("description"),
+  structure: jsonb("structure").notNull(), // Template structure definition
+  defaultData: jsonb("default_data").default('{}'), // Sample data for the template
+  excelTemplate: varchar("excel_template_url"), // URL to template Excel file
+  cannabis_specific: boolean("cannabis_specific").default(true),
+  industry: varchar("industry").default("cannabis"),
+  createdBy: varchar("created_by"), // System or user ID
+  isPublic: boolean("is_public").default(true),
+  usageCount: integer("usage_count").default(0),
+  features: jsonb("features").default('[]'), // Array of features: formulas, charts, validation, etc.
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Relations for spreadsheets
+export const spreadsheetsRelations = relations(spreadsheets, ({ one }) => ({
+  user: one(users, {
+    fields: [spreadsheets.userId],
+    references: [users.id],
+  }),
+  artifact: one(userArtifacts, {
+    fields: [spreadsheets.artifactId],
+    references: [userArtifacts.id],
+  }),
+}));
+
+export const spreadsheetTemplatesRelations = relations(spreadsheetTemplates, ({ one }) => ({
+  creator: one(users, {
+    fields: [spreadsheetTemplates.createdBy],
+    references: [users.id],
+  }),
+}));
+
 // Zod schemas
 export const insertUserSchema = createInsertSchema(users).pick({
   id: true,
@@ -795,6 +857,24 @@ export type AgentTool = typeof agentTools.$inferSelect;
 export type InsertAgentTool = z.infer<typeof insertAgentToolSchema>;
 export type ArtifactHistory = typeof artifactHistory.$inferSelect;
 export type InsertArtifactHistory = z.infer<typeof insertArtifactHistorySchema>;
+
+// Spreadsheet schemas and types
+export const insertSpreadsheetSchema = createInsertSchema(spreadsheets).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertSpreadsheetTemplateSchema = createInsertSchema(spreadsheetTemplates).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type Spreadsheet = typeof spreadsheets.$inferSelect;
+export type InsertSpreadsheet = z.infer<typeof insertSpreadsheetSchema>;
+export type SpreadsheetTemplate = typeof spreadsheetTemplates.$inferSelect;
+export type InsertSpreadsheetTemplate = z.infer<typeof insertSpreadsheetTemplateSchema>;
 
 // Dashboard Widget Customization
 export const dashboardLayouts = pgTable("dashboard_layouts", {

@@ -21,6 +21,7 @@ import baselineTestingRoutes from "./routes/baseline-testing";
 import corpusQARoutes from "./routes/corpus-qa";
 import artifactsRouter from "./routes/artifacts";
 import astradbRouter from "./routes/astradb";
+import { registerSpreadsheetRoutes } from "./routes/spreadsheets";
 import baselineSummaryRouter from "./routes/baseline-summary";
 import runAllTestsRoutes from "./routes/run-all-tests";
 import baselineCoverageRoutes from "./routes/baseline-coverage";
@@ -1720,6 +1721,9 @@ When creating documents, reports, manuals, or structured content, always use Asc
 
   // AstraDB vector search routes
   app.use('/api/astradb', astradbRouter);
+  
+  // Spreadsheet routes
+  registerSpreadsheetRoutes(app);
 
   // Feedback routes
   app.use('/api/feedback', feedbackRoutes);
