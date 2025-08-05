@@ -117,6 +117,7 @@
   --formul8-tool-files: hsl(35, 75%, 55%);             /* Orange - File Management */
   --formul8-tool-browser: hsl(220, 70%, 55%);          /* Blue - Web Browser */
   --formul8-tool-calculator: hsl(60, 80%, 50%);        /* Yellow - QC Calculator */
+  --formul8-tool-analytics: hsl(210, 80%, 55%);        /* Analytics Blue - Dashboard */
   
   /* Agent Background & Border Variations (matching business flow spectrum) */
   /* PHASE 1: Research & Development */
@@ -158,6 +159,8 @@
   --formul8-tool-chat-border: hsl(195, 84%, 55%, 0.3);
   --formul8-tool-calculator-bg: hsl(60, 80%, 50%, 0.1);
   --formul8-tool-calculator-border: hsl(60, 80%, 50%, 0.3);
+  --formul8-tool-analytics-bg: hsl(210, 80%, 55%, 0.1);
+  --formul8-tool-analytics-border: hsl(210, 80%, 55%, 0.3);
 }
 
 .dark {
@@ -266,6 +269,10 @@
   .tool-calculator { color: var(--formul8-tool-calculator); }
   .tool-calculator-bg { background-color: var(--formul8-tool-calculator-bg); }
   .tool-calculator-border { border-color: var(--formul8-tool-calculator-border); }
+  
+  .tool-analytics { color: var(--formul8-tool-analytics); }
+  .tool-analytics-bg { background-color: var(--formul8-tool-analytics-bg); }
+  .tool-analytics-border { border-color: var(--formul8-tool-analytics-border); }
 }
 
 /* Custom Formul8 utility classes */
@@ -446,5 +453,25 @@
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Force remove any outline/border from parrot emoji */
+  button div:contains("🦜"),
+  div:contains("🦜"),
+  .parrot-emoji {
+    outline: none !important;
+    border: none !important;
+    text-decoration: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  button:focus div:contains("🦜"),
+  button:active div:contains("🦜") {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 }

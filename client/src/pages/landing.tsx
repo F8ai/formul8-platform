@@ -28,96 +28,96 @@ const features = [
     id: 'chat', 
     name: 'Expert Chat', 
     icon: MessageCircle, 
-    color: 'text-sky-400',
-    bgColor: 'bg-sky-500/20',
+    color: 'tool-chat',
+    bgColor: 'tool-chat-bg',
     route: '/chat-tool'
   },
   { 
     id: 'compliance', 
     name: 'State Compliance Engine', 
     icon: Shield, 
-    color: 'text-emerald-400',
-    bgColor: 'bg-emerald-500/20',
+    color: 'agent-compliance',
+    bgColor: 'agent-compliance-bg',
     route: '/agent/compliance'
   },
   { 
     id: 'calculator', 
     name: 'QC Calculator Suite', 
     icon: Calculator, 
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/20',
+    color: 'tool-calculator',
+    bgColor: 'tool-calculator-bg',
     route: '/calculator'
   },
   { 
     id: 'extraction', 
     name: 'Extraction Optimizer', 
     icon: FlaskConical, 
-    color: 'text-purple-400',
-    bgColor: 'bg-purple-500/20',
+    color: 'agent-operations',
+    bgColor: 'agent-operations-bg',
     route: '/extraction'
   },
   { 
     id: 'formulation', 
     name: 'Formulation Designer', 
     icon: Beaker, 
-    color: 'text-cyan-400',
-    bgColor: 'bg-cyan-500/20',
+    color: 'agent-formulation',
+    bgColor: 'agent-formulation-bg',
     route: '/agent/formulation'
   },
   { 
     id: 'stability', 
     name: 'Stability Predictor', 
     icon: AlertTriangle, 
-    color: 'text-yellow-400',
-    bgColor: 'bg-yellow-500/20',
+    color: 'agent-science',
+    bgColor: 'agent-science-bg',
     route: '/stability'
   },
   { 
     id: 'sop', 
     name: 'GMP SOP Library', 
     icon: FileText, 
-    color: 'text-teal-400',
-    bgColor: 'bg-teal-500/20',
+    color: 'agent-compliance',
+    bgColor: 'agent-compliance-bg',
     route: '/sop'
   },
   { 
     id: 'margin', 
     name: 'Margin Calculator', 
     icon: DollarSign, 
-    color: 'text-green-400',
-    bgColor: 'bg-green-500/20',
+    color: 'agent-customer',
+    bgColor: 'agent-customer-bg',
     route: '/margin'
   },
   { 
     id: 'sourcing', 
     name: 'Sourcing Marketplace', 
     icon: ShoppingCart, 
-    color: 'text-red-400',
-    bgColor: 'bg-red-500/20',
+    color: 'agent-sourcing',
+    bgColor: 'agent-sourcing-bg',
     route: '/agent/sourcing'
   },
   { 
     id: 'copy', 
     name: 'Compliant Copy', 
     icon: MessageSquareText, 
-    color: 'text-pink-400',
-    bgColor: 'bg-pink-500/20',
+    color: 'agent-marketing',
+    bgColor: 'agent-marketing-bg',
     route: '/copy'
   },
   { 
     id: 'audit', 
     name: 'Audit Trail Export', 
     icon: Scale, 
-    color: 'text-orange-400',
-    bgColor: 'bg-orange-500/20',
+    color: 'agent-compliance',
+    bgColor: 'agent-compliance-bg',
     route: '/audit'
   },
   { 
     id: 'user-sop', 
     name: 'User Generated SOPs', 
     icon: UserCheck, 
-    color: 'text-violet-400',
-    bgColor: 'bg-violet-500/20',
+    color: 'agent-lms',
+    bgColor: 'agent-lms-bg',
     route: '/user-sop'
   },
 
