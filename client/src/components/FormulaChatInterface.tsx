@@ -13,7 +13,6 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import remarkEmoji from "remark-emoji";
 import remarkGfm from "remark-gfm";
-import "katex/dist/katex.min.css";
 import { DocumentPreview } from "./DocumentPreview";
 import { WindowManagerContext } from "../contexts/WindowManagerContext";
 import { useIsMobile } from '@/hooks/use-mobile';
