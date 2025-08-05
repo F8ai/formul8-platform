@@ -88,6 +88,76 @@
   --formul8-error: hsl(0, 84%, 60%);           /* Error color */
   --formul8-info: hsl(195, 84%, 55%);          /* Info color */
   --formul8-tertiary: hsl(280, 84%, 55%);      /* Tertiary color */
+
+  /* ===========================================
+     FORMUL8 AGENT & TOOL COLOR SYSTEM
+     Organized by Cannabis Business Flow Spectrum
+     =========================================== */
+  
+  /* PHASE 1: Research & Development (Blue-Violet Spectrum) */
+  --formul8-agent-science: hsl(240, 80%, 60%);         /* Deep Blue - Research Foundation */
+  --formul8-agent-patent: hsl(260, 75%, 55%);          /* Violet - IP Protection */
+  --formul8-agent-formulation: hsl(280, 70%, 55%);     /* Purple - Product Development */
+  --formul8-agent-spectra: hsl(300, 75%, 55%);         /* Magenta - Chemical Analysis */
+  --formul8-agent-metabolomics: hsl(320, 70%, 55%);    /* Pink-Magenta - Metabolic Analysis */
+  
+  /* PHASE 2: Supply & Production (Green Spectrum) */
+  --formul8-agent-sourcing: hsl(90, 70%, 45%);         /* Yellow-Green - Material Sourcing */
+  --formul8-agent-compliance: hsl(120, 65%, 45%);      /* Green - Regulatory Compliance */
+  --formul8-agent-operations: hsl(150, 70%, 45%);      /* Blue-Green - Production Operations */
+  
+  /* PHASE 3: Market & Customer (Orange-Red Spectrum) */
+  --formul8-agent-marketing: hsl(30, 85%, 55%);        /* Orange - Marketing & Branding */
+  --formul8-agent-customer: hsl(45, 80%, 55%);         /* Yellow-Orange - Customer Success */
+  --formul8-agent-lms: hsl(180, 70%, 50%);             /* Teal - Learning & Training */
+  
+  /* INFRASTRUCTURE TOOLS (Neutral Spectrum) */
+  --formul8-tool-chat: hsl(195, 84%, 55%);             /* Primary Blue - AI Chat */
+  --formul8-tool-langgraph: hsl(0, 75%, 55%);          /* Red - LangChain/AI Infrastructure */
+  --formul8-tool-files: hsl(35, 75%, 55%);             /* Orange - File Management */
+  --formul8-tool-browser: hsl(220, 70%, 55%);          /* Blue - Web Browser */
+  --formul8-tool-calculator: hsl(60, 80%, 50%);        /* Yellow - QC Calculator */
+  
+  /* Agent Background & Border Variations (matching business flow spectrum) */
+  /* PHASE 1: Research & Development */
+  --formul8-agent-science-bg: hsl(240, 80%, 60%, 0.1);
+  --formul8-agent-science-border: hsl(240, 80%, 60%, 0.3);
+  --formul8-agent-patent-bg: hsl(260, 75%, 55%, 0.1);
+  --formul8-agent-patent-border: hsl(260, 75%, 55%, 0.3);
+  --formul8-agent-formulation-bg: hsl(280, 70%, 55%, 0.1);
+  --formul8-agent-formulation-border: hsl(280, 70%, 55%, 0.3);
+  --formul8-agent-spectra-bg: hsl(300, 75%, 55%, 0.1);
+  --formul8-agent-spectra-border: hsl(300, 75%, 55%, 0.3);
+  --formul8-agent-metabolomics-bg: hsl(320, 70%, 55%, 0.1);
+  --formul8-agent-metabolomics-border: hsl(320, 70%, 55%, 0.3);
+  
+  /* PHASE 2: Supply & Production */
+  --formul8-agent-sourcing-bg: hsl(90, 70%, 45%, 0.1);
+  --formul8-agent-sourcing-border: hsl(90, 70%, 45%, 0.3);
+  --formul8-agent-compliance-bg: hsl(120, 65%, 45%, 0.1);
+  --formul8-agent-compliance-border: hsl(120, 65%, 45%, 0.3);
+  --formul8-agent-operations-bg: hsl(150, 70%, 45%, 0.1);
+  --formul8-agent-operations-border: hsl(150, 70%, 45%, 0.3);
+  
+  /* PHASE 3: Market & Customer */
+  --formul8-agent-marketing-bg: hsl(30, 85%, 55%, 0.1);
+  --formul8-agent-marketing-border: hsl(30, 85%, 55%, 0.3);
+  --formul8-agent-customer-bg: hsl(45, 80%, 55%, 0.1);
+  --formul8-agent-customer-border: hsl(45, 80%, 55%, 0.3);
+  --formul8-agent-lms-bg: hsl(180, 70%, 50%, 0.1);
+  --formul8-agent-lms-border: hsl(180, 70%, 50%, 0.3);
+  
+  /* Tool Color Variations */
+  --formul8-tool-langgraph-bg: hsl(0, 75%, 55%, 0.1);
+  --formul8-tool-langgraph-border: hsl(0, 75%, 55%, 0.3);
+  --formul8-tool-browser-bg: hsl(220, 70%, 55%, 0.1);
+  --formul8-tool-browser-border: hsl(220, 70%, 55%, 0.3);
+  --formul8-tool-files-bg: hsl(30, 75%, 55%, 0.1);
+  --formul8-tool-files-border: hsl(30, 75%, 55%, 0.3);
+  --formul8-tool-chat-bg: hsl(195, 84%, 55%, 0.1);
+  --formul8-tool-chat-border: hsl(195, 84%, 55%, 0.3);
+  --formul8-tool-calculator-bg: hsl(60, 80%, 50%, 0.1);
+  --formul8-tool-calculator-border: hsl(60, 80%, 50%, 0.3);
 }
 
 .dark {
@@ -122,6 +192,80 @@
     background-color: var(--formul8-bg-dark);
     color: var(--formul8-text-white);
   }
+}
+
+@layer utilities {
+  /* ===========================================
+     FORMUL8 AGENT COLOR UTILITY CLASSES
+     =========================================== */
+  
+  /* Phase 1: Research & Development Colors */
+  .agent-science { color: var(--formul8-agent-science); }
+  .agent-science-bg { background-color: var(--formul8-agent-science-bg); }
+  .agent-science-border { border-color: var(--formul8-agent-science-border); }
+  
+  .agent-patent { color: var(--formul8-agent-patent); }
+  .agent-patent-bg { background-color: var(--formul8-agent-patent-bg); }
+  .agent-patent-border { border-color: var(--formul8-agent-patent-border); }
+  
+  .agent-formulation { color: var(--formul8-agent-formulation); }
+  .agent-formulation-bg { background-color: var(--formul8-agent-formulation-bg); }
+  .agent-formulation-border { border-color: var(--formul8-agent-formulation-border); }
+  
+  .agent-spectra { color: var(--formul8-agent-spectra); }
+  .agent-spectra-bg { background-color: var(--formul8-agent-spectra-bg); }
+  .agent-spectra-border { border-color: var(--formul8-agent-spectra-border); }
+  
+  .agent-metabolomics { color: var(--formul8-agent-metabolomics); }
+  .agent-metabolomics-bg { background-color: var(--formul8-agent-metabolomics-bg); }
+  .agent-metabolomics-border { border-color: var(--formul8-agent-metabolomics-border); }
+  
+  /* Phase 2: Supply & Production Colors */
+  .agent-sourcing { color: var(--formul8-agent-sourcing); }
+  .agent-sourcing-bg { background-color: var(--formul8-agent-sourcing-bg); }
+  .agent-sourcing-border { border-color: var(--formul8-agent-sourcing-border); }
+  
+  .agent-compliance { color: var(--formul8-agent-compliance); }
+  .agent-compliance-bg { background-color: var(--formul8-agent-compliance-bg); }
+  .agent-compliance-border { border-color: var(--formul8-agent-compliance-border); }
+  
+  .agent-operations { color: var(--formul8-agent-operations); }
+  .agent-operations-bg { background-color: var(--formul8-agent-operations-bg); }
+  .agent-operations-border { border-color: var(--formul8-agent-operations-border); }
+  
+  /* Phase 3: Market & Customer Colors */
+  .agent-marketing { color: var(--formul8-agent-marketing); }
+  .agent-marketing-bg { background-color: var(--formul8-agent-marketing-bg); }
+  .agent-marketing-border { border-color: var(--formul8-agent-marketing-border); }
+  
+  .agent-customer { color: var(--formul8-agent-customer); }
+  .agent-customer-bg { background-color: var(--formul8-agent-customer-bg); }
+  .agent-customer-border { border-color: var(--formul8-agent-customer-border); }
+  
+  .agent-lms { color: var(--formul8-agent-lms); }
+  .agent-lms-bg { background-color: var(--formul8-agent-lms-bg); }
+  .agent-lms-border { border-color: var(--formul8-agent-lms-border); }
+  
+  /* Tool Colors */
+  .tool-chat { color: var(--formul8-tool-chat); }
+  .tool-chat-bg { background-color: var(--formul8-tool-chat-bg); }
+  .tool-chat-border { border-color: var(--formul8-tool-chat-border); }
+  
+  .tool-langgraph { color: var(--formul8-tool-langgraph); }
+  .tool-langgraph-bg { background-color: var(--formul8-tool-langgraph-bg); }
+  .tool-langgraph-border { border-color: var(--formul8-tool-langgraph-border); }
+  
+  .tool-files { color: var(--formul8-tool-files); }
+  .tool-files-bg { background-color: var(--formul8-tool-files-bg); }
+  .tool-files-border { border-color: var(--formul8-tool-files-border); }
+  
+  .tool-browser { color: var(--formul8-tool-browser); }
+  .tool-browser-bg { background-color: var(--formul8-tool-browser-bg); }
+  .tool-browser-border { border-color: var(--formul8-tool-browser-border); }
+  
+  .tool-calculator { color: var(--formul8-tool-calculator); }
+  .tool-calculator-bg { background-color: var(--formul8-tool-calculator-bg); }
+  .tool-calculator-border { border-color: var(--formul8-tool-calculator-border); }
 }
 
 /* Custom Formul8 utility classes */

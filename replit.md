@@ -28,6 +28,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **LangChain Dashboard Integration (Aug 5, 2025)**: Added LangChain Dashboard with parrot icon (🦜) to both left navigation bar and desktop toolbar, includes LangSmith functionality for agent workflow monitoring and observability, accessible at /langgraph-dashboard route
 - **Complete Spreadsheet Icon System (Aug 5, 2025)**: Implemented dedicated spreadsheet icon types with FileSpreadsheet (📊) for spreadsheets, Calculator (🧮) for formulation sheets, proper document type differentiation in desktop workspace
 - **Desktop Window Toggle System (Aug 5, 2025)**: Added comprehensive toggle functionality to desktop toolbar - clicking tool buttons once opens window, clicking again closes it. Prevents multiple instances of same tool, applies to LangChain Dashboard, File Explorer, Formulation Designer, Expert Chat, and Browser Window tools
+- **Agent Color System (Aug 5, 2025)**: Implemented comprehensive color spectrum for agents organized by cannabis business flow - Phase 1 (Research & Development: blue-violet spectrum), Phase 2 (Supply & Production: green spectrum), Phase 3 (Market & Customer: orange-red spectrum), with CSS utility classes for consistent styling throughout the platform
 
 ## User Preferences
 
