@@ -1210,7 +1210,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/documents', isAuthenticated, async (req, res) => {
     try {
       const userId = req.user?.claims?.sub;
-      const documents = await storage.getUserDocuments(userId);
+      const documents = await storage.getDocuments(userId);
       res.json(documents);
     } catch (error) {
       console.error('Error fetching documents:', error);
