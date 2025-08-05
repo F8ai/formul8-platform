@@ -46,8 +46,13 @@ try {
   
   const root = createRoot(rootElement);
   
-  // Only use SimpleApp when explicitly requested via URL parameter
-  if (window.location.search.includes('simple=true')) {
+  // Enhanced error handling for production deployment
+  const isProduction = import.meta.env.PROD;
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const forceSimple = window.location.search.includes('simple=true');
+  
+  // Use SimpleApp for Safari in production or when explicitly requested
+  if (forceSimple || (isProduction && isSafari)) {
     console.log("Using Safari-compatible SimpleApp");
     root.render(<SimpleApp />);
   } else {
