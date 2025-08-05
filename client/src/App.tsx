@@ -73,6 +73,7 @@ function Router() {
         {/* Main routes */}
         <Route path="/" component={Workspace} />
         <Route path="/formulation-chat" component={FormulationChatPage} />
+        <Route path="/langgraph-dashboard" component={LangGraphDashboard} />
         {/* All other routes redirect to root */}
         <Route>
           {() => {
