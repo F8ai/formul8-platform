@@ -48,14 +48,14 @@ try {
   
   // Enhanced error handling for production deployment
   const isProduction = import.meta.env.PROD;
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   const forceSimple = window.location.search.includes('simple=true');
   
-  // Use SimpleApp for Safari in production or when explicitly requested
-  if (forceSimple || (isProduction && isSafari)) {
-    console.log("Using Safari-compatible SimpleApp");
+  // Only use SimpleApp when explicitly requested via URL parameter
+  if (forceSimple) {
+    console.log("Using Safari-compatible SimpleApp (explicitly requested)");
     root.render(<SimpleApp />);
   } else {
+    console.log("Using main App");
     root.render(<App />);
   }
 
