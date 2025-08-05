@@ -23,6 +23,7 @@ The Formul8 Platform is a comprehensive AI-powered cannabis operations platform.
 - **Safari Compatibility Added (Aug 4, 2025)**: Added automatic Safari browser detection with fallback to simplified interface, resolved white screen issues with error handling and browser-specific rendering modes
 - **Enhanced Chat Prompt (Aug 4, 2025)**: Updated system prompt with comprehensive AsciiDoc, diagram, and spreadsheet instructions including 13+ Mermaid diagram types, Kroki.io diagram support, variable definitions, calculations, and spreadsheet table functionality
 - **Cannabis Expert AI (Aug 4, 2025)**: Enhanced chat assistant with comprehensive cannabis industry expertise including cultivation, product formulation, cannabinoid profiles, extraction methods, compliance, testing, business operations, and dosage calculations - now generates professional cannabis documents automatically
+- **KaTeX Font Loading Fix (Aug 5, 2025)**: Resolved critical KaTeX font loading issue causing Vite serving directory conflicts and workflow failures. Removed KaTeX CSS imports from AsciiDocViewer and FormulaChatInterface components, configured math rendering to use HTML/MathML output instead of web fonts, ensuring stable server operation without font access errors
 
 ## User Preferences
 
