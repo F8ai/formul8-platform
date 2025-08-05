@@ -56,12 +56,44 @@ try {
 
 } catch (error) {
   console.error("Failed to mount React app:", error);
+  
+  // Enhanced error reporting for production debugging
+  const errorDetails = {
+    message: error instanceof Error ? error.message : String(error),
+    stack: error instanceof Error ? error.stack : undefined,
+    url: window.location.href,
+    userAgent: navigator.userAgent,
+    timestamp: new Date().toISOString()
+  };
+  
+  // Log detailed error information
+  console.error("React Mount Error Details:", errorDetails);
+  
   document.body.innerHTML = `
-    <div style="background: #1a1a1a; color: white; padding: 20px; font-family: Arial;">
-      <h1>React Mount Error</h1>
-      <p>Failed to initialize the application.</p>
-      <p>Error: ${error instanceof Error ? error.message : String(error)}</p>
-      <p>Check the browser console for more details.</p>
+    <div style="background: #1a1a1a; color: white; padding: 20px; font-family: Arial; min-height: 100vh;">
+      <h1>🚨 Application Failed to Load</h1>
+      <p>The Formul8 application encountered an error during initialization.</p>
+      <p><strong>Error:</strong> ${errorDetails.message}</p>
+      
+      <details style="margin-top: 20px;">
+        <summary style="cursor: pointer; color: #00ff88;">🔧 Debug Information (Click to expand)</summary>
+        <pre style="background: #2a2a2a; padding: 15px; border-radius: 5px; margin-top: 10px; font-size: 12px; overflow-x: auto;">
+URL: ${errorDetails.url}
+Time: ${errorDetails.timestamp}
+User Agent: ${errorDetails.userAgent}
+${errorDetails.stack ? `\nStack Trace:\n${errorDetails.stack}` : ''}
+        </pre>
+      </details>
+      
+      <div style="margin-top: 30px; padding: 15px; background: #2a2a2a; border-left: 4px solid #00ff88; border-radius: 5px;">
+        <h3 style="margin: 0 0 10px 0; color: #00ff88;">💡 Troubleshooting</h3>
+        <ul style="margin: 0; padding-left: 20px;">
+          <li>Try refreshing the page (Ctrl+F5 or Cmd+Shift+R)</li>
+          <li>Clear browser cache and reload</li>
+          <li>Check browser console for additional error details</li>
+          <li>Ensure JavaScript is enabled</li>
+        </ul>
+      </div>
     </div>
   `;
 }

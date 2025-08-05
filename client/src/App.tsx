@@ -123,6 +123,15 @@ function App() {
     );
   } catch (error) {
     console.error('App render error:', error);
+    // Log to external service in production for debugging
+    if (import.meta.env.PROD) {
+      console.error('Production App Error:', {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+        url: window.location.href,
+        userAgent: navigator.userAgent
+      });
+    }
     return (
       <div style={{ 
         background: '#1a1a1a', 
@@ -133,6 +142,14 @@ function App() {
       }}>
         <h1>App Error</h1>
         <p>Error: {error instanceof Error ? error.message : String(error)}</p>
+        <details style={{ marginTop: '20px' }}>
+          <summary>Debug Information</summary>
+          <pre style={{ fontSize: '12px', marginTop: '10px' }}>
+            URL: {window.location.href}{'\n'}
+            Environment: {import.meta.env.MODE}{'\n'}
+            {error instanceof Error && error.stack ? `Stack: ${error.stack}` : ''}
+          </pre>
+        </details>
       </div>
     );
   }

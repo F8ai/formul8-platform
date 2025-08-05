@@ -3737,6 +3737,16 @@ When creating documents, reports, manuals, or structured content, always use Asc
   const { default: langchainRouter } = await import("./langchain-router.js");
   app.use("/api/agents", langchainRouter);
 
+  // Health check endpoint for deployment
+  app.get("/api/health", (req, res) => {
+    res.json({
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV,
+      version: "1.0.0"
+    });
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
