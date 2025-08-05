@@ -380,6 +380,17 @@ export default function FormulaChatInterface() {
           // Open in tabbed interface
           window.open('/workspace', '_blank');
         }
+      },
+      {
+        patterns: ['langchain', 'lang chain', 'langgraph', 'agent workflow', 'workflow', 'chain', 'graph'],
+        tool: 'langchain',
+        description: 'LangChain Dashboard',
+        route: '/langgraph-dashboard',
+        icon: '🦜',
+        action: () => {
+          // Open in tabbed interface
+          window.open('/langgraph-dashboard', '_blank');
+        }
       }
     ];
 

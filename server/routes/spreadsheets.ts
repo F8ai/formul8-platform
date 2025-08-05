@@ -331,7 +331,8 @@ Categories:
         userId,
         title: spreadsheetData.title,
         description: spreadsheetData.description,
-        type: "spreadsheet", 
+        type: "spreadsheet",
+        documentType: "spreadsheet", // Set proper document type for desktop icon
         category: generatedData.metadata?.category || "general",
         content: {
           spreadsheetId: newSpreadsheet.id,
@@ -342,7 +343,8 @@ Categories:
         metadata: {
           spreadsheetId: newSpreadsheet.id,
           ...spreadsheetData.metadata
-        }
+        },
+        position: { x: Math.random() * 200, y: Math.random() * 200 } // Random desktop position
       });
 
       res.json(newSpreadsheet);
