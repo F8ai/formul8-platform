@@ -90,7 +90,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
       category: "Development",
       items: [
         { href: "/agents-dashboard", icon: Activity, label: "Agent Dashboard", active: location === "/agents-dashboard" },
-        { href: "/langgraph", icon: GitBranch, label: "LangGraph", active: location === "/langgraph" },
+        { href: "/langgraph-dashboard", icon: () => <span className="text-base">🦜</span>, label: "🦜 LangChain Dashboard", badge: "LangSmith", active: location === "/langgraph-dashboard" },
         { href: "/development-agent", icon: Bot, label: "Dev Agent", active: location === "/development-agent" },
         { href: "/real-metrics", icon: BarChart3, label: "Real Metrics", active: location === "/real-metrics" },
         { href: "/corpus-qa", icon: Database, label: "Corpus Q&A", active: location === "/corpus-qa" },
