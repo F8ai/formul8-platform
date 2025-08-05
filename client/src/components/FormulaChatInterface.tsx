@@ -697,7 +697,7 @@ export default function FormulaChatInterface() {
                       <ReactMarkdown 
                         components={markdownComponents}
                         remarkPlugins={[remarkMath, remarkEmoji, remarkGfm]}
-                        rehypePlugins={[rehypeKatex]}
+                        rehypePlugins={[[rehypeKatex, { output: 'htmlAndMathml' }]]}
                       >
                         {message.content}
                       </ReactMarkdown>
