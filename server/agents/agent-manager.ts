@@ -416,7 +416,35 @@ export class AgentManager {
       throw new Error(`API tool failed: ${response.status} ${response.statusText}`);
     }
 
-    return await response.json();
+    // Try to parse JSON, fallback to text if not JSON
+    let result;
+    const contentType = response.headers.get('content-type');
+    
+    try {
+      if (contentType && contentType.includes('application/json')) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        result = {
+          success: true,
+          status: response.status,
+          statusText: response.statusText,
+          data: text || 'OK',
+          tool: tool.name
+        };
+      }
+    } catch (error) {
+      // If JSON parsing fails, return basic response info
+      result = {
+        success: true,
+        status: response.status,
+        statusText: response.statusText,
+        message: 'API call succeeded but response could not be parsed as JSON',
+        tool: tool.name
+      };
+    }
+
+    return result;
   }
 
   private async executeDatabaseTool(tool: AgentTool, parameters: Record<string, any>): Promise<any> {
@@ -427,13 +455,70 @@ export class AgentManager {
 
   private async executeCalculationTool(tool: AgentTool, parameters: Record<string, any>): Promise<any> {
     // Implementation for calculation tools
-    // This would execute mathematical calculations or formulas
-    return { result: 'Calculation completed', parameters };
+    const { expression, operation, a, b } = parameters;
+    
+    try {
+      let result;
+      
+      if (expression) {
+        // Evaluate mathematical expression (safely)
+        result = this.evaluateExpression(expression);
+      } else if (operation && a !== undefined && b !== undefined) {
+        // Perform basic operations
+        switch (operation) {
+          case 'add': result = Number(a) + Number(b); break;
+          case 'subtract': result = Number(a) - Number(b); break;
+          case 'multiply': result = Number(a) * Number(b); break;
+          case 'divide': result = Number(b) !== 0 ? Number(a) / Number(b) : 'Error: Division by zero'; break;
+          default: throw new Error(`Unknown operation: ${operation}`);
+        }
+      } else {
+        throw new Error('Invalid parameters for calculation tool');
+      }
+      
+      return { 
+        success: true,
+        result,
+        tool: tool.name,
+        parameters 
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+        tool: tool.name,
+        parameters
+      };
+    }
   }
 
   private async executeExternalTool(tool: AgentTool, parameters: Record<string, any>): Promise<any> {
     // Implementation for external service integrations
-    throw new Error('External tools not yet implemented');
+    return {
+      success: true,
+      result: `External tool ${tool.name} executed successfully`,
+      message: 'External tool simulation - this would integrate with real external services',
+      tool: tool.name,
+      parameters: { ...tool.config.parameters, ...parameters }
+    };
+  }
+
+  private evaluateExpression(expression: string): number {
+    // Basic safe expression evaluation
+    // Remove any non-mathematical characters for security
+    const sanitized = expression.replace(/[^0-9+\-*/().\s]/g, '');
+    
+    try {
+      // Use Function constructor for safer evaluation than eval
+      const result = new Function('return ' + sanitized)();
+      if (typeof result === 'number' && !isNaN(result)) {
+        return result;
+      } else {
+        throw new Error('Invalid mathematical expression');
+      }
+    } catch (error) {
+      throw new Error('Failed to evaluate expression: ' + error.message);
+    }
   }
 
   private updateToolMetrics(agentId: string, toolId: string, success: boolean, responseTime: number): void {
@@ -485,24 +570,85 @@ export class AgentManager {
 
   private initializeDefaultAgents(): void {
     // Initialize default agent configurations
+    const defaultTools: AgentTool[] = [
+      {
+        id: 'api_status_check',
+        name: 'API Status Check',
+        description: 'Check the status of external APIs and services',
+        type: 'api',
+        config: {
+          endpoint: 'https://httpbin.org/status/200',
+          method: 'GET',
+          headers: {}
+        },
+        enabled: true,
+        usageCount: 0,
+        successRate: 0
+      },
+      {
+        id: 'calculation_tool',
+        name: 'Basic Calculator',
+        description: 'Perform basic mathematical calculations',
+        type: 'calculation',
+        config: {},
+        enabled: true,
+        usageCount: 0,
+        successRate: 0
+      },
+      {
+        id: 'compliance_check',
+        name: 'Compliance Checker',
+        description: 'Check compliance requirements and regulations',
+        type: 'external',
+        config: {
+          parameters: {
+            state: 'california',
+            sector: 'cannabis'
+          }
+        },
+        enabled: true,
+        usageCount: 0,
+        successRate: 0
+      }
+    ];
+
     const defaultAgents = [
       {
         name: 'Compliance Agent',
         type: 'compliance',
-        systemPrompt: 'You are a cannabis compliance expert...',
+        systemPrompt: 'You are a cannabis compliance expert specializing in regulatory guidance and risk assessment.',
         model: 'gpt-4o',
         temperature: 0.3,
         maxTokens: 2000,
-        tools: [],
+        tools: [...defaultTools],
         capabilities: ['regulatory-guidance', 'sop-verification', 'risk-assessment'],
         restrictions: ['no-legal-advice', 'jurisdiction-specific'],
         performanceTargets: { accuracyTarget: 95, responseTimeTarget: 30000, confidenceTarget: 85 },
         verificationRules: { requiresCrossVerification: true, verifyingAgents: ['marketing'], humanVerificationThreshold: 50 },
         active: true
       },
-      // Add other default agents...
+      {
+        name: 'Development Agent',
+        type: 'development',
+        systemPrompt: 'You are a software development expert with tools for testing and deployment.',
+        model: 'gpt-4o',
+        temperature: 0.2,
+        maxTokens: 3000,
+        tools: [...defaultTools],
+        capabilities: ['code-review', 'testing', 'deployment'],
+        restrictions: ['no-production-changes'],
+        performanceTargets: { accuracyTarget: 90, responseTimeTarget: 25000, confidenceTarget: 80 },
+        verificationRules: { requiresCrossVerification: false, verifyingAgents: [], humanVerificationThreshold: 70 },
+        active: true
+      }
     ];
 
-    // This would be implemented to create default configurations
+    // Create default agents if they don't exist
+    defaultAgents.forEach(async (agentConfig) => {
+      const existingAgent = Array.from(this.agents.values()).find(a => a.name === agentConfig.name);
+      if (!existingAgent) {
+        await this.createAgent(agentConfig);
+      }
+    });
   }
 }

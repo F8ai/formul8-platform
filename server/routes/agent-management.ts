@@ -224,6 +224,23 @@ export function registerAgentManagementRoutes(app: Express): void {
 
   // ===== TOOL MANAGEMENT ROUTES =====
 
+  // Get agent tools
+  app.get('/api/agents/management/:agentId/tools', isAuthenticated, (req, res) => {
+    try {
+      const { agentId } = req.params;
+      const agent = agentManager.getAgent(agentId);
+      
+      if (!agent) {
+        return res.status(404).json({ message: "Agent not found" });
+      }
+      
+      res.json({ tools: agent.tools || [] });
+    } catch (error) {
+      console.error("Error getting agent tools:", error);
+      res.status(500).json({ message: "Failed to get agent tools" });
+    }
+  });
+
   // Add tool to agent
   app.post('/api/agents/management/:agentId/tools', isAuthenticated, async (req, res) => {
     try {
