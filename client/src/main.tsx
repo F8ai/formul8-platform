@@ -1,6 +1,5 @@
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import SimpleApp from "./simple-app";
 import "./index.css";
 
 // Initialize performance monitoring (dev mode only for detailed logging)
@@ -46,18 +45,9 @@ try {
   
   const root = createRoot(rootElement);
   
-  // Enhanced error handling for production deployment
-  const isProduction = import.meta.env.PROD;
-  const forceSimple = window.location.search.includes('simple=true');
-  
-  // Only use SimpleApp when explicitly requested via URL parameter
-  if (forceSimple) {
-    console.log("Using Safari-compatible SimpleApp (explicitly requested)");
-    root.render(<SimpleApp />);
-  } else {
-    console.log("Using main App");
-    root.render(<App />);
-  }
+  // Always use the main App - removed Safari detection logic
+  console.log("Loading main Formul8 application");
+  root.render(<App />);
 
 } catch (error) {
   console.error("Failed to mount React app:", error);
